@@ -16,7 +16,6 @@ public class CommandOptionAdder {
                 .required(isRequired)
                 .longOpt("name")
                 .desc(description)
-                .argName("name")
                 .build();
 
         options.addOption(nameOption);
@@ -29,7 +28,6 @@ public class CommandOptionAdder {
                 .required(isRequired)
                 .longOpt("description")
                 .desc(description)
-                .argName("description")
                 .build();
 
         options.addOption(descOption);
@@ -41,9 +39,8 @@ public class CommandOptionAdder {
                 .hasArg(true)
                 .required(isRequired)
                 .numberOfArgs(1)
-                .longOpt("cost")
+                .longOpt("cost-price")
                 .desc(description)
-                .argName("cost")
                 .build();
 
         options.addOption(costOption);
@@ -57,7 +54,6 @@ public class CommandOptionAdder {
                 .numberOfArgs(1)
                 .longOpt("quantity")
                 .desc(description)
-                .argName("quantity")
                 .build();
 
         options.addOption(quantOption);
@@ -69,9 +65,8 @@ public class CommandOptionAdder {
                 .hasArg(true)
                 .required(isRequired)
                 .numberOfArgs(1)
-                .longOpt("salePrice")
+                .longOpt("sale-price")
                 .desc(description)
-                .argName("salePrice")
                 .build();
 
         options.addOption(saleOption);
@@ -83,9 +78,8 @@ public class CommandOptionAdder {
                 .hasArg(true)
                 .required(isRequired)
                 .numberOfArgs(1)
-                .longOpt("expiration")
+                .longOpt("expiry-date")
                 .desc(description)
-                .argName("expiration")
                 .build();
 
         options = options.addOption(expiryOption);
