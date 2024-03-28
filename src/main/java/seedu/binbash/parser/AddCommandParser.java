@@ -30,17 +30,18 @@ public class AddCommandParser extends DefaultParser {
         // Required options
         String itemName = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
         String itemDescription = String.join(" ", commandLine.getOptionValues("description"));
-        double itemCostPrice = Double.parseDouble(commandLine.getOptionValue("cost"));
+        double itemCostPrice = Double.parseDouble(commandLine.getOptionValue("cost-price"));
 
         // Optional options
-        int itemQuantity;
-        try {
-            itemQuantity = Integer.parseInt(commandLine.getOptionValue("quantity", "0"));
-        } catch (NumberFormatException e) {
-            throw new ParseException("Item quantity must be a number!");
+        int itemQuantity = 0;
+        if commandLine.hasOption("quantity") {
+            itemQuantity = getParsedOptionValue("quantity");
         }
-        double itemSalePrice = Double.parseDouble(commandLine.getOptionValue("salePrice", "0.00"));
-        LocalDate itemExpirationDate = Optional.ofNullable(commandLine.getOptionValue("expiration"))
+        double itemSalePrice = 0.00;
+        if commandLine.hasOption("sale-price") {
+            itemSalePrice = getParsedOptionValue("sale-price");
+        }
+        LocalDate itemExpirationDate = Optional.ofNullable(commandLine.getOptionValue("expiry-date"))
                 .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
                 .orElse(LocalDate.MIN);
 

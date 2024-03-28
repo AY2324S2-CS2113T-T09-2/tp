@@ -18,7 +18,7 @@ public class SellCommandParser extends DefaultParser {
         CommandLine commandLine = super.parse(options, commandArgs);
 
         String itemName = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
-        int sellQuantity = Integer.parseInt(commandLine.getOptionValue("quantity", "0"));
+        int sellQuantity = getParsedOptionValue("quantity");
 
         return new SellCommand(itemName, sellQuantity);
     }

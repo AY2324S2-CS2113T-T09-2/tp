@@ -18,7 +18,7 @@ public class RestockCommandParser extends DefaultParser {
         CommandLine commandLine = super.parse(options, commandArgs);
 
         String itemName = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
-        int restockQuantity = Integer.parseInt(commandLine.getOptionValue("quantity", "0"));
+        int restockQuantity = getParsedOptionValue("quantity");
 
         return new RestockCommand(itemName, restockQuantity);
     }
