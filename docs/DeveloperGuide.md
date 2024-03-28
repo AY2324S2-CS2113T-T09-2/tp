@@ -203,6 +203,23 @@ This return value can be printed to the user as per pre-existing *print()* metho
 * Log messages are output to a `logs.txt` file in the `*/logs/` directory by default.
 * If there are issues with the `logs.txt` file that results in no `logs` being written, warnings logs will be output through the console instead.
 
+## Features
+
+### Parser
+
+The `Parser` component plays a vital role in interpreting user input and facilitating interaction with the application. It serves as the bridge between user commands and actionable operations within the system. Here's an overview of its functionalities:
+
+- **Command Interpretation**: The `Parser` analyzes user input to identify the corresponding commands and parameters, ensuring accurate command interpretation.
+
+- **Command Delegation**: Once user commands are identified, the `Parser` delegates command execution to the appropriate command handlers, ensuring seamless operation flow.
+
+- **Error Handling**: In cases of invalid or malformed input, the `Parser` provides informative error messages, guiding users towards correct command usage.
+
+- **Integration Support**: Designed with modularity in mind, the `Parser` facilitates integration with other system components, promoting extensibility and maintainability.
+
+By effectively parsing user commands and translating them into actionable tasks, the `Parser` enhances the overall usability and functionality of the application.
+
+
 ## Product scope
 
 ### Target user profile
