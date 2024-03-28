@@ -1,0 +1,91 @@
+package seedu.binbash.parser;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import seedu.binbash.command.SearchCommand;
+
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.LocalDate;
+import java.util.Optional;
+
+public class SearchCommandParser extends DefaultParser {
+    protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    public SearchCommandParser() {
+        options = new Options();
+        new CommandOptionAdder(options)
+            .addNameOption(false, "Easily recognizable item name.")
+            .addDescriptionOption(false, "A brief description of the item.")
+            .addCostPriceOption(false, "The cost of the item.")
+            .addSalePriceOption(false, "How much you'll sell the item for.")
+            .addExpirationDateOption(false, "If the item has an expiration date, specify it here.");
+    }
+
+    public SearchCommand parse(String[] commandArgs) throws ParseException {
+        CommandLine commandLine = super.parse(options, commandArgs);
+
+        boolean hasOption = false;
+        SearchCommand searchCommand = new SearchCommand();
+        if (commandLine.hasOption("name")) {
+            String nameField = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
+            searchCommand.setNameField(nameField);
+            hasOption = true;
+        }
+        if (commandLine.hasOption("description")) {
+            String descriptionField = String.join(" ", commandLine.getOptionValues("description"));
+            searchCommand.setDescriptionField(descriptionField);
+            hasOption = true;
+        }
+        if (commandLine.hasOption("cost-price")) {
+            double costPriceField = parsePriceField(commandLine.getOptionValue("cost-price"));
+            searchCommand.setCostPriceField(costPriceField);
+            hasOption = true;
+        }
+        if (commandLine.hasOption("sale-price")) {
+            double salePriceField = parsePriceField(commandLine.getOptionValue("sale-price"));
+            searchCommand.setSalePriceField(salePriceField);
+            hasOption = true;
+        }
+        if (commandLine.hasOption("expiry-date")) {
+            //LocalDate expiryDateField = Optional.ofNullable(commandLine.getOptionValue("expiry-date"))
+            //        .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
+            //        .orElse(LocalDate.MIN);
+            try {
+                LocalDate expiryDateField = LocalDate.parse(commandLine.getOptionValue("expiry-date"),
+                        EXPECTED_INPUT_DATE_FORMAT);
+                searchCommand.setExpiryDateField(expiryDateField);
+            } catch (DateTimeParseException e) {
+                throw new ParseException(e.getMessage());
+            }
+            hasOption = true;
+        }
+        if (!hasOption) {
+            throw new ParseException("At least one option required!");
+        }
+
+        return searchCommand;
+    }
+
+    /*
+     * Returns a negative number if searching everything less than, positive if searching more than
+     */
+    private double parsePriceField(String argument) throws ParseException {
+        if (!argument.substring(0, 1).equals("<") && !argument.substring(0, 1).equals(">")) {
+            throw new ParseException("Price argument must start with '<' or '>'!");
+        }
+        boolean isSearchSmaller = argument.substring(0, 1).equals("<");
+        double price = 0;
+        try {
+            price = Double.parseDouble(argument.substring(1));
+        } catch (NumberFormatException e) {
+            throw new ParseException("Please specify a price!");
+        }
+        if (isSearchSmaller) {
+            price *= -1;
+        }
+        return price;
+    }
+}
