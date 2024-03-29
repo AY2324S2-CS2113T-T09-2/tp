@@ -1,5 +1,7 @@
 package seedu.binbash.parser;
 
+import seedu.binbash.command.SearchCommand;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -16,5 +18,16 @@ public class SearchCommandParserTest {
                     searchCommandParser.parse(invalidCommandArgs);
                 }, "ParseException was expected");
         Assertions.assertEquals("At least one of -n, -d, -c, -s, -e option required", thrown.getMessage());
+    }
+
+    @Test
+    public void parse_expiryDateOption_success() {
+        String[] commandArgs = new String[]{"-e", "23-11-2023"};
+        try {
+            SearchCommand searchCommand = searchCommandParser.parse(commandArgs);
+            Assertions.assertTrue(searchCommand instanceof SearchCommand);
+        } catch (ParseException e) {
+            Assertions.fail();
+        }
     }
 }

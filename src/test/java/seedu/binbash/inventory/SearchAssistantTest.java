@@ -28,14 +28,15 @@ public class SearchAssistantTest {
                     LocalDate.of(2024, 1, 4), 0.50, 0.40));
         testItemList.add(new PerishableRetailItem("milk", "meiji full fat whole milk", 10,
                     LocalDate.of(2024, 2, 3), 5, 3.50));
+        testItemList.add(new PerishableRetailItem("banana", "red banana", 20,
+                    LocalDate.of(2024, 1, 6), 0.70, 0.60));
         searchAssistant.setFoundItems(testItemList);
-        searchAssistant.setNumberOfResults(testItemList.size());
     }
 
     @Test
     public void searchByName_banana_success() {
         ArrayList<Item> foundItems = searchAssistant.searchByName("banana")
-            .getFoundItems();
+            .getFoundItems(1);
         String foundItemName = foundItems.get(0).getItemName();
         Assertions.assertTrue(foundItemName.contains("banana"));
     }
@@ -43,35 +44,57 @@ public class SearchAssistantTest {
     @Test
     public void searchByDescription_sarasa_success() {
         ArrayList<Item> foundItems = searchAssistant.searchByDescription("sarasa")
-            .getFoundItems();
+            .getFoundItems(1);
         String foundItemDescription = foundItems.get(0).getItemDescription();
         Assertions.assertTrue(foundItemDescription.contains("sarasa"));
     }
 
     @Test
-    public void searchByCostPrice_everythingMoreThan50Cents_foundPenAndMilk() {
-        ArrayList<Item> foundItems = searchAssistant.searchByCostPrice(0.50)
-            .getFoundItems();
+    public void searchByCostPrice_lessThan40Cents_foundLightBulbAndBattery() {
+        ArrayList<Item> foundItems = searchAssistant.searchByCostPrice(-0.40)
+            .getFoundItems(6);
         String firstItemFound = foundItems.get(0).getItemName();
         String secondItemFound = foundItems.get(1).getItemName();
-        Assertions.assertTrue(firstItemFound.equals("black pen") &&
-                secondItemFound.equals("milk") && foundItems.size() == 2);
+        Assertions.assertTrue(firstItemFound.equals("light bulb") && secondItemFound.equals("battery")
+                && foundItems.size() == 2);
     }
 
     @Test
     public void searchBySalePrice_everythingLessThan60Cents_foundBanana() {
         ArrayList<Item> foundItems = searchAssistant.searchBySalePrice(-0.60)
-            .getFoundItems();
-        String firstItemFound = foundItems.get(0).getItemName();
-        Assertions.assertTrue(firstItemFound.equals("banana") &&
+            .getFoundItems(6);
+        String firstItemFound = foundItems.get(0).getItemDescription();
+        Assertions.assertTrue(firstItemFound.equals("cavendish banana") &&
                 foundItems.size() == 1);
     }
 
     @Test
-    public void searchByExpiryDate_everythingBefore20Jan_foundBanana() {
+    public void searchByExpiryDate_everythingBefore20Jan_found2Bananas() {
         ArrayList<Item> foundItems = searchAssistant.searchByExpiryDate(LocalDate.of(2024, 1, 20))
-            .getFoundItems();
+            .getFoundItems(6);
         String firstItemFound = foundItems.get(0).getItemName();
-        Assertions.assertTrue(firstItemFound.equals("banana") && foundItems.size() == 1);
+        String secondItemFound = foundItems.get(1).getItemName();
+        Assertions.assertTrue(firstItemFound.equals("banana") && 
+                secondItemFound.equals("banana") && foundItems.size() == 2);
+    }
+
+    @Test
+    public void searchByDescriptionThenName_useBulb_foundLightBulb() {
+        ArrayList<Item> foundItems = searchAssistant.searchByDescription("use")
+            .searchByName("bulb")
+            .getFoundItems(6);
+        String firstItemFound = foundItems.get(0).getItemName();
+        Assertions.assertTrue(firstItemFound.equals("light bulb") && foundItems.size() == 1);
+    }
+
+    @Test
+    public void searchByCostPriceThenExpiryDate_moreThan50CentsBefore12Dec_foundBananaAndMilk() {
+        ArrayList<Item> foundItems = searchAssistant.searchByCostPrice(0.5)
+            .searchByExpiryDate(LocalDate.of(2024, 12, 12))
+            .getFoundItems(6);
+        String firstItemFound = foundItems.get(0).getItemName();
+        String secondItemFound = foundItems.get(1).getItemDescription();
+        Assertions.assertTrue(firstItemFound.equals("milk") &&
+                secondItemFound.equals("red banana") && foundItems.size() == 2);
     }
 }
