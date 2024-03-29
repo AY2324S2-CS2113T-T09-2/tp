@@ -6,18 +6,6 @@ import seedu.binbash.ItemList;
 
 public class AddCommand extends Command {
 
-
-    //    public static final Pattern COMMAND_FORMAT = Pattern.compile(
-    //            "add\\s" + "n/(?<itemName>.+?)\\s" + "d/(?<itemDescription>.+?)\\s" + "(q/(?<itemQuantity>.+?))?"
-    //                    + "(e/(?<itemExpirationDate>.+?))?" + "s/(?<itemSalePrice>.+?)\\s" + "c/(?<itemCostPrice>.+)"
-    //    );
-
-    /**
-     * TODO: I understand the formatting of this is cancer. I'll fix it in the future, but I hope they help clarify
-     * TODO: the regex format for future rectifications.
-     *
-     * As of now, only itemQuantity(q/) and and itemExpirationDate(e/) are optional groups.
-     */
     public static final Pattern COMMAND_FORMAT = Pattern.compile(
 
             // Match the 'add' command followed by one or more whitespace characters.
@@ -42,6 +30,7 @@ public class AddCommand extends Command {
                     // Finally, match 'c/' followed by the cost price.
                     "c/(?<itemCostPrice>.+)"
     );
+    private final String itemType;
     private final String itemName;
     private final String itemDescription;
     private final int itemQuantity;
@@ -49,8 +38,9 @@ public class AddCommand extends Command {
     private final double itemSalePrice;
     private final double itemCostPrice;
 
-    public AddCommand(String itemName, String itemDescription, int itemQuantity,
+    public AddCommand(String itemType, String itemName, String itemDescription, int itemQuantity,
                       LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
+        this.itemType = itemType;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemQuantity = itemQuantity;
@@ -75,7 +65,7 @@ public class AddCommand extends Command {
 
     @Override
     public boolean execute(ItemList itemList) {
-        executionUiOutput = itemList.addItem(itemName, itemDescription, itemQuantity, itemExpirationDate,
+        executionUiOutput = itemList.addItem(itemType, itemName, itemDescription, itemQuantity, itemExpirationDate,
                 itemSalePrice, itemCostPrice);
         hasToSave = true;
         return true;
