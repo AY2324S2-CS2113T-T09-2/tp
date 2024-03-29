@@ -72,8 +72,7 @@ public class ItemList {
         return output;
     }
 
-    public SearchAssistant getSearchAssistant(int numberOfResults) {
-        searchAssistant.setNumberOfResults(numberOfResults);
+    public SearchAssistant getSearchAssistant() {
         searchAssistant.setFoundItems(itemList);
         return searchAssistant;
     }

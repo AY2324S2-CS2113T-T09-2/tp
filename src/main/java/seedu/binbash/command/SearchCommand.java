@@ -13,6 +13,7 @@ public class SearchCommand extends Command {
     private double salePriceField = 0.00;
     private LocalDate expiryDateField = LocalDate.MAX;
     private int numberOfResults = 1;
+    private ArrayList<Item> foundItems;
 
     public SearchCommand() {
         commandLogger.fine(String.format(
@@ -44,14 +45,18 @@ public class SearchCommand extends Command {
         this.numberOfResults = numberOfResults;
     }
 
+    public ArrayList<Item> getFoundItems() {
+        return foundItems;
+    }
+
     public boolean execute(ItemList itemList) {
-        ArrayList<Item> foundItems = itemList.getSearchAssistant(numberOfResults)
+        foundItems = itemList.getSearchAssistant()
             .searchByName(nameField)
             .searchByDescription(descriptionField)
             .searchByCostPrice(costPriceField)
             .searchBySalePrice(salePriceField)
             .searchByExpiryDate(expiryDateField)
-            .getFoundItems();
+            .getFoundItems(numberOfResults);
         executionUiOutput = itemList.printList(foundItems);
         return true;
     }
