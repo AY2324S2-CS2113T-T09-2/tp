@@ -45,8 +45,13 @@ public class SearchCommand extends Command {
     }
 
     public boolean execute(ItemList itemList) {
-        ArrayList<Item> foundItems = itemList.searchItemList(nameField, descriptionField, costPriceField,
-                salePriceField, expiryDateField, numberOfResults);
+        ArrayList<Item> foundItems = itemList.getSearchAssistant(numberOfResults)
+            .searchByName(nameField)
+            .searchByDescription(descriptionField)
+            .searchByCostPrice(costPriceField)
+            .searchBySalePrice(salePriceField)
+            .searchByExpiryDate(expiryDateField)
+            .getFoundItems();
         executionUiOutput = itemList.printList(foundItems);
         return true;
     }
