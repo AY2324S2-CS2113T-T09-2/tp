@@ -17,7 +17,6 @@ public class CommandOptionAdder {
                 .longOpt("name")
                 .desc(description)
                 .build();
-
         options.addOption(nameOption);
         return this;
     }
@@ -29,7 +28,6 @@ public class CommandOptionAdder {
                 .longOpt("description")
                 .desc(description)
                 .build();
-
         options.addOption(descOption);
         return this;
     }
@@ -42,7 +40,6 @@ public class CommandOptionAdder {
                 .longOpt("cost-price")
                 .desc(description)
                 .build();
-
         options.addOption(costOption);
         return this;
     }
@@ -55,7 +52,6 @@ public class CommandOptionAdder {
                 .longOpt("quantity")
                 .desc(description)
                 .build();
-
         options.addOption(quantOption);
         return this;
     }
@@ -68,7 +64,6 @@ public class CommandOptionAdder {
                 .longOpt("sale-price")
                 .desc(description)
                 .build();
-
         options.addOption(saleOption);
         return this;
     }
@@ -81,8 +76,19 @@ public class CommandOptionAdder {
                 .longOpt("expiry-date")
                 .desc(description)
                 .build();
-
         options = options.addOption(expiryOption);
+        return this;
+    }
+
+    CommandOptionAdder addListOption(boolean isRequired, String description) {
+        Option nameOption = Option.builder("l")
+                .hasArg()
+                .argName("n")
+                .required(isRequired)
+                .longOpt("list")
+                .desc(description)
+                .build();
+        options.addOption(nameOption);
         return this;
     }
 }

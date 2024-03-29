@@ -4,12 +4,12 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.TypeHandler;
 import seedu.binbash.command.SearchCommand;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
-import java.util.Optional;
 
 public class SearchCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -17,11 +17,12 @@ public class SearchCommandParser extends DefaultParser {
     public SearchCommandParser() {
         options = new Options();
         new CommandOptionAdder(options)
-            .addNameOption(false, "Easily recognizable item name.")
-            .addDescriptionOption(false, "A brief description of the item.")
-            .addCostPriceOption(false, "The cost of the item.")
-            .addSalePriceOption(false, "How much you'll sell the item for.")
-            .addExpirationDateOption(false, "If the item has an expiration date, specify it here.");
+            .addNameOption(false, "Search by name")
+            .addDescriptionOption(false, "Search by description")
+            .addCostPriceOption(false, "Search by cost-price")
+            .addSalePriceOption(false, "Search by sale-price")
+            .addExpirationDateOption(false, "Search by expiry date")
+            .addListOption(false, "Lists the first n results");
     }
 
     public SearchCommand parse(String[] commandArgs) throws ParseException {
@@ -63,9 +64,14 @@ public class SearchCommandParser extends DefaultParser {
             hasOption = true;
         }
         if (!hasOption) {
-            throw new ParseException("At least one option required!");
+            throw new ParseException("At least one of -n, -d, -c, -s, -e option required");
         }
 
+        if (commandLine.hasOption("list")) {
+            int numberOfResults = TypeHandler.createNumber(
+                    commandLine.getOptionValue("list")).intValue();
+            searchCommand.setNumberOfResults(numberOfResults);
+        }
         return searchCommand;
     }
 
