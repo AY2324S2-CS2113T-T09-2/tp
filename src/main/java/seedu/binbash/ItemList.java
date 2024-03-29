@@ -7,6 +7,7 @@ import seedu.binbash.command.RestockCommand;
 import seedu.binbash.logger.BinBashLogger;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -166,23 +167,27 @@ public class ItemList {
         return deleteItem(targetIndex);
     }
 
-    public String searchItem(String keyword) {
-        ArrayList<Item> filteredList = (ArrayList<Item>) itemList.stream()
-                .filter(item -> item.getItemName().contains(keyword))
+    public ArrayList<Item> searchItemList(String nameField, String descriptionField,
+            double costPriceField, double salePriceField,
+            LocalDate expiryDateField, int numberOfResults) {
+        ArrayList<Item> filteredList = (ArrayList<Item>) itemList.stream() // filter through mandatory fields first
+                .filter(item -> item.getItemName().contains(nameField))
+                .filter(item -> item.getItemDescription().contains(descriptionField))
+                .filter(item -> (costPriceField < 0) ? item.getItemCostPrice() < (-1 * costPriceField) : 
+                        item.getItemCostPrice() > costPriceField)
+                // then filter through optional fields
+                .filter(item -> (salePriceField < 0) ?
+                        item instanceof RetailItem && ((RetailItem) item).getItemSalePrice() < (-1 * salePriceField) :
+                        salePriceField == 0 ||
+                         (item instanceof RetailItem && ((RetailItem) item).getItemSalePrice() > salePriceField))
+                .filter(item -> item instanceof PerishableRetailItem ?
+                        LocalDate.parse(((PerishableRetailItem) item).getItemExpirationDate(),
+                            DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                        .isBefore(expiryDateField) : true)
+                .limit(numberOfResults)
                 .collect(Collectors.toList());
-
-        String output = "";
-
-        if (filteredList.isEmpty()) {
-            output += String.format("There are no tasks with the keyword '%s'!", keyword);
-        } else {
-            output = String.format("Here's a list of items that contain the keyword '%s': ", keyword)
-                    + System.lineSeparator()
-                    + printList(filteredList);
-        }
-
-        assert filteredList.size() > 0 && filteredList.size() <= itemList.size();
-        return output;
+        assert filteredList.size() <= numberOfResults;
+        return filteredList;
     }
 
     /**
