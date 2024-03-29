@@ -7,12 +7,11 @@ import seedu.binbash.item.PerishableRetailItem;
 import seedu.binbash.item.RetailItem;
 import seedu.binbash.command.RestockCommand;
 import seedu.binbash.logger.BinBashLogger;
+import seedu.binbash.inventory.SearchAssistant;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -21,13 +20,15 @@ public class ItemList {
     private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());
     private double totalRevenue;
     private double totalCost;
-    private final List<Item> itemList;
+    private final ArrayList<Item> itemList;
+    private SearchAssistant searchAssistant;
 
     public ItemList(ArrayList<Item> itemList) {
         this.itemList = itemList;
         ITEMLIST_LOGGER.setLevel(Level.WARNING);
         this.totalRevenue = 0;
         this.totalCost = 0;
+        searchAssistant = new SearchAssistant();
     }
 
     private double getTotalRevenue() {
@@ -69,6 +70,12 @@ public class ItemList {
                         totalRevenue,
                         netProfit);
         return output;
+    }
+
+    public SearchAssistant getSearchAssistant(int numberOfResults) {
+        searchAssistant.setNumberOfResults(numberOfResults);
+        searchAssistant.setFoundItems(itemList);
+        return searchAssistant;
     }
 
     public List<Item> getItemList() {
@@ -174,29 +181,6 @@ public class ItemList {
         }
 
         return deleteItem(targetIndex);
-    }
-
-    public ArrayList<Item> searchItemList(String nameField, String descriptionField,
-            double costPriceField, double salePriceField,
-            LocalDate expiryDateField, int numberOfResults) {
-        ArrayList<Item> filteredList = (ArrayList<Item>) itemList.stream() // filter through mandatory fields first
-                .filter(item -> item.getItemName().contains(nameField))
-                .filter(item -> item.getItemDescription().contains(descriptionField))
-                .filter(item -> (costPriceField < 0) ? item.getItemCostPrice() < (-1 * costPriceField) : 
-                        item.getItemCostPrice() > costPriceField)
-                // then filter through optional fields
-                .filter(item -> (salePriceField < 0) ?
-                        item instanceof RetailItem && ((RetailItem) item).getItemSalePrice() < (-1 * salePriceField) :
-                        salePriceField == 0 ||
-                         (item instanceof RetailItem && ((RetailItem) item).getItemSalePrice() > salePriceField))
-                .filter(item -> item instanceof PerishableRetailItem ?
-                        LocalDate.parse(((PerishableRetailItem) item).getItemExpirationDate(),
-                            DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-                        .isBefore(expiryDateField) : true)
-                .limit(numberOfResults)
-                .collect(Collectors.toList());
-        assert filteredList.size() <= numberOfResults;
-        return filteredList;
     }
 
     /**
