@@ -16,21 +16,35 @@ public class AddCommandParser extends DefaultParser {
     public AddCommandParser() {
         options = new Options();
         new CommandOptionAdder(options)
-            .addNameOption(true, "Easily recognizable item name.")
-            .addDescriptionOption(true, "A brief description of the item.")
-            .addQuantityOption(false, "The units of item to be added.")
-            .addCostPriceOption(true, "The cost of the item.")
-            .addSalePriceOption(false, "How much you'll sell the item for.")
-            .addExpirationDateOption(false, "If the item has an expiration date, specify it here.");
+                .addItemTypeOptionGroup()
+                .addNameOption(true, "Easily recognizable item name.")
+                .addDescriptionOption(true, "A brief description of the item.")
+                .addQuantityOption(false, "The units of item to be added.")
+                .addCostPriceOption(true, "The cost of the item.")
+                .addSalePriceOption(false, "How much you'll sell the item for.")
+                .addExpirationDateOption(false, "If the item has an expiration date, specify it here.");
     }
 
     public AddCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
 
+        // Determine item type to be created
+        String itemType;
+        if (commandLine.hasOption("retail")) {
+            itemType = "retail";
+        } else {
+            itemType = "operational";
+        }
+
         // Required options
         String itemName = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
         String itemDescription = String.join(" ", commandLine.getOptionValues("description"));
-        double itemCostPrice = Double.parseDouble(commandLine.getOptionValue("cost"));
+        double itemCostPrice;
+        try {
+            itemCostPrice = Double.parseDouble(commandLine.getOptionValue("cost"));
+        } catch (NumberFormatException e) {
+            throw new ParseException("Item cost price must be a number!");
+        }
 
         // Optional options
         int itemQuantity;
@@ -39,12 +53,19 @@ public class AddCommandParser extends DefaultParser {
         } catch (NumberFormatException e) {
             throw new ParseException("Item quantity must be a number!");
         }
-        double itemSalePrice = Double.parseDouble(commandLine.getOptionValue("salePrice", "0.00"));
+
+        double itemSalePrice;
+        try {
+            itemSalePrice = Double.parseDouble(commandLine.getOptionValue("salePrice", "0.00"));
+        } catch (NumberFormatException e) {
+            throw new ParseException("Item sale price must be a number!");
+        }
+
         LocalDate itemExpirationDate = Optional.ofNullable(commandLine.getOptionValue("expiration"))
                 .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
                 .orElse(LocalDate.MIN);
 
-        return new AddCommand(itemName, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice,
+        return new AddCommand(itemType, itemName, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice,
                 itemCostPrice);
     }
 }
