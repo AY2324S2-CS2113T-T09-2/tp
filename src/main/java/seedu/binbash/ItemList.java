@@ -1,6 +1,8 @@
 package seedu.binbash;
 
 import seedu.binbash.item.Item;
+import seedu.binbash.item.OperationalItem;
+import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.item.PerishableRetailItem;
 import seedu.binbash.item.RetailItem;
 import seedu.binbash.command.RestockCommand;
@@ -77,16 +79,23 @@ public class ItemList {
         return itemList.size();
     }
 
-    public String addItem(String itemName, String itemDescription, int itemQuantity,
+    public String addItem(String itemType, String itemName, String itemDescription, int itemQuantity,
                           LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
         Item item;
-        if (!itemExpirationDate.equals(LocalDate.MIN)) {
-            // Create perishable item
+        if (itemType.equals("retail") && !itemExpirationDate.equals(LocalDate.MIN)) {
+            // Perishable Retail Item
             item = new PerishableRetailItem(itemName, itemDescription, itemQuantity,
                     itemExpirationDate, itemSalePrice, itemCostPrice);
-        } else {
-            // Create non-perishable item
+        } else if (itemType.equals("retail") && itemExpirationDate.equals(LocalDate.MIN)) {
+            // Non-perishable Retail Item
             item = new RetailItem(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice);
+        } else if (itemType.equals("operational") && !itemExpirationDate.equals(LocalDate.MIN)) {
+            // Perishable Operational Item
+            item = new PerishableOperationalItem(itemName, itemDescription, itemQuantity,
+                    itemExpirationDate, itemCostPrice);
+        } else {
+            // Non-perishable Operational Item
+            item = new OperationalItem(itemName, itemDescription, itemQuantity, itemCostPrice);
         }
 
         int beforeSize = itemList.size();

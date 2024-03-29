@@ -17,16 +17,25 @@ public class AddCommandParser extends DefaultParser {
     public AddCommandParser() {
         options = new Options();
         new CommandOptionAdder(options)
-            .addNameOption(true, "Easily recognizable item name.")
-            .addDescriptionOption(true, "A brief description of the item.")
-            .addQuantityOption(false, "The units of item to be added.")
-            .addCostPriceOption(true, "The cost of the item.")
-            .addSalePriceOption(false, "How much you'll sell the item for.")
-            .addExpirationDateOption(false, "If the item has an expiration date, specify it here.");
+                .addItemTypeOptionGroup()
+                .addNameOption(true, "Easily recognizable item name.")
+                .addDescriptionOption(true, "A brief description of the item.")
+                .addQuantityOption(false, "The units of item to be added.")
+                .addCostPriceOption(true, "The cost of the item.")
+                .addSalePriceOption(false, "How much you'll sell the item for.")
+                .addExpirationDateOption(false, "If the item has an expiration date, specify it here.");
     }
 
     public AddCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
+
+        // Determine item type to be created
+        String itemType;
+        if (commandLine.hasOption("retail")) {
+            itemType = "retail";
+        } else {
+            itemType = "operational";
+        }
 
         // Required options
         String itemName = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
@@ -43,7 +52,7 @@ public class AddCommandParser extends DefaultParser {
                 .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
                 .orElse(LocalDate.MIN);
 
-        return new AddCommand(itemName, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice,
+        return new AddCommand(itemType, itemName, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice,
                 itemCostPrice);
     }
 }

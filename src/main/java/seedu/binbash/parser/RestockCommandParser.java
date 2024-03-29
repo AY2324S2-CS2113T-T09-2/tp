@@ -7,10 +7,8 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.TypeHandler;
 import seedu.binbash.command.RestockCommand;
 import seedu.binbash.logger.BinBashLogger;
-import java.util.logging.Logger;
 
 public class RestockCommandParser extends DefaultParser {
-    private static final Logger logger = Logger.getLogger(RestockCommandParser.class.getName());
     private static final BinBashLogger binBashLogger = new BinBashLogger(RestockCommandParser.class.getName());
     public RestockCommandParser() {
         options = new Options();

@@ -54,7 +54,7 @@ public class Parser {
         case "sell":
             return parseSellCommand(commandArgs);
         default:
-            throw new InvalidCommandException("Invalid command!");
+            throw new InvalidCommandException("Invalid command: "  + commandString);
         }
     }
 
@@ -85,7 +85,7 @@ public class Parser {
         try {
             return addCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidFormatException("Invalid format for adding a task: " + e.getMessage());
         }
     }
 
@@ -93,7 +93,7 @@ public class Parser {
         try {
             return restockCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidFormatException("Invalid format for restocking: " + e.getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ public class Parser {
         try {
             return sellCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidFormatException("Invalid format for selling: " + e.getMessage());
         }
     }
 

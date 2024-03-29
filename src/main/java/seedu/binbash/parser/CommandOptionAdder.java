@@ -1,6 +1,7 @@
 package seedu.binbash.parser;
 
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 
 public class CommandOptionAdder {
@@ -8,6 +9,40 @@ public class CommandOptionAdder {
 
     public CommandOptionAdder(Options options) {
         this.options = options;
+    }
+
+    private Option getRetailItemOption() {
+        Option reItemOption = Option.builder("re")
+                .hasArg(false)
+                .required(true)
+                .longOpt("retail")
+                .desc("Add a Retail Item.")
+                .argName("retail")
+                .build();
+
+        return reItemOption;
+    }
+
+    private Option getOperationalItemOption() {
+        Option opItemOption = Option.builder("op")
+                .hasArg(false)
+                .required(true)
+                .longOpt("operational")
+                .desc("Add an Operational Item.")
+                .argName("operational")
+                .build();
+
+        return opItemOption;
+    }
+
+    CommandOptionAdder addItemTypeOptionGroup() {
+        OptionGroup itemTypeOptionGroup = new OptionGroup()
+                .addOption(getRetailItemOption())
+                .addOption(getOperationalItemOption());
+
+        itemTypeOptionGroup.setRequired(true);
+        options.addOptionGroup(itemTypeOptionGroup);
+        return this;
     }
 
     CommandOptionAdder addNameOption(boolean isRequired, String description) {

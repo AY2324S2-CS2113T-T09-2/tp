@@ -14,7 +14,7 @@ class DeleteCommandTest {
     @Test
     void execute_deleteCommandOnListWithTestItem_success() {
         ItemList itemList = new ItemList(new ArrayList<Item>());
-        itemList.addItem("testItem", "A test item", 1,
+        itemList.addItem("retail", "testItem", "A test item", 1,
                 LocalDate.now(), 10.00, 5.00);
 
         DeleteCommand deleteCommand = new DeleteCommand("testItem");

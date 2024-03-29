@@ -22,6 +22,7 @@ bin/
 /text-ui-test/ACTUAL.TXT
 /text-ui-test/EXPECTED-UNIX.TXT
 /text-ui-test/data/
+/text-ui-test/logs/
 
 # Data and log files created by application
 /data/
