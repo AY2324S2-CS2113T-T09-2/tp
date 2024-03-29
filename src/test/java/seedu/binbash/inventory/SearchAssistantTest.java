@@ -24,8 +24,10 @@ public class SearchAssistantTest {
         testItemList.add(new PerishableOperationalItem("battery", "a battery for in-store use", 500,
                     LocalDate.of(2024, 1, 16), 0.10));
         testItemList.add(new RetailItem("black pen", "zebra sarasa black 0.5", 50, 1.00, 0.70));
-        testItemList.add(new PerishableRetailItem("banana", "cavendish banana", 30, LocalDate.of(2024, 1, 4), 0.50, 0.40));
-        testItemList.add(new PerishableRetailItem("milk", "meiji full fat whole milk", 10, LocalDate.of(2024, 2, 3), 5, 3.50));
+        testItemList.add(new PerishableRetailItem("banana", "cavendish banana", 30,
+                    LocalDate.of(2024, 1, 4), 0.50, 0.40));
+        testItemList.add(new PerishableRetailItem("milk", "meiji full fat whole milk", 10,
+                    LocalDate.of(2024, 2, 3), 5, 3.50));
         searchAssistant.setFoundItems(testItemList);
         searchAssistant.setNumberOfResults(testItemList.size());
     }
