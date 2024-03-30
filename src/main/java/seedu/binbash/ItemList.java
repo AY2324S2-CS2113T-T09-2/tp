@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class ItemList {
-    private static final Logger ITEMLIST_LOGGER = Logger.getLogger("ItemList");
     private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());
     private double totalRevenue;
     private double totalCost;
@@ -25,7 +24,6 @@ public class ItemList {
 
     public ItemList(ArrayList<Item> itemList) {
         this.itemList = itemList;
-        ITEMLIST_LOGGER.setLevel(Level.WARNING);
         this.totalRevenue = 0;
         this.totalCost = 0;
         searchAssistant = new SearchAssistant();
