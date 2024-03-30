@@ -178,13 +178,14 @@ public class ItemList {
         for (int i = 0 ; i < itemList.size(); i ++) {
             currentItem = itemList.get(i);
             if (currentItem.getItemName().trim().equals(keyword)) {
-                ITEMLIST_LOGGER.log(Level.INFO, "first matching item at index " + i + " found.");
+                logger.info("first matching item at index " + i + " found.");
                 targetIndex = i + 1;
                 break;
             }
         }
 
         if (targetIndex == -1) {
+            logger.info("No matching item was found, no item was deleted.");
             String output = "Item not found! Nothing was deleted!";
             return output;
         }
