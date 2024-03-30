@@ -1,13 +1,12 @@
 package seedu.binbash;
 
 import org.junit.jupiter.api.Test;
-import seedu.binbash.item.Item;
+
 import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.item.PerishableRetailItem;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,7 +15,7 @@ class ItemListTest {
 
     @Test
     void deleteItem_indexOfItemInItemList_itemRemovedFromItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00);
 
@@ -27,7 +26,7 @@ class ItemListTest {
 
     @Test
     void deleteItem_nameOfItemInItemList_itemRemovedFromItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00);
 
@@ -38,7 +37,7 @@ class ItemListTest {
 
     @Test
     void deleteItem_nameOfItemNotInItemList_itemNotRemovedFromItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00);
 
@@ -49,7 +48,7 @@ class ItemListTest {
 
     @Test
     void addItem_noItemInItemList_oneItemInItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
 
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00);
@@ -58,7 +57,7 @@ class ItemListTest {
 
     @Test
     void addItem_itemInputs_correctItemParameters() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
 
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.of(1999, 1, 1), 4.00, 5.00);
@@ -74,7 +73,7 @@ class ItemListTest {
 
     @Test
     void addItem_addOperationalItem_correctItemType() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
 
         itemList.addItem("operational", "testItem", "A test item", 2,
                 LocalDate.MIN, 0.00, 5.00);
@@ -83,7 +82,7 @@ class ItemListTest {
 
     @Test
     void addItem_addPerishableOperationalItem_correctItemType() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
 
         itemList.addItem("operational", "testItem", "A test item", 2,
                 LocalDate.of(1999, 1, 1), 0.00, 5.00);
@@ -92,7 +91,7 @@ class ItemListTest {
 
     @Test
     void printList_twoItemsInItemList_correctPrintFormatForBothItems() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
 
         itemList.addItem("retail", "testItem1", "Test item 1", 2,
                 LocalDate.of(1999, 1, 1), 4.00, 5.00);

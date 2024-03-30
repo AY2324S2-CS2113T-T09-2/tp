@@ -1,11 +1,10 @@
 package seedu.binbash.command;
 
 import org.junit.jupiter.api.Test;
-import seedu.binbash.item.Item;
+
 import seedu.binbash.ItemList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,7 +12,7 @@ class ListCommandTest {
 
     @Test
     void execute_listCommandWithTwoItemsInItemList_correctPrintFormatForBothItems() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
 
         itemList.addItem("retail", "testItem1", "Test item 1", 2,
                 LocalDate.of(1999, 1, 1), 4.00, 5.00);
@@ -45,7 +44,7 @@ class ListCommandTest {
 
     @Test
     void execute_listCommandWithEmptyItemList_returnsEmptyOutput() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
         ListCommand listCommand = new ListCommand();
 
         listCommand.execute(itemList);

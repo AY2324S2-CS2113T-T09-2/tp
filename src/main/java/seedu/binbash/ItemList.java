@@ -20,8 +20,8 @@ public class ItemList {
     private final ArrayList<Item> itemList;
     private SearchAssistant searchAssistant;
 
-    public ItemList(ArrayList<Item> itemList) {
-        this.itemList = itemList;
+    public ItemList() {
+        this.itemList = new ArrayList<Item>();
         this.totalRevenue = 0;
         this.totalCost = 0;
         searchAssistant = new SearchAssistant();
