@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import seedu.binbash.ItemList;
 import seedu.binbash.command.AddCommand;
