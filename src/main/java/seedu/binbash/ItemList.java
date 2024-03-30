@@ -148,6 +148,12 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Deletes an item from the inventory by identifying the item using its index.
+     *
+     * @param index index of the item to be deleted.
+     * @return the message indicating which item was deleted.
+     */
     public String deleteItem(int index) {
         logger.info("Attempting to delete an item");
         int beforeSize = itemList.size();
@@ -160,6 +166,12 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Deletes an item from the inventory by identifying the item using its name.
+     *
+     * @param keyword the name of the item to be deleted.
+     * @return the message indicating which item was deleted.
+     */
     public String deleteItem(String keyword) {
         int targetIndex = -1;
         Item currentItem;
