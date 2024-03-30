@@ -1,25 +1,80 @@
 package seedu.binbash;
 
 import seedu.binbash.item.Item;
+import seedu.binbash.item.OperationalItem;
+import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.item.PerishableRetailItem;
 import seedu.binbash.item.RetailItem;
 import seedu.binbash.command.RestockCommand;
+import seedu.binbash.logger.BinBashLogger;
+import seedu.binbash.inventory.SearchAssistant;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class ItemList {
     private static final Logger ITEMLIST_LOGGER = Logger.getLogger("ItemList");
-
-    private final List<Item> itemList;
+    private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());
+    private double totalRevenue;
+    private double totalCost;
+    private final ArrayList<Item> itemList;
+    private SearchAssistant searchAssistant;
 
     public ItemList(ArrayList<Item> itemList) {
         this.itemList = itemList;
         ITEMLIST_LOGGER.setLevel(Level.WARNING);
+        this.totalRevenue = 0;
+        this.totalCost = 0;
+        searchAssistant = new SearchAssistant();
+    }
+
+    private double getTotalRevenue() {
+        double totalRevenue = 0;
+
+        for (Item item: itemList) {
+            if (item instanceof RetailItem) {
+                // Downcast made only after checking if item is a RetailItem (and below) object.
+                // TODO: Add an assert statement to verify code logic.
+                RetailItem retailItem = (RetailItem) item;
+                totalRevenue += (retailItem.getTotalUnitsSold() * retailItem.getItemSalePrice());
+            }
+        }
+
+        return totalRevenue;
+    }
+
+    private double getTotalCost() {
+        double totalCost = 0;
+
+        for (Item item: itemList) {
+            totalCost += (item.getTotalUnitsPurchased() * item.getItemCostPrice());
+        }
+
+        return totalCost;
+    }
+
+    public String getProfitMargin() {
+        double totalCost = getTotalCost();
+        double totalRevenue = getTotalRevenue();
+        double netProfit = totalRevenue - totalCost;
+
+        String output =
+                String.format("Here are your metrics: " + System.lineSeparator()
+                        + "\tTotal Cost: %.2f" + System.lineSeparator()
+                        + "\tTotal Revenue: %.2f" + System.lineSeparator()
+                        + "\tNet Profit: %.2f" + System.lineSeparator(),
+                        totalCost,
+                        totalRevenue,
+                        netProfit);
+        return output;
+    }
+
+    public SearchAssistant getSearchAssistant() {
+        searchAssistant.setFoundItems(itemList);
+        return searchAssistant;
     }
 
     public List<Item> getItemList() {
@@ -30,16 +85,23 @@ public class ItemList {
         return itemList.size();
     }
 
-    public String addItem(String itemName, String itemDescription, int itemQuantity,
+    public String addItem(String itemType, String itemName, String itemDescription, int itemQuantity,
                           LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
         Item item;
-        if (!itemExpirationDate.equals(LocalDate.MIN)) {
-            // Create perishable item
+        if (itemType.equals("retail") && !itemExpirationDate.equals(LocalDate.MIN)) {
+            // Perishable Retail Item
             item = new PerishableRetailItem(itemName, itemDescription, itemQuantity,
                     itemExpirationDate, itemSalePrice, itemCostPrice);
-        } else {
-            // Create non-perishable item
+        } else if (itemType.equals("retail") && itemExpirationDate.equals(LocalDate.MIN)) {
+            // Non-perishable Retail Item
             item = new RetailItem(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice);
+        } else if (itemType.equals("operational") && !itemExpirationDate.equals(LocalDate.MIN)) {
+            // Perishable Operational Item
+            item = new PerishableOperationalItem(itemName, itemDescription, itemQuantity,
+                    itemExpirationDate, itemCostPrice);
+        } else {
+            // Non-perishable Operational Item
+            item = new OperationalItem(itemName, itemDescription, itemQuantity, itemCostPrice);
         }
 
         int beforeSize = itemList.size();
@@ -56,14 +118,29 @@ public class ItemList {
 
         for (Item item : itemList) {
             int newQuantity = item.getItemQuantity();
+
             if (!item.getItemName().trim().equals(itemName.trim())) {
                 continue;
             }
 
+            // Restocking item consists of (i) Updating itemQuantity, (ii) Updating totalUnitsPurchased
             if (command.trim().equals(RestockCommand.COMMAND.trim())) {
                 newQuantity += itemQuantity;
+
+                int totalUnitsPurchased = item.getTotalUnitsPurchased();
+                item.setTotalUnitsPurchased(totalUnitsPurchased + itemQuantity);
+
+            // Selling item consists of (i) Updating itemQuantity, (ii) Updating totalUnitsSold
             } else {
                 newQuantity -= itemQuantity;
+
+                // Stinky downcast?
+                // I'm going off the assertion that only retail items (and its subclasses) can be sold.
+                // TODO: Add an assert statement to verify code logic.
+                RetailItem retailItem = (RetailItem)item;
+
+                int totalUnitsSold = retailItem.getTotalUnitsSold();
+                retailItem.setTotalUnitsSold(totalUnitsSold + itemQuantity);
             }
             item.setItemQuantity(newQuantity);
             output = "Great! I have updated the quantity of the item for you:" + System.lineSeparator()
@@ -74,12 +151,14 @@ public class ItemList {
     }
 
     public String deleteItem(int index) {
+        logger.info("Attempting to delete an item");
         int beforeSize = itemList.size();
         Item tempItem = itemList.remove(index - 1);
         assert itemList.size() == (beforeSize - 1);
 
         String output = "Got it! I've removed the following item:" + System.lineSeparator()
                 + System.lineSeparator() + tempItem;
+        logger.info("An item has been deleted");
         return output;
     }
 
@@ -101,25 +180,6 @@ public class ItemList {
         }
 
         return deleteItem(targetIndex);
-    }
-
-    public String searchItem(String keyword) {
-        ArrayList<Item> filteredList = (ArrayList<Item>) itemList.stream()
-                .filter(item -> item.getItemName().contains(keyword))
-                .collect(Collectors.toList());
-
-        String output = "";
-
-        if (filteredList.isEmpty()) {
-            output += String.format("There are no tasks with the keyword '%s'!", keyword);
-        } else {
-            output = String.format("Here's a list of items that contain the keyword '%s': ", keyword)
-                    + System.lineSeparator()
-                    + printList(filteredList);
-        }
-
-        assert filteredList.size() > 0 && filteredList.size() <= itemList.size();
-        return output;
     }
 
     /**

@@ -15,9 +15,9 @@ class ListCommandTest {
     void execute_listCommandWithTwoItemsInItemList_correctPrintFormatForBothItems() {
         ItemList itemList = new ItemList(new ArrayList<Item>());
 
-        itemList.addItem("testItem1", "Test item 1", 2,
+        itemList.addItem("retail", "testItem1", "Test item 1", 2,
                 LocalDate.of(1999, 1, 1), 4.00, 5.00);
-        itemList.addItem("testItem2", "Test item 2", 6,
+        itemList.addItem("retail", "testItem2", "Test item 2", 6,
                 LocalDate.of(1999, 1, 1), 8.00, 9.00);
 
         ListCommand listCommand = new ListCommand();
@@ -39,6 +39,19 @@ class ListCommandTest {
                 "\tsale price: $8.00" + System.lineSeparator() +
                 "\texpiry date: 01-01-1999" + System.lineSeparator() +
                 System.lineSeparator();
+
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    void execute_listCommandWithEmptyItemList_returnsEmptyOutput() {
+        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ListCommand listCommand = new ListCommand();
+
+        listCommand.execute(itemList);
+        String actualOutput = listCommand.getExecutionUiOutput();
+
+        String expectedOutput = "";
 
         assertEquals(expectedOutput, actualOutput);
     }

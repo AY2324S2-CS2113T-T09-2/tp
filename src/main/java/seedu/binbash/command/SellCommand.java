@@ -1,5 +1,6 @@
 package seedu.binbash.command;
 
+import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.ItemList;
 
 import java.util.regex.Pattern;
@@ -11,6 +12,7 @@ public class SellCommand extends Command{
                     + "n/(?<itemName>.+?)(?=q/)"
                     + "q/(?<sellQuantity>.+)"
     );
+    private static final BinBashLogger binBashLogger = new BinBashLogger(SellCommand.class.getName());
     private final String itemName;
     private final int sellQuantity;
 
