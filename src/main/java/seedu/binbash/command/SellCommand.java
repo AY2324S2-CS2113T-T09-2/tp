@@ -31,7 +31,6 @@ public class SellCommand extends Command{
     public boolean execute(ItemList itemList) {
         executionUiOutput = itemList.updateItemQuantity(itemName, sellQuantity, COMMAND);
         hasToSave = true;
-        binBashLogger.info(executionUiOutput);
         return true;
     }
 }

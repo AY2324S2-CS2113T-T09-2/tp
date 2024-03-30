@@ -13,7 +13,6 @@ import seedu.binbash.ItemList;
 import seedu.binbash.command.AddCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.command.DeleteCommand;
-import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ByeCommand;
 import seedu.binbash.exceptions.BinBashException;
@@ -113,12 +112,6 @@ public class ParserTest {
     public void testParseCommand_validCommandList_returnsListCommand() throws BinBashException {
         Command command = parser.parseCommand("list");
         assertTrue(command instanceof ListCommand);
-    }
-
-    @Test
-    public void testParseCommand_validCommandSearch_returnsSearchCommand() throws BinBashException {
-        Command command = parser.parseCommand("search keyword");
-        assertTrue(command instanceof SearchCommand);
     }
 
     @Test

@@ -7,11 +7,11 @@ import seedu.binbash.item.PerishableRetailItem;
 import seedu.binbash.item.RetailItem;
 import seedu.binbash.command.RestockCommand;
 import seedu.binbash.logger.BinBashLogger;
+import seedu.binbash.inventory.SearchAssistant;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -20,13 +20,15 @@ public class ItemList {
     private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());
     private double totalRevenue;
     private double totalCost;
-    private final List<Item> itemList;
+    private final ArrayList<Item> itemList;
+    private SearchAssistant searchAssistant;
 
     public ItemList(ArrayList<Item> itemList) {
         this.itemList = itemList;
         ITEMLIST_LOGGER.setLevel(Level.WARNING);
         this.totalRevenue = 0;
         this.totalCost = 0;
+        searchAssistant = new SearchAssistant();
     }
 
     private double getTotalRevenue() {
@@ -68,6 +70,11 @@ public class ItemList {
                         totalRevenue,
                         netProfit);
         return output;
+    }
+
+    public SearchAssistant getSearchAssistant() {
+        searchAssistant.setFoundItems(itemList);
+        return searchAssistant;
     }
 
     public List<Item> getItemList() {
@@ -173,25 +180,6 @@ public class ItemList {
         }
 
         return deleteItem(targetIndex);
-    }
-
-    public String searchItem(String keyword) {
-        ArrayList<Item> filteredList = (ArrayList<Item>) itemList.stream()
-                .filter(item -> item.getItemName().contains(keyword))
-                .collect(Collectors.toList());
-
-        String output = "";
-
-        if (filteredList.isEmpty()) {
-            output += String.format("There are no tasks with the keyword '%s'!", keyword);
-        } else {
-            output = String.format("Here's a list of items that contain the keyword '%s': ", keyword)
-                    + System.lineSeparator()
-                    + printList(filteredList);
-        }
-
-        assert filteredList.size() >= 0 && filteredList.size() <= itemList.size();
-        return output;
     }
 
     /**

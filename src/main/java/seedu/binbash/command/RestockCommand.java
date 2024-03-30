@@ -31,7 +31,6 @@ public class RestockCommand extends Command{
     public boolean execute(ItemList itemList) {
         executionUiOutput = itemList.updateItemQuantity(itemName, restockQuantity, COMMAND);
         hasToSave = true;
-        binBashLogger.info(executionUiOutput);
         return true;
     }
 }

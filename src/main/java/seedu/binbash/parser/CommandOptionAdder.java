@@ -51,9 +51,7 @@ public class CommandOptionAdder {
                 .required(isRequired)
                 .longOpt("name")
                 .desc(description)
-                .argName("name")
                 .build();
-
         options.addOption(nameOption);
         return this;
     }
@@ -64,9 +62,7 @@ public class CommandOptionAdder {
                 .required(isRequired)
                 .longOpt("description")
                 .desc(description)
-                .argName("description")
                 .build();
-
         options.addOption(descOption);
         return this;
     }
@@ -75,11 +71,10 @@ public class CommandOptionAdder {
         Option costOption = Option.builder("c")
                 .hasArg(true)
                 .required(isRequired)
-                .longOpt("cost")
+                .numberOfArgs(1)
+                .longOpt("cost-price")
                 .desc(description)
-                .argName("cost")
                 .build();
-
         options.addOption(costOption);
         return this;
     }
@@ -88,11 +83,10 @@ public class CommandOptionAdder {
         Option quantOption = Option.builder("q")
                 .hasArg(true)
                 .required(isRequired)
+                .numberOfArgs(1)
                 .longOpt("quantity")
                 .desc(description)
-                .argName("quantity")
                 .build();
-
         options.addOption(quantOption);
         return this;
     }
@@ -101,11 +95,10 @@ public class CommandOptionAdder {
         Option saleOption = Option.builder("s")
                 .hasArg(true)
                 .required(isRequired)
-                .longOpt("salePrice")
+                .numberOfArgs(1)
+                .longOpt("sale-price")
                 .desc(description)
-                .argName("salePrice")
                 .build();
-
         options.addOption(saleOption);
         return this;
     }
@@ -114,12 +107,23 @@ public class CommandOptionAdder {
         Option expiryOption = Option.builder("e")
                 .hasArg(true)
                 .required(isRequired)
-                .longOpt("expiration")
+                .numberOfArgs(1)
+                .longOpt("expiry-date")
                 .desc(description)
-                .argName("expiration")
                 .build();
-
         options = options.addOption(expiryOption);
+        return this;
+    }
+
+    CommandOptionAdder addListOption(boolean isRequired, String description) {
+        Option nameOption = Option.builder("l")
+                .hasArg()
+                .argName("n")
+                .required(isRequired)
+                .longOpt("list")
+                .desc(description)
+                .build();
+        options.addOption(nameOption);
         return this;
     }
 }
