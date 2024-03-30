@@ -26,7 +26,7 @@ public class ParserTest {
 
     @BeforeEach
     public void setUp() {
-        itemList = new ItemList(new ArrayList<>());
+        itemList = new ItemList();
         parser = new Parser();
     }
 

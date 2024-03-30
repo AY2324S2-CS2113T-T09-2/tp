@@ -13,7 +13,7 @@ public class AddCommandTest {
 
     @Test
     void execute_item_oneItemInItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList();
         AddCommand addCommand = new AddCommand("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00);
 
