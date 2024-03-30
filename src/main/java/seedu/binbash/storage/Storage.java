@@ -58,13 +58,18 @@ public class Storage {
         try {
             ArrayList<String> stringRepresentationOfTxtFile = readTxtFile();
             parseAndAddToList(stringRepresentationOfTxtFile, itemManager);
-        } catch (BinBashException | IOException | NumberFormatException | ParseException e) {
+        } catch (BinBashException | IOException | NumberFormatException e) {
             isCorrupted = true;
         }
 
         assert !isCorrupted : "data file is corrupted";
 
-        storageLogger.log(Level.INFO, "Data loaded successfully.");
+        if (isCorrupted) {
+            storageLogger.log(Level.INFO,
+                    "Data file is corrupted. A new data file will be generated. Proceed at your own risk");
+        } else {
+            storageLogger.log(Level.INFO, "Data loaded successfully.");
+        }
 
         return itemList;
     }
@@ -114,25 +119,33 @@ public class Storage {
      * @throws InvalidCommandException if the command is invalid.
      * @throws ParseException if there is an error in parsing the command arguments.
      */
-    private void parseAndAddToList(ArrayList<String> stringRepresentationOfTxtFile, ItemList itemManager)
-            throws InvalidCommandException, ParseException {
+    private void parseAndAddToList(ArrayList<String> stringRepresentationOfTxtFile, ItemList itemManager) {
 
         AddCommandParser addCommandParser = new AddCommandParser();
         int parseState = READING_IN_ITEM;
 
         for (String line : stringRepresentationOfTxtFile) {
-            String[] tokens = line.trim().split("\\s+"); // Tokenize user input
+            String[] tokens = line.trim().split("\\s+");
             String commandString = tokens[0].toLowerCase();
-            String[] commandArgs = Arrays.copyOfRange(tokens, 1, tokens.length); // Takes only options and arguments
+            String[] commandArgs = Arrays.copyOfRange(tokens, 1, tokens.length);
 
-            if ("add".equals(commandString)) {
+            switch (commandString) {
+            case "add":
                 assert parseState == READING_IN_ITEM;
-                handleAddCommand(addCommandParser, commandArgs, itemManager);
+                try {
+                    handleAddCommand(addCommandParser, commandArgs, itemManager);
+                } catch (InvalidCommandException | ParseException e) {
+                    isCorrupted = true;
+                }
                 parseState = READING_IN_PROFIT_QUANTITIES;
-            } else if ("setprofit".equals(commandString)) {
+                break;
+            case "setprofit":
                 assert parseState == READING_IN_PROFIT_QUANTITIES;
                 handleSetProfitString(commandArgs, itemManager);
                 parseState = READING_IN_ITEM;
+                break;
+            default:
+                isCorrupted = true;
             }
         }
     }
