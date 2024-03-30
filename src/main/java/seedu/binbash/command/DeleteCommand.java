@@ -52,7 +52,8 @@ public class DeleteCommand extends Command {
     public boolean execute(ItemList itemList) {
         if (isIndex) {
             if (index <= 0 || index > itemList.getItemCount()) {
-                executionUiOutput = "Index is out of bounds!";
+                commandLogger.info("Index entered is out of bounds");
+                executionUiOutput = "Index entered is out of bounds!";
                 return true;
             }
             assert index > 0 && index <= itemList.getItemCount();
