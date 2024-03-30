@@ -3,6 +3,7 @@ package seedu.binbash.command;
 import java.util.regex.Pattern;
 import java.util.logging.Level;
 import seedu.binbash.ItemList;
+import seedu.binbash.logger.BinBashLogger;
 
 public class DeleteCommand extends Command {
     public static final Pattern COMMAND_FORMAT = Pattern.compile("delete\\s(?<identifier>.+)");
@@ -13,7 +14,8 @@ public class DeleteCommand extends Command {
     public DeleteCommand(int index) {
         this.index = index;
         isIndex = true;
-        commandLogger.fine(String.format(
+        commandLogger = new BinBashLogger(DeleteCommand.class.getName());
+        commandLogger.info(String.format(
                 "Creating Delete Command... ItemIndex: %d",
                 index
         ));
@@ -22,7 +24,7 @@ public class DeleteCommand extends Command {
     public DeleteCommand(String keyword) {
         this.keyword = keyword;
         isIndex = false;
-        commandLogger.fine(String.format(
+        commandLogger.info(String.format(
                 "Creating Delete Command... ItemIndex: %d",
                 index
         ));
@@ -35,10 +37,10 @@ public class DeleteCommand extends Command {
                 return true;
             }
             assert index > 0 && index <= itemList.getItemCount();
-            commandLogger.log(Level.INFO, "Delete identifier is detected as an index");
+            commandLogger.info("Delete identifier is detected as an index");
             executionUiOutput = itemList.deleteItem(index);
         } else {
-            commandLogger.log(Level.INFO, "Delete identifier is detected as an item name");
+            commandLogger.info("Delete identifier is detected as an item name");
             executionUiOutput = itemList.deleteItem(keyword);
         }
         hasToSave = true;
