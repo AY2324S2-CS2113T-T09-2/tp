@@ -3,6 +3,7 @@ package seedu.binbash.command;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 import seedu.binbash.ItemList;
+import seedu.binbash.logger.BinBashLogger;
 
 public class AddCommand extends Command {
 
@@ -40,6 +41,7 @@ public class AddCommand extends Command {
 
     public AddCommand(String itemType, String itemName, String itemDescription, int itemQuantity,
                       LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
+        commandLogger = new BinBashLogger(AddCommand.class.getName());
         this.itemType = itemType;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -51,7 +53,7 @@ public class AddCommand extends Command {
         assert itemName != null && !itemName.trim().isEmpty();
         assert itemQuantity >= 0;
 
-        commandLogger.fine(String.format(
+        commandLogger.info(String.format(
                 "Creating Add Command... itemName: %s, itemDescription: %s, itemQuantity: %d, itemExpirationDate: %s"
                         + "itemSalePrice: %f, itemCostPrice: %f",
                 itemName,
