@@ -5,18 +5,27 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.TypeHandler;
+import org.jline.builtins.Completers.OptDesc;
+
 import seedu.binbash.command.AddCommand;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.ArrayList;
 
 public class AddCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private ArrayList<OptDesc> optionDescriptions;
+
+    public ArrayList<OptDesc> getOptionDescriptions() {
+        return optionDescriptions;
+    }
 
     public AddCommandParser() {
         options = new Options();
-        new CommandOptionAdder(options)
+        optionDescriptions = new ArrayList<>();
+        new CommandOptionAdder(options, optionDescriptions)
                 .addItemTypeOptionGroup()
                 .addNameOption(true, "Easily recognizable item name.")
                 .addDescriptionOption(true, "A brief description of the item.")
