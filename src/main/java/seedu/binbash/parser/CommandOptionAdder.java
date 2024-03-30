@@ -3,12 +3,22 @@ package seedu.binbash.parser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
+import org.jline.builtins.Completers.OptDesc;
+
+import java.util.ArrayList;
 
 public class CommandOptionAdder {
     Options options;
+    ArrayList<OptDesc> optionDescriptions;
 
     public CommandOptionAdder(Options options) {
         this.options = options;
+        optionDescriptions = new ArrayList<>();
+    }
+
+    public CommandOptionAdder(Options options, ArrayList<OptDesc> optionDescriptions) {
+        this(options);
+        this.optionDescriptions = optionDescriptions;
     }
 
     private Option getRetailItemOption() {
@@ -19,7 +29,7 @@ public class CommandOptionAdder {
                 .desc("Add a Retail Item.")
                 .argName("retail")
                 .build();
-
+        optionDescriptions.add(new OptDesc("-re", "--retail", "Add a Retail Item."));
         return reItemOption;
     }
 
@@ -31,7 +41,7 @@ public class CommandOptionAdder {
                 .desc("Add an Operational Item.")
                 .argName("operational")
                 .build();
-
+        optionDescriptions.add(new OptDesc("-op", "--operational", "Add an Operational Item."));
         return opItemOption;
     }
 
@@ -53,6 +63,7 @@ public class CommandOptionAdder {
                 .desc(description)
                 .build();
         options.addOption(nameOption);
+        optionDescriptions.add(new OptDesc("-n", "--name", description));
         return this;
     }
 
@@ -64,6 +75,7 @@ public class CommandOptionAdder {
                 .desc(description)
                 .build();
         options.addOption(descOption);
+        optionDescriptions.add(new OptDesc("-d", "--description", description));
         return this;
     }
 
@@ -76,6 +88,7 @@ public class CommandOptionAdder {
                 .desc(description)
                 .build();
         options.addOption(costOption);
+        optionDescriptions.add(new OptDesc("-c", "--cost-price", description));
         return this;
     }
 
@@ -88,6 +101,7 @@ public class CommandOptionAdder {
                 .desc(description)
                 .build();
         options.addOption(quantOption);
+        optionDescriptions.add(new OptDesc("-q", "--quantity", description));
         return this;
     }
 
@@ -100,6 +114,7 @@ public class CommandOptionAdder {
                 .desc(description)
                 .build();
         options.addOption(saleOption);
+        optionDescriptions.add(new OptDesc("-s", "--sale-price", description));
         return this;
     }
 
@@ -112,6 +127,7 @@ public class CommandOptionAdder {
                 .desc(description)
                 .build();
         options = options.addOption(expiryOption);
+        optionDescriptions.add(new OptDesc("-e", "--expiry-date", description));
         return this;
     }
 
@@ -124,6 +140,7 @@ public class CommandOptionAdder {
                 .desc(description)
                 .build();
         options.addOption(nameOption);
+        optionDescriptions.add(new OptDesc("-l", "--list", description));
         return this;
     }
 }

@@ -31,6 +31,10 @@ public class Parser {
         searchCommandParser = new SearchCommandParser();
     }
 
+    public AddCommandParser getAddCommandParser() {
+        return addCommandParser;
+    }
+
     public Command parseCommand(String userInput) throws BinBashException {
         String[] tokens = userInput.trim().split("\\s+"); // Tokenize user input
         String commandString = tokens[0].toLowerCase();
