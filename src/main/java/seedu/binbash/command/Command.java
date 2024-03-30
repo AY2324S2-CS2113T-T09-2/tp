@@ -1,6 +1,5 @@
 package seedu.binbash.command;
 
-import java.util.logging.Logger;
 import seedu.binbash.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 

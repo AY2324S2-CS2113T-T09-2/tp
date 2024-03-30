@@ -1,7 +1,6 @@
 package seedu.binbash.command;
 
 import java.util.regex.Pattern;
-import java.util.logging.Level;
 import seedu.binbash.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 
@@ -23,10 +22,7 @@ public class DeleteCommand extends Command {
         this.index = index;
         isIndex = true;
         commandLogger = new BinBashLogger(DeleteCommand.class.getName());
-        commandLogger.info(String.format(
-                "Creating Delete Command... ItemIndex: %d",
-                index
-        ));
+        commandLogger.info(String.format("Creating Delete Command... ItemIndex: %d", index));
     }
 
     /**
@@ -37,10 +33,8 @@ public class DeleteCommand extends Command {
     public DeleteCommand(String keyword) {
         this.keyword = keyword;
         isIndex = false;
-        commandLogger.info(String.format(
-                "Creating Delete Command... ItemIndex: %d",
-                index
-        ));
+        commandLogger = new BinBashLogger(DeleteCommand.class.getName());
+        commandLogger.info(String.format("Creating Delete Command... ItemName:", keyword));
     }
 
     /**

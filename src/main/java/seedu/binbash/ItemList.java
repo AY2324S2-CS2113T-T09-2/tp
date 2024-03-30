@@ -12,8 +12,6 @@ import seedu.binbash.inventory.SearchAssistant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 
 public class ItemList {
     private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());

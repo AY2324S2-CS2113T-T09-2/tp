@@ -3,7 +3,6 @@ package seedu.binbash.command;
 import seedu.binbash.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 
-import java.util.List;
 
 public class ListCommand extends Command {
 
