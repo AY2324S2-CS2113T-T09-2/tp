@@ -5,7 +5,7 @@ import seedu.binbash.logger.BinBashLogger;
 
 /**
  * Represents the execution of a command entered by the user. Serves as an abstract to which
- * all BinBash commands will inherit.
+ * all BinBash commands will inherit. Execute method will be implemented by subclasses.
  */
 public abstract class Command {
     protected ItemList itemList;
@@ -18,6 +18,7 @@ public abstract class Command {
 
     /**
      * Returns the outcome of the command execution that will be printed to the text UI.
+     *
      * @return the outcome message as a String.
      */
     public String getExecutionUiOutput() {
@@ -26,6 +27,7 @@ public abstract class Command {
 
     /**
      * Returns whether the command executed will require BinBash to save its memory contents to the storage file.
+     *
      * @return true if BinBash needs to save to storage file, else false
      */
     public boolean hasToSave() {

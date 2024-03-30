@@ -35,7 +35,7 @@ class DeleteCommandTest {
     }
 
     @Test
-    void execute_inValidItemIndex_itemNotRemovedFromItemList() {
+    void execute_invalidItemIndex_itemNotRemovedFromItemList() {
         ItemList itemList = new ItemList();
         itemList.addItem("retail", "test", "A test item", 2,
                 LocalDate.now(), 2.00, 1.00);
@@ -47,7 +47,7 @@ class DeleteCommandTest {
     }
 
     @Test
-    void execute_inValidItemName_itemNotRemovedFromItemList() {
+    void execute_invalidItemName_itemNotRemovedFromItemList() {
         ItemList itemList = new ItemList();
         itemList.addItem("retail", "test", "A test item", 2,
                 LocalDate.now(), 2.00, 1.00);
