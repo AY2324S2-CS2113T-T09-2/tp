@@ -18,10 +18,10 @@ public class BinBash {
 
     public BinBash() {
         logger = new BinBashLogger(BinBash.class.getName());
-        userInterface = new Ui();
+        inputParser = new Parser();
+        userInterface = new Ui(inputParser);
         storage = new Storage();
         itemList = new ItemList(storage.loadData());
-        inputParser = new Parser();
     }
 
     private void run() {

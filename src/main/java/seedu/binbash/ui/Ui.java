@@ -7,6 +7,7 @@ import org.jline.reader.UserInterruptException;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
+import seedu.binbash.parser.Parser;
 import seedu.binbash.logger.BinBashLogger;
 
 import java.io.IOException;
@@ -25,7 +26,8 @@ public class Ui {
     private static LineReader inputReader;
     private static boolean isUserActive;
 
-    public Ui() {
+    public Ui(Parser parser) {
+        CommandCompleter uiCommandCompleter = new CommandCompleter();
         System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
         try {
             Terminal userTerminal = TerminalBuilder.builder()
@@ -34,7 +36,7 @@ public class Ui {
                 .build();
             inputReader = LineReaderBuilder.builder()
                 .terminal(userTerminal)
-                .completer(new CommandCompleter())
+                .completer(uiCommandCompleter)
                 .build();
         } catch (IOException e) {
             UILOGGER.info("failed to get system terminal!");
