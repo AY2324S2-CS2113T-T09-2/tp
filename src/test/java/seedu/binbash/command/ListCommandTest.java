@@ -1,11 +1,10 @@
 package seedu.binbash.command;
 
 import org.junit.jupiter.api.Test;
-import seedu.binbash.item.Item;
+
 import seedu.binbash.ItemList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

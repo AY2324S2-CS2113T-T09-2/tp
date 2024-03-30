@@ -1,13 +1,12 @@
 package seedu.binbash;
 
 import org.junit.jupiter.api.Test;
-import seedu.binbash.item.Item;
+
 import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.item.PerishableRetailItem;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

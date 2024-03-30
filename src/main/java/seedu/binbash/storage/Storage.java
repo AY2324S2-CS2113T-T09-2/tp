@@ -4,8 +4,12 @@ import org.apache.commons.cli.ParseException;
 import seedu.binbash.ItemList;
 import seedu.binbash.command.Command;
 import seedu.binbash.exceptions.InvalidCommandException;
-import seedu.binbash.item.*;
+import seedu.binbash.item.Item;
 import seedu.binbash.exceptions.BinBashException;
+import seedu.binbash.item.OperationalItem;
+import seedu.binbash.item.PerishableRetailItem;
+import seedu.binbash.item.RetailItem;
+import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.parser.AddCommandParser;
 
 import java.io.File;
@@ -13,7 +17,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +40,7 @@ public class Storage {
         this.filePath = "data/items.txt";
         this.dataDirectoryPath = "./data/";
         this.dataFileName = "items.txt";
-        this.isCorrupted = false; // set to false by default}
+        this.isCorrupted = false; // set to false by default
         this.storageLogger = Logger.getLogger("storageLogger");
     }
 
@@ -43,17 +49,14 @@ public class Storage {
     //  exception is bad exception handling!
 
     /**
-     * Loads the data from the file into the itemManager and returns a list of items.
+     * Loads the data from the file into the itemManager.
      * If the data file is corrupted or an error occurs during reading, the file is marked as corrupted.
      *
      * @param itemManager The ItemList object to add loaded items to.
-     * @return A list of items loaded from the file, or null if the file is corrupted.
      * @throws RuntimeException if an error occurs during file reading.
      */
-    public ArrayList<Item> loadData(ItemList itemManager) {
+    public void loadData(ItemList itemManager) {
         storageLogger.log(Level.INFO, "Preparing to load data from storage file.");
-
-        ArrayList<Item> itemList = null;
 
         try {
             ArrayList<String> stringRepresentationOfTxtFile = readTxtFile();
@@ -62,7 +65,7 @@ public class Storage {
             isCorrupted = true;
         }
 
-        assert !isCorrupted : "data file is corrupted";
+        //assert !isCorrupted : "data file is corrupted";
 
         if (isCorrupted) {
             storageLogger.log(Level.INFO,
@@ -70,8 +73,6 @@ public class Storage {
         } else {
             storageLogger.log(Level.INFO, "Data loaded successfully.");
         }
-
-        return itemList;
     }
 
     /**
@@ -116,8 +117,6 @@ public class Storage {
      *
      * @param stringRepresentationOfTxtFile The list of strings representing each line in the text file.
      * @param itemManager The ItemList object containing the empty list of items.
-     * @throws InvalidCommandException if the command is invalid.
-     * @throws ParseException if there is an error in parsing the command arguments.
      */
     private void parseAndAddToList(ArrayList<String> stringRepresentationOfTxtFile, ItemList itemManager) {
 
