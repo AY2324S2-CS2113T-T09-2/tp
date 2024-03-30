@@ -64,7 +64,7 @@ public class Storage {
         }
 
         if (isCorrupted) {
-            storageLogger.info("Data file is corrupted. A new data file will be generated. "
+            storageLogger.warning("Data file is corrupted. A new data file will be generated. "
                     + "Proceed at your own risk");
         } else {
             storageLogger.info("Data loaded successfully.");
