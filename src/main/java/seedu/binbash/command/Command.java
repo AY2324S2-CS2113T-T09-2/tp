@@ -3,7 +3,6 @@ package seedu.binbash.command;
 import seedu.binbash.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 
-
 /**
  * Represents the execution of a command entered by the user. Serves as an abstract to which
  * all BinBash commands will inherit.
