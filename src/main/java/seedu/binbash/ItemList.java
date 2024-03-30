@@ -12,11 +12,8 @@ import seedu.binbash.inventory.SearchAssistant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 
 public class ItemList {
-    private static final Logger ITEMLIST_LOGGER = Logger.getLogger("ItemList");
     private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());
     private double totalRevenue;
     private double totalCost;
@@ -25,7 +22,6 @@ public class ItemList {
 
     public ItemList() {
         this.itemList = new ArrayList<Item>();
-        ITEMLIST_LOGGER.setLevel(Level.WARNING);
         this.totalRevenue = 0;
         this.totalCost = 0;
         searchAssistant = new SearchAssistant();
@@ -150,6 +146,12 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Deletes an item from the inventory by identifying the item using its index.
+     *
+     * @param index index of the item to be deleted.
+     * @return the message indicating which item was deleted.
+     */
     public String deleteItem(int index) {
         logger.info("Attempting to delete an item");
         int beforeSize = itemList.size();
@@ -162,19 +164,26 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Deletes an item from the inventory by identifying the item using its name.
+     *
+     * @param keyword the name of the item to be deleted.
+     * @return the message indicating which item was deleted.
+     */
     public String deleteItem(String keyword) {
         int targetIndex = -1;
         Item currentItem;
         for (int i = 0 ; i < itemList.size(); i ++) {
             currentItem = itemList.get(i);
             if (currentItem.getItemName().trim().equals(keyword)) {
-                ITEMLIST_LOGGER.log(Level.INFO, "first matching item at index " + i + " found.");
+                logger.info("first matching item at index " + i + " found.");
                 targetIndex = i + 1;
                 break;
             }
         }
 
         if (targetIndex == -1) {
+            logger.info("No matching item was found, no item was deleted.");
             String output = "Item not found! Nothing was deleted!";
             return output;
         }

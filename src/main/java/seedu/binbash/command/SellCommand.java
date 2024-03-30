@@ -20,7 +20,8 @@ public class SellCommand extends Command{
         this.itemName = itemName;
         this.sellQuantity = sellQuantity;
 
-        commandLogger.fine(String.format(
+        commandLogger=  new BinBashLogger(SellCommand.class.getName());
+        commandLogger.info(String.format(
                 "Creating Sell Command... itemName: %s, sellQuantity: %d",
                 itemName,
                 sellQuantity

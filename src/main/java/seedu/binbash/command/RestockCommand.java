@@ -20,7 +20,8 @@ public class RestockCommand extends Command{
         this.itemName = itemName;
         this.restockQuantity = restockQuantity;
 
-        commandLogger.fine(String.format(
+        commandLogger = new BinBashLogger(RestockCommand.class.getName());
+        commandLogger.info(String.format(
                 "Creating Restock Command... itemName: %s, restockQuantity: %d",
                 itemName,
                 restockQuantity
