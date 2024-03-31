@@ -99,6 +99,7 @@ public class ItemList {
 
     public String updateItemQuantity(String itemName, int itemQuantity, String command) {
         String output = "Sorry, I can't find the item you are looking for.";
+        String alertText = "";
 
         for (Item item : itemList) {
             int newQuantity = item.getItemQuantity();
@@ -123,14 +124,27 @@ public class ItemList {
                 // TODO: Add an assert statement to verify code logic.
                 RetailItem retailItem = (RetailItem)item;
 
+                int itemThreshold = retailItem.getItemThreshold();
+                if (newQuantity < itemThreshold) {
+                    alertText = alertItemQuantity(retailItem);
+                }
+
                 int totalUnitsSold = retailItem.getTotalUnitsSold();
                 retailItem.setTotalUnitsSold(totalUnitsSold + itemQuantity);
             }
             item.setItemQuantity(newQuantity);
             output = "Great! I have updated the quantity of the item for you:" + System.lineSeparator()
-                    + System.lineSeparator() + item;
+                    + System.lineSeparator() + item
+                    + alertText;
 
         }
+        return output;
+    }
+
+    public String alertItemQuantity(Item item) {
+        item.setAlert(true);
+        String output = System.lineSeparator() + System.lineSeparator() + "Oh no! You're item is running low!";
+
         return output;
     }
 
