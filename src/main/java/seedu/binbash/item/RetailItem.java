@@ -4,8 +4,8 @@ public class RetailItem extends Item {
     private final double itemSalePrice;
     private int totalUnitsSold;
     public RetailItem(String itemName, String itemDescription, int itemQuantity,
-                      double itemSalePrice, double itemCostPrice) {
-        super(itemName, itemDescription, itemQuantity, itemCostPrice);
+                      double itemSalePrice, double itemCostPrice, Integer itemThreshold) {
+        super(itemName, itemDescription, itemQuantity, itemCostPrice, itemThreshold);
         this.itemSalePrice = itemSalePrice;
         this.totalUnitsSold = 0;
     }

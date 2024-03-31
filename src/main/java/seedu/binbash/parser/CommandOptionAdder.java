@@ -87,4 +87,17 @@ public class CommandOptionAdder {
         options = options.addOption(expiryOption);
         return this;
     }
+
+    CommandOptionAdder addThresholdOption(boolean isRequired, String description) {
+        Option thresholdOption = Option.builder("t")
+                .hasArg(true)
+                .required(isRequired)
+                .longOpt("threshold")
+                .desc(description)
+                .argName("threshold")
+                .build();
+
+        options = options.addOption(thresholdOption);
+        return this;
+    }
 }

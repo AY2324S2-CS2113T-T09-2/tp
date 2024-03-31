@@ -22,6 +22,7 @@ public class AddCommandParser extends DefaultParser {
             .addCostPriceOption(true, "The cost of the item.")
             .addSalePriceOption(false, "How much you'll sell the item for.")
             .addExpirationDateOption(false, "If the item has an expiration date, specify it here.");
+            .addThresholdOption(false, "Minimum quantity, below which an alert will be displayed");
     }
 
     public AddCommand parse(String[] commandArgs) throws ParseException {
@@ -43,8 +44,11 @@ public class AddCommandParser extends DefaultParser {
         LocalDate itemExpirationDate = Optional.ofNullable(commandLine.getOptionValue("expiration"))
                 .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
                 .orElse(LocalDate.MIN);
+        int itemThreshold = Optional.ofNullable(commandLine.getOptionValue("threshold"))
+                .map(Integer::parseInt)
+                .orElse(-1);
 
         return new AddCommand(itemName, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice,
-                itemCostPrice);
+                itemCostPrice, itemThreshold);
     }
 }

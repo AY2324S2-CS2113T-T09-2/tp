@@ -77,15 +77,15 @@ public class ItemList {
     }
 
     public String addItem(String itemName, String itemDescription, int itemQuantity,
-                          LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
+                          LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice, int itemThreshold) {
         Item item;
         if (!itemExpirationDate.equals(LocalDate.MIN)) {
             // Create perishable item
             item = new PerishableRetailItem(itemName, itemDescription, itemQuantity,
-                    itemExpirationDate, itemSalePrice, itemCostPrice);
+                    itemExpirationDate, itemSalePrice, itemCostPrice, itemThreshold);
         } else {
             // Create non-perishable item
-            item = new RetailItem(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice);
+            item = new RetailItem(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice, itemThreshold);
         }
 
         int beforeSize = itemList.size();

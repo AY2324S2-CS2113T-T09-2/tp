@@ -6,12 +6,15 @@ public abstract class Item {
     protected int itemQuantity;
     protected final double itemCostPrice;
     protected int totalUnitsPurchased;
+    protected Integer itemThreshold;
 
-    public Item(String itemName, String itemDescription, int itemQuantity, double itemCostPrice) {
+    public Item(String itemName, String itemDescription, int itemQuantity, double itemCostPrice,
+                Integer itemThreshold) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemQuantity = itemQuantity;
         this.itemCostPrice = itemCostPrice;
+        this.itemThreshold = itemThreshold;
         this.totalUnitsPurchased = itemQuantity;
     }
 
@@ -33,6 +36,14 @@ public abstract class Item {
 
     public double getItemCostPrice() {
         return itemCostPrice;
+    }
+
+    public int getItemThreshold() {
+        return itemThreshold;
+    }
+
+    public void setItemThreshold(Integer itemThreshold) {
+        this.itemThreshold = itemThreshold;
     }
 
     public int getTotalUnitsPurchased() {

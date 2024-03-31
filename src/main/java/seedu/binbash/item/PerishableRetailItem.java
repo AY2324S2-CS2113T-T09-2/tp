@@ -8,8 +8,9 @@ public class PerishableRetailItem extends RetailItem {
     private final LocalDate itemExpirationDate;
 
     public PerishableRetailItem(String itemName, String itemDescription, int itemQuantity,
-                                LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
-        super(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice);
+                                LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
+                                int itemThreshold) {
+        super(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice, itemThreshold);
         this.itemExpirationDate = itemExpirationDate;
     }
 

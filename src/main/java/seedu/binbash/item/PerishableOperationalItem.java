@@ -5,11 +5,11 @@ import java.time.format.DateTimeFormatter;
 
 public class PerishableOperationalItem extends OperationalItem {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    private final LocalDate itemExpirationDate;
+    private LocalDate itemExpirationDate;
 
     public PerishableOperationalItem(String itemName, String itemDescription, int itemQuantity,
-                                     LocalDate itemExpirationDate, double itemCostPrice) {
-        super(itemName, itemDescription, itemQuantity, itemCostPrice);
+                                     LocalDate itemExpirationDate, double itemCostPrice, Integer itemThreshold) {
+        super(itemName, itemDescription, itemQuantity, itemCostPrice, itemThreshold);
         this.itemExpirationDate = itemExpirationDate;
     }
 
