@@ -23,6 +23,19 @@ public class CommandOptionAdder {
         return this;
     }
 
+    CommandOptionAdder addIndexOption(boolean isRequired, String description) {
+        Option nameOption = Option.builder("i")
+                .hasArg(true)
+                .required(isRequired)
+                .longOpt("index")
+                .desc(description)
+                .argName("index")
+                .build();
+
+        options.addOption(nameOption);
+        return this;
+    }
+
     CommandOptionAdder addDescriptionOption(boolean isRequired, String description) {
         Option descOption = Option.builder("d")
                 .hasArgs()

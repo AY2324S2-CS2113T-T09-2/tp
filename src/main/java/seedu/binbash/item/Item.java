@@ -17,14 +17,23 @@ public abstract class Item {
         this.itemCostPrice = itemCostPrice;
         this.itemThreshold = itemThreshold;
         this.totalUnitsPurchased = itemQuantity;
+        this.isAlert = false;
     }
 
     public String getItemName() {
         return itemName;
     }
 
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
     public String getItemDescription() {
         return itemDescription;
+    }
+
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
     }
 
     public int getItemQuantity() {
@@ -37,6 +46,10 @@ public abstract class Item {
 
     public double getItemCostPrice() {
         return itemCostPrice;
+    }
+
+    public void setItemCostPrice(double itemCostPrice) {
+        this.itemCostPrice = itemCostPrice;
     }
 
     public int getItemThreshold() {

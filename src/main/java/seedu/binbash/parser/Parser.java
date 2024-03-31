@@ -1,12 +1,7 @@
 package seedu.binbash.parser;
 
 import org.apache.commons.cli.ParseException;
-import seedu.binbash.command.AddCommand;
-import seedu.binbash.command.ByeCommand;
-import seedu.binbash.command.Command;
-import seedu.binbash.command.DeleteCommand;
-import seedu.binbash.command.ListCommand;
-import seedu.binbash.command.SearchCommand;
+import seedu.binbash.command.*;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.exceptions.InvalidCommandException;
@@ -22,11 +17,13 @@ public class Parser {
     private AddCommandParser addCommandParser;
     private RestockCommandParser restockCommandParser;
     private SellCommandParser sellCommandParser;
+    private UpdateCommandParser updateCommandParser;
 
     public Parser() {
         addCommandParser = new AddCommandParser();
         restockCommandParser = new RestockCommandParser();
         sellCommandParser = new SellCommandParser();
+        updateCommandParser = new UpdateCommandParser();
     }
 
     public Command parseCommand(String userInput) throws BinBashException {
@@ -51,6 +48,8 @@ public class Parser {
             return parseRestockCommand(commandArgs);
         case "sell":
             return parseSellCommand(commandArgs);
+        case "update":
+            return parseUpdateCommand(commandArgs);
         default:
             throw new InvalidCommandException("Invalid command!");
         }
@@ -82,6 +81,14 @@ public class Parser {
     private AddCommand parseAddCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return addCommandParser.parse(commandArgs);
+        } catch (ParseException e) {
+            throw new InvalidFormatException(e.getMessage());
+        }
+    }
+
+    private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidFormatException {
+        try {
+            return updateCommandParser.parse(commandArgs);
         } catch (ParseException e) {
             throw new InvalidFormatException(e.getMessage());
         }

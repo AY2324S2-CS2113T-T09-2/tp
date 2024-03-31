@@ -1,6 +1,8 @@
 package seedu.binbash;
 
+import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.item.Item;
+import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.item.PerishableRetailItem;
 import seedu.binbash.item.RetailItem;
 import seedu.binbash.command.RestockCommand;
@@ -97,7 +99,155 @@ public class ItemList {
         return output;
     }
 
-    public String updateItemQuantity(String itemName, int itemQuantity, String command) {
+    public String updateItemDataByString(String itemName, String newItemDescription,
+                                 Integer newItemQuantity, LocalDate newItemExpirationDate, Double newItemSalePrice,
+                                 Double newItemCostPrice, Integer newItemThreshold) {
+
+        updateItemDescription(itemName,newItemDescription);
+        updateItemQuantity(itemName, newItemQuantity);
+        updateItemExpirationDate(itemName, newItemExpirationDate);
+        updateItemSalePrice(itemName, newItemSalePrice);
+        updateItemCostPrice(itemName, newItemCostPrice);
+        updateItemThreshold(itemName, newItemThreshold);
+
+        String output = "I have updated the your item information. Do check the following if it is correct.";
+
+        return output;
+    }
+
+    public String updateItemDataByIndex(int index, String newItemDescription,
+                                         Integer newItemQuantity, LocalDate newItemExpirationDate, Double newItemSalePrice,
+                                         Double newItemCostPrice, Integer newItemThreshold) {
+
+        updateItemDescription(index,newItemDescription);
+        updateItemQuantity(index, newItemQuantity);
+        updateItemExpirationDate(index, newItemExpirationDate);
+        updateItemSalePrice(index, newItemSalePrice);
+        updateItemCostPrice(index, newItemCostPrice);
+        updateItemThreshold(index, newItemThreshold);
+
+        String output = "I have updated the your item information. Do check the following if it is correct.";
+
+        return output;
+    }
+
+    public void updateItemDescription(String itemName, String newItemDescription) {
+        for (Item item : itemList) {
+            if (item.getItemName().trim().equals(itemName.trim())) {
+                logger.info("Attempting to update item description");
+                item.setItemDescription(newItemDescription);
+            }
+        }
+    }
+
+    public void updateItemDescription(int index, String newItemDescription) {
+        Item item = itemList.get(index - 1);
+        logger.info("Attempting to update item description");
+        item.setItemDescription(newItemDescription);
+    }
+
+    public void updateItemQuantity(String itemName, int newItemQuantity) {
+        for (Item item : itemList) {
+            if (!item.getItemName().trim().equals(itemName.trim())) {
+                continue;
+            }
+            logger.info("Attempting to update item quantity");
+            item.setItemQuantity(newItemQuantity);
+        }
+    }
+
+    public void updateItemQuantity(int index, int newItemQuantity) {
+        Item item = itemList.get(index - 1);
+        logger.info("Attempting to update item quantity");
+        item.setItemQuantity(newItemQuantity);
+    }
+
+    public void updateItemExpirationDate(String itemName, LocalDate newItemExpirationDate) {
+        for (Item item : itemList) {
+            if (!item.getItemName().trim().equals(itemName.trim())) {
+                continue;
+                }
+            logger.info("Attempting to update item expiration date");
+            if (item instanceof PerishableOperationalItem) {
+                ((PerishableOperationalItem) item).setItemExpirationDate(newItemExpirationDate);
+            } else if (item instanceof PerishableRetailItem) {
+                ((PerishableRetailItem) item).setItemExpirationDate(newItemExpirationDate);
+            }
+        }
+    }
+
+    public void updateItemExpirationDate(int index, LocalDate newItemExpirationDate) {
+        Item item = itemList.get(index - 1);
+        logger.info("Attempting to update item expiration date");
+        if (item instanceof PerishableOperationalItem) {
+            ((PerishableOperationalItem) item).setItemExpirationDate(newItemExpirationDate);
+        } else if (item instanceof PerishableRetailItem) {
+            ((PerishableRetailItem) item).setItemExpirationDate(newItemExpirationDate);
+        }
+    }
+
+    public void updateItemSalePrice(String itemName, double newItemSalePrice) {
+        for (Item item : itemList) {
+            if (!item.getItemName().trim().equals(itemName.trim())) {
+                continue;
+                }
+            logger.info("Attempting to update item sale price");
+            if (item instanceof RetailItem) {
+                ((RetailItem) item).setItemSalePrice(newItemSalePrice);
+            }
+        }
+    }
+
+    public void updateItemSalePrice(int index, double newItemSalePrice) {
+        Item item = itemList.get(index - 1);
+        logger.info("Attempting to update item sale price");
+        if (item instanceof RetailItem) {
+            ((RetailItem) item).setItemSalePrice(newItemSalePrice);
+        }
+    }
+
+    public void updateItemCostPrice(String itemName, double newItemCostPrice) {
+        for (Item item : itemList) {
+            if (!item.getItemName().trim().equals(itemName.trim())) {
+                continue;
+            }
+            logger.info("Attempting to update item cost price");
+            item.setItemCostPrice(newItemCostPrice);
+        }
+    }
+
+    public void updateItemCostPrice(int index, double newItemCostPrice) {
+        Item item = itemList.get(index - 1);
+        logger.info("Attempting to update item quantity");
+        item.setItemCostPrice(newItemCostPrice);
+    }
+
+    public void updateItemThreshold(String itemName, int newItemThreshold) {
+        for (Item item : itemList) {
+            if (!item.getItemName().trim().equals(itemName.trim())) {
+                continue;
+            }
+            logger.info("Attempting to update item threshold");
+            item.setItemThreshold(newItemThreshold);
+        }
+    }
+
+    public void updateItemThreshold(int index, int newItemThreshold) {
+        Item item = itemList.get(index - 1);
+        logger.info("Attempting to update item quantity");
+        item.setItemThreshold(newItemThreshold);
+    }
+
+    public Item findItemByName(String itemName) throws InvalidArgumentException {
+        for (Item item : itemList) {
+            if (item.getItemName().trim().equals(itemName.trim())) {
+                return item;
+            }
+        }
+        throw new InvalidArgumentException("Item with name '" + itemName + "' not found.");
+    }
+
+    public String sellOrRestockItem(String itemName, int itemQuantity, String command) {
         String output = "Sorry, I can't find the item you are looking for.";
         String alertText = "";
 

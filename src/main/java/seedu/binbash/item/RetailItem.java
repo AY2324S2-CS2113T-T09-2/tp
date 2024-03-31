@@ -1,7 +1,8 @@
 package seedu.binbash.item;
 
 public class RetailItem extends Item {
-    private final double itemSalePrice;
+
+    private double itemSalePrice;
     private int totalUnitsSold;
     public RetailItem(String itemName, String itemDescription, int itemQuantity,
                       double itemSalePrice, double itemCostPrice, Integer itemThreshold) {
@@ -12,6 +13,10 @@ public class RetailItem extends Item {
 
     public double getItemSalePrice() {
         return itemSalePrice;
+    }
+
+    public void setItemSalePrice(double itemSalePrice) {
+        this.itemSalePrice = itemSalePrice;
     }
 
     public int getTotalUnitsSold() {
@@ -25,6 +30,7 @@ public class RetailItem extends Item {
     @Override
     public String toString() {
         return "[R] " + super.toString() + System.lineSeparator()
-                + String.format("\tsale price: $%.2f", itemSalePrice);
+                + String.format("\tsale price: $%.2f", itemSalePrice) + System.lineSeparator()
+                + String.format("\tthreshold: %d", itemThreshold);
     }
 }

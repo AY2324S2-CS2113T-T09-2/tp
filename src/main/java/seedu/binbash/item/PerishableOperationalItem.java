@@ -17,6 +17,14 @@ public class PerishableOperationalItem extends OperationalItem {
         return itemExpirationDate.format(DATE_TIME_FORMATTER);
     }
 
+    public LocalDate getLocalDateItemExpirationDate() {
+        return itemExpirationDate;
+    }
+
+    public void setItemExpirationDate(LocalDate itemExpirationDate) {
+        this.itemExpirationDate = itemExpirationDate;
+    }
+
     @Override
     public String toString() {
         return "[P] " + super.toString() + System.lineSeparator() +

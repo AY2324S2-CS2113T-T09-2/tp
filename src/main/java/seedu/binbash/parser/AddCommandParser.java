@@ -21,7 +21,7 @@ public class AddCommandParser extends DefaultParser {
             .addQuantityOption(false, "The units of item to be added.")
             .addCostPriceOption(true, "The cost of the item.")
             .addSalePriceOption(false, "How much you'll sell the item for.")
-            .addExpirationDateOption(false, "If the item has an expiration date, specify it here.");
+            .addExpirationDateOption(false, "If the item has an expiration date, specify it here.")
             .addThresholdOption(false, "Minimum quantity, below which an alert will be displayed");
     }
 
