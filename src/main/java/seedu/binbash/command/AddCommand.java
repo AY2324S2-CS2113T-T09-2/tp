@@ -51,26 +51,27 @@ public class AddCommand extends Command {
     private final int itemThreshold;
 
     public AddCommand(String itemName, String itemDescription, int itemQuantity,
-                      LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
+                      LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice, int itemThreshold) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemQuantity = itemQuantity;
         this.itemExpirationDate = itemExpirationDate;
         this.itemSalePrice = itemSalePrice;
         this.itemCostPrice = itemCostPrice;
-        
+        this.itemThreshold = itemThreshold;
+
         assert itemName != null && !itemName.trim().isEmpty();
         assert itemQuantity >= 0;
 
         commandLogger.fine(String.format(
                 "Creating Add Command... itemName: %s, itemDescription: %s, itemQuantity: %d, itemExpirationDate: %s"
-                        + "itemSalePrice: %f, itemCostPrice: %f",
+                        + "itemSalePrice: %f, itemCostPrice: %f, itemThreshold: %d",
                 itemName,
                 itemDescription,
                 itemQuantity,
                 itemExpirationDate,
                 itemSalePrice,
-                itemCostPrice
+                itemCostPrice,
                 itemThreshold
         ));
     }
