@@ -27,7 +27,7 @@ public class Ui {
     private static boolean isUserActive;
 
     public Ui(Parser parser) {
-        CommandCompleter uiCommandCompleter = new CommandCompleter(parser.getAddCommandParser().getOptionDescriptions());
+        CommandCompleter uiCommandCompleter = new CommandCompleter(parser.getAllCommandsOptionDescriptions());
         System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
         try {
             Terminal userTerminal = TerminalBuilder.builder()

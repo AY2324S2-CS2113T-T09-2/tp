@@ -1,6 +1,5 @@
 package seedu.binbash.parser;
 
-import org.apache.commons.cli.ParseException;
 import seedu.binbash.command.AddCommand;
 import seedu.binbash.command.ByeCommand;
 import seedu.binbash.command.Command;
@@ -12,8 +11,12 @@ import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.exceptions.InvalidFormatException;
 
+import org.apache.commons.cli.ParseException;
+import org.jline.builtins.Completers.OptDesc;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,16 +26,17 @@ public class Parser {
     private SearchCommandParser searchCommandParser;
     private RestockCommandParser restockCommandParser;
     private SellCommandParser sellCommandParser;
+    private static ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>();
 
     public Parser() {
-        addCommandParser = new AddCommandParser();
+        addCommandParser = new AddCommandParser(allCommandsOptionDescriptions);
         restockCommandParser = new RestockCommandParser();
         sellCommandParser = new SellCommandParser();
         searchCommandParser = new SearchCommandParser();
     }
 
-    public AddCommandParser getAddCommandParser() {
-        return addCommandParser;
+    public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
+        return allCommandsOptionDescriptions;
     }
 
     public Command parseCommand(String userInput) throws BinBashException {
