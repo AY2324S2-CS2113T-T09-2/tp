@@ -1,7 +1,7 @@
 package seedu.binbash.storage;
 
 import org.apache.commons.cli.ParseException;
-import seedu.binbash.ItemList;
+import seedu.binbash.inventory.ItemList;
 import seedu.binbash.command.Command;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
