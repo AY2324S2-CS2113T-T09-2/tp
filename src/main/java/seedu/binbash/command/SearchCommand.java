@@ -2,6 +2,7 @@ package seedu.binbash.command;
 
 import seedu.binbash.item.Item;
 import seedu.binbash.ItemList;
+import seedu.binbash.logger.BinBashLogger;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -16,7 +17,8 @@ public class SearchCommand extends Command {
     private ArrayList<Item> foundItems;
 
     public SearchCommand() {
-        commandLogger.fine(String.format(
+        commandLogger = new BinBashLogger(SearchCommand.class.getName());
+        commandLogger.info(String.format(
                 "Creating Search Command..."
         ));
     }

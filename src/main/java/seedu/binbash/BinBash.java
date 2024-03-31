@@ -19,14 +19,15 @@ public class BinBash {
     public BinBash() {
         logger = new BinBashLogger(BinBash.class.getName());
         inputParser = new Parser();
-        userInterface = new Ui(inputParser);
+        userInterface = new Ui(inputParser.getAllCommandsOptionDescriptions());
+        itemList = new ItemList();
         storage = new Storage();
-        itemList = new ItemList(storage.loadData());
     }
 
     private void run() {
         logger.info("BinBash starting...");
 
+        storage.loadData(itemList);
         userInterface.greet();
         userInterface.talk(itemList.getProfitMargin());
 
