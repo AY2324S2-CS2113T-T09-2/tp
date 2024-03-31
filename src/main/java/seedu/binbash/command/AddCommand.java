@@ -48,6 +48,7 @@ public class AddCommand extends Command {
     private final LocalDate itemExpirationDate;
     private final double itemSalePrice;
     private final double itemCostPrice;
+    private final int itemThreshold;
 
     public AddCommand(String itemName, String itemDescription, int itemQuantity,
                       LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
@@ -70,13 +71,14 @@ public class AddCommand extends Command {
                 itemExpirationDate,
                 itemSalePrice,
                 itemCostPrice
+                itemThreshold
         ));
     }
 
     @Override
     public boolean execute(ItemList itemList) {
         executionUiOutput = itemList.addItem(itemName, itemDescription, itemQuantity, itemExpirationDate,
-                itemSalePrice, itemCostPrice);
+                itemSalePrice, itemCostPrice, itemThreshold);
         hasToSave = true;
         return true;
     }
