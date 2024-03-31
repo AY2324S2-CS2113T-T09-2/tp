@@ -31,7 +31,7 @@ public class RestockCommand extends Command{
 
     @Override
     public boolean execute(ItemList itemList) {
-        executionUiOutput = itemList.updateItemQuantity(itemName, restockQuantity, COMMAND);
+        executionUiOutput = itemList.sellOrRestockItem(itemName, restockQuantity, COMMAND);
         hasToSave = true;
         return true;
     }

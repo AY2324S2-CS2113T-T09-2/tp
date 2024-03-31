@@ -31,7 +31,7 @@ public class SellCommand extends Command{
 
     @Override
     public boolean execute(ItemList itemList) {
-        executionUiOutput = itemList.updateItemQuantity(itemName, sellQuantity, COMMAND);
+        executionUiOutput = itemList.sellOrRestockItem(itemName, sellQuantity, COMMAND);
         hasToSave = true;
         return true;
     }
