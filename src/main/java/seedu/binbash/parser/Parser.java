@@ -30,7 +30,7 @@ public class Parser {
 
     public Parser() {
         addCommandParser = new AddCommandParser(allCommandsOptionDescriptions);
-        restockCommandParser = new RestockCommandParser();
+        restockCommandParser = new RestockCommandParser(allCommandsOptionDescriptions);
         sellCommandParser = new SellCommandParser();
         searchCommandParser = new SearchCommandParser(allCommandsOptionDescriptions);
     }
