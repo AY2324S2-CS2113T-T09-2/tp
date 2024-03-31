@@ -1,7 +1,7 @@
 package seedu.binbash.command;
 
 import seedu.binbash.logger.BinBashLogger;
-import seedu.binbash.ItemList;
+import seedu.binbash.inventory.ItemList;
 
 import java.util.regex.Pattern;
 
