@@ -18,10 +18,6 @@ public class SearchCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private ArrayList<OptDesc> optionDescriptions;
 
-    public ArrayList<OptDesc> getOptionDecriptions() {
-        return optionDescriptions;
-    }
-
     public SearchCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
@@ -32,6 +28,10 @@ public class SearchCommandParser extends DefaultParser {
             .addSalePriceOption(false, "Search by sale-price")
             .addExpirationDateOption(false, "Search by expiry date")
             .addListOption(false, "Lists the first n results");
+    }
+
+    public ArrayList<OptDesc> getOptionDecriptions() {
+        return optionDescriptions;
     }
 
     public SearchCommand parse(String[] commandArgs) throws ParseException {

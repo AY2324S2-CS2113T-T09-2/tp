@@ -18,10 +18,6 @@ public class AddCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private ArrayList<OptDesc> optionDescriptions;
 
-    public ArrayList<OptDesc> getOptionDecriptions() {
-        return optionDescriptions;
-    }
-
     public AddCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
@@ -33,6 +29,10 @@ public class AddCommandParser extends DefaultParser {
                 .addCostPriceOption(true, "The cost of the item.")
                 .addSalePriceOption(false, "How much you'll sell the item for.")
                 .addExpirationDateOption(false, "If the item has an expiration date, specify it here.");
+    }
+
+    public ArrayList<OptDesc> getOptionDecriptions() {
+        return optionDescriptions;
     }
 
     public AddCommand parse(String[] commandArgs) throws ParseException {

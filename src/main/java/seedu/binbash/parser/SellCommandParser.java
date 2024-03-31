@@ -16,16 +16,16 @@ public class SellCommandParser extends DefaultParser {
     private static final BinBashLogger binBashLogger = new BinBashLogger(SellCommandParser.class.getName());
     private ArrayList<OptDesc> optionDescriptions;
 
-    public ArrayList<OptDesc> getOptionDecriptions() {
-        return optionDescriptions;
-    }
-
     public SellCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
         new CommandOptionAdder(options, optionDescriptions)
             .addNameOption(true, "Name of item sold.")
             .addQuantityOption(true, "Units of item sold.");
+    }
+
+    public ArrayList<OptDesc> getOptionDecriptions() {
+        return optionDescriptions;
     }
 
     public SellCommand parse(String[] commandArgs) throws ParseException {

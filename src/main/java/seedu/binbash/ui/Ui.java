@@ -4,13 +4,14 @@ import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.UserInterruptException;
+import org.jline.builtins.Completers.OptDesc;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
-import seedu.binbash.parser.Parser;
 import seedu.binbash.logger.BinBashLogger;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Ui {
     private static final String NEWLINE = System.lineSeparator();
@@ -26,8 +27,7 @@ public class Ui {
     private static LineReader inputReader;
     private static boolean isUserActive;
 
-    public Ui(Parser parser) {
-        CommandCompleter uiCommandCompleter = new CommandCompleter(parser.getAllCommandsOptionDescriptions());
+    public Ui(ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions) {
         System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
         try {
             Terminal userTerminal = TerminalBuilder.builder()
@@ -36,7 +36,7 @@ public class Ui {
                 .build();
             inputReader = LineReaderBuilder.builder()
                 .terminal(userTerminal)
-                .completer(uiCommandCompleter)
+                .completer(new CommandCompleter(allCommandsOptionDescriptions))
                 .build();
         } catch (IOException e) {
             UILOGGER.info("failed to get system terminal!");

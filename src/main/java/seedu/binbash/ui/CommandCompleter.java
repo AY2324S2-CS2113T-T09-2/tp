@@ -3,18 +3,12 @@ package seedu.binbash.ui;
 import org.jline.builtins.Completers.OptionCompleter;
 import org.jline.builtins.Completers.OptDesc;
 import org.jline.reader.Candidate;
-import org.jline.reader.Completer;
-import org.jline.reader.LineReader;
-import org.jline.reader.ParsedLine;
 import org.jline.reader.impl.completer.ArgumentCompleter;
 import org.jline.reader.impl.completer.AggregateCompleter;
 import org.jline.reader.impl.completer.StringsCompleter;
 import org.jline.reader.impl.completer.NullCompleter;
 
-import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Collection;
 
 public class CommandCompleter extends AggregateCompleter {
     private static NullCompleter deleteOptionCompleter = NullCompleter.INSTANCE;

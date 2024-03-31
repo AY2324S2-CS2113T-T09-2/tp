@@ -16,16 +16,16 @@ public class RestockCommandParser extends DefaultParser {
     private static final BinBashLogger binBashLogger = new BinBashLogger(RestockCommandParser.class.getName());
     private ArrayList<OptDesc> optionDescriptions;
 
-    public ArrayList<OptDesc> getOptionDecriptions() {
-        return optionDescriptions;
-    }
-
     public RestockCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
         new CommandOptionAdder(options, optionDescriptions)
             .addNameOption(true, "Name of item.")
             .addQuantityOption(true, "Units of item to restock.");
+    }
+
+    public ArrayList<OptDesc> getOptionDecriptions() {
+        return optionDescriptions;
     }
 
     public RestockCommand parse(String[] commandArgs) throws ParseException {
