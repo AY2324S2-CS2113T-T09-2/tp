@@ -160,6 +160,7 @@ public class Storage {
                         .orElse(LocalDate.MIN);
                 double itemSalePrice = Double.parseDouble(matcher.group("itemSalePrice"));
                 double itemCostPrice = Double.parseDouble(matcher.group("itemCostPrice"));
+                int itemThreshold = Integer.parseInt(matcher.group("itemThreshold"));
 
                 if (itemExpirationDate.equals(LocalDate.MIN)) {
                     RetailItem retailItem = new RetailItem(
@@ -167,7 +168,8 @@ public class Storage {
                             itemDescription,
                             itemQuantity,
                             itemSalePrice,
-                            itemCostPrice);
+                            itemCostPrice,
+                            itemThreshold);
                     retailItem.setTotalUnitsSold(totalUnitsSold);
                     retailItem.setTotalUnitsPurchased(totalUnitsPurchased);
                     itemList.add(retailItem);
@@ -178,7 +180,8 @@ public class Storage {
                             itemQuantity,
                             itemExpirationDate,
                             itemSalePrice,
-                            itemCostPrice);
+                            itemCostPrice,
+                            itemThreshold);
                     perishableRetailItem.setTotalUnitsSold(totalUnitsSold);
                     perishableRetailItem.setTotalUnitsPurchased(totalUnitsPurchased);
                     itemList.add(perishableRetailItem);
