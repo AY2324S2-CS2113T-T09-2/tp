@@ -2,6 +2,7 @@ package seedu.binbash.item;
 
 /**
  * Abstract Item class, which represents an Item that can be stored in the ItemList (inventory).
+ * Subclasses can extend Item in order to add properties that are specific to different Item types.
  */
 public abstract class Item {
     protected final String itemName;
