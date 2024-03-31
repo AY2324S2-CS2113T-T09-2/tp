@@ -32,7 +32,7 @@ public class Parser {
         addCommandParser = new AddCommandParser(allCommandsOptionDescriptions);
         restockCommandParser = new RestockCommandParser();
         sellCommandParser = new SellCommandParser();
-        searchCommandParser = new SearchCommandParser();
+        searchCommandParser = new SearchCommandParser(allCommandsOptionDescriptions);
     }
 
     public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {

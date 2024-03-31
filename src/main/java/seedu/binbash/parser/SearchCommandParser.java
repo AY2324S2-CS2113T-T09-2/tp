@@ -1,28 +1,34 @@
 package seedu.binbash.parser;
 
+import seedu.binbash.command.SearchCommand;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.TypeHandler;
-import seedu.binbash.command.SearchCommand;
+import org.jline.builtins.Completers.OptDesc;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class SearchCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private ArrayList<OptDesc> optionDescriptions;
 
-    public SearchCommandParser() {
+    public SearchCommandParser(ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions) {
         options = new Options();
-        new CommandOptionAdder(options)
+        optionDescriptions = new ArrayList<>();
+        new CommandOptionAdder(options, optionDescriptions)
             .addNameOption(false, "Search by name")
             .addDescriptionOption(false, "Search by description")
             .addCostPriceOption(false, "Search by cost-price")
             .addSalePriceOption(false, "Search by sale-price")
             .addExpirationDateOption(false, "Search by expiry date")
             .addListOption(false, "Lists the first n results");
+        allCommandsOptionDescriptions.add(optionDescriptions);
     }
 
     public SearchCommand parse(String[] commandArgs) throws ParseException {

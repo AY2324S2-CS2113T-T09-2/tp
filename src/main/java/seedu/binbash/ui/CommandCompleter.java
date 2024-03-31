@@ -22,17 +22,19 @@ public class CommandCompleter extends AggregateCompleter {
             "add deez ", "suffix", "key", true);
     private static Candidate searchCommandCandidate = new Candidate("search", "search", "item management",
             "search an item", "suffix", "key2", true);
+
     private static NullCompleter deleteOptionCompleter = NullCompleter.INSTANCE;
     private static NullCompleter listOptionCompleter = NullCompleter.INSTANCE;
     private static NullCompleter searchOptionCompleter = NullCompleter.INSTANCE;
     private static NullCompleter byeOptionCompleter = NullCompleter.INSTANCE;
 
     private static ArgumentCompleter addCompleter = new ArgumentCompleter(new StringsCompleter(addCommandCandidate));
+    private static ArgumentCompleter searchCompleter = new ArgumentCompleter(new StringsCompleter(searchCommandCandidate));
+
     private static ArgumentCompleter deleteCompleter = new ArgumentCompleter(new StringsCompleter("delete"),
             deleteOptionCompleter);
     private static ArgumentCompleter listCompleter = new ArgumentCompleter(new StringsCompleter("list"),
             listOptionCompleter);
-    private static ArgumentCompleter searchCompleter = new ArgumentCompleter(new StringsCompleter(searchCommandCandidate));
     private static ArgumentCompleter byeCompleter = new ArgumentCompleter(new StringsCompleter("bye"),
             byeOptionCompleter);
 
@@ -42,5 +44,7 @@ public class CommandCompleter extends AggregateCompleter {
         super(addCompleter, searchCompleter);
         addCompleter.getCompleters().add(new OptionCompleter(
                     allCommandsOptionDescriptions.get(0), 1));
+        searchCompleter.getCompleters().add(new OptionCompleter(
+                    allCommandsOptionDescriptions.get(1), 1));
     }
 }
