@@ -19,10 +19,12 @@ import java.util.Collection;
 public class CommandCompleter extends AggregateCompleter {
     private static Candidate addCommandCandidate = new Candidate("add", "add", "inventory management",
             "add item", null, null, true);
-    private static Candidate searchCommandCandidate = new Candidate("search", "search", "item management",
-            "search an item", null, null, true);
     private static Candidate restockCommandCandidate = new Candidate("restock", "restock", "item management",
             "restock an item", null, null, true);
+    private static Candidate sellCommandCandidate = new Candidate("sell", "sell", "item management",
+            "sell an item", null, null, true);
+    private static Candidate searchCommandCandidate = new Candidate("search", "search", "item management",
+            "search an item", null, null, true);
 
     private static NullCompleter deleteOptionCompleter = NullCompleter.INSTANCE;
     private static NullCompleter listOptionCompleter = NullCompleter.INSTANCE;
@@ -30,8 +32,9 @@ public class CommandCompleter extends AggregateCompleter {
     private static NullCompleter byeOptionCompleter = NullCompleter.INSTANCE;
 
     private static ArgumentCompleter addCompleter = new ArgumentCompleter(new StringsCompleter(addCommandCandidate));
-    private static ArgumentCompleter searchCompleter = new ArgumentCompleter(new StringsCompleter(searchCommandCandidate));
     private static ArgumentCompleter restockCompleter = new ArgumentCompleter(new StringsCompleter(restockCommandCandidate));
+    private static ArgumentCompleter sellCompleter = new ArgumentCompleter(new StringsCompleter(sellCommandCandidate));
+    private static ArgumentCompleter searchCompleter = new ArgumentCompleter(new StringsCompleter(searchCommandCandidate));
 
     private static ArgumentCompleter deleteCompleter = new ArgumentCompleter(new StringsCompleter("delete"),
             deleteOptionCompleter);
@@ -40,16 +43,18 @@ public class CommandCompleter extends AggregateCompleter {
     private static ArgumentCompleter byeCompleter = new ArgumentCompleter(new StringsCompleter("bye"),
             byeOptionCompleter);
 
-    // note the order of completers to get depends on the order in which command parsers
-    // were declared in Parser.java
+    // note the order of completers to get depends on the order in which command option descriptions
+    // are added in Parser.getAllCommandsOptionDescriptions
     public CommandCompleter(ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions) {
-        super(addCompleter, searchCompleter, restockCompleter,
+        super(addCompleter, searchCompleter, restockCompleter, sellCompleter,
                 deleteCompleter, listCompleter, byeCompleter);
         addCompleter.getCompleters().add(new OptionCompleter(
                     allCommandsOptionDescriptions.get(0), 1));
         restockCompleter.getCompleters().add(new OptionCompleter(
                     allCommandsOptionDescriptions.get(1), 1));
-        searchCompleter.getCompleters().add(new OptionCompleter(
+        sellCompleter.getCompleters().add(new OptionCompleter(
                     allCommandsOptionDescriptions.get(2), 1));
+        searchCompleter.getCompleters().add(new OptionCompleter(
+                    allCommandsOptionDescriptions.get(3), 1));
     }
 }

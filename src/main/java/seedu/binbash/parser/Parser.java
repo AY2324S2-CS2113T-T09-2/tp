@@ -26,16 +26,20 @@ public class Parser {
     private SearchCommandParser searchCommandParser;
     private RestockCommandParser restockCommandParser;
     private SellCommandParser sellCommandParser;
-    private static ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>();
 
     public Parser() {
-        addCommandParser = new AddCommandParser(allCommandsOptionDescriptions);
-        restockCommandParser = new RestockCommandParser(allCommandsOptionDescriptions);
+        addCommandParser = new AddCommandParser();
+        restockCommandParser = new RestockCommandParser();
         sellCommandParser = new SellCommandParser();
-        searchCommandParser = new SearchCommandParser(allCommandsOptionDescriptions);
+        searchCommandParser = new SearchCommandParser();
     }
 
     public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
+        ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>();
+        allCommandsOptionDescriptions.add(addCommandParser.getOptionDecriptions());
+        allCommandsOptionDescriptions.add(restockCommandParser.getOptionDecriptions());
+        allCommandsOptionDescriptions.add(sellCommandParser.getOptionDecriptions());
+        allCommandsOptionDescriptions.add(searchCommandParser.getOptionDecriptions());
         return allCommandsOptionDescriptions;
     }
 
