@@ -1,5 +1,10 @@
 package seedu.binbash.item;
 
+/**
+ * Represents a Retail Item in the ItemList (inventory).
+ * Retail Items are Items meant to be sold, and affect the business' profit margins.
+ * Since these Items are meant to be sold, they will have a sale price.
+ */
 public class RetailItem extends Item {
     private final double itemSalePrice;
     private int totalUnitsSold;
@@ -10,14 +15,29 @@ public class RetailItem extends Item {
         this.totalUnitsSold = 0;
     }
 
+    /**
+     * Returns the sale price of the Item.
+     *
+     * @return Double value representing the Item sale price.
+     */
     public double getItemSalePrice() {
         return itemSalePrice;
     }
 
+    /**
+     * Returns the number of units sold of the Item.
+     *
+     * @return Integer value representing the number of units sold of the Item.
+     */
     public int getTotalUnitsSold() {
         return totalUnitsSold;
     }
 
+    /**
+     * Sets the number of units sold of the Item.
+     *
+     * @param totalUnitsSold The number of units sold of the Item.
+     */
     public void setTotalUnitsSold(int totalUnitsSold) {
         this.totalUnitsSold = totalUnitsSold;
     }
