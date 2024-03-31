@@ -26,7 +26,7 @@ public class ItemList {
         searchAssistant = new SearchAssistant();
     }
 
-    private double getTotalRevenue() {
+    public double getTotalRevenue() {
         double totalRevenue = 0;
 
         for (Item item: itemList) {
@@ -41,7 +41,7 @@ public class ItemList {
         return totalRevenue;
     }
 
-    private double getTotalCost() {
+    public double getTotalCost() {
         double totalCost = 0;
 
         for (Item item: itemList) {
