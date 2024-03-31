@@ -1,6 +1,7 @@
 package seedu.binbash.parser;
 
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 
 public class CommandOptionAdder {
@@ -10,15 +11,47 @@ public class CommandOptionAdder {
         this.options = options;
     }
 
+    private Option getRetailItemOption() {
+        Option reItemOption = Option.builder("re")
+                .hasArg(false)
+                .required(true)
+                .longOpt("retail")
+                .desc("Add a Retail Item.")
+                .argName("retail")
+                .build();
+
+        return reItemOption;
+    }
+
+    private Option getOperationalItemOption() {
+        Option opItemOption = Option.builder("op")
+                .hasArg(false)
+                .required(true)
+                .longOpt("operational")
+                .desc("Add an Operational Item.")
+                .argName("operational")
+                .build();
+
+        return opItemOption;
+    }
+
+    CommandOptionAdder addItemTypeOptionGroup() {
+        OptionGroup itemTypeOptionGroup = new OptionGroup()
+                .addOption(getRetailItemOption())
+                .addOption(getOperationalItemOption());
+
+        itemTypeOptionGroup.setRequired(true);
+        options.addOptionGroup(itemTypeOptionGroup);
+        return this;
+    }
+
     CommandOptionAdder addNameOption(boolean isRequired, String description) {
         Option nameOption = Option.builder("n")
                 .hasArgs() // potentially more than 1 input
                 .required(isRequired)
                 .longOpt("name")
                 .desc(description)
-                .argName("name")
                 .build();
-
         options.addOption(nameOption);
         return this;
     }
@@ -42,9 +75,7 @@ public class CommandOptionAdder {
                 .required(isRequired)
                 .longOpt("description")
                 .desc(description)
-                .argName("description")
                 .build();
-
         options.addOption(descOption);
         return this;
     }
@@ -53,11 +84,10 @@ public class CommandOptionAdder {
         Option costOption = Option.builder("c")
                 .hasArg(true)
                 .required(isRequired)
-                .longOpt("cost")
+                .numberOfArgs(1)
+                .longOpt("cost-price")
                 .desc(description)
-                .argName("cost")
                 .build();
-
         options.addOption(costOption);
         return this;
     }
@@ -66,11 +96,10 @@ public class CommandOptionAdder {
         Option quantOption = Option.builder("q")
                 .hasArg(true)
                 .required(isRequired)
+                .numberOfArgs(1)
                 .longOpt("quantity")
                 .desc(description)
-                .argName("quantity")
                 .build();
-
         options.addOption(quantOption);
         return this;
     }
@@ -79,11 +108,10 @@ public class CommandOptionAdder {
         Option saleOption = Option.builder("s")
                 .hasArg(true)
                 .required(isRequired)
-                .longOpt("salePrice")
+                .numberOfArgs(1)
+                .longOpt("sale-price")
                 .desc(description)
-                .argName("salePrice")
                 .build();
-
         options.addOption(saleOption);
         return this;
     }
@@ -92,11 +120,10 @@ public class CommandOptionAdder {
         Option expiryOption = Option.builder("e")
                 .hasArg(true)
                 .required(isRequired)
-                .longOpt("expiration")
+                .numberOfArgs(1)
+                .longOpt("expiry-date")
                 .desc(description)
-                .argName("expiration")
                 .build();
-
         options = options.addOption(expiryOption);
         return this;
     }
@@ -111,6 +138,18 @@ public class CommandOptionAdder {
                 .build();
 
         options = options.addOption(thresholdOption);
+        return this;
+    }
+
+    CommandOptionAdder addListOption(boolean isRequired, String description) {
+        Option nameOption = Option.builder("l")
+                .hasArg()
+                .argName("n")
+                .required(isRequired)
+                .longOpt("list")
+                .desc(description)
+                .build();
+        options.addOption(nameOption);
         return this;
     }
 }

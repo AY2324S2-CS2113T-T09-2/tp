@@ -1,11 +1,14 @@
 package seedu.binbash.command;
 
 import seedu.binbash.ItemList;
+import seedu.binbash.logger.BinBashLogger;
+
 
 public class ListCommand extends Command {
 
     public ListCommand() {
-        commandLogger.fine("Creating List Command...");
+        commandLogger = new BinBashLogger(ListCommand.class.getName());
+        commandLogger.info("Creating List Command...");
     }
 
     public boolean execute(ItemList itemList) {

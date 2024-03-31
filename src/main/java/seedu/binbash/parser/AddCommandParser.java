@@ -4,6 +4,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.TypeHandler;
 import seedu.binbash.command.AddCommand;
 
 import java.time.format.DateTimeFormatter;
@@ -16,6 +17,7 @@ public class AddCommandParser extends DefaultParser {
     public AddCommandParser() {
         options = new Options();
         new CommandOptionAdder(options)
+            .addItemTypeOptionGroup()
             .addNameOption(true, "Easily recognizable item name.")
             .addDescriptionOption(true, "A brief description of the item.")
             .addQuantityOption(false, "The units of item to be added.")
@@ -28,27 +30,34 @@ public class AddCommandParser extends DefaultParser {
     public AddCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
 
+        // Determine item type to be created
+        String itemType;
+        if (commandLine.hasOption("retail")) {
+            itemType = "retail";
+        } else {
+            itemType = "operational";
+        }
+
         // Required options
         String itemName = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
         String itemDescription = String.join(" ", commandLine.getOptionValues("description"));
-        double itemCostPrice = Double.parseDouble(commandLine.getOptionValue("cost"));
+        double itemCostPrice = TypeHandler.createNumber(
+                commandLine.getOptionValue("cost-price")).doubleValue();
 
         // Optional options
-        int itemQuantity;
-        try {
-            itemQuantity = Integer.parseInt(commandLine.getOptionValue("quantity", "0"));
-        } catch (NumberFormatException e) {
-            throw new ParseException("Item quantity must be a number!");
-        }
-        double itemSalePrice = Double.parseDouble(commandLine.getOptionValue("salePrice", "0.00"));
-        LocalDate itemExpirationDate = Optional.ofNullable(commandLine.getOptionValue("expiration"))
+        int itemQuantity = TypeHandler.createNumber(
+                commandLine.getOptionValue("quantity", "0.00")).intValue();
+        double itemSalePrice = TypeHandler.createNumber(
+                commandLine.getOptionValue("sale-price", "0.00")).doubleValue();
+        LocalDate itemExpirationDate = Optional.ofNullable(commandLine.getOptionValue("expiry-date"))
                 .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
                 .orElse(LocalDate.MIN);
         int itemThreshold = Optional.ofNullable(commandLine.getOptionValue("threshold"))
                 .map(Integer::parseInt)
                 .orElse(-1);
 
-        return new AddCommand(itemName, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice,
+        return new AddCommand(itemType, itemName, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice,
                 itemCostPrice, itemThreshold);
+
     }
 }

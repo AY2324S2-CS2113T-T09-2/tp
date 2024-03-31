@@ -2,31 +2,30 @@ package seedu.binbash;
 
 import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.item.Item;
+import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.item.PerishableRetailItem;
 import seedu.binbash.item.RetailItem;
 import seedu.binbash.command.RestockCommand;
 import seedu.binbash.logger.BinBashLogger;
+import seedu.binbash.inventory.SearchAssistant;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 
 public class ItemList {
-    private static final Logger ITEMLIST_LOGGER = Logger.getLogger("ItemList");
     private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());
     private double totalRevenue;
     private double totalCost;
-    private final List<Item> itemList;
+    private final ArrayList<Item> itemList;
+    private SearchAssistant searchAssistant;
 
-    public ItemList(ArrayList<Item> itemList) {
-        this.itemList = itemList;
-        ITEMLIST_LOGGER.setLevel(Level.WARNING);
+    public ItemList() {
+        this.itemList = new ArrayList<Item>();
         this.totalRevenue = 0;
         this.totalCost = 0;
+        searchAssistant = new SearchAssistant();
     }
 
     private double getTotalRevenue() {
@@ -70,6 +69,11 @@ public class ItemList {
         return output;
     }
 
+    public SearchAssistant getSearchAssistant() {
+        searchAssistant.setFoundItems(itemList);
+        return searchAssistant;
+    }
+
     public List<Item> getItemList() {
         return itemList;
     }
@@ -78,16 +82,24 @@ public class ItemList {
         return itemList.size();
     }
 
-    public String addItem(String itemName, String itemDescription, int itemQuantity,
+
+    public String addItem(String itemType, String itemName, String itemDescription, int itemQuantity,
                           LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice, int itemThreshold) {
         Item item;
-        if (!itemExpirationDate.equals(LocalDate.MIN)) {
-            // Create perishable item
+        if (itemType.equals("retail") && !itemExpirationDate.equals(LocalDate.MIN)) {
+            // Perishable Retail Item
             item = new PerishableRetailItem(itemName, itemDescription, itemQuantity,
                     itemExpirationDate, itemSalePrice, itemCostPrice, itemThreshold);
-        } else {
-            // Create non-perishable item
+        } else if (itemType.equals("retail") && itemExpirationDate.equals(LocalDate.MIN)) {
+            // Non-perishable Retail Item
             item = new RetailItem(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice, itemThreshold);
+        } else if (itemType.equals("operational") && !itemExpirationDate.equals(LocalDate.MIN)) {
+            // Perishable Operational Item
+            item = new PerishableOperationalItem(itemName, itemDescription, itemQuantity,
+                    itemExpirationDate, itemCostPrice, itemThreshold);
+        } else {
+            // Non-perishable Operational Item
+            item = new OperationalItem(itemName, itemDescription, itemQuantity, itemCostPrice, itemThreshold);
         }
 
         int beforeSize = itemList.size();
@@ -98,6 +110,8 @@ public class ItemList {
                 + System.lineSeparator() + item;
         return output;
     }
+
+    
 
     public String updateItemDataByString(String itemName, String newItemDescription,
                                  Integer newItemQuantity, LocalDate newItemExpirationDate, Double newItemSalePrice,
@@ -298,6 +312,13 @@ public class ItemList {
         return output;
     }
 
+
+    /**
+     * Deletes an item from the inventory by identifying the item using its index.
+     *
+     * @param index index of the item to be deleted.
+     * @return the message indicating which item was deleted.
+     */
     public String deleteItem(int index) {
         logger.info("Attempting to delete an item");
         int beforeSize = itemList.size();
@@ -310,43 +331,31 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Deletes an item from the inventory by identifying the item using its name.
+     *
+     * @param keyword the name of the item to be deleted.
+     * @return the message indicating which item was deleted.
+     */
     public String deleteItem(String keyword) {
         int targetIndex = -1;
         Item currentItem;
         for (int i = 0 ; i < itemList.size(); i ++) {
             currentItem = itemList.get(i);
             if (currentItem.getItemName().trim().equals(keyword)) {
-                ITEMLIST_LOGGER.log(Level.INFO, "first matching item at index " + i + " found.");
+                logger.info("first matching item at index " + i + " found.");
                 targetIndex = i + 1;
                 break;
             }
         }
 
         if (targetIndex == -1) {
+            logger.info("No matching item was found, no item was deleted.");
             String output = "Item not found! Nothing was deleted!";
             return output;
         }
 
         return deleteItem(targetIndex);
-    }
-
-    public String searchItem(String keyword) {
-        ArrayList<Item> filteredList = (ArrayList<Item>) itemList.stream()
-                .filter(item -> item.getItemName().contains(keyword))
-                .collect(Collectors.toList());
-
-        String output = "";
-
-        if (filteredList.isEmpty()) {
-            output += String.format("There are no tasks with the keyword '%s'!", keyword);
-        } else {
-            output = String.format("Here's a list of items that contain the keyword '%s': ", keyword)
-                    + System.lineSeparator()
-                    + printList(filteredList);
-        }
-
-        assert filteredList.size() > 0 && filteredList.size() <= itemList.size();
-        return output;
     }
 
     /**

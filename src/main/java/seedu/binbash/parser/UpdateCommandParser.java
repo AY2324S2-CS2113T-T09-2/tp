@@ -32,35 +32,50 @@ public class UpdateCommandParser extends DefaultParser {
     public UpdateCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
 
-        // Optional options
-        String itemDescription = Optional.ofNullable(commandLine.getOptionValues("description"))
-                .map(values -> String.join(" ", values))
-                .orElse(null);
-        Integer itemQuantity = Optional.ofNullable(commandLine.getOptionValue("quantity"))
-                .map(Integer::parseInt)
-                .orElse(null);
-        Double itemCostPrice = Optional.ofNullable(commandLine.getOptionValue("cost"))
-                .map(Double::parseDouble)
-                .orElse(null);
-        Double itemSalePrice = Optional.ofNullable(commandLine.getOptionValue("salePrice"))
-                .map(Double::parseDouble)
-                .orElse(null);
-        LocalDate itemExpirationDate = Optional.ofNullable(commandLine.getOptionValue("expiration"))
-                .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
-                .orElse(null);
-        Integer itemThreshold = Optional.ofNullable(commandLine.getOptionValue("threshold"))
-                .map(Integer::parseInt)
-                .orElse(null);
+        String itemDescription = parseDescriptionOption(commandLine, "description");
+        Integer itemQuantity = parseIntegerOption(commandLine, "quantity");
+        Double itemCostPrice = parseDoubleOption(commandLine, "cost-price");
+        Double itemSalePrice = parseDoubleOption(commandLine, "sale-price");
+        LocalDate itemExpirationDate = parseDateOption(commandLine, "expiry-date");
+        Integer itemThreshold = parseIntegerOption(commandLine, "threshold");
 
         if (commandLine.hasOption("index")) {
             int index = Integer.parseInt(commandLine.getOptionValue("index"));
             return new UpdateCommand(index, itemDescription, itemQuantity, itemExpirationDate,
                     itemSalePrice, itemCostPrice, itemThreshold);
         } else {
-            String itemName = String.join(" ", commandLine.getOptionValues("name"));
+            String itemName = parseNameOption(commandLine, "name");
             return new UpdateCommand(itemName, itemDescription, itemQuantity, itemExpirationDate,
                     itemSalePrice, itemCostPrice, itemThreshold);
         }
+    }
+
+    private String parseNameOption(CommandLine commandLine, String option) {
+        return String.join(" ", commandLine.getOptionValues("name"));
+    }
+
+    private String parseDescriptionOption(CommandLine commandLine, String option) {
+        return Optional.ofNullable(commandLine.getOptionValues(option))
+                .map(values -> String.join(" ", values))
+                .orElse(null);
+    }
+
+    private Integer parseIntegerOption(CommandLine commandLine, String option) {
+        return Optional.ofNullable(commandLine.getOptionValue(option))
+                .map(Integer::parseInt)
+                .orElse(null);
+    }
+
+    private Double parseDoubleOption(CommandLine commandLine, String option) {
+        return Optional.ofNullable(commandLine.getOptionValue(option))
+                .map(Double::parseDouble)
+                .orElse(null);
+    }
+
+    private LocalDate parseDateOption(CommandLine commandLine, String option) {
+        return Optional.ofNullable(commandLine.getOptionValue(option))
+                .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
+                .orElse(null);
     }
 }
 

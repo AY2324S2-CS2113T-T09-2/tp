@@ -27,7 +27,7 @@ public class PerishableOperationalItem extends OperationalItem {
 
     @Override
     public String toString() {
-        return "[P] " + super.toString() + System.lineSeparator() +
+        return "[P]" + super.toString() + System.lineSeparator() +
                 String.format("\texpiry date: %s", itemExpirationDate.format(DATE_TIME_FORMATTER));
     }
 }

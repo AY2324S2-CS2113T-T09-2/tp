@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 public class Parser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private AddCommandParser addCommandParser;
+    private SearchCommandParser searchCommandParser;
     private RestockCommandParser restockCommandParser;
     private SellCommandParser sellCommandParser;
     private UpdateCommandParser updateCommandParser;
@@ -24,6 +25,7 @@ public class Parser {
         restockCommandParser = new RestockCommandParser();
         sellCommandParser = new SellCommandParser();
         updateCommandParser = new UpdateCommandParser();
+        searchCommandParser = new SearchCommandParser();
     }
 
     public Command parseCommand(String userInput) throws BinBashException {
@@ -43,7 +45,7 @@ public class Parser {
         case "list":
             return parseListCommand();
         case "search":
-            return parseSearchCommand(userInput);
+            return parseSearchCommand(commandArgs);
         case "restock":
             return parseRestockCommand(commandArgs);
         case "sell":
@@ -51,7 +53,7 @@ public class Parser {
         case "update":
             return parseUpdateCommand(commandArgs);
         default:
-            throw new InvalidCommandException("Invalid command!");
+            throw new InvalidCommandException("Invalid command: "  + commandString);
         }
     }
 
@@ -110,13 +112,12 @@ public class Parser {
         }
     }
 
-    private Command parseSearchCommand(String userInput) throws InvalidFormatException {
-        Matcher matcher = SearchCommand.COMMAND_FORMAT.matcher(userInput);
-        if (!matcher.matches()) {
-            throw new InvalidFormatException("Search command is not properly formatted!");
+    private SearchCommand parseSearchCommand(String[] commandArgs) throws InvalidFormatException {
+        try {
+            return searchCommandParser.parse(commandArgs);
+        } catch (ParseException e) {
+            throw new InvalidFormatException(e.getMessage());
         }
-        String keyword = matcher.group("keyword");
-        return new SearchCommand(keyword);
     }
 
     private Command parseListCommand() {

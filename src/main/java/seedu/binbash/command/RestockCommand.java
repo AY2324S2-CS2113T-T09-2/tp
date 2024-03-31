@@ -2,7 +2,6 @@ package seedu.binbash.command;
 
 import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.ItemList;
-import java.util.logging.Logger;
 
 import java.util.regex.Pattern;
 
@@ -13,7 +12,6 @@ public class RestockCommand extends Command{
                     + "n/(?<itemName>.+?)(?=q/)"
                     + "q/(?<restockQuantity>.+)"
     );
-    private static final Logger logger = Logger.getLogger(RestockCommand.class.getName());
     private static final BinBashLogger binBashLogger = new BinBashLogger(RestockCommand.class.getName());
     private final String itemName;
     private final int restockQuantity;
@@ -22,7 +20,8 @@ public class RestockCommand extends Command{
         this.itemName = itemName;
         this.restockQuantity = restockQuantity;
 
-        commandLogger.fine(String.format(
+        commandLogger = new BinBashLogger(RestockCommand.class.getName());
+        commandLogger.info(String.format(
                 "Creating Restock Command... itemName: %s, restockQuantity: %d",
                 itemName,
                 restockQuantity

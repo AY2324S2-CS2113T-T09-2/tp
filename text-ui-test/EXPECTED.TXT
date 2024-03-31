@@ -56,6 +56,57 @@ Noted! I have added the following item into your inventory:
 	expiry date: 01-01-1999
 -------------------------------------------------------------
 -------------------------------------------------------------
+Noted! I have added the following item into your inventory:
+
+[O] item with
+	description: no exp(op)
+	quantity: 10
+	cost price: $100.00
+-------------------------------------------------------------
+-------------------------------------------------------------
+Noted! I have added the following item into your inventory:
+
+[P][O] item with
+	description: everything(op)
+	quantity: 100
+	cost price: $100.00
+	expiry date: 01-01-1999
+-------------------------------------------------------------
+-------------------------------------------------------------
+1. [R] item with
+	description: no exp or quantity
+	quantity: 0
+	cost price: $100.00
+	sale price: $0.00
+
+2. [R] item with
+	description: no exp
+	quantity: 10
+	cost price: $100.00
+	sale price: $0.00
+
+
+-------------------------------------------------------------
+-------------------------------------------------------------
+1. [R] item with
+	description: no exp or quantity
+	quantity: 0
+	cost price: $100.00
+	sale price: $0.00
+
+
+-------------------------------------------------------------
+-------------------------------------------------------------
+1. [P][R] item with
+	description: everything
+	quantity: 100
+	cost price: $100.00
+	sale price: $0.00
+	expiry date: 01-01-1999
+
+
+-------------------------------------------------------------
+-------------------------------------------------------------
 1. [R] item with
 	description: no exp or quantity
 	quantity: 0
@@ -80,6 +131,17 @@ Noted! I have added the following item into your inventory:
 	quantity: 100
 	cost price: $100.00
 	sale price: $0.00
+	expiry date: 01-01-1999
+
+5. [O] item with
+	description: no exp(op)
+	quantity: 10
+	cost price: $100.00
+
+6. [P][O] item with
+	description: everything(op)
+	quantity: 100
+	cost price: $100.00
 	expiry date: 01-01-1999
 
 
