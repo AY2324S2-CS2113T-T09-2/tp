@@ -1,12 +1,13 @@
 package seedu.binbash.item;
 
 public abstract class Item {
-    protected final String itemName;
-    protected final String itemDescription;
+    protected String itemName;
+    protected String itemDescription;
     protected int itemQuantity;
-    protected final double itemCostPrice;
+    protected double itemCostPrice;
     protected int totalUnitsPurchased;
     protected Integer itemThreshold;
+    protected boolean isAlert;
 
     public Item(String itemName, String itemDescription, int itemQuantity, double itemCostPrice,
                 Integer itemThreshold) {
@@ -52,6 +53,14 @@ public abstract class Item {
 
     public void setTotalUnitsPurchased(int totalUnitsPurchased) {
         this.totalUnitsPurchased = totalUnitsPurchased;
+    }
+
+    public boolean isAlert() {
+        return isAlert;
+    }
+
+    public void setAlert(boolean alert) {
+        isAlert = alert;
     }
 
     @Override
