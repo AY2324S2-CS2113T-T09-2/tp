@@ -1,0 +1,36 @@
+@startuml
+participant ":BinBash"
+activate ":BinBash"
+
+":BinBash" -> "userInterface:Ui" : 1. readUserCommand()
+activate "userInterface:Ui"
+return 2. userInput: String
+
+":BinBash" -> "inputParser:Parser" : 3. parseCommand(userInput)
+activate "inputParser:Parser"
+"inputParser:Parser" -> "inputParser:Parser" : 4. parseAddCommand()
+activate "inputParser:Parser"
+"inputParser:Parser" -> "addCommandParser:AddCommandParser" : 5. parse()
+activate "addCommandParser:AddCommandParser"
+"addCommandParser:AddCommandParser" -> "userCommand:AddCommand" ** : 6. new AddCommand()
+activate "userCommand:AddCommand"
+return 7. userCommand: AddCommand
+return 8. userCommand: AddCommand
+return 9. userCommand: AddCommand
+return 10. userCommand: AddCommand
+
+":BinBash" -> "userCommand:AddCommand" : 11. execute(itemList)
+activate "userCommand:AddCommand"
+"userCommand:AddCommand" -> "itemList:ItemList" : 12. addItem()
+activate "itemList:ItemList"
+return 13. executionUiOutput: String
+return 14. true
+
+":BinBash" -> "userCommand:AddCommand" : 15. getExecutionUiOutput()
+activate "userCommand:AddCommand"
+return 16. executionUiOutput: String
+":BinBash" -> "userInterface:Ui" : 17. talk(executionUiOutput)
+activate "userInterface:Ui"
+return 18.
+
+@enduml
