@@ -21,6 +21,17 @@ public class SearchCommandParserTest {
     }
 
     @Test
+    public void parse_costPriceRangeSpecified_correctlyParsesPriceRange() {
+        String[] invalidCommandArgs = new String[]{"-c", "1..2"};
+        try {
+            SearchCommand searchCommand = searchCommandParser.parse(invalidCommandArgs);
+            Assertions.assertTrue(searchCommand instanceof SearchCommand);
+        } catch (ParseException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
     public void parse_expiryDateOption_success() {
         String[] commandArgs = new String[]{"-e", "23-11-2023"};
         try {

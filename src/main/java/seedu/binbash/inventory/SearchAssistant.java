@@ -65,7 +65,7 @@ public class SearchAssistant {
         foundItems = foundItems.stream()
             .filter(item -> item instanceof RetailItem)
             .filter(item -> isSearchLessThan ?
-                    ((RetailItem) item).getItemSalePrice() < salePriceField :
+                    ((RetailItem) item).getItemSalePrice() <= salePriceField :
                     ((RetailItem) item).getItemSalePrice() > salePriceField)
             .collect(Collectors.toCollection(ArrayList::new));
         return this;

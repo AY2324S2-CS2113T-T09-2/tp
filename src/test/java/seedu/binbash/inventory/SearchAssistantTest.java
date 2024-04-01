@@ -50,7 +50,7 @@ public class SearchAssistantTest {
     }
 
     @Test
-    public void searchByCostPrice_lessThan30Cents_foundLightBulbAndBattery() {
+    public void searchByCostPrice_upTo30Cents_foundLightBulbAndBattery() {
         ArrayList<Item> foundItems = searchAssistant.searchByCostPrice(0.30, true)
             .getFoundItems();
         String firstItemFound = foundItems.get(0).getItemName();
@@ -60,16 +60,16 @@ public class SearchAssistantTest {
     }
 
     @Test
-    public void searchBySalePrice_everythingLessThan60Cents_foundBanana() {
-        ArrayList<Item> foundItems = searchAssistant.searchBySalePrice(0.60, true)
+    public void searchBySalePrice_between50CentsAnd1Dollar_foundBananaAndPen() {
+        ArrayList<Item> foundItems = searchAssistant.searchBySalePrice(1, true)
+            .searchBySalePrice(0.50, false)
             .getFoundItems();
-        String firstItemFound = foundItems.get(0).getItemDescription();
-        Assertions.assertTrue(firstItemFound.equals("cavendish banana") &&
-                foundItems.size() == 1);
+        Assertions.assertTrue(foundItems.get(0).getItemDescription().equals("zebra sarasa black 0.5")
+                && foundItems.get(1).getItemDescription().equals("red banana") && foundItems.size() == 2);
     }
 
     @Test
-    public void searchByExpiryDate_everythingBefore20Jan_found2Bananas() {
+    public void searchByExpiryDate_before20Jan_found2Bananas() {
         ArrayList<Item> foundItems = searchAssistant.searchByExpiryDate(LocalDate.of(2024, 1, 20))
             .getFoundItems();
         String firstItemFound = foundItems.get(0).getItemName();
