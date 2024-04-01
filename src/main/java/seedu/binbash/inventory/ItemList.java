@@ -1,5 +1,6 @@
 package seedu.binbash.inventory;
 
+import seedu.binbash.comparators.ItemComparatorByExpiryDate;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableOperationalItem;
@@ -12,15 +13,19 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 
+import static java.util.stream.Collectors.toList;
+
 public class ItemList {
     private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());
     private double totalRevenue;
     private double totalCost;
     private final ArrayList<Item> itemList;
+    private ArrayList<Integer> sortedOrder;
     private SearchAssistant searchAssistant;
 
     public ItemList() {
         this.itemList = new ArrayList<Item>();
+        this.sortedOrder = new ArrayList<Integer>();
         this.totalRevenue = 0;
         this.totalCost = 0;
         searchAssistant = new SearchAssistant();
@@ -100,8 +105,10 @@ public class ItemList {
         }
 
         int beforeSize = itemList.size();
+        sortedOrder.add(beforeSize);
         itemList.add(item);
         assert itemList.size() == (beforeSize + 1);
+        assert sortedOrder.size() == (beforeSize + 1);
 
         String output = "Noted! I have added the following item into your inventory:" + System.lineSeparator()
                 + System.lineSeparator() + item;
@@ -172,7 +179,7 @@ public class ItemList {
     public String deleteItem(String keyword) {
         int targetIndex = -1;
         Item currentItem;
-        for (int i = 0 ; i < itemList.size(); i ++) {
+        for (int i = 0; i < itemList.size(); i ++) {
             currentItem = itemList.get(i);
             if (currentItem.getItemName().trim().equals(keyword)) {
                 logger.info("first matching item at index " + i + " found.");
@@ -200,7 +207,30 @@ public class ItemList {
         int index = 1;
         String output = "";
 
+        sortedOrder.clear();
         for (Item item: itemList) {
+            sortedOrder.add(index - 1);
+            output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
+            index++;
+        }
+
+        return output;
+    }
+
+    public String printListSortedByExpiryDate(List<Item> itemList) {
+        int index = 1;
+        String output = "";
+        ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
+                .filter((t) -> t instanceof PerishableOperationalItem || t instanceof PerishableRetailItem)
+                .sorted(new ItemComparatorByExpiryDate())
+                .collect(toList());
+
+        sortedOrder.clear();
+        for (int i = 0; i < sortedList.size(); i++) {
+            sortedOrder.add(itemList.indexOf(sortedList.get(i)));
+        }
+
+        for (Item item: sortedList) {
             output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
             index++;
         }
