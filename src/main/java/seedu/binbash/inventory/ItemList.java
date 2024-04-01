@@ -1,6 +1,8 @@
 package seedu.binbash.inventory;
 
+import seedu.binbash.comparators.ItemComparatorByCostPrice;
 import seedu.binbash.comparators.ItemComparatorByExpiryDate;
+import seedu.binbash.comparators.ItemComparatorBySalePrice;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableOperationalItem;
@@ -85,6 +87,10 @@ public class ItemList {
         return itemList.size();
     }
 
+    public ArrayList<Integer> getSortedOrder() {
+        return sortedOrder;
+    }
+
     public String addItem(String itemType, String itemName, String itemDescription, int itemQuantity,
                           LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
         Item item;
@@ -161,7 +167,7 @@ public class ItemList {
     public String deleteItem(int index) {
         logger.info("Attempting to delete an item");
         int beforeSize = itemList.size();
-        Item tempItem = itemList.remove(index - 1);
+        Item tempItem = itemList.remove((sortedOrder.get(index - 1).intValue()));
         assert itemList.size() == (beforeSize - 1);
 
         String output = "Got it! I've removed the following item:" + System.lineSeparator()
@@ -217,6 +223,23 @@ public class ItemList {
         return output;
     }
 
+    public String printListSortedByCostPrice(List<Item> itemList) {
+        int index = 1;
+        String output = "";
+        ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
+                .sorted(new ItemComparatorByCostPrice())
+                .collect(toList());
+
+        updateSortedOrder(itemList, sortedList);
+
+        for (Item item: sortedList) {
+            output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
+            index++;
+        }
+
+        return output;
+    }
+
     public String printListSortedByExpiryDate(List<Item> itemList) {
         int index = 1;
         String output = "";
@@ -225,10 +248,7 @@ public class ItemList {
                 .sorted(new ItemComparatorByExpiryDate())
                 .collect(toList());
 
-        sortedOrder.clear();
-        for (int i = 0; i < sortedList.size(); i++) {
-            sortedOrder.add(itemList.indexOf(sortedList.get(i)));
-        }
+        updateSortedOrder(itemList, sortedList);
 
         for (Item item: sortedList) {
             output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
@@ -236,6 +256,31 @@ public class ItemList {
         }
 
         return output;
+    }
+
+    public String printListSortedBySalePrice(List<Item> itemList) {
+        int index = 1;
+        String output = "";
+        ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
+                .filter((t) -> t instanceof RetailItem)
+                .sorted(new ItemComparatorBySalePrice())
+                .collect(toList());
+
+        updateSortedOrder(itemList, sortedList);
+
+        for (Item item: sortedList) {
+            output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
+            index++;
+        }
+
+        return output;
+    }
+
+    private void updateSortedOrder(List<Item> itemList, ArrayList<Item> sortedList) {
+        sortedOrder.clear();
+        for (int i = 0; i < sortedList.size(); i++) {
+            sortedOrder.add(itemList.indexOf(sortedList.get(i)));
+        }
     }
 
     @Override
