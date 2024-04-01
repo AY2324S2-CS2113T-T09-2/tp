@@ -3,7 +3,11 @@ package seedu.binbash.storage;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seedu.binbash.item.*;
+import seedu.binbash.item.Item;
+import seedu.binbash.item.OperationalItem;
+import seedu.binbash.item.PerishableOperationalItem;
+import seedu.binbash.item.PerishableRetailItem;
+import seedu.binbash.item.RetailItem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,7 +22,7 @@ class StorageTest {
     }
 
     @Test
-    public void generateStorageRepresentationOfSingleItem_OperationalItem_CorrectStringRepresentation() {
+    public void generateStorageRepresentationOfSingleItem_operationalItem_correctStringRepresentation() {
         OperationalItem operationalItem = new OperationalItem(
                 "item1",
                 "description1",
@@ -31,7 +35,7 @@ class StorageTest {
     }
 
     @Test
-    public void generateStorageRepresentationOfSingleItem_PerishableOperationalItem_CorrectStringRepresentation() {
+    public void generateStorageRepresentationOfSingleItem_perishableOperationalItem_correctStringRepresentation() {
         PerishableOperationalItem perishableOperationalItem = new PerishableOperationalItem(
                 "item2",
                 "description2",
@@ -45,7 +49,7 @@ class StorageTest {
     }
 
     @Test
-    public void generateStorageRepresentationOfSingleItem_PerishableRetailItem_CorrectStringRepresentation() {
+    public void generateStorageRepresentationOfSingleItem_perishableRetailItem_correctStringRepresentation() {
         PerishableRetailItem perishableRetailItem = new PerishableRetailItem(
                 "item3",
                 "description3",
@@ -61,7 +65,7 @@ class StorageTest {
     }
 
     @Test
-    public void generateStorageRepresentationOfSingleItem_RetailItem_CorrectStringRepresentation() {
+    public void generateStorageRepresentationOfSingleItem_retailItem_correctStringRepresentation() {
         RetailItem retailItem = new RetailItem(
                 "item4",
                 "description4",
@@ -76,7 +80,7 @@ class StorageTest {
     }
 
     @Test
-    void convertLineToItem_OperationalItemWithValidData_ExpectOperationalItem() {
+    void convertLineToItem_operationalItemWithValidData_expectOperationalItem() {
         String validOperationalItem =
                 "OperationalItem|Hammer|Heavy Duty Hammer|50|19.99|200|20|||";
         Item result = storage.convertLineToItem(validOperationalItem);
@@ -92,7 +96,7 @@ class StorageTest {
     }
 
     @Test
-    void convertLineToItem_PerishableOperationalItemWithValidData_ExpectPerishableOperationalItem() {
+    void convertLineToItem_perishableOperationalItemWithValidData_expectPerishableOperationalItem() {
         String validPerishableOperationalItem =
                 "PerishableOperationalItem|Paint|Blue Paint|100|35.50|500|10|31-12-2024|||";
         Item result = storage.convertLineToItem(validPerishableOperationalItem);
@@ -109,7 +113,7 @@ class StorageTest {
     }
 
     @Test
-    void convertLineToItem_PerishableRetailItemWithValidData_ExpectPerishableRetailItem() {
+    void convertLineToItem_perishableRetailItemWithValidData_expectPerishableRetailItem() {
         String validPerishableRetailItem =
                 "PerishableRetailItem|Milk|2L Whole Milk|200|1.99|200|50|31-12-2024|2.99|150|";
         Item result = storage.convertLineToItem(validPerishableRetailItem);
@@ -128,7 +132,7 @@ class StorageTest {
     }
 
     @Test
-    void convertLineToItem_RetailItemWithValidData_ExpectRetailItem() {
+    void convertLineToItem_retailItemWithValidData_expectRetailItem() {
         String validRetailItem =
                 "RetailItem|Book|Science Fiction Novel|10|5.99|100|5||6.99|80|";
         Item result = storage.convertLineToItem(validRetailItem);
@@ -146,7 +150,7 @@ class StorageTest {
     }
 
     @Test
-    void convertLineToItem_InvalidItemType_ExpectNull() {
+    void convertLineToItem_invalidItemType_expectNull() {
         String invalidType = "UnknownItem|Item|Description|10|1.99|100|5|||";
         Item result = storage.convertLineToItem(invalidType);
 
@@ -154,7 +158,7 @@ class StorageTest {
     }
 
     @Test
-    void parseLinesToItemList_InvalidNumberFormat_ExpectCorruptionFlag() {
+    void parseLinesToItemList_invalidNumberFormat_expectCorruptionFlag() {
         ArrayList<String> linesWithInvalidNumber = new ArrayList<>();
         linesWithInvalidNumber.add("OperationalItem|Hammer|Heavy Duty Hammer|notANumber|19.99|200|20|||");
 
@@ -165,7 +169,7 @@ class StorageTest {
     }
 
     @Test
-    void parseLinesToItemList_InvalidDateFormat_ExpectCorruptionFlag() {
+    void parseLinesToItemList_invalidDateFormat_expectCorruptionFlag() {
         ArrayList<String> linesWithInvalidDate = new ArrayList<>();
         linesWithInvalidDate.add("PerishableOperationalItem|Paint|Blue Paint|100|35.50|500|10|31/12/2024|||");
 
@@ -175,7 +179,8 @@ class StorageTest {
         assertTrue(parsedItems.isEmpty());
     }
 
-    void parseLinesToItemList_ValidInputData_ExpectItemsAdded() {
+    @Test
+    void parseLinesToItemList_validInputData_expectItemsAdded() {
         ArrayList<String> linesWithValidData = new ArrayList<>();
         linesWithValidData.add("OperationalItem|Hammer|Heavy Duty Hammer|50|19.99|200|20|||");
         linesWithValidData.add("PerishableOperationalItem|Paint|Blue Paint|100|35.50|500|10|31-12-2024|||");
