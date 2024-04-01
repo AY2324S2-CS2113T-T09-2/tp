@@ -77,8 +77,8 @@ public class UpdateCommand extends Command {
             assert index > 0 && index <= itemList.getItemCount();
             commandLogger.info("Delete identifier is detected as an index");
             try {
-                executionUiOutput = itemList.updateItemDataByIndex(index, itemDescription, itemQuantity, itemExpirationDate,
-                        itemSalePrice, itemCostPrice, itemThreshold);
+                executionUiOutput = itemList.updateItemDataByIndex(index, itemDescription, itemQuantity,
+                        itemExpirationDate, itemSalePrice, itemCostPrice, itemThreshold);
             } catch (InvalidArgumentException e) {
                 executionUiOutput = e.getMessage();
                 return true;

@@ -1,13 +1,15 @@
 package seedu.binbash.parser;
 
-import org.apache.commons.cli.*;
-import seedu.binbash.command.SearchCommand;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+
 import seedu.binbash.command.UpdateCommand;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Optional;
 
 public class UpdateCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -74,7 +76,8 @@ public class UpdateCommandParser extends DefaultParser {
         return hasOption;
     }
 
-    private static boolean hasExpirationDateOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
+    private static boolean hasExpirationDateOption(CommandLine commandLine, UpdateCommand updateCommand)
+            throws ParseException {
         boolean hasOption;
         try {
             LocalDate itemExpiryDate = LocalDate.parse(commandLine.getOptionValue("expiry-date"),

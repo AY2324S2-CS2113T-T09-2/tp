@@ -165,8 +165,7 @@ public class ItemList {
                 ((PerishableOperationalItem) item).setItemExpirationDate(itemExpirationDate);
             } else if (item instanceof PerishableRetailItem) {
                 ((PerishableRetailItem) item).setItemExpirationDate(itemExpirationDate);
-            }
-            else {
+            } else {
                 throw new InvalidArgumentException("This item is not a perishable and has no expiry date.");
             }
         }
