@@ -1,7 +1,7 @@
 package seedu.binbash.command;
 
-import seedu.binbash.ItemList;
 import seedu.binbash.exceptions.InvalidArgumentException;
+import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 
 import java.time.LocalDate;

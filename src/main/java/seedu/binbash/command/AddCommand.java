@@ -2,7 +2,7 @@ package seedu.binbash.command;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;
-import seedu.binbash.ItemList;
+import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 
 public class AddCommand extends Command {

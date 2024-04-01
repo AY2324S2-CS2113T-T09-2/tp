@@ -1,5 +1,9 @@
 package seedu.binbash.item;
 
+/**
+ * Abstract Item class, which represents an Item that can be stored in the ItemList (inventory).
+ * Subclasses can extend Item in order to add properties that are specific to different Item types.
+ */
 public abstract class Item {
     protected String itemName;
     protected String itemDescription;
@@ -20,6 +24,11 @@ public abstract class Item {
         this.isAlert = false;
     }
 
+    /**
+     * Returns the name of the Item.
+     *
+     * @return Item name String.
+     */
     public String getItemName() {
         return itemName;
     }
@@ -28,6 +37,11 @@ public abstract class Item {
         this.itemName = itemName;
     }
 
+    /**
+     * Returns the description of the Item.
+     *
+     * @return Item description String.
+     */
     public String getItemDescription() {
         return itemDescription;
     }
@@ -36,14 +50,29 @@ public abstract class Item {
         this.itemDescription = itemDescription;
     }
 
+    /**
+     * Returns the quantity of the Item.
+     *
+     * @return Integer value representing the Item quantity.
+     */
     public int getItemQuantity() {
         return itemQuantity;
     }
 
+    /**
+     * Sets the quantity of the Item.
+     *
+     * @param itemQuantity The new Item quantity value.
+     */
     public void setItemQuantity(int itemQuantity) {
         this.itemQuantity = itemQuantity;
     }
 
+    /**
+     * Returns the cost price of the Item.
+     *
+     * @return Double value representing the Item cost price.
+     */
     public double getItemCostPrice() {
         return itemCostPrice;
     }
@@ -60,10 +89,20 @@ public abstract class Item {
         this.itemThreshold = itemThreshold;
     }
 
+    /**
+     * Returns the number of units purchased of the Item.
+     *
+     * @return Integer value representing the number of units purchased of the Item.
+     */
     public int getTotalUnitsPurchased() {
         return totalUnitsPurchased;
     }
 
+    /**
+     * Sets the number of units purchased of the Item.
+     *
+     * @param totalUnitsPurchased The number of units purchased of the Item.
+     */
     public void setTotalUnitsPurchased(int totalUnitsPurchased) {
         this.totalUnitsPurchased = totalUnitsPurchased;
     }

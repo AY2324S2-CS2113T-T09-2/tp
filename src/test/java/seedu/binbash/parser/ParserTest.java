@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import seedu.binbash.ItemList;
+import seedu.binbash.inventory.ItemList;
 import seedu.binbash.command.AddCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.command.DeleteCommand;

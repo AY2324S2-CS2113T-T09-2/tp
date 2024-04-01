@@ -1,7 +1,7 @@
 package seedu.binbash.command;
 
 import org.junit.jupiter.api.Test;
-import seedu.binbash.ItemList;
+import seedu.binbash.inventory.ItemList;
 import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.item.PerishableRetailItem;
 

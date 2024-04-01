@@ -9,6 +9,7 @@ import seedu.binbash.command.DeleteCommand;
 import seedu.binbash.command.UpdateCommand;
 import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
+import seedu.binbash.command.ProfitCommand;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.exceptions.InvalidCommandException;
@@ -59,6 +60,8 @@ public class Parser {
             return parseSellCommand(commandArgs);
         case "update":
             return parseUpdateCommand(commandArgs);
+        case "profit":
+            return new ProfitCommand();
         default:
             throw new InvalidCommandException("Invalid command: "  + commandString);
         }
