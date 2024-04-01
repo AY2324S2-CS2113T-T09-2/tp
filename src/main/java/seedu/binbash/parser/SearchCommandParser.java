@@ -41,12 +41,12 @@ public class SearchCommandParser extends DefaultParser {
             hasOption = true;
         }
         if (commandLine.hasOption("cost-price")) {
-            double costPriceField = parsePriceField(commandLine.getOptionValue("cost-price"));
+            double[] costPriceField = parsePriceField(commandLine.getOptionValue("cost-price"));
             searchCommand.setCostPriceField(costPriceField);
             hasOption = true;
         }
         if (commandLine.hasOption("sale-price")) {
-            double salePriceField = parsePriceField(commandLine.getOptionValue("sale-price"));
+            double[] salePriceField = parsePriceField(commandLine.getOptionValue("sale-price"));
             searchCommand.setSalePriceField(salePriceField);
             hasOption = true;
         }
@@ -73,22 +73,37 @@ public class SearchCommandParser extends DefaultParser {
     }
 
     /*
-     * Returns a negative number if searching everything less than, positive if searching more than
+     * Returns a range of price to search for
      */
-    private double parsePriceField(String argument) throws ParseException {
-        if (!argument.substring(0, 1).equals("<") && !argument.substring(0, 1).equals(">")) {
-            throw new ParseException("Price argument must start with '<' or '>'!");
+    private double[] parsePriceField(String priceArgument) throws ParseException {
+        if (!priceArgument.contains("..") || priceArgument.length() < 3) {
+            throw new ParseException("Format for price option: {min}..{max}");
         }
-        boolean isSearchSmaller = argument.substring(0, 1).equals("<");
-        double price = 0;
+        double[] priceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
+        String[] values = priceArgument.split("\\Q..\\E");
+        if (values[0].equals("")) {
+            try {
+                priceRange[1] = Double.parseDouble(values[1]);
+                return priceRange;
+            } catch (NumberFormatException e) {
+                throw new ParseException("Invalid price");
+            }
+        }
+
         try {
-            price = Double.parseDouble(argument.substring(1));
+            priceRange[0] = Double.parseDouble(values[0]);
         } catch (NumberFormatException e) {
-            throw new ParseException("Please specify a price!");
+            throw new ParseException("Invalid price");
         }
-        if (isSearchSmaller) {
-            price *= -1;
+        if (values.length < 2) {
+            return priceRange;
         }
-        return price;
+
+        try {
+            priceRange[1] = Double.parseDouble(values[1]);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Invalid price");
+        }
+        return priceRange;
     }
 }

@@ -47,26 +47,26 @@ public class SearchAssistant {
         return this;
     }
 
-    public SearchAssistant searchByCostPrice(double costPriceField) {
-        if (costPriceField == 0) {
+    public SearchAssistant searchByCostPrice(double costPriceField, boolean isSearchLessThan) {
+        if (costPriceField == Double.MIN_VALUE || costPriceField == Double.MAX_VALUE) {
             return this;
         }
         foundItems = foundItems.stream()
-            .filter(item -> (costPriceField < 0) ? item.getItemCostPrice() < (-1 * costPriceField) : 
-                    item.getItemCostPrice() > costPriceField)
+            .filter(item -> isSearchLessThan ?
+                    item.getItemCostPrice() <= costPriceField : item.getItemCostPrice() > costPriceField)
             .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }
 
-    public SearchAssistant searchBySalePrice(double salePriceField) {
-        if (salePriceField == 0) {
+    public SearchAssistant searchBySalePrice(double salePriceField, boolean isSearchLessThan) {
+        if (salePriceField == Double.MIN_VALUE || salePriceField == Double.MAX_VALUE) {
             return this;
         }
         foundItems = foundItems.stream()
-            .filter(item -> (salePriceField < 0) ?
-                    item instanceof RetailItem && ((RetailItem) item).getItemSalePrice() < (-1 * salePriceField) :
-                    salePriceField == 0 ||
-                     (item instanceof RetailItem && ((RetailItem) item).getItemSalePrice() > salePriceField))
+            .filter(item -> item instanceof RetailItem)
+            .filter(item -> isSearchLessThan ?
+                    ((RetailItem) item).getItemSalePrice() < salePriceField :
+                    ((RetailItem) item).getItemSalePrice() > salePriceField)
             .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }

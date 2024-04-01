@@ -10,8 +10,8 @@ import java.time.LocalDate;
 public class SearchCommand extends Command {
     private String nameField = "";
     private String descriptionField = "";
-    private double costPriceField = 0.00;
-    private double salePriceField = 0.00;
+    private double[] costPriceField = {Double.MIN_VALUE, Double.MAX_VALUE};
+    private double[] salePriceField = {Double.MIN_VALUE, Double.MAX_VALUE};
     private LocalDate expiryDateField = LocalDate.MAX;
     private int numberOfResults = Integer.MAX_VALUE;
     private ArrayList<Item> foundItems;
@@ -31,11 +31,11 @@ public class SearchCommand extends Command {
         this.descriptionField = descriptionField;
     }
 
-    public void setCostPriceField(double costPriceField) {
+    public void setCostPriceField(double[] costPriceField) {
         this.costPriceField = costPriceField;
     }
 
-    public void setSalePriceField(double salePriceField) {
+    public void setSalePriceField(double[] salePriceField) {
         this.salePriceField = salePriceField;
     }
 
@@ -55,8 +55,10 @@ public class SearchCommand extends Command {
         foundItems = itemList.getSearchAssistant()
             .searchByName(nameField)
             .searchByDescription(descriptionField)
-            .searchByCostPrice(costPriceField)
-            .searchBySalePrice(salePriceField)
+            .searchByCostPrice(costPriceField[0], false)
+            .searchByCostPrice(costPriceField[1], true)
+            .searchBySalePrice(salePriceField[0], false)
+            .searchBySalePrice(salePriceField[1], true)
             .searchByExpiryDate(expiryDateField)
             .getFoundItems(numberOfResults);
         executionUiOutput = itemList.printList(foundItems);
