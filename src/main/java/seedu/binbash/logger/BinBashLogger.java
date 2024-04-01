@@ -108,6 +108,10 @@ public class BinBashLogger {
         }
     }
 
+    public void consoleLog(String message) {
+        consoleLogger.log(Level.INFO, message);
+    }
+
     /**
      * Creates a file handler that allows log messages be written to the log file.
      */
