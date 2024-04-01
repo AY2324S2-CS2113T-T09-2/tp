@@ -1,7 +1,14 @@
 package seedu.binbash.parser;
 
 import org.apache.commons.cli.ParseException;
-import seedu.binbash.command.*;
+
+import seedu.binbash.command.AddCommand;
+import seedu.binbash.command.ByeCommand;
+import seedu.binbash.command.Command;
+import seedu.binbash.command.DeleteCommand;
+import seedu.binbash.command.UpdateCommand;
+import seedu.binbash.command.SearchCommand;
+import seedu.binbash.command.ListCommand;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.exceptions.InvalidCommandException;
