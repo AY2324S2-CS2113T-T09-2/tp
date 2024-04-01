@@ -1,4 +1,4 @@
-package seedu.binbash;
+package seedu.binbash.inventory;
 
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
@@ -7,7 +7,6 @@ import seedu.binbash.item.PerishableRetailItem;
 import seedu.binbash.item.RetailItem;
 import seedu.binbash.command.RestockCommand;
 import seedu.binbash.logger.BinBashLogger;
-import seedu.binbash.inventory.SearchAssistant;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,7 +26,7 @@ public class ItemList {
         searchAssistant = new SearchAssistant();
     }
 
-    private double getTotalRevenue() {
+    public double getTotalRevenue() {
         double totalRevenue = 0;
 
         for (Item item: itemList) {
@@ -42,7 +41,7 @@ public class ItemList {
         return totalRevenue;
     }
 
-    private double getTotalCost() {
+    public double getTotalCost() {
         double totalCost = 0;
 
         for (Item item: itemList) {
