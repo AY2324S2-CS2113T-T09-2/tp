@@ -35,6 +35,30 @@ public class CommandOptionAdder {
         return opItemOption;
     }
 
+    private Option getItemNameOption() {
+        Option opItemOption = Option.builder("n")
+                .hasArg(true)
+                .required(true)
+                .longOpt("name")
+                .desc("Update using name")
+                .argName("name")
+                .build();
+
+        return opItemOption;
+    }
+
+    private Option getItemIndexOption() {
+        Option opItemOption = Option.builder("i")
+                .hasArg(true)
+                .required(true)
+                .longOpt("index")
+                .desc("Update using index")
+                .argName("index")
+                .build();
+
+        return opItemOption;
+    }
+
     CommandOptionAdder addItemTypeOptionGroup() {
         OptionGroup itemTypeOptionGroup = new OptionGroup()
                 .addOption(getRetailItemOption())
@@ -42,6 +66,16 @@ public class CommandOptionAdder {
 
         itemTypeOptionGroup.setRequired(true);
         options.addOptionGroup(itemTypeOptionGroup);
+        return this;
+    }
+
+    CommandOptionAdder addItemNameAndIndexOptionGroup() {
+        OptionGroup itemNameAndInxdexOptionGroup = new OptionGroup()
+                .addOption(getItemIndexOption())
+                .addOption(getItemNameOption());
+
+        itemNameAndInxdexOptionGroup.setRequired(true);
+        options.addOptionGroup(itemNameAndInxdexOptionGroup);
         return this;
     }
 
@@ -64,7 +98,6 @@ public class CommandOptionAdder {
                 .desc(description)
                 .argName("index")
                 .build();
-
         options.addOption(nameOption);
         return this;
     }
