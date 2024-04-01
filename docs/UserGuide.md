@@ -87,19 +87,26 @@ Examples:
 
 ### Searching for an item: `search`
 
-> Searches for items whose names contain the given keyword as a substring.
+> Searches for items in the inventory, filtering results through a number of user-defined fields.
 
-Format: `search KEYWORD`
+Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`
 
-- `KEYWORD`: The keyword to search for within the task descriptions.
-- The search is case-sensitive and uses substring matching. This means it will find items whose names contain the exact 
-keyword. For example, searching for "Car" will return items with the name "Toy Car" and "Carrot", but not items with 
-the name "Scarlet Witch".
+- At least one of -n, -d, -c, -s, or -e must be set.
+- NAME_QUERY and DESCRIPTION_QUERY perform a case-insensitive search on the name and description fields of inventory items respectively.
+- COST_PRICE_RANGE and SALE_PRICE_RANGE take the form {price_lower_bound}..{price_upper_bound} where at least one of price_lower_bound or price_upper_bound is required.
+- EXPIRY_DATE_RANGE is similar: except dates need to be specified in the format dd-MM-YYYY.
+- Shows the first NUMBER_OF_RESULTS results if set, all matching results otherwise.
 
 **Examples:**
 
-- `search Milo`  
-  This will return items with names such as "Milo Powder" and "Milo Packet".
+- `search -n snake plant`
+  Will return all items with names containing snake plant such as "snake plant" and "snake plant seeds".
+- `search -c ..5 -l 6`
+  Will return the first 6 items that cost up to $5.00.
+- `search -s 20..30`
+  Will return all items with sale prices between $20 (inclusive) and $30 (exclusive).
+- `search -e 11.11.2023.. -l 1`
+  Will return the first item that expires on or after 11 November 2023.
 
 ### Listing current inventory: `list`
 
