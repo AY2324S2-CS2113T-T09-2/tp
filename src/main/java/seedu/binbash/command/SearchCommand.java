@@ -13,7 +13,7 @@ public class SearchCommand extends Command {
     private double costPriceField = 0.00;
     private double salePriceField = 0.00;
     private LocalDate expiryDateField = LocalDate.MAX;
-    private int numberOfResults = 1;
+    private int numberOfResults = Integer.MAX_VALUE;
     private ArrayList<Item> foundItems;
 
     public SearchCommand() {

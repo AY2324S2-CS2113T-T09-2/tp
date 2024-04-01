@@ -94,6 +94,37 @@ Noted! I have added the following item into your inventory:
 	cost price: $100.00
 	sale price: $0.00
 
+2. [R] item with
+	description: no exp
+	quantity: 10
+	cost price: $100.00
+	sale price: $0.00
+
+3. [P][R] item with
+	description: no quantity
+	quantity: 0
+	cost price: $100.00
+	sale price: $0.00
+	expiry date: 01-01-1999
+
+4. [P][R] item with
+	description: everything
+	quantity: 100
+	cost price: $100.00
+	sale price: $0.00
+	expiry date: 01-01-1999
+
+5. [O] item with
+	description: no exp(op)
+	quantity: 10
+	cost price: $100.00
+
+6. [P][O] item with
+	description: everything(op)
+	quantity: 100
+	cost price: $100.00
+	expiry date: 01-01-1999
+
 
 -------------------------------------------------------------
 -------------------------------------------------------------

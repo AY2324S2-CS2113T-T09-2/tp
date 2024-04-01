@@ -16,6 +16,10 @@ public class SearchAssistant {
         this.foundItems = foundItems;
     }
 
+    public ArrayList<Item> getFoundItems() {
+        return foundItems;
+    }
+
     public ArrayList<Item> getFoundItems(int numberOfResults) {
         if (numberOfResults > foundItems.size()) {
             return foundItems;
@@ -28,7 +32,7 @@ public class SearchAssistant {
             return this;
         }
         foundItems = foundItems.stream()
-            .filter(item -> item.getItemName().contains(nameField))
+            .filter(item -> item.getItemName().toLowerCase().contains(nameField.toLowerCase()))
             .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }
@@ -38,7 +42,7 @@ public class SearchAssistant {
             return this;
         }
         foundItems = foundItems.stream()
-            .filter(item -> item.getItemDescription().contains(descriptionField))
+            .filter(item -> item.getItemDescription().toLowerCase().contains(descriptionField.toLowerCase()))
             .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }

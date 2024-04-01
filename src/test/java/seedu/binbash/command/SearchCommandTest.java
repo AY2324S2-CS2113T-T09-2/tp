@@ -42,13 +42,15 @@ public class SearchCommandTest {
     }
 
     @Test
-    void execute_searchForExpiry_foundBanana() {
+    void execute_searchForExpiryRetail_foundBananaAndMilk() {
         SearchCommand searchCommand = new SearchCommand();
         searchCommand.setExpiryDateField(LocalDate.of(2024, 2, 4));
 
         searchCommand.execute(testItemList);
         ArrayList<Item> foundItems = searchCommand.getFoundItems();
-        String foundItem = foundItems.get(0).getItemName();
-        Assertions.assertTrue(foundItem.equals("banana") && foundItems.size() == 1);
+        String firstFoundItem = foundItems.get(0).getItemName();
+        String secondFoundItem = foundItems.get(1).getItemName();
+        Assertions.assertTrue(firstFoundItem.equals("banana") &&
+                secondFoundItem.equals("milk") && foundItems.size() == 2);
     }
 }

@@ -52,7 +52,7 @@ public class SearchAssistantTest {
     @Test
     public void searchByCostPrice_lessThan40Cents_foundLightBulbAndBattery() {
         ArrayList<Item> foundItems = searchAssistant.searchByCostPrice(-0.40)
-            .getFoundItems(6);
+            .getFoundItems();
         String firstItemFound = foundItems.get(0).getItemName();
         String secondItemFound = foundItems.get(1).getItemName();
         Assertions.assertTrue(firstItemFound.equals("light bulb") && secondItemFound.equals("battery")
@@ -62,7 +62,7 @@ public class SearchAssistantTest {
     @Test
     public void searchBySalePrice_everythingLessThan60Cents_foundBanana() {
         ArrayList<Item> foundItems = searchAssistant.searchBySalePrice(-0.60)
-            .getFoundItems(6);
+            .getFoundItems();
         String firstItemFound = foundItems.get(0).getItemDescription();
         Assertions.assertTrue(firstItemFound.equals("cavendish banana") &&
                 foundItems.size() == 1);
@@ -71,7 +71,7 @@ public class SearchAssistantTest {
     @Test
     public void searchByExpiryDate_everythingBefore20Jan_found2Bananas() {
         ArrayList<Item> foundItems = searchAssistant.searchByExpiryDate(LocalDate.of(2024, 1, 20))
-            .getFoundItems(6);
+            .getFoundItems();
         String firstItemFound = foundItems.get(0).getItemName();
         String secondItemFound = foundItems.get(1).getItemName();
         Assertions.assertTrue(firstItemFound.equals("banana") && 
@@ -82,7 +82,7 @@ public class SearchAssistantTest {
     public void searchByDescriptionThenName_useBulb_foundLightBulb() {
         ArrayList<Item> foundItems = searchAssistant.searchByDescription("use")
             .searchByName("bulb")
-            .getFoundItems(6);
+            .getFoundItems();
         String firstItemFound = foundItems.get(0).getItemName();
         Assertions.assertTrue(firstItemFound.equals("light bulb") && foundItems.size() == 1);
     }
@@ -91,7 +91,7 @@ public class SearchAssistantTest {
     public void searchByCostPriceThenExpiryDate_moreThan50CentsBefore12Dec_foundBananaAndMilk() {
         ArrayList<Item> foundItems = searchAssistant.searchByCostPrice(0.5)
             .searchByExpiryDate(LocalDate.of(2024, 12, 12))
-            .getFoundItems(6);
+            .getFoundItems();
         String firstItemFound = foundItems.get(0).getItemName();
         String secondItemFound = foundItems.get(1).getItemDescription();
         Assertions.assertTrue(firstItemFound.equals("milk") &&

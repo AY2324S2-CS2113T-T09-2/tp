@@ -51,9 +51,6 @@ public class SearchCommandParser extends DefaultParser {
             hasOption = true;
         }
         if (commandLine.hasOption("expiry-date")) {
-            //LocalDate expiryDateField = Optional.ofNullable(commandLine.getOptionValue("expiry-date"))
-            //        .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
-            //        .orElse(LocalDate.MIN);
             try {
                 LocalDate expiryDateField = LocalDate.parse(commandLine.getOptionValue("expiry-date"),
                         EXPECTED_INPUT_DATE_FORMAT);
