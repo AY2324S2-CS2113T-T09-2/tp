@@ -1,36 +1,24 @@
 @startuml
+
 participant ":BinBash"
-activate ":BinBash"
+participant "userCommand:AddCommand"
 
-":BinBash" -> "userInterface:Ui" : 1. readUserCommand()
-activate "userInterface:Ui"
-return 2. userInput: String
-
-":BinBash" -> "inputParser:Parser" : 3. parseCommand(userInput)
-activate "inputParser:Parser"
-"inputParser:Parser" -> "inputParser:Parser" : 4. parseAddCommand()
-activate "inputParser:Parser"
-"inputParser:Parser" -> "addCommandParser:AddCommandParser" : 5. parse()
-activate "addCommandParser:AddCommandParser"
-"addCommandParser:AddCommandParser" -> "userCommand:AddCommand" ** : 6. new AddCommand()
+":BinBash" -> "userCommand:AddCommand" : 1. execute(itemList)
 activate "userCommand:AddCommand"
-return 7. userCommand: AddCommand
-return 8. userCommand: AddCommand
-return 9. userCommand: AddCommand
-return 10. userCommand: AddCommand
-
-":BinBash" -> "userCommand:AddCommand" : 11. execute(itemList)
-activate "userCommand:AddCommand"
-"userCommand:AddCommand" -> "itemList:ItemList" : 12. addItem()
+"userCommand:AddCommand" -> "itemList:ItemList" : 2. addItem()
 activate "itemList:ItemList"
-return 13. executionUiOutput: String
-return 14. true
 
-":BinBash" -> "userCommand:AddCommand" : 15. getExecutionUiOutput()
+"itemList:ItemList" -> ":Item"** : 3. new Item()
+activate ":Item"
+return 4. :Item
+return 5. executionUiOutput: String
+return 6. true
+
+":BinBash" -> "userCommand:AddCommand" : 7. getExecutionUiOutput()
 activate "userCommand:AddCommand"
-return 16. executionUiOutput: String
-":BinBash" -> "userInterface:Ui" : 17. talk(executionUiOutput)
+return 8. executionUiOutput: String
+":BinBash" -> "userInterface:Ui" : 9. talk(executionUiOutput)
 activate "userInterface:Ui"
-return 18.
+return 10.
 
 @enduml
