@@ -115,12 +115,8 @@ public class ItemList {
                                   int itemThreshold) throws InvalidArgumentException {
         Item item = findItemByName(itemName);
 
-        updateItemDescription(item, itemDescription);
-        updateItemQuantity(item, itemQuantity);
-        updateItemExpirationDate(item, itemExpirationDate);
-        updateItemCostPrice(item, itemCostPrice);
-        updateItemSalePrice(item, itemSalePrice);
-        updateItemThreshold(item, itemThreshold);
+        updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
+                itemThreshold);
 
         String output = "I have updated the your item information. Do check the following if it is correct."
                 + System.lineSeparator() + System.lineSeparator() + item;
@@ -132,16 +128,23 @@ public class ItemList {
                                   int itemThreshold) throws InvalidArgumentException {
         Item item = itemList.get(index - 1);
 
+        updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
+                itemThreshold);
+
+        String output = "I have updated the your item information. Do check the following if it is correct."
+                + System.lineSeparator() + System.lineSeparator() + item;;
+        return output;
+    }
+
+    private void updateItemData(Item item, String itemDescription, int itemQuantity, LocalDate itemExpirationDate,
+                                double itemSalePrice, double itemCostPrice, int itemThreshold)
+            throws InvalidArgumentException {
         updateItemDescription(item, itemDescription);
         updateItemQuantity(item, itemQuantity);
         updateItemExpirationDate(item, itemExpirationDate);
         updateItemCostPrice(item, itemCostPrice);
         updateItemSalePrice(item, itemSalePrice);
         updateItemThreshold(item, itemThreshold);
-
-        String output = "I have updated the your item information. Do check the following if it is correct."
-                + System.lineSeparator() + System.lineSeparator() + item;;
-        return output;
     }
 
     public void updateItemDescription(Item item, String itemDescription) {
