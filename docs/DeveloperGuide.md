@@ -19,30 +19,70 @@
 
 ## Acknowledgements
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+[AB3 Developer Guide](https://se-education.org/addressbook-level3/DeveloperGuide.html)
+
+[AB3 GitHub Project Repository](https://github.com/se-edu/addressbook-level3)
 
 ## Setting up, getting started
 
-## Design
+1. Ensure you have Java `11` and above. If you do not have the required version, you can install the Java `11` JDK from this [link](https://www.oracle.com/sg/java/technologies/javase/jdk11-archive-downloads.html).
+2. **Fork** the BinBash repository [here](https://github.com/AY2324S2-CS2113T-T09-2/tp).
+3. **Clone** the fork into your computer. 
 
-# Design
+> Note: It is recommended to use `IntelliJ IDEA` for the remaining steps.
+
+If you are using `IntelliJ IDEA`,
+
+4. Set up the correct JDK version for IntelliJ. To do this, kindly refer to the official documentation from JetBrains [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).
+   1. Ensure that you are using **JDK version 11**. 
+5. Import the project as a **Gradle** project. 
+   1. Click **Open** or **Import** in IntelliJ. 
+   2. Locate the `build.gradle` file in the repository. Select it, and click OK.
+   3. If prompted, choose to **Open as Project**. 
+   4. Click OK to accept the default settings. 
+   5. Wait for the import process to finish. This could take a few minutes.
+   6. Once the importing process has completed, you should see the `Gradle Toolbar` in the IDEA interface (look for the elephant icon on the right side of your screen). 
+6. Verify that the Gradle project has been set up correctly.
+   1. Run `seedu.binbash.BinBash` and ensure you see the following output.
+   ```text
+    -------------------------------------------------------------
+      ____  _       ____            _
+    | __ )(_)_ __ | __ )  __ _ ___| |__
+    |  _ \| | '_ \|  _ \ / _` / __| '_ \
+    | |_) | | | | | |_) | (_| \__ \ | | |
+    |____/|_|_| |_|____/ \__,_|___/_| |_|
+    
+    Welcome to BinBash!
+    -------------------------------------------------------------
+    -------------------------------------------------------------
+    Here are your metrics:
+    Total Cost: 0.00
+    Total Revenue: 0.00
+    Net Profit: 0.00
+    
+    -------------------------------------------------------------
+    ```
+   2. Click on the Gradle icon.
+   3. Run the tests (click on `tp/Tasks/verification/test`) and ensure that all tests have passed.
+
+## Design
 
 ### Architecture
 
 Given below is a quick overview of main components and how they interact with each other.
 
-### Main components of the architecture
+#### Main components of the architecture
 
 The bulk of the app's work is done by the following six components:
 
 - `Ui`: The UI of the App.
-- `Storage`: Reads data from and writes data to a .txt file
-- `Parser`: Makes sense of the user input to return the appropriate command
-- `Command`: Executes the command requested by the user
-- `ItemList`: Consists of all the classes that are involved during command execution
+- `Storage`: Reads data from and writes data to a `.txt` file.
+- `Parser`: Makes sense of the user input to return the appropriate command.
+- `Command`: Executes the command requested by the user.
+- `Data`: Handles the data created by the user.
 - `BinBash`: Responsible for initializing the above classes in the correct sequence during startup, and connecting them up with each other.
 
-### Sequence Diagram
+#### Sequence Diagram
 
 The **Sequence Diagram** below shows how the components interact with each other for the scenario where the user issues the command `list`.
 
@@ -63,11 +103,31 @@ The **Sequence Diagram** below shows how the components interact with each other
 11. `Ui` prints this outputString to the user.
 12. If the `Command` executed modifies the database, `BinBash` will call the `saveToStorage()` method of `Storage`
 
+### Parser Component
+
+<!-- TODO: Create the Class diagram for the Parser package/component --> 
+
+API: [`Parser.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/parser/Parser.java)
+
+Below shows the sequence diagram of a `Parser` parsing user input, to return the corresponding `Command`.
+
+![ParseSequenceDiagram](images/ParseSequenceDiagram.png)
+
+Here, it is assumed that the user has already provided their input to the `Ui`. 
+Then, `BinBash` retrieves this input and passes it to `Parser`.
+The `Parser` will then process the user input to determine the type of command to be created.
+
+From here, `Parser` will self-call its corresponding `parseXYZCommand()` method.
+Upon calling `parseXYZCommand()`, the `parse()` method of an internal `XYZCommandParser` is invoked, to create the appropriate `Command` (an `XYZCommand` in this case).
+> In some instances, if the command that needs to be created is simple enough (like a `ByeCommand` or `ListCommand`), then `Parser` will directly create the `Command` without the need of an `XYZCommandParser`.
+
+The `XYZCommand` is then subsequently returned back to `BinBash` for code execution.
+
 ### Data Component
 
 ![DataComponent](images/DataComponent.png)
 
-API: [`ItemList.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/ItemList.java)
+API: [`ItemList.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/inventory/ItemList.java)
 
 The `Data` component is primarily composed of an `ItemList` object that stores different types of `Item`.
 
@@ -75,24 +135,28 @@ The `Data` component is primarily composed of an `ItemList` object that stores d
 
 ## Features
 
-### Iman
+### Add Item to Inventory
 
-### Add Item
+![AddSequenceDiagram](images/AddSequenceDiagram.png)
 
-The `add` command adds an item to the `Item` object and prints out a formatted message to state the name, description,
-quantity, expiration date, sale price, and cost price entered for the item.
+API: [`Ui.java`](../src/main/java/seedu/binbash/ui/Ui.java)
 
-When the `execute()` method from `AddCommand` class is called, the `addItem()` method is first called to create a new
-`RetailItem` object or `PerishableRetailItem` object depending on the user inputs. It will then add the object to the
-`ItemList`. It will then call the `Ui` class to print out a message indicating that the item has
-been successfully added.
+The `add` command adds an `Item` to the `ItemList` object. A formatted `executionUiOutput` message which states the name, description,
+quantity, expiration date, sale price, and cost price entered for the newly created item, will also be printed out upon successful
+command execution.
+
+When the `execute()` method from `AddCommand` class is called, the `addItem()` method is called in turn. A new `Item` object
+will firstly be created based off the user's input. For instance, the user can choose to create a `RetailItem`, `PerishableRetailItem`,
+`OperationalItem` or `PerishableOperationalItem`, depending on their needs. This new `Item` object is then added to the
+`ItemList`, and the formatted `executionUiOutput` will be returned to the `AddCommand`.
+
+`BinBash` will then retrieve the `executionUiOutput` from the `AddCommand`, and call the `Ui` class to print out this 
+message using the `talk()` method.
 
 Separation of Concerns is applied to ensure the `Ui` is only responsible for printing the messages to output, while the 
-`ItemList` class deals with the logic of adding an item to the list. This implementation also encapsulates the details 
+`ItemList` class deals with the logic of creating and adding an item to the list. This implementation also encapsulates the details 
 of adding an item and displaying messages. This way, only classes relevant to the logic of adding an item will have 
 access to `ItemList`.
-
-### Haziq
 
 ### List all items in inventory
 
@@ -101,8 +165,6 @@ and assigns it to `executionUiOutput`.
 
 #### Implementation Notes ####
 The ListCommand is concerned only with the execution of the listing operation. It follows a straightforward process that relies on the `ItemList` to format the list of items, ensuring separation of concerns between command execution and UI presentation.
-
-### Jun Han
 
 ### Delete Item
 
@@ -163,17 +225,7 @@ Note the use of an externally provided `LineReader` object in the `TextIn` class
 
 This allows us to overload options on a small number of commands to provide full functionality of the application. Developers can then extend its features without also the worry of finding a way for users to access those features easily.
 
-### Yi Hao
-
-### Xavier
-
 ## Implementation
-
-### Iman
-
-### Haziq
-
-### Jun Han
 
 ### [Proposed] Search by universal fields
 
@@ -191,15 +243,11 @@ The arguments are then parsed in turn, stored in the filter for the method *Sear
 
 This return value can be printed to the user as per pre-existing *print()* methods.
 
-### Yi Hao
-
-### Xavier
-
 ## Logging
 
 * We are using `java.util.logging` package for logging.
-* The `BinBashLogger` class is used to manage all logging related funtions.
-* The `Logger` for a class can be obtained by contructing a `BinBashLogger` object and assigning it as a class-level variable
+* The `BinBashLogger` class is used to manage all logging related functions.
+* The `Logger` for a class can be obtained by constructing a `BinBashLogger` object and assigning it as a class-level variable
 * Log messages are output to a `logs.txt` file in the `*/logs/` directory by default.
 * If there are issues with the `logs.txt` file that results in no `logs` being written, warnings logs will be output through the console instead.
 
@@ -224,15 +272,16 @@ By effectively parsing user commands and translating them into actionable tasks,
 
 ### Target user profile
 
-* Retail shop owners who has a need to efficiently manage their inventory list
-* prefer desktop apps over other types of apps
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+Small business (retail shop) owners who:
+* have a need to efficiently manage their shop inventory,
+* prefer desktop apps over other types of apps,
+* can type fast,
+* prefer typing to mouse interactions,
+* are reasonably comfortable using CLI apps.
 
 ### Value proposition
 
-* Manage inventory list more efficiently compared to manual stock taking and typical mouse/GUI driven apps
+* Manage inventory more efficiently, compared to manual stock-taking and typical mouse/GUI-driven apps.
 * Portability allows usage on multiple operating systems (E.g. Windows, Linux, Mac).
 * Lightweight, only requires entry-level hardware to run.
 
@@ -245,11 +294,13 @@ By effectively parsing user commands and translating them into actionable tasks,
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
+1. The application should auto-suggest commands for users, to speed up the command entry process.
+2. The user should be allowed to enter commands out-of-order. However, they must still enter the required arguments.
+3. The application should work offline with no issues.
 
 ## Glossary
 
-* *glossary item* - Definition
+* **CLI** - Command-line Interface
 
 ## Instructions for manual testing
 
