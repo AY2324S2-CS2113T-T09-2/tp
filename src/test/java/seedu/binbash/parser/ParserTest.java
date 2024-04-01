@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.command.AddCommand;
@@ -15,6 +16,7 @@ import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.exceptions.InvalidFormatException;
+import seedu.binbash.item.Item;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,7 +29,7 @@ public class ParserTest {
 
     @BeforeEach
     public void setUp() {
-        itemList = new ItemList();
+        itemList = new ItemList(new ArrayList<Item>());
         parser = new Parser();
     }
 
