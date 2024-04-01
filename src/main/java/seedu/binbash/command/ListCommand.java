@@ -14,14 +14,22 @@ public class ListCommand extends Command {
 
     public ListCommand(String sortType) {
         commandLogger = new BinBashLogger(ListCommand.class.getName());
-        commandLogger.info("Creating List Command with sort type of expiry date...");
+        commandLogger.info("Creating List Command with sort type " + sortType + "...");
         this.sortType = sortType;
     }
 
     public boolean execute(ItemList itemList) {
-        if (sortType.equals("e")) {
+        switch(sortType) {
+        case "e":
             executionUiOutput = itemList.printListSortedByExpiryDate(itemList.getItemList());
-        } else {
+            break;
+        case "c":
+            executionUiOutput = itemList.printListSortedByCostPrice(itemList.getItemList());
+            break;
+        case "s":
+            executionUiOutput = itemList.printListSortedBySalePrice(itemList.getItemList());
+            break;
+        default:
             executionUiOutput = itemList.printList(itemList.getItemList());
         }
 
