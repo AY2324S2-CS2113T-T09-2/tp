@@ -20,16 +20,16 @@ public class SearchAssistantTest {
     public void setUp() {
         ArrayList<Item> testItemList = new ArrayList<>();
         testItemList.add(new OperationalItem("light bulb", "a light bulb used in the warehouse",
-                    100, 0.20));
+                    100, 0.20, 50));
         testItemList.add(new PerishableOperationalItem("battery", "a battery for in-store use", 500,
-                    LocalDate.of(2024, 1, 16), 0.10));
-        testItemList.add(new RetailItem("black pen", "zebra sarasa black 0.5", 50, 1.00, 0.70));
+                    LocalDate.of(2024, 1, 16), 0.10, 50));
+        testItemList.add(new RetailItem("black pen", "zebra sarasa black 0.5", 50, 1.00, 0.70, 50));
         testItemList.add(new PerishableRetailItem("banana", "cavendish banana", 30,
-                    LocalDate.of(2024, 1, 4), 0.50, 0.40));
+                    LocalDate.of(2024, 1, 4), 0.50, 0.40, 50));
         testItemList.add(new PerishableRetailItem("milk", "meiji full fat whole milk", 10,
-                    LocalDate.of(2024, 2, 3), 5, 3.50));
+                    LocalDate.of(2024, 2, 3), 5, 3.50, 50));
         testItemList.add(new PerishableRetailItem("banana", "red banana", 20,
-                    LocalDate.of(2024, 1, 6), 0.70, 0.60));
+                    LocalDate.of(2024, 1, 6), 0.70, 0.60, 50));
         searchAssistant.setFoundItems(testItemList);
     }
 
