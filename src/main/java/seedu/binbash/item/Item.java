@@ -10,7 +10,7 @@ public abstract class Item {
     protected int itemQuantity;
     protected double itemCostPrice;
     protected int totalUnitsPurchased;
-    protected Integer itemThreshold;
+    protected int itemThreshold;
     protected boolean isAlert;
 
     public Item(String itemName, String itemDescription, int itemQuantity, double itemCostPrice,
@@ -111,8 +111,8 @@ public abstract class Item {
         return isAlert;
     }
 
-    public void setAlert(boolean alert) {
-        isAlert = alert;
+    public void setAlert(boolean isAlert) {
+        this.isAlert = isAlert;
     }
 
     @Override
