@@ -19,8 +19,8 @@ public class ItemList {
     private final ArrayList<Item> itemList;
     private SearchAssistant searchAssistant;
 
-    public ItemList() {
-        this.itemList = new ArrayList<Item>();
+    public ItemList(ArrayList<Item> itemList) {
+        this.itemList = itemList;
         this.totalRevenue = 0;
         this.totalCost = 0;
         searchAssistant = new SearchAssistant();
