@@ -4,7 +4,6 @@ import seedu.binbash.item.Item;
 import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.item.PerishableRetailItem;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 
 
@@ -36,18 +35,42 @@ public class ItemComparatorByExpiryDate implements Comparator<Item> {
     }
 
     private int compareOpToOp (PerishableOperationalItem item1, PerishableOperationalItem item2) {
+        if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
+            return 0;
+        } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
+            return -1;
+        }
 
+        return 1;
     }
 
     private int compareOpToRe (PerishableOperationalItem item1, PerishableRetailItem item2) {
+        if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
+            return -1;
+        } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
+            return -1;
+        }
 
+        return 1;
     }
 
     private int compareReToRe (PerishableRetailItem item1, PerishableRetailItem item2) {
+        if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
+            return 0;
+        } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
+            return -1;
+        }
 
+        return 1;
     }
 
     private int compareReToOp (PerishableRetailItem item1, PerishableOperationalItem item2) {
+        if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
+            return 1;
+        } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
+            return -1;
+        }
 
+        return 1;
     }
 }
