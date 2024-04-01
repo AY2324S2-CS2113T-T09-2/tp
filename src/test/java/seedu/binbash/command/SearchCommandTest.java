@@ -9,7 +9,7 @@ import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.item.RetailItem;
 import seedu.binbash.item.PerishableRetailItem;
-import seedu.binbash.ItemList;
+import seedu.binbash.inventory.ItemList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

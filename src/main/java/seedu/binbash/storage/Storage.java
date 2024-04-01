@@ -1,7 +1,7 @@
 package seedu.binbash.storage;
 
 import org.apache.commons.cli.ParseException;
-import seedu.binbash.ItemList;
+import seedu.binbash.inventory.ItemList;
 import seedu.binbash.command.Command;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
@@ -9,6 +9,7 @@ import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableRetailItem;
 import seedu.binbash.item.RetailItem;
+import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.parser.AddCommandParser;
 
@@ -20,11 +21,8 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Storage {
-
     private static final int READING_IN_PROFIT_QUANTITIES = 1;
     private static final int READING_IN_ITEM = 0;
     private static final int TOTAL_UNITS_PURCHASED_INDEX = 0;
@@ -34,14 +32,14 @@ public class Storage {
     protected String dataDirectoryPath;
     protected String dataFileName;
     protected boolean isCorrupted;
-    protected Logger storageLogger;
+    protected BinBashLogger storageLogger;
 
     public Storage() {
         this.filePath = "data/items.txt";
         this.dataDirectoryPath = "./data/";
         this.dataFileName = "items.txt";
-        this.isCorrupted = false; // set to false by default
-        this.storageLogger = Logger.getLogger("storageLogger");
+        this.isCorrupted = false; // set to false by default}
+        this.storageLogger = new BinBashLogger(Storage.class.getName());
     }
 
     // TODO: Handle exceptions properly (when the exceptions for AddCommand are settled)
@@ -56,7 +54,7 @@ public class Storage {
      * @throws RuntimeException if an error occurs during file reading.
      */
     public void loadData(ItemList itemManager) {
-        storageLogger.log(Level.INFO, "Preparing to load data from storage file.");
+        storageLogger.info("Preparing to load data from storage file.");
 
         try {
             ArrayList<String> stringRepresentationOfTxtFile = readTxtFile();
@@ -65,13 +63,11 @@ public class Storage {
             isCorrupted = true;
         }
 
-        //assert !isCorrupted : "data file is corrupted";
-
         if (isCorrupted) {
-            storageLogger.log(Level.INFO,
-                    "Data file is corrupted. A new data file will be generated. Proceed at your own risk");
+            storageLogger.warning("Data file is corrupted. A new data file will be generated. "
+                    + "Proceed at your own risk");
         } else {
-            storageLogger.log(Level.INFO, "Data loaded successfully.");
+            storageLogger.info("Data loaded successfully.");
         }
     }
 

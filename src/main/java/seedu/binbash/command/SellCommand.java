@@ -1,7 +1,7 @@
 package seedu.binbash.command;
 
 import seedu.binbash.logger.BinBashLogger;
-import seedu.binbash.ItemList;
+import seedu.binbash.inventory.ItemList;
 
 import java.util.regex.Pattern;
 
@@ -20,7 +20,8 @@ public class SellCommand extends Command{
         this.itemName = itemName;
         this.sellQuantity = sellQuantity;
 
-        commandLogger.fine(String.format(
+        commandLogger=  new BinBashLogger(SellCommand.class.getName());
+        commandLogger.info(String.format(
                 "Creating Sell Command... itemName: %s, sellQuantity: %d",
                 itemName,
                 sellQuantity
