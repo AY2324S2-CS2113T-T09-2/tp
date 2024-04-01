@@ -28,6 +28,10 @@ public class PerishableRetailItem extends RetailItem {
         return itemExpirationDate.format(DATE_TIME_FORMATTER);
     }
 
+    public LocalDate getItemExpirationDateLocalDate() {
+        return itemExpirationDate;
+    }
+
     @Override
     public String toString() {
         return "[P]" + super.toString() + System.lineSeparator() +
