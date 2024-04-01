@@ -73,12 +73,11 @@ public class Storage {
 
         if (!isCorrupted) {
             storageLogger.consoleLog("Data loaded successfully");
-            return outputList;
         } else {
             handleCorruptedFile();
-            storageLogger.consoleLog("User will be given an empty inventory.");
-            return new ArrayList<Item>();
+            storageLogger.consoleLog("User will be given an incomplete inventory.");
         }
+        return outputList;
     }
 
     /**
@@ -87,7 +86,7 @@ public class Storage {
      */
     private void handleCorruptedFile() {
         storageLogger.consoleLog("Data file is corrupted. BinBash is attempting to rename the corrupted file" +
-                "and create a new data file.");
+                " and create a new data file.");
 
         boolean isRenamed = isCorruptedFileRenamed();
         boolean isNewFileCreated = isNewFileCreated();
