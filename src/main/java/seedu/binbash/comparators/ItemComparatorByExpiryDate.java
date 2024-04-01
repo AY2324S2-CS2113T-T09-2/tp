@@ -36,7 +36,7 @@ public class ItemComparatorByExpiryDate implements Comparator<Item> {
 
     private int compareOpToOp (PerishableOperationalItem item1, PerishableOperationalItem item2) {
         if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
-            return 0;
+            return compareQty(item1.getItemQuantity(), item2.getItemQuantity());
         } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
             return -1;
         }
@@ -56,7 +56,7 @@ public class ItemComparatorByExpiryDate implements Comparator<Item> {
 
     private int compareReToRe (PerishableRetailItem item1, PerishableRetailItem item2) {
         if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
-            return 0;
+            return compareQty(item1.getItemQuantity(), item2.getItemQuantity());
         } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
             return -1;
         }
@@ -72,5 +72,15 @@ public class ItemComparatorByExpiryDate implements Comparator<Item> {
         }
 
         return 1;
+    }
+
+    private int compareQty(int qty1, int qty2) {
+        if (qty1 < qty2) {
+            return -1;
+        } else if (qty1 > qty2) {
+            return 1;
+        }
+
+        return 0;
     }
 }
