@@ -32,10 +32,10 @@ public class Storage {
     private static final int ITEM_QUANTITY_INDEX = 3;
     private static final int ITEM_COST_PRICE_INDEX = 4;
     private static final int ITEM_TOTAL_UNITS_PURCHASED_INDEX = 5;
-    private static final int ITEM_EXPIRATION_DATE_INDEX = 6;
-    private static final int ITEM_SALE_PRICE_INDEX = 7;
-    private static final int ITEM_TOTAL_UNITS_SOLD_INDEX = 8;
-    private static final int ITEM_THRESHOLD_INDEX = 9;
+    private static final int ITEM_THRESHOLD_INDEX = 6;
+    private static final int ITEM_EXPIRATION_DATE_INDEX = 7;
+    private static final int ITEM_SALE_PRICE_INDEX = 8;
+    private static final int ITEM_TOTAL_UNITS_SOLD_INDEX = 9;
 
     private static final String DELIMITER = "|";
 
@@ -217,7 +217,8 @@ public class Storage {
                     itemElements[ITEM_NAME_INDEX],
                     itemElements[ITEM_DESCRIPTION_INDEX],
                     Integer.parseInt(itemElements[ITEM_QUANTITY_INDEX]),
-                    Double.parseDouble(itemElements[ITEM_COST_PRICE_INDEX])
+                    Double.parseDouble(itemElements[ITEM_COST_PRICE_INDEX]),
+                    Integer.parseInt(itemElements[ITEM_THRESHOLD_INDEX])
             );
             operationalItem.setTotalUnitsPurchased(Integer.parseInt(itemElements[ITEM_TOTAL_UNITS_PURCHASED_INDEX]));
 
@@ -229,7 +230,8 @@ public class Storage {
                     itemElements[ITEM_DESCRIPTION_INDEX],
                     Integer.parseInt(itemElements[ITEM_QUANTITY_INDEX]),
                     LocalDate.parse(itemElements[ITEM_EXPIRATION_DATE_INDEX], EXPECTED_INPUT_DATE_FORMAT),
-                    Double.parseDouble(itemElements[ITEM_COST_PRICE_INDEX])
+                    Double.parseDouble(itemElements[ITEM_COST_PRICE_INDEX]),
+                    Integer.parseInt(itemElements[ITEM_THRESHOLD_INDEX])
             );
             perishableOperationalItem.setTotalUnitsPurchased(Integer.parseInt(
                     itemElements[ITEM_TOTAL_UNITS_PURCHASED_INDEX]));
@@ -243,7 +245,8 @@ public class Storage {
                     Integer.parseInt(itemElements[ITEM_QUANTITY_INDEX]),
                     LocalDate.parse(itemElements[ITEM_EXPIRATION_DATE_INDEX], EXPECTED_INPUT_DATE_FORMAT),
                     Double.parseDouble(itemElements[ITEM_SALE_PRICE_INDEX]),
-                    Double.parseDouble(itemElements[ITEM_COST_PRICE_INDEX])
+                    Double.parseDouble(itemElements[ITEM_COST_PRICE_INDEX]),
+                    Integer.parseInt(itemElements[ITEM_THRESHOLD_INDEX])
             );
             perishableRetailItem.setTotalUnitsPurchased(Integer.parseInt(
                     itemElements[ITEM_TOTAL_UNITS_PURCHASED_INDEX]));
@@ -257,7 +260,8 @@ public class Storage {
                     itemElements[ITEM_DESCRIPTION_INDEX],
                     Integer.parseInt(itemElements[ITEM_QUANTITY_INDEX]),
                     Double.parseDouble(itemElements[ITEM_SALE_PRICE_INDEX]),
-                    Double.parseDouble(itemElements[ITEM_COST_PRICE_INDEX])
+                    Double.parseDouble(itemElements[ITEM_COST_PRICE_INDEX]),
+                    Integer.parseInt(itemElements[ITEM_THRESHOLD_INDEX])
             );
             retailItem.setTotalUnitsPurchased(Integer.parseInt(itemElements[ITEM_TOTAL_UNITS_PURCHASED_INDEX]));
             retailItem.setTotalUnitsSold(Integer.parseInt(itemElements[ITEM_TOTAL_UNITS_SOLD_INDEX]));
@@ -318,13 +322,13 @@ public class Storage {
                 + item.getItemDescription() + DELIMITER
                 + item.getItemQuantity() + DELIMITER
                 + item.getItemCostPrice() + DELIMITER
-                + item.getTotalUnitsPurchased() + DELIMITER;
+                + item.getTotalUnitsPurchased() + DELIMITER
+                + item.getItemThreshold() + DELIMITER;
 
         // Additional fields for specific item types
         switch (itemType) {
         case "OperationalItem":
             output += " " + DELIMITER
-                    + " " + DELIMITER
                     + " " + DELIMITER
                     + " " + DELIMITER;
             break;
@@ -333,7 +337,6 @@ public class Storage {
 
             output += perishableOperationalItem.getItemExpirationDate() + DELIMITER
                     + " " + DELIMITER
-                    + " " + DELIMITER
                     + " " + DELIMITER;
             break;
         case "PerishableRetailItem":
@@ -341,16 +344,14 @@ public class Storage {
 
             output += perishableRetailItem.getItemExpirationDate() + DELIMITER
                     + perishableRetailItem.getItemSalePrice() + DELIMITER
-                    + perishableRetailItem.getTotalUnitsSold() + DELIMITER
-                    + " " + DELIMITER;
+                    + perishableRetailItem.getTotalUnitsSold() + DELIMITER;
             break;
         case "RetailItem":
             RetailItem retailItem = (RetailItem) item;
 
             output += " " + DELIMITER
                     + retailItem.getItemSalePrice() + DELIMITER
-                    + retailItem.getTotalUnitsSold() + DELIMITER
-                    + " " + DELIMITER;
+                    + retailItem.getTotalUnitsSold() + DELIMITER;
             break;
         default:
             isCorrupted = true;

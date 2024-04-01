@@ -15,9 +15,9 @@ class ListCommandTest {
         ItemList itemList = new ItemList();
 
         itemList.addItem("retail", "testItem1", "Test item 1", 2,
-                LocalDate.of(1999, 1, 1), 4.00, 5.00);
+                LocalDate.of(1999, 1, 1), 4.00, 5.00, 6);
         itemList.addItem("retail", "testItem2", "Test item 2", 6,
-                LocalDate.of(1999, 1, 1), 8.00, 9.00);
+                LocalDate.of(1999, 1, 1), 8.00, 9.00, 10);
 
         ListCommand listCommand = new ListCommand();
 
@@ -29,6 +29,7 @@ class ListCommandTest {
                 "\tquantity: 2" + System.lineSeparator() +
                 "\tcost price: $5.00" + System.lineSeparator() +
                 "\tsale price: $4.00" + System.lineSeparator() +
+                "\tthreshold: 6" + System.lineSeparator() +
                 "\texpiry date: 01-01-1999" + System.lineSeparator() +
                 System.lineSeparator() +
                 "2. [P][R] testItem2" + System.lineSeparator() +
@@ -36,6 +37,7 @@ class ListCommandTest {
                 "\tquantity: 6" + System.lineSeparator() +
                 "\tcost price: $9.00" + System.lineSeparator() +
                 "\tsale price: $8.00" + System.lineSeparator() +
+                "\tthreshold: 10" + System.lineSeparator() +
                 "\texpiry date: 01-01-1999" + System.lineSeparator() +
                 System.lineSeparator();
 

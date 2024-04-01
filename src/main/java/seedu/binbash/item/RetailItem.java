@@ -6,11 +6,12 @@ package seedu.binbash.item;
  * Since these Items are meant to be sold, they will have a sale price.
  */
 public class RetailItem extends Item {
-    private final double itemSalePrice;
+
+    private double itemSalePrice;
     private int totalUnitsSold;
     public RetailItem(String itemName, String itemDescription, int itemQuantity,
-                      double itemSalePrice, double itemCostPrice) {
-        super(itemName, itemDescription, itemQuantity, itemCostPrice);
+                      double itemSalePrice, double itemCostPrice, Integer itemThreshold) {
+        super(itemName, itemDescription, itemQuantity, itemCostPrice, itemThreshold);
         this.itemSalePrice = itemSalePrice;
         this.totalUnitsSold = 0;
     }
@@ -22,6 +23,10 @@ public class RetailItem extends Item {
      */
     public double getItemSalePrice() {
         return itemSalePrice;
+    }
+
+    public void setItemSalePrice(double itemSalePrice) {
+        this.itemSalePrice = itemSalePrice;
     }
 
     /**
@@ -45,6 +50,7 @@ public class RetailItem extends Item {
     @Override
     public String toString() {
         return "[R] " + super.toString() + System.lineSeparator()
-                + String.format("\tsale price: $%.2f", itemSalePrice);
+                + String.format("\tsale price: $%.2f", itemSalePrice) + System.lineSeparator()
+                + String.format("\tthreshold: %d", itemThreshold);
     }
 }
