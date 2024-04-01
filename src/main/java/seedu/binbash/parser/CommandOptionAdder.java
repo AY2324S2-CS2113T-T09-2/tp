@@ -35,6 +35,27 @@ public class CommandOptionAdder {
         return opItemOption;
     }
 
+    private Option sortByExpirationDateOption() {
+        Option sortOption = Option.builder("e")
+                .hasArg(false)
+                .required(false)
+                .longOpt("expiry")
+                .desc("Sort by expiry date.")
+                .argName("expiry")
+                .build();
+
+        return sortOption;
+    }
+
+    CommandOptionAdder addListTypeOptionGroup() {
+        OptionGroup listTypeOptionGroup = new OptionGroup()
+                .addOption(sortByExpirationDateOption());
+
+        listTypeOptionGroup.setRequired(false);
+        options.addOptionGroup(listTypeOptionGroup);
+        return this;
+    }
+
     CommandOptionAdder addItemTypeOptionGroup() {
         OptionGroup itemTypeOptionGroup = new OptionGroup()
                 .addOption(getRetailItemOption())
