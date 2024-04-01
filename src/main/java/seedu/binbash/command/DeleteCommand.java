@@ -1,5 +1,6 @@
 package seedu.binbash.command;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
@@ -45,12 +46,12 @@ public class DeleteCommand extends Command {
      */
     public boolean execute(ItemList itemList) {
         if (isIndex) {
-            if (index <= 0 || index > itemList.getItemCount()) {
+            if (index <= 0 || index > itemList.getSortedOrder().size()) {
                 commandLogger.info("Index entered is out of bounds");
                 executionUiOutput = "Index entered is out of bounds!";
                 return true;
             }
-            assert index > 0 && index <= itemList.getItemCount();
+            assert index > 0 && index <= itemList.getSortedOrder().size();
             commandLogger.info("Delete identifier is detected as an index");
             executionUiOutput = itemList.deleteItem(index);
         } else {
