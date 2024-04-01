@@ -111,145 +111,88 @@ public class ItemList {
         return output;
     }
 
-    
+    public String updateItemDataByName (String itemName, String itemDescription, int itemQuantity,
+                                  LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
+                                  int itemThreshold) throws InvalidArgumentException {
+        Item item = findItemByName(itemName);
 
-    public String updateItemDataByString(String itemName, String newItemDescription,
-                                 Integer newItemQuantity, LocalDate newItemExpirationDate, Double newItemSalePrice,
-                                 Double newItemCostPrice, Integer newItemThreshold) {
+        updateItemDescription(item, itemDescription);
+        updateItemQuantity(item, itemQuantity);
+        updateItemExpirationDate(item, itemExpirationDate);
+        updateItemCostPrice(item, itemCostPrice);
+        updateItemSalePrice(item, itemSalePrice);
+        updateItemThreshold(item, itemThreshold);
 
-        updateItemDescription(itemName,newItemDescription);
-        updateItemQuantity(itemName, newItemQuantity);
-        updateItemExpirationDate(itemName, newItemExpirationDate);
-        updateItemSalePrice(itemName, newItemSalePrice);
-        updateItemCostPrice(itemName, newItemCostPrice);
-        updateItemThreshold(itemName, newItemThreshold);
-
-        String output = "I have updated the your item information. Do check the following if it is correct.";
-
+        String output = "I have updated the your item information. Do check the following if it is correct."
+                + System.lineSeparator() + System.lineSeparator() + item;
         return output;
     }
 
-    public String updateItemDataByIndex(int index, String newItemDescription,
-                                         Integer newItemQuantity, LocalDate newItemExpirationDate, Double newItemSalePrice,
-                                         Double newItemCostPrice, Integer newItemThreshold) {
+    public String updateItemDataByIndex (int index, String itemDescription, int itemQuantity,
+                                  LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
+                                  int itemThreshold) throws InvalidArgumentException {
+        Item item = itemList.get(index - 1);
 
-        updateItemDescription(index,newItemDescription);
-        updateItemQuantity(index, newItemQuantity);
-        updateItemExpirationDate(index, newItemExpirationDate);
-        updateItemSalePrice(index, newItemSalePrice);
-        updateItemCostPrice(index, newItemCostPrice);
-        updateItemThreshold(index, newItemThreshold);
+        updateItemDescription(item, itemDescription);
+        updateItemQuantity(item, itemQuantity);
+        updateItemExpirationDate(item, itemExpirationDate);
+        updateItemCostPrice(item, itemCostPrice);
+        updateItemSalePrice(item, itemSalePrice);
+        updateItemThreshold(item, itemThreshold);
 
-        String output = "I have updated the your item information. Do check the following if it is correct.";
-
+        String output = "I have updated the your item information. Do check the following if it is correct."
+                + System.lineSeparator() + System.lineSeparator() + item;;
         return output;
     }
 
-    public void updateItemDescription(String itemName, String newItemDescription) {
-        for (Item item : itemList) {
-            if (item.getItemName().trim().equals(itemName.trim())) {
-                logger.info("Attempting to update item description");
-                item.setItemDescription(newItemDescription);
-            }
+    public void updateItemDescription(Item item, String itemDescription) {
+        if (itemDescription != null) {
+            logger.info("Attempting to update item description");
+            item.setItemDescription(itemDescription);
         }
     }
-
-    public void updateItemDescription(int index, String newItemDescription) {
-        Item item = itemList.get(index - 1);
-        logger.info("Attempting to update item description");
-        item.setItemDescription(newItemDescription);
-    }
-
-    public void updateItemQuantity(String itemName, int newItemQuantity) {
-        for (Item item : itemList) {
-            if (!item.getItemName().trim().equals(itemName.trim())) {
-                continue;
-            }
+    public void updateItemQuantity(Item item, int itemQuantity) {
+        if (itemQuantity != Integer.MIN_VALUE) {
             logger.info("Attempting to update item quantity");
-            item.setItemQuantity(newItemQuantity);
+            item.setItemQuantity(itemQuantity);
         }
     }
 
-    public void updateItemQuantity(int index, int newItemQuantity) {
-        Item item = itemList.get(index - 1);
-        logger.info("Attempting to update item quantity");
-        item.setItemQuantity(newItemQuantity);
-    }
-
-    public void updateItemExpirationDate(String itemName, LocalDate newItemExpirationDate) {
-        for (Item item : itemList) {
-            if (!item.getItemName().trim().equals(itemName.trim())) {
-                continue;
-                }
+    public void updateItemExpirationDate(Item item, LocalDate itemExpirationDate) throws InvalidArgumentException {
+        if (itemExpirationDate != LocalDate.MIN) {
             logger.info("Attempting to update item expiration date");
             if (item instanceof PerishableOperationalItem) {
-                ((PerishableOperationalItem) item).setItemExpirationDate(newItemExpirationDate);
+                ((PerishableOperationalItem) item).setItemExpirationDate(itemExpirationDate);
             } else if (item instanceof PerishableRetailItem) {
-                ((PerishableRetailItem) item).setItemExpirationDate(newItemExpirationDate);
+                ((PerishableRetailItem) item).setItemExpirationDate(itemExpirationDate);
+            }
+            else {
+                throw new InvalidArgumentException("This item is not a perishable and has no expiry date.");
             }
         }
     }
+    public void updateItemSalePrice(Item item, double itemSalePrice) {
 
-    public void updateItemExpirationDate(int index, LocalDate newItemExpirationDate) {
-        Item item = itemList.get(index - 1);
-        logger.info("Attempting to update item expiration date");
-        if (item instanceof PerishableOperationalItem) {
-            ((PerishableOperationalItem) item).setItemExpirationDate(newItemExpirationDate);
-        } else if (item instanceof PerishableRetailItem) {
-            ((PerishableRetailItem) item).setItemExpirationDate(newItemExpirationDate);
-        }
-    }
-
-    public void updateItemSalePrice(String itemName, double newItemSalePrice) {
-        for (Item item : itemList) {
-            if (!item.getItemName().trim().equals(itemName.trim())) {
-                continue;
-                }
+        if (itemSalePrice != Double.MIN_VALUE) {
             logger.info("Attempting to update item sale price");
             if (item instanceof RetailItem) {
-                ((RetailItem) item).setItemSalePrice(newItemSalePrice);
+                ((RetailItem) item).setItemSalePrice(itemSalePrice);
             }
         }
     }
 
-    public void updateItemSalePrice(int index, double newItemSalePrice) {
-        Item item = itemList.get(index - 1);
-        logger.info("Attempting to update item sale price");
-        if (item instanceof RetailItem) {
-            ((RetailItem) item).setItemSalePrice(newItemSalePrice);
-        }
-    }
-
-    public void updateItemCostPrice(String itemName, double newItemCostPrice) {
-        for (Item item : itemList) {
-            if (!item.getItemName().trim().equals(itemName.trim())) {
-                continue;
-            }
+    public void updateItemCostPrice(Item item, double itemCostPrice) {
+        if (itemCostPrice != Double.MIN_VALUE) {
             logger.info("Attempting to update item cost price");
-            item.setItemCostPrice(newItemCostPrice);
+            item.setItemCostPrice(itemCostPrice);
         }
     }
 
-    public void updateItemCostPrice(int index, double newItemCostPrice) {
-        Item item = itemList.get(index - 1);
-        logger.info("Attempting to update item quantity");
-        item.setItemCostPrice(newItemCostPrice);
-    }
-
-    public void updateItemThreshold(String itemName, int newItemThreshold) {
-        for (Item item : itemList) {
-            if (!item.getItemName().trim().equals(itemName.trim())) {
-                continue;
-            }
+    public void updateItemThreshold(Item item, int itemThreshold) {
+        if (itemThreshold != Integer.MIN_VALUE) {
             logger.info("Attempting to update item threshold");
-            item.setItemThreshold(newItemThreshold);
+            item.setItemThreshold(itemThreshold);
         }
-    }
-
-    public void updateItemThreshold(int index, int newItemThreshold) {
-        Item item = itemList.get(index - 1);
-        logger.info("Attempting to update item quantity");
-        item.setItemThreshold(newItemThreshold);
     }
 
     public Item findItemByName(String itemName) throws InvalidArgumentException {
@@ -307,7 +250,7 @@ public class ItemList {
 
     public String alertItemQuantity(Item item) {
         item.setAlert(true);
-        String output = System.lineSeparator() + System.lineSeparator() + "Oh no! You're item is running low!";
+        String output = System.lineSeparator() + System.lineSeparator() + "Oh no! Your item is running low!";
 
         return output;
     }
