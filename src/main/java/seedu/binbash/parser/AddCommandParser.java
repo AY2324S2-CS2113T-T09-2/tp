@@ -54,7 +54,7 @@ public class AddCommandParser extends DefaultParser {
                 .orElse(LocalDate.MIN);
         int itemThreshold = Optional.ofNullable(commandLine.getOptionValue("threshold"))
                 .map(Integer::parseInt)
-                .orElse(-1);
+                .orElse(1);
 
         return new AddCommand(itemType, itemName, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice,
                 itemCostPrice, itemThreshold);
