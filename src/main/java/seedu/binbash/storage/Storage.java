@@ -148,7 +148,7 @@ public class Storage {
      * @throws BinBashException if the directory or file cannot be created.
      * @throws IOException if an error occurs during file reading.
      */
-    private ArrayList<String> readTxtFile() throws BinBashException, IOException {
+    protected ArrayList<String> readTxtFile() throws BinBashException, IOException {
         File dataDirectory = new File(dataDirectoryPath);
         File dataFile = new File(dataDirectory, dataFileName);
 
@@ -182,7 +182,7 @@ public class Storage {
      * @param stringRepresentationOfTxtFile The list of strings representing each line in the text file.
      * @return A list of items parsed from the text file.
      */
-    private ArrayList<Item> parseLinesToItemList(ArrayList<String> stringRepresentationOfTxtFile) {
+    protected ArrayList<Item> parseLinesToItemList(ArrayList<String> stringRepresentationOfTxtFile) {
         ArrayList<Item> outputList = new ArrayList<>();
 
         for (String line : stringRepresentationOfTxtFile) {
@@ -206,7 +206,7 @@ public class Storage {
      * @param line The string representation of a single line in the text file.
      * @return The item object created from the line, or {@code null} if the item type is unknown.
      */
-    private Item convertLineToItem(String line) {
+    protected Item convertLineToItem(String line) {
         String[] itemElements = line.split("\\|");
         String itemType = itemElements[ITEM_TYPE_INDEX];
 
@@ -295,7 +295,7 @@ public class Storage {
      * @param itemList The list of items to be converted into a string.
      * @return A string representation of the list of items, suitable for saving to a file.
      */
-    private String generateTextToSave(List<Item> itemList) {
+    protected String generateTextToSave(List<Item> itemList) {
         String textToSave = "";
 
         for (Item item: itemList) {
@@ -313,7 +313,7 @@ public class Storage {
      * @param item The item to be converted into a string.
      * @return A string representation of the item, suitable for saving to a file.
      */
-    private String generateStorageRepresentationOfSingleItem(Item item) {
+    protected String generateStorageRepresentationOfSingleItem(Item item) {
         String itemType = item.getClass().getSimpleName();
 
         // Common fields for all item types
