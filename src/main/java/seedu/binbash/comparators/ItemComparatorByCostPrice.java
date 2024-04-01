@@ -20,8 +20,10 @@ public class ItemComparatorByCostPrice implements Comparator<Item> {
 
     private int compareByItemType (Item item1, Item item2) {
         if (item1 instanceof PerishableRetailItem && item2 instanceof PerishableOperationalItem) {
+        if (item1 instanceof RetailItem && item2 instanceof OperationalItem) {
             return -1;
         } else if (item1 instanceof PerishableOperationalItem && item2 instanceof PerishableRetailItem) {
+        } else if (item1 instanceof OperationalItem && item2 instanceof RetailItem) {
             return 1;
         }
 
