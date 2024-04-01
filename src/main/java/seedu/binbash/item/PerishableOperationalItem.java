@@ -28,7 +28,7 @@ public class PerishableOperationalItem extends OperationalItem {
         return itemExpirationDate.format(DATE_TIME_FORMATTER);
     }
 
-    public LocalDate getItemExpirationnDateLocalDate() {
+    public LocalDate getItemExpirationDateLocalDate() {
         return itemExpirationDate;
     }
 
