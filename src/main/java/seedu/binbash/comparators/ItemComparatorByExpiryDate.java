@@ -46,7 +46,7 @@ public class ItemComparatorByExpiryDate implements Comparator<Item> {
 
     private int compareOpToRe (PerishableOperationalItem item1, PerishableRetailItem item2) {
         if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
-            return -1;
+            return 1;
         } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
             return -1;
         }
@@ -66,7 +66,7 @@ public class ItemComparatorByExpiryDate implements Comparator<Item> {
 
     private int compareReToOp (PerishableRetailItem item1, PerishableOperationalItem item2) {
         if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
-            return 1;
+            return -1;
         } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
             return -1;
         }
