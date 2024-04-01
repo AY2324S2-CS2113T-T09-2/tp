@@ -1,81 +1,160 @@
 package seedu.binbash.parser;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.*;
+import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.UpdateCommand;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
 public class UpdateCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    private Options options;
 
     public UpdateCommandParser() {
         options = new Options();
         new CommandOptionAdder(options)
-                .addNameOption(false, "Easily recognizable item name.")
-                .addDescriptionOption(false, "A brief description of the item.")
-                .addQuantityOption(false, "The units of item to be added.")
-                .addCostPriceOption(false, "The cost of the item.")
-                .addSalePriceOption(false, "How much you'll sell the item for.")
+                .addItemNameAndIndexOptionGroup()
+                .addDescriptionOption(false, "Update description of item")
+                .addQuantityOption(false, "Update quantity of item")
+                .addCostPriceOption(false, "Update cost price of item")
+                .addSalePriceOption(false, "Update sale price of item")
                 .addExpirationDateOption(false,
-                        "If the item has an expiration date, specify it here.")
+                        "Update expiry date of item")
                 .addThresholdOption(false,
-                        "Minimum quantity, below which an alert will be displayed")
-                .addIndexOption(false, "The index of the item to update.");
+                        "Update threshold of item");
     }
 
     public UpdateCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
 
-        String itemDescription = parseDescriptionOption(commandLine, "description");
-        Integer itemQuantity = parseIntegerOption(commandLine, "quantity");
-        Double itemCostPrice = parseDoubleOption(commandLine, "cost-price");
-        Double itemSalePrice = parseDoubleOption(commandLine, "sale-price");
-        LocalDate itemExpirationDate = parseDateOption(commandLine, "expiry-date");
-        Integer itemThreshold = parseIntegerOption(commandLine, "threshold");
+        boolean hasOption = false;
+        UpdateCommand updateCommand;
 
-        if (commandLine.hasOption("index")) {
-            int index = Integer.parseInt(commandLine.getOptionValue("index"));
-            return new UpdateCommand(index, itemDescription, itemQuantity, itemExpirationDate,
-                    itemSalePrice, itemCostPrice, itemThreshold);
-        } else {
-            String itemName = parseNameOption(commandLine, "name");
-            return new UpdateCommand(itemName, itemDescription, itemQuantity, itemExpirationDate,
-                    itemSalePrice, itemCostPrice, itemThreshold);
+        updateCommand = getUpdateCommand(commandLine);
+
+        if (commandLine.hasOption("description")) {
+            hasOption = hasDescriptionOption(commandLine, updateCommand);
         }
+        if (commandLine.hasOption("quantity")) {
+            hasOption = hasQuantityOption(commandLine, updateCommand);
+        }
+        if (commandLine.hasOption("cost-price")) {
+            hasOption = hasCostPriceOption(commandLine, updateCommand);
+        }
+        if (commandLine.hasOption("sale-price")) {
+            hasOption = hasSalePriceOption(commandLine, updateCommand);
+        }
+        if (commandLine.hasOption("expiry-date")) {
+            hasOption = hasExpirationDateOption(commandLine, updateCommand);
+        }
+        if (commandLine.hasOption("threshold")) {
+            hasOption = hasThresholdOption(commandLine, updateCommand);
+        }
+        if (!hasOption) {
+            throw new ParseException("At least one of -n, -d, -c, -s, -e option required");
+        }
+        return updateCommand;
     }
 
-    private String parseNameOption(CommandLine commandLine, String option) {
-        return String.join(" ", commandLine.getOptionValues("name"));
+    private static boolean hasThresholdOption(CommandLine commandLine, UpdateCommand updateCommand)
+            throws ParseException {
+        boolean hasOption;
+        String threshold = commandLine.getOptionValue("threshold");
+        int itemThreshold = Integer.parseInt(threshold);
+        if (itemThreshold < 0) {
+            throw new ParseException("Threshold must be must be at least 0.");
+        } else if (itemThreshold == Integer.MAX_VALUE) {
+            throw new ParseException("Your threshold is too large");
+        }
+        updateCommand.setItemThreshold(itemThreshold);
+        hasOption = true;
+
+        return hasOption;
     }
 
-    private String parseDescriptionOption(CommandLine commandLine, String option) {
-        return Optional.ofNullable(commandLine.getOptionValues(option))
-                .map(values -> String.join(" ", values))
-                .orElse(null);
+    private static boolean hasExpirationDateOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
+        boolean hasOption;
+        try {
+            LocalDate itemExpiryDate = LocalDate.parse(commandLine.getOptionValue("expiry-date"),
+                    EXPECTED_INPUT_DATE_FORMAT);
+            updateCommand.setItemExpirationDate(itemExpiryDate);
+        } catch (DateTimeParseException e) {
+            throw new ParseException(e.getMessage());
+        }
+        hasOption = true;
+        return hasOption;
     }
 
-    private Integer parseIntegerOption(CommandLine commandLine, String option) {
-        return Optional.ofNullable(commandLine.getOptionValue(option))
-                .map(Integer::parseInt)
-                .orElse(null);
+    private static boolean hasSalePriceOption(CommandLine commandLine, UpdateCommand updateCommand)
+            throws ParseException {
+        boolean hasOption;
+        String salePrice = commandLine.getOptionValue("sale-price");
+        double itemSalePrice = Double.parseDouble(salePrice);
+        if (itemSalePrice < 0) {
+            throw new ParseException("Sale price must be at least 0.");
+        } else if (itemSalePrice == Integer.MAX_VALUE) {
+            throw new ParseException("Your sale price is too large");
+        }
+        updateCommand.setItemSalePrice(itemSalePrice);
+        hasOption = true;
+
+        return hasOption;
     }
 
-    private Double parseDoubleOption(CommandLine commandLine, String option) {
-        return Optional.ofNullable(commandLine.getOptionValue(option))
-                .map(Double::parseDouble)
-                .orElse(null);
+    private static boolean hasCostPriceOption(CommandLine commandLine, UpdateCommand updateCommand)
+            throws ParseException {
+        boolean hasOption;
+        String costPrice = commandLine.getOptionValue("cost-price");
+        double itemCostPrice = Double.parseDouble(costPrice);
+        if (itemCostPrice < 0) {
+            throw new ParseException("Cost price must be at least 0.");
+        } else if (itemCostPrice == Integer.MAX_VALUE) {
+            throw new ParseException("Your cost price is too large");
+        }
+        updateCommand.setItemCostPrice(itemCostPrice);
+        hasOption = true;
+
+        return hasOption;
     }
 
-    private LocalDate parseDateOption(CommandLine commandLine, String option) {
-        return Optional.ofNullable(commandLine.getOptionValue(option))
-                .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
-                .orElse(null);
+    private static boolean hasQuantityOption(CommandLine commandLine, UpdateCommand updateCommand)
+            throws ParseException {
+        boolean hasOption;
+        String quantity = commandLine.getOptionValue("quantity");
+        int itemQuantity = Integer.parseInt(quantity);
+        if (itemQuantity < 0) {
+            throw new ParseException("Quantity must be at least 0.");
+        } else if (itemQuantity == Integer.MAX_VALUE) {
+            throw new ParseException("Your quantity is too large");
+        }
+        updateCommand.setItemQuantity(itemQuantity);
+        hasOption = true;
+
+        return hasOption;
+    }
+
+
+    private static boolean hasDescriptionOption(CommandLine commandLine, UpdateCommand updateCommand) {
+        boolean hasOption;
+        String itemDescription = String.join(" ", commandLine.getOptionValues("description"));
+        updateCommand.setItemDescription(itemDescription);
+        hasOption = true;
+        return hasOption;
+    }
+
+    private static UpdateCommand getUpdateCommand(CommandLine commandLine) {
+        UpdateCommand updateCommand;
+        if (commandLine.hasOption("name")) {
+            String itemName = String.join(" ", commandLine.getOptionValues("name"));
+            updateCommand = new UpdateCommand(itemName);
+        } else {
+            int index = Integer.parseInt(commandLine.getOptionValue("index"));
+            updateCommand = new UpdateCommand(index);
+            updateCommand.setIsIndex();
+        }
+        return updateCommand;
     }
 }
 
