@@ -11,7 +11,7 @@ public class ItemComparatorByCostPrice implements Comparator<Item> {
     public int compare(Item item1, Item item2) {
         if (item1.getItemCostPrice() < item2.getItemCostPrice()) {
             return -1;
-        } else if (item1.getItemQuantity() > item2.getItemCostPrice()) {
+        } else if (item1.getItemCostPrice() > item2.getItemCostPrice()) {
             return 1;
         }
 
