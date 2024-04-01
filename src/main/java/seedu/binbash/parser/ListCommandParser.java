@@ -15,10 +15,14 @@ public class ListCommandParser extends DefaultParser {
 
     public ListCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
-        if (commandLine.hasOption("expiry")) {
+        if (commandLine.hasOption("cost")) {
+            return new ListCommand("c");
+        } else if (commandLine.hasOption("expiry")) {
             return new ListCommand("e");
+        }  else if (commandLine.hasOption("sale")) {
+            return new ListCommand("s");
+        } else {
+            return new ListCommand();
         }
-
-        return new ListCommand();
     }
 }
