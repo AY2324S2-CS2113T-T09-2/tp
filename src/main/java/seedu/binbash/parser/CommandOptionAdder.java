@@ -35,6 +35,53 @@ public class CommandOptionAdder {
         return opItemOption;
     }
 
+    private Option sortByCostPriceOption() {
+        Option sortCostOption = Option.builder("c")
+                .hasArg(false)
+                .required(false)
+                .longOpt("cost")
+                .desc("Sort by cost price.")
+                .argName("cost")
+                .build();
+
+        return sortCostOption;
+    }
+
+    private Option sortByExpirationDateOption() {
+        Option sortExpiryOption = Option.builder("e")
+                .hasArg(false)
+                .required(false)
+                .longOpt("expiry")
+                .desc("Sort by expiry date.")
+                .argName("expiry")
+                .build();
+
+        return sortExpiryOption;
+    }
+
+    private Option sortBySalePriceOption() {
+        Option sortSaleOption = Option.builder("s")
+                .hasArg(false)
+                .required(false)
+                .longOpt("sale")
+                .desc("Sort by sale price.")
+                .argName("sale")
+                .build();
+
+        return sortSaleOption;
+    }
+
+    CommandOptionAdder addListTypeOptionGroup() {
+        OptionGroup listTypeOptionGroup = new OptionGroup()
+                .addOption(sortByCostPriceOption())
+                .addOption(sortByExpirationDateOption())
+                .addOption(sortBySalePriceOption());
+
+        listTypeOptionGroup.setRequired(false);
+        options.addOptionGroup(listTypeOptionGroup);
+        return this;
+    }
+
     private Option getItemNameOption() {
         Option opItemOption = Option.builder("n")
                 .hasArg(true)

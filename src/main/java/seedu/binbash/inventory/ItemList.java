@@ -1,5 +1,8 @@
 package seedu.binbash.inventory;
 
+import seedu.binbash.comparators.ItemComparatorByCostPrice;
+import seedu.binbash.comparators.ItemComparatorByExpiryDate;
+import seedu.binbash.comparators.ItemComparatorBySalePrice;
 import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
@@ -13,15 +16,19 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 
+import static java.util.stream.Collectors.toList;
+
 public class ItemList {
     private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());
     private double totalRevenue;
     private double totalCost;
     private final ArrayList<Item> itemList;
+    private ArrayList<Integer> sortedOrder;
     private SearchAssistant searchAssistant;
 
     public ItemList(ArrayList<Item> itemList) {
         this.itemList = itemList;
+        this.sortedOrder = new ArrayList<Integer>();
         this.totalRevenue = 0;
         this.totalCost = 0;
         searchAssistant = new SearchAssistant();
@@ -81,6 +88,9 @@ public class ItemList {
         return itemList.size();
     }
 
+    public ArrayList<Integer> getSortedOrder() {
+        return sortedOrder;
+    }
 
     public String addItem(String itemType, String itemName, String itemDescription, int itemQuantity,
                           LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice, int itemThreshold) {
@@ -102,8 +112,10 @@ public class ItemList {
         }
 
         int beforeSize = itemList.size();
+        sortedOrder.add(beforeSize);
         itemList.add(item);
         assert itemList.size() == (beforeSize + 1);
+        assert sortedOrder.size() == (beforeSize + 1);
 
         String output = "Noted! I have added the following item into your inventory:" + System.lineSeparator()
                 + System.lineSeparator() + item;
@@ -266,7 +278,7 @@ public class ItemList {
     public String deleteItem(int index) {
         logger.info("Attempting to delete an item");
         int beforeSize = itemList.size();
-        Item tempItem = itemList.remove(index - 1);
+        Item tempItem = itemList.remove((sortedOrder.get(index - 1).intValue()));
         assert itemList.size() == (beforeSize - 1);
 
         String output = "Got it! I've removed the following item:" + System.lineSeparator()
@@ -284,8 +296,8 @@ public class ItemList {
     public String deleteItem(String keyword) {
         int targetIndex = -1;
         Item currentItem;
-        for (int i = 0 ; i < itemList.size(); i ++) {
-            currentItem = itemList.get(i);
+        for (int i = 0; i < sortedOrder.size(); i ++) {
+            currentItem = itemList.get(sortedOrder.get(i));
             if (currentItem.getItemName().trim().equals(keyword)) {
                 logger.info("first matching item at index " + i + " found.");
                 targetIndex = i + 1;
@@ -312,12 +324,121 @@ public class ItemList {
         int index = 1;
         String output = "";
 
+        sortedOrder.clear();
         for (Item item: itemList) {
+            sortedOrder.add(index - 1);
             output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
             index++;
         }
 
         return output;
+    }
+
+    /**
+     * Returns a string representation of all the items in the list sorted by item cost price. Each item's string
+     * representation is obtained by calling its 'toString' method.
+     *
+     * @param itemList the inventory to print.
+     * @return A concatenated string of all item representations in the sorted list, each on a new line.
+     */
+    public String printListSortedByCostPrice(List<Item> itemList) {
+        int index = 1;
+        String output = "";
+
+        logger.info("Sorting inventory by expiry date...");
+        ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
+                .sorted(new ItemComparatorByCostPrice())
+                .collect(toList());
+
+        logger.info("Updating sortedOrder...");
+        updateSortedOrder(itemList, sortedList);
+
+        assert sortedOrder.size() == sortedList.size();
+
+        logger.info("Printing sorted list...");
+        for (Item item: sortedList) {
+            output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
+            index++;
+        }
+
+        return output;
+    }
+
+    /**
+     * Returns a string representation of all the items in the list sorted by item expiry date. Each item's string
+     * representation is obtained by calling its 'toString' method.
+     *
+     * @param itemList the inventory to print.
+     * @return A concatenated string of all item representations in the sorted list, each on a new line.
+     */
+    public String printListSortedByExpiryDate(List<Item> itemList) {
+        int index = 1;
+        String output = "";
+
+        logger.info("Sorting inventory by expiry date...");
+        ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
+                .filter((t) -> t instanceof PerishableOperationalItem || t instanceof PerishableRetailItem)
+                .sorted(new ItemComparatorByExpiryDate())
+                .collect(toList());
+
+        logger.info("Updating sortedOrder...");
+        updateSortedOrder(itemList, sortedList);
+
+        assert sortedOrder.size() == sortedList.size();
+
+        logger.info("Printing sorted list...");
+        for (Item item: sortedList) {
+            output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
+            index++;
+        }
+
+        return output;
+    }
+
+    /**
+     * Returns a string representation of all the items in the list sorted by item sale price. Each item's string
+     * representation is obtained by calling its 'toString' method.
+     *
+     * @param itemList the inventory to print.
+     * @return A concatenated string of all item representations in the sorted list, each on a new line.
+     */
+    public String printListSortedBySalePrice(List<Item> itemList) {
+        int index = 1;
+        String output = "";
+
+        logger.info("Sorting inventory by sale price...");
+        ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
+                .filter((t) -> t instanceof RetailItem)
+                .sorted(new ItemComparatorBySalePrice())
+                .collect(toList());
+
+        logger.info("Updating sortedOrder...");
+        updateSortedOrder(itemList, sortedList);
+
+        assert sortedOrder.size() == sortedList.size();
+
+        logger.info("Printing sorted list...");
+        for (Item item: sortedList) {
+            output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
+            index++;
+        }
+
+        return output;
+    }
+
+    /**
+     * Updates the sortedOrder ArrayList to enable commands that uses item index to reference the
+     * latest sorted inventory that was printed.
+     *
+     * @param itemList the unsorted inventory ArrayList.
+     * @param sortedList the sorted inventory ArrayList.
+     */
+    private void updateSortedOrder(List<Item> itemList, ArrayList<Item> sortedList) {
+        logger.info("Clearing sortedOrder...");
+        sortedOrder.clear();
+        for (int i = 0; i < sortedList.size(); i++) {
+            sortedOrder.add(itemList.indexOf(sortedList.get(i)));
+        }
     }
 
     @Override

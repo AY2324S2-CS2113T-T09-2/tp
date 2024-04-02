@@ -26,6 +26,7 @@ public class Parser {
     private SearchCommandParser searchCommandParser;
     private RestockCommandParser restockCommandParser;
     private SellCommandParser sellCommandParser;
+    private ListCommandParser listCommandParser;
     private UpdateCommandParser updateCommandParser;
 
     public Parser() {
@@ -34,6 +35,7 @@ public class Parser {
         sellCommandParser = new SellCommandParser();
         updateCommandParser = new UpdateCommandParser();
         searchCommandParser = new SearchCommandParser();
+        listCommandParser = new ListCommandParser();
     }
 
     public Command parseCommand(String userInput) throws BinBashException {
@@ -51,7 +53,7 @@ public class Parser {
         case "delete":
             return parseDeleteCommand(userInput);
         case "list":
-            return parseListCommand();
+            return parseListCommand(commandArgs);
         case "search":
             return parseSearchCommand(commandArgs);
         case "restock":
@@ -130,7 +132,11 @@ public class Parser {
         }
     }
 
-    private Command parseListCommand() {
-        return new ListCommand();
+    private ListCommand parseListCommand(String[] commandArgs) throws InvalidFormatException {
+        try {
+            return listCommandParser.parse(commandArgs);
+        } catch (ParseException e) {
+            throw new InvalidFormatException(e.getMessage());
+        }
     }
 }
