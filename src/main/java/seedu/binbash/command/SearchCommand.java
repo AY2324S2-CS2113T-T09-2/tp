@@ -10,9 +10,9 @@ import java.time.LocalDate;
 public class SearchCommand extends Command {
     private String nameField = "";
     private String descriptionField = "";
-    private double[] costPriceField = {Double.MIN_VALUE, Double.MAX_VALUE};
-    private double[] salePriceField = {Double.MIN_VALUE, Double.MAX_VALUE};
-    private LocalDate expiryDateField = LocalDate.MAX;
+    private double[] costPriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
+    private double[] salePriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
+    private LocalDate[] expiryDateRange = {LocalDate.MIN, LocalDate.MAX};
     private int numberOfResults = Integer.MAX_VALUE;
     private ArrayList<Item> foundItems;
 
@@ -31,16 +31,16 @@ public class SearchCommand extends Command {
         this.descriptionField = descriptionField;
     }
 
-    public void setCostPriceField(double[] costPriceField) {
-        this.costPriceField = costPriceField;
+    public void setCostPriceRange(double[] costPriceRange) {
+        this.costPriceRange = costPriceRange;
     }
 
-    public void setSalePriceField(double[] salePriceField) {
-        this.salePriceField = salePriceField;
+    public void setSalePriceRange(double[] salePriceRange) {
+        this.salePriceRange = salePriceRange;
     }
 
-    public void setExpiryDateField(LocalDate expiryDateField) {
-        this.expiryDateField = expiryDateField;
+    public void setExpiryDateRange(LocalDate[] expiryDateRange) {
+        this.expiryDateRange = expiryDateRange;
     }
 
     public void setNumberOfResults(int numberOfResults) {
@@ -55,11 +55,9 @@ public class SearchCommand extends Command {
         foundItems = itemList.getSearchAssistant()
             .searchByName(nameField)
             .searchByDescription(descriptionField)
-            .searchByCostPrice(costPriceField[0], false)
-            .searchByCostPrice(costPriceField[1], true)
-            .searchBySalePrice(salePriceField[0], false)
-            .searchBySalePrice(salePriceField[1], true)
-            .searchByExpiryDate(expiryDateField)
+            .searchByCostPrice(costPriceRange[0], costPriceRange[1])
+            .searchBySalePrice(salePriceRange[0], salePriceRange[1])
+            .searchByExpiryDateBetween(expiryDateRange[0], expiryDateRange[1])
             .getFoundItems(numberOfResults);
         executionUiOutput = itemList.printList(foundItems);
         return true;

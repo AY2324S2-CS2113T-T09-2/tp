@@ -12,7 +12,6 @@ import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
 
 public class SearchCommandParser extends DefaultParser {
-    protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public SearchCommandParser() {
         options = new Options();
@@ -41,23 +40,18 @@ public class SearchCommandParser extends DefaultParser {
             hasOption = true;
         }
         if (commandLine.hasOption("cost-price")) {
-            double[] costPriceField = parsePriceField(commandLine.getOptionValue("cost-price"));
-            searchCommand.setCostPriceField(costPriceField);
+            double[] costPriceRange = parsePriceField(commandLine.getOptionValue("cost-price"));
+            searchCommand.setCostPriceRange(costPriceRange);
             hasOption = true;
         }
         if (commandLine.hasOption("sale-price")) {
-            double[] salePriceField = parsePriceField(commandLine.getOptionValue("sale-price"));
-            searchCommand.setSalePriceField(salePriceField);
+            double[] salePriceRange = parsePriceField(commandLine.getOptionValue("sale-price"));
+            searchCommand.setSalePriceRange(salePriceRange);
             hasOption = true;
         }
         if (commandLine.hasOption("expiry-date")) {
-            try {
-                LocalDate expiryDateField = LocalDate.parse(commandLine.getOptionValue("expiry-date"),
-                        EXPECTED_INPUT_DATE_FORMAT);
-                searchCommand.setExpiryDateField(expiryDateField);
-            } catch (DateTimeParseException e) {
-                throw new ParseException(e.getMessage());
-            }
+            LocalDate[] expiryDateRange = parseExpiryDateField(commandLine.getOptionValue("expiry-date"));
+            searchCommand.setExpiryDateRange(expiryDateRange);
             hasOption = true;
         }
         if (!hasOption) {
@@ -105,5 +99,37 @@ public class SearchCommandParser extends DefaultParser {
             throw new ParseException("Invalid price");
         }
         return priceRange;
+    }
+
+    private LocalDate[] parseExpiryDateField(String dateArgument) throws ParseException {
+        if (!dateArgument.contains("..") || dateArgument.length() < 3) {
+            throw new ParseException("Format for expiry date option: {min}..{max}");
+        }
+        LocalDate[] expiryDateRange = {LocalDate.MIN, LocalDate.MAX};
+        String[] values = dateArgument.split("\\Q..\\E");
+        if (values[0].equals("")) {
+            try {
+                expiryDateRange[1] = LocalDate.parse(values[1], Parser.EXPECTED_INPUT_DATE_FORMAT);
+                return expiryDateRange;
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Invalid date");
+            }
+        }
+
+        try {
+            expiryDateRange[0] = LocalDate.parse(values[0], Parser.EXPECTED_INPUT_DATE_FORMAT);
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Invalid date");
+        }
+        if (values.length < 2) {
+            return expiryDateRange;
+        }
+
+        try {
+            expiryDateRange[1] = LocalDate.parse(values[1], Parser.EXPECTED_INPUT_DATE_FORMAT);
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Invalid date");
+        }
+        return expiryDateRange;
     }
 }

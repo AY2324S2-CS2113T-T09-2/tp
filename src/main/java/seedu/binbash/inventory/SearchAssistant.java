@@ -2,6 +2,7 @@ package seedu.binbash.inventory;
 
 import seedu.binbash.item.Item;
 import seedu.binbash.item.PerishableRetailItem;
+import seedu.binbash.item.PerishableOperationalItem;
 import seedu.binbash.item.RetailItem;
 
 import java.time.LocalDate;
@@ -47,6 +48,12 @@ public class SearchAssistant {
         return this;
     }
 
+    public SearchAssistant searchByCostPrice(double from, double to) {
+        searchByCostPrice(from, false);
+        searchByCostPrice(to, true);
+        return this;
+    }
+
     public SearchAssistant searchByCostPrice(double costPriceField, boolean isSearchLessThan) {
         if (costPriceField == Double.MIN_VALUE || costPriceField == Double.MAX_VALUE) {
             return this;
@@ -55,6 +62,12 @@ public class SearchAssistant {
             .filter(item -> isSearchLessThan ?
                     item.getItemCostPrice() <= costPriceField : item.getItemCostPrice() > costPriceField)
             .collect(Collectors.toCollection(ArrayList::new));
+        return this;
+    }
+
+    public SearchAssistant searchBySalePrice(double from, double to) {
+        searchBySalePrice(from, false);
+        searchBySalePrice(to, true);
         return this;
     }
 
@@ -71,15 +84,38 @@ public class SearchAssistant {
         return this;
     }
 
-    public SearchAssistant searchByExpiryDate(LocalDate expiryDateField) {
-        if (expiryDateField == LocalDate.MAX) {
+    public SearchAssistant searchByExpiryDateBetween(LocalDate from, LocalDate to) {
+        searchByExpiryDateFrom(from);
+        searchByExpiryDateTo(to);
+        return this;
+    }
+
+    public SearchAssistant searchByExpiryDateFrom(LocalDate fromDate) {
+        if (fromDate == LocalDate.MIN) {
             return this;
         }
         foundItems = foundItems.stream()
-            .filter(item -> item instanceof PerishableRetailItem ?
+            .filter(item -> item instanceof PerishableRetailItem || item instanceof PerishableOperationalItem)
+            .filter(item -> item instanceof PerishableRetailItem?
                     LocalDate.parse(((PerishableRetailItem) item).getItemExpirationDate(),
-                        DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-                    .isBefore(expiryDateField) : false)
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy")).isAfter(fromDate) :
+                    LocalDate.parse(((PerishableOperationalItem) item).getItemExpirationDate(),
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy")).isAfter(fromDate))
+            .collect(Collectors.toCollection(ArrayList::new));
+        return this;
+    }
+
+    public SearchAssistant searchByExpiryDateTo(LocalDate toDate) {
+        if (toDate == LocalDate.MAX) {
+            return this;
+        }
+        foundItems = foundItems.stream()
+            .filter(item -> item instanceof PerishableRetailItem || item instanceof PerishableOperationalItem)
+            .filter(item -> item instanceof PerishableRetailItem?
+                    !LocalDate.parse(((PerishableRetailItem) item).getItemExpirationDate(),
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy")).isAfter(toDate) :
+                    !LocalDate.parse(((PerishableOperationalItem) item).getItemExpirationDate(),
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy")).isAfter(toDate))
             .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }
