@@ -52,6 +52,13 @@ public class RetailItem extends Item {
         this.totalUnitsSold = totalUnitsSold;
     }
 
+    public double getItemProfit() {
+        double totalRevenue = this.itemSalePrice * this.totalUnitsSold;
+        double totalCost = this.itemCostPrice * this.totalUnitsPurchased;
+
+        return totalRevenue - totalCost;
+    }
+
     @Override
     public String toString() {
         return "[R] " + super.toString() + System.lineSeparator()
