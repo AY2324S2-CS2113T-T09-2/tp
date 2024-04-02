@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class UpdateCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private ArrayList<OptDesc> optionDescriptions;
-    boolean hasOption;
+    private boolean hasOption;
 
     public UpdateCommandParser() {
         options = new Options();
