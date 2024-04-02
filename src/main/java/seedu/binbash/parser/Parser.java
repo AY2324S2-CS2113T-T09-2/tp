@@ -118,7 +118,7 @@ public class Parser {
         }
     }
 
-    private Command parseListCommand(String[] commandArgs) throws InvalidFormatException {
+    private ListCommand parseListCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return listCommandParser.parse(commandArgs);
         } catch (ParseException e) {
