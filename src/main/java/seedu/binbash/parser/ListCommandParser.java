@@ -5,6 +5,7 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import seedu.binbash.command.ListCommand;
+import seedu.binbash.enums.SortOptionEnum;
 
 public class ListCommandParser extends DefaultParser {
     public ListCommandParser() {
@@ -16,11 +17,11 @@ public class ListCommandParser extends DefaultParser {
     public ListCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
         if (commandLine.hasOption("cost")) {
-            return new ListCommand("c");
+            return new ListCommand(SortOptionEnum.COST);
         } else if (commandLine.hasOption("expiry")) {
-            return new ListCommand("e");
+            return new ListCommand(SortOptionEnum.EXPIRY);
         }  else if (commandLine.hasOption("sale")) {
-            return new ListCommand("s");
+            return new ListCommand(SortOptionEnum.SALE);
         } else {
             return new ListCommand();
         }

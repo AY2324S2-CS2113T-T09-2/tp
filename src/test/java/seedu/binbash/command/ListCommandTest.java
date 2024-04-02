@@ -2,6 +2,7 @@ package seedu.binbash.command;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.binbash.enums.SortOptionEnum;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.item.Item;
 
@@ -62,7 +63,7 @@ class ListCommandTest {
     void execute_sortByCostPrice_returnsSortedList() {
         ArrayList<Item> inventory = new ArrayList();
         ItemList itemList = new ItemList(inventory);
-        ListCommand listCommandCostPrice = new ListCommand("c");
+        ListCommand listCommandCostPrice = new ListCommand(SortOptionEnum.COST);
 
         itemList.addItem("retail", "testItem1", "Test item 1", 2,
                 LocalDate.of(2024, 1, 1), 10.00, 5.00, 10);
@@ -96,7 +97,7 @@ class ListCommandTest {
     void execute_sortByExpiryDate_returnsSortedList() {
         ArrayList<Item> inventory = new ArrayList();
         ItemList itemList = new ItemList(inventory);
-        ListCommand listCommandCostPrice = new ListCommand("e");
+        ListCommand listCommandCostPrice = new ListCommand(SortOptionEnum.EXPIRY);
 
         itemList.addItem("retail", "testItem", "Test item", 2,
                 LocalDate.of(2024, 1, 5), 3.00, 2.00, 10);
@@ -130,7 +131,7 @@ class ListCommandTest {
     void execute_sortBySalePrice_returnsSortedList() {
         ArrayList<Item> inventory = new ArrayList();
         ItemList itemList = new ItemList(inventory);
-        ListCommand listCommandCostPrice = new ListCommand("s");
+        ListCommand listCommandCostPrice = new ListCommand(SortOptionEnum.SALE);
 
         itemList.addItem("retail", "testItem1", "Test item 1", 2,
                 LocalDate.of(2024, 1, 1), 10.00, 2.00, 10);
