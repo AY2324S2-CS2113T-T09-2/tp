@@ -25,9 +25,9 @@ class ItemComparatorByCostPriceTest {
         itemList.add(item2);
 
         itemList.sort(new ItemComparatorByCostPrice());
-        double costPriceOfFirstItem = itemList.get(0).getItemCostPrice();
+        String nameOfFirstItem = itemList.get(0).getItemName();
 
-        assertEquals(1.00,costPriceOfFirstItem);
+        assertEquals("testItem1",nameOfFirstItem);
     }
 
     @Test
@@ -43,9 +43,9 @@ class ItemComparatorByCostPriceTest {
         itemList.add(item2);
 
         itemList.sort(new ItemComparatorByCostPrice());
-        double costPriceOfFirstItem = itemList.get(0).getItemCostPrice();
+        String nameOfFirstItem = itemList.get(0).getItemName();
 
-        assertEquals(1.00,costPriceOfFirstItem);
+        assertEquals("testItem2",nameOfFirstItem);
     }
 
     @Test
