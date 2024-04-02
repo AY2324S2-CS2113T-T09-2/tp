@@ -3,15 +3,17 @@ package seedu.binbash.command;
 import org.junit.jupiter.api.Test;
 
 import seedu.binbash.inventory.ItemList;
+import seedu.binbash.item.Item;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ListCommandTest {
     @Test
     void execute_listCommandWithTwoItemsInItemList_correctPrintFormatForBothItems() {
-        ItemList itemList = new ItemList();
+        ItemList itemList = new ItemList(new ArrayList<Item>());
 
         itemList.addItem("retail", "testItem1", "Test item 1", 2,
                 LocalDate.of(1999, 1, 1), 4.00, 5.00, 6);
@@ -45,7 +47,7 @@ class ListCommandTest {
 
     @Test
     void execute_listCommandWithEmptyItemList_returnsEmptyOutput() {
-        ItemList itemList = new ItemList();
+        ItemList itemList = new ItemList(new ArrayList<Item>());
         ListCommand listCommand = new ListCommand();
 
         listCommand.execute(itemList);
@@ -58,7 +60,8 @@ class ListCommandTest {
 
     @Test
     void execute_sortByCostPrice_returnsSortedList() {
-        ItemList itemList = new ItemList();
+        ArrayList<Item> inventory = new ArrayList();
+        ItemList itemList = new ItemList(inventory);
         ListCommand listCommandCostPrice = new ListCommand("c");
 
         itemList.addItem("retail", "testItem1", "Test item 1", 2,
@@ -91,7 +94,8 @@ class ListCommandTest {
 
     @Test
     void execute_sortByExpiryDate_returnsSortedList() {
-        ItemList itemList = new ItemList();
+        ArrayList<Item> inventory = new ArrayList();
+        ItemList itemList = new ItemList(inventory);
         ListCommand listCommandCostPrice = new ListCommand("e");
 
         itemList.addItem("retail", "testItem", "Test item", 2,
@@ -124,7 +128,8 @@ class ListCommandTest {
 
     @Test
     void execute_sortBySalePrice_returnsSortedList() {
-        ItemList itemList = new ItemList();
+        ArrayList<Item> inventory = new ArrayList();
+        ItemList itemList = new ItemList(inventory);
         ListCommand listCommandCostPrice = new ListCommand("s");
 
         itemList.addItem("retail", "testItem1", "Test item 1", 2,

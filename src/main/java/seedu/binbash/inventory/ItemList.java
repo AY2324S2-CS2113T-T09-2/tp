@@ -26,8 +26,8 @@ public class ItemList {
     private ArrayList<Integer> sortedOrder;
     private SearchAssistant searchAssistant;
 
-    public ItemList() {
-        this.itemList = new ArrayList<Item>();
+    public ItemList(ArrayList<Item> itemList) {
+        this.itemList = itemList;
         this.sortedOrder = new ArrayList<Integer>();
         this.totalRevenue = 0;
         this.totalCost = 0;

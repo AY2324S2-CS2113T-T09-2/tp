@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SearchCommandTest {
-    private ItemList testItemList = new ItemList();
+    private ItemList testItemList = new ItemList(new ArrayList<Item>());
 
     @BeforeEach
     public void setUp() {
