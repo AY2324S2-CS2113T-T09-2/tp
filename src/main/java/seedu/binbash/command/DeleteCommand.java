@@ -27,7 +27,7 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Construsts a DeleteCommand object that will delete an item using item name.
+     * Constructs a DeleteCommand object that will delete an item using item name.
      *
      * @param keyword a String matching the item name of the item to be deleted from the inventory.
      */
@@ -42,7 +42,7 @@ public class DeleteCommand extends Command {
      * Executes the delete command to remove an item from the inventory.
      *
      * @param itemList the inventory where the item will be deleted from.
-     * @return true if the command execution is successful, else false
+     * @return true if the command execution is successful.
      */
     public boolean execute(ItemList itemList) {
         if (isIndex) {
