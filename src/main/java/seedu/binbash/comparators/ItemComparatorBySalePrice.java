@@ -28,7 +28,7 @@ public class ItemComparatorBySalePrice implements Comparator<Item> {
 
         if (retailItem1.getItemSalePrice() < retailItem2.getItemSalePrice()) {
             return -1;
-        } else if (retailItem1.getItemSalePrice() > retailItem2.getItemCostPrice()) {
+        } else if (retailItem1.getItemSalePrice() > retailItem2.getItemSalePrice()) {
             return 1;
         }
 
