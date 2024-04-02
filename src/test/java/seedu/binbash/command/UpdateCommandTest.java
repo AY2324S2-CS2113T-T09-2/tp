@@ -3,9 +3,11 @@ package seedu.binbash.command;
 import org.junit.jupiter.api.Test;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.exceptions.InvalidArgumentException;
+import seedu.binbash.item.Item;
 import seedu.binbash.item.PerishableRetailItem;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +16,7 @@ public class UpdateCommandTest {
 
     @Test
     void execute_updateByName_itemUpdated() throws InvalidArgumentException {
-        ItemList itemList = new ItemList();
+        ItemList itemList = new ItemList(new ArrayList<Item>());
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00, 6);
 
@@ -38,7 +40,7 @@ public class UpdateCommandTest {
 
     @Test
     void execute_updateByIndex_itemUpdated() throws InvalidArgumentException {
-        ItemList itemList = new ItemList();
+        ItemList itemList = new ItemList(new ArrayList<Item>());
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00, 6);
 
@@ -63,7 +65,7 @@ public class UpdateCommandTest {
 
     @Test
     void execute_itemNotFound_updateFailed() {
-        ItemList itemList = new ItemList();
+        ItemList itemList = new ItemList(new ArrayList<Item>());
         UpdateCommand updateCommand = new UpdateCommand("nonexistentItem");
         updateCommand.setItemDescription("Updated item");
         updateCommand.setItemQuantity(5);
@@ -78,7 +80,7 @@ public class UpdateCommandTest {
 
     @Test
     void execute_indexOutOfBounds_updateFailed() {
-        ItemList itemList = new ItemList();
+        ItemList itemList = new ItemList(new ArrayList<Item>());
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00, 6);
 

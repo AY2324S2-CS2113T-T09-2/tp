@@ -12,6 +12,7 @@ public class ByeCommand extends Command {
     @Override
     public boolean execute(ItemList itemList) {
         executionUiOutput = "Bye!";
+        hasToSave = true;
         return true;
     }
 }
