@@ -1,0 +1,23 @@
+@startuml
+
+participant ":BinBash"
+activate ":BinBash"
+
+":BinBash" -> ":Ui" : readUserCommand()
+activate ":Ui"
+return userInput: String
+
+":BinBash" -> ":Parser" : parseCommand(userInput)
+activate ":Parser"
+":Parser" -> ":Parser" : parseXYZCommand()
+activate ":Parser"
+":Parser" -> ":XYZCommandParser" : parse()
+activate ":XYZCommandParser"
+":XYZCommandParser" -> ":XYZCommand" ** : new XYZCommand()
+activate ":XYZCommand"
+return :XYZCommand
+return :XYZCommand
+return :XYZCommand
+return :XYZCommand
+
+@enduml
