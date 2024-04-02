@@ -14,6 +14,11 @@ public class PerishableRetailItem extends RetailItem {
     private LocalDate itemExpirationDate;
 
     public PerishableRetailItem(String itemName, String itemDescription, int itemQuantity,
+                                LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
+        this(itemName, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice, -1);
+    }
+
+    public PerishableRetailItem(String itemName, String itemDescription, int itemQuantity,
                                 LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
                                 int itemThreshold) {
         super(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice, itemThreshold);
