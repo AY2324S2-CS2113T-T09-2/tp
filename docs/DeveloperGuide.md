@@ -143,6 +143,24 @@ Note the use of an externally provided `LineReader` object in the `TextIn` class
 
 This allows us to overload options on a small number of commands to provide full functionality of the application. Developers can then extend its features without also the worry of finding a way for users to access those features easily.
 
+### Storage Component
+
+![Storage class diagram](images/StorageClassDiagram.png)
+
+<!-- TODO: Link storage API -->
+
+#### Overview
+The `Storage` class is responsible for managing storage operations for the BinBash application. It performs critical 
+functions such as loading and saving item data, handling corrupted files, and maintaining the integrity of the 
+application's persistent data.
+
+#### Key Responsibilities
+- **Loading Data**: The `loadData()` method reads from `items.txt` and constructs a list of `Item` objects.
+- **Saving Data**: The `saveToStorage(List<Item> itemList)` method writes the current state of `Item` objects to `items.txt`.
+- **Corruption Handling**: If data corruption is detected, `handleCorruptedFile()` attempts to recover by renaming the corrupted file and creating a new one.
+- **Data Parsing**: The class contains methods for parsing data from and to the storage format, specifically `parseLinesToItemList(ArrayList<String>)` and `generateStorageRepresentationOfSingleItem(Item)`.
+
+
 ### Parser Component
 
 <!-- TODO: Create the Class diagram for the Parser package/component --> 
@@ -174,6 +192,40 @@ Upon calling `parseXYZCommand()`, the `parse()` method of an internal `XYZComman
 > In some instances, if the command that needs to be created is simple enough (like a `ByeCommand` or `ListCommand`), then `Parser` will directly create the `Command` without the need of an `XYZCommandParser`.
 
 The `XYZCommand` is then subsequently returned back to `BinBash` for code execution.
+
+## Command Component
+
+![CommandClassDiagram](images/CommandClassDiagram.png)
+
+<!-- TODO: Link command API -->
+
+The command classes within the `seedu.binbash.command` package form the command pattern that encapsulates all user 
+commands. Each command represents a single operation or action that can be performed by the BinBash application.
+
+#### Core Class: `Command`
+
+- `Command` is an abstract class that serves as a template for all other command classes.
+- It declares the method `execute(ItemList itemList)` that must be implemented by all subclasses to carry out the command-specific logic.
+- It provides common fields such as `itemList`, `commandLogger`, `executionUiOutput`, and `hasToSave` which facilitate logging, output generation, and indicating if the application state needs to be saved post-execution.
+
+#### Subclasses of `Command`
+
+- `AddCommand`: Handles the addition of new items to the inventory.
+- `ByeCommand`: Signals the application to shut down.
+- `DeleteCommand`: Removes items from the inventory by index or name.
+- `ListCommand`: Lists all items currently in the inventory.
+- `ProfitCommand`: Calculates and displays the total profit.
+- `RestockCommand`: Adds stock to an existing item in the inventory.
+- `SearchCommand`: Searches for items in the inventory based on specified criteria.
+- `SellCommand`: Records the sale of items and adjusts the inventory accordingly.
+- `UpdateCommand`: Updates the details of an existing item in the inventory.
+
+#### Command Execution Flow
+
+1. `BinBash` main class receives user input.
+2. `Parser` interprets the input and creates an instance of the appropriate `Command` subclass.
+3. The `execute` method of the created `Command` object is called by `BinBash`.
+4. If `hasToSave` is true post-execution, `BinBash` triggers the `Storage` class to save the current state.
 
 ### Data Component
 
