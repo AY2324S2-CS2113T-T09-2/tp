@@ -233,12 +233,18 @@ public class ItemList {
     public String printListSortedByCostPrice(List<Item> itemList) {
         int index = 1;
         String output = "";
+
+        logger.info("Sorting inventory by expiry date...");
         ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
                 .sorted(new ItemComparatorByCostPrice())
                 .collect(toList());
 
+        logger.info("Updating sortedOrder...");
         updateSortedOrder(itemList, sortedList);
 
+        assert sortedOrder.size() == sortedList.size();
+
+        logger.info("Printing sorted list...");
         for (Item item: sortedList) {
             output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
             index++;
@@ -257,13 +263,19 @@ public class ItemList {
     public String printListSortedByExpiryDate(List<Item> itemList) {
         int index = 1;
         String output = "";
+
+        logger.info("Sorting inventory by expiry date...");
         ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
                 .filter((t) -> t instanceof PerishableOperationalItem || t instanceof PerishableRetailItem)
                 .sorted(new ItemComparatorByExpiryDate())
                 .collect(toList());
 
+        logger.info("Updating sortedOrder...");
         updateSortedOrder(itemList, sortedList);
 
+        assert sortedOrder.size() == sortedList.size();
+
+        logger.info("Printing sorted list...");
         for (Item item: sortedList) {
             output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
             index++;
@@ -282,13 +294,19 @@ public class ItemList {
     public String printListSortedBySalePrice(List<Item> itemList) {
         int index = 1;
         String output = "";
+
+        logger.info("Sorting inventory by sale price...");
         ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
                 .filter((t) -> t instanceof RetailItem)
                 .sorted(new ItemComparatorBySalePrice())
                 .collect(toList());
 
+        logger.info("Updating sortedOrder...");
         updateSortedOrder(itemList, sortedList);
 
+        assert sortedOrder.size() == sortedList.size();
+
+        logger.info("Printing sorted list...");
         for (Item item: sortedList) {
             output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
             index++;
@@ -305,6 +323,7 @@ public class ItemList {
      * @param sortedList the sorted inventory ArrayList.
      */
     private void updateSortedOrder(List<Item> itemList, ArrayList<Item> sortedList) {
+        logger.info("Clearing sortedOrder...");
         sortedOrder.clear();
         for (int i = 0; i < sortedList.size(); i++) {
             sortedOrder.add(itemList.indexOf(sortedList.get(i)));
