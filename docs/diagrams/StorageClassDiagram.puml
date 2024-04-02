@@ -8,24 +8,31 @@ class BinBash {
     - logger : BinBashLogger
 
     + {method} BinBash()
-    + {method} run() : void
-    + {static} main(args : String[]) : void
+    - {method} run()
+    + {static} main(args : String[])
 
 }
 
 class Storage {
 
+    # filePath : String
+    # dataDirectoryPath : String
+    # dataFileName : String
+    # isCorrupted : boolean
+    # storageLogger : BinBashLogger
+
     + {method} Storage()
     + {method} loadData() : ArrayList<Item>
-    - {method} handleCorruptedFile() : void
-    - {method} isCorruptedFileRenamed() : boolean
-    - {method} isNewFileCreated() : boolean
-    - {method} readTxtFile() : ArrayList<String>
-    - {method} parseLinesToItemList(stringRepresentationOfTxtFile : ArrayList<String>) : ArrayList<Item>
-    - {method} convertLineToItem(line : String) : Item
-    + {method} saveToStorage(itemList : List<Item>) : void
-    - {method} generateTextToSave(itemList : List<Item>) : String
-    - {method} generateStorageRepresentationOfSingleItem(item : Item) : String
+    - {method} handleCorruptedFile()
+    - {method} renameCorruptedFile() : boolean
+    - {method} createNewTxtFile() : boolean
+    # {method} readTxtFile() : ArrayList<String>
+    # {method} parseLinesToItemList(stringRepresentationOfTxtFile : ArrayList<String>) : ArrayList<Item>
+    # {method} convertLineToItem(line : String) : Item
+    + {method} saveToStorage(itemList : List<Item>)
+    # {method} generateTextToSave(itemList : List<Item>) : String
+    # {method} generateStorageRepresentationOfSingleItem(item : Item) : String
+
 }
 
 BinBash --> Storage : uses
