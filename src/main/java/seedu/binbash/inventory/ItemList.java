@@ -223,6 +223,13 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Returns a string representation of all the items in the list sorted by item cost price. Each item's string
+     * representation is obtained by calling its 'toString' method.
+     *
+     * @param itemList the inventory to print.
+     * @return A concatenated string of all item representations in the sorted list, each on a new line.
+     */
     public String printListSortedByCostPrice(List<Item> itemList) {
         int index = 1;
         String output = "";
@@ -240,6 +247,13 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Returns a string representation of all the items in the list sorted by item expiry date. Each item's string
+     * representation is obtained by calling its 'toString' method.
+     *
+     * @param itemList the inventory to print.
+     * @return A concatenated string of all item representations in the sorted list, each on a new line.
+     */
     public String printListSortedByExpiryDate(List<Item> itemList) {
         int index = 1;
         String output = "";
@@ -258,6 +272,13 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Returns a string representation of all the items in the list sorted by item sale price. Each item's string
+     * representation is obtained by calling its 'toString' method.
+     *
+     * @param itemList the inventory to print.
+     * @return A concatenated string of all item representations in the sorted list, each on a new line.
+     */
     public String printListSortedBySalePrice(List<Item> itemList) {
         int index = 1;
         String output = "";
@@ -276,6 +297,13 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Updates the sortedOrder ArrayList to enable commands that uses item index to reference the
+     * latest sorted inventory that was printed.
+     *
+     * @param itemList the unsorted inventory ArrayList.
+     * @param sortedList the sorted inventory ArrayList.
+     */
     private void updateSortedOrder(List<Item> itemList, ArrayList<Item> sortedList) {
         sortedOrder.clear();
         for (int i = 0; i < sortedList.size(); i++) {
