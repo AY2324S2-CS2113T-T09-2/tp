@@ -1,11 +1,11 @@
 @startuml
 
 abstract class Command {
-    - itemList: ItemList
-    - commandLogger: BinBashLogger
-    - executionUiOutput: String
-    - hasToSave: boolean
-    + execute(itemList: ItemList): boolean
+    # itemList: ItemList
+    # commandLogger: BinBashLogger
+    # executionUiOutput: String
+    # hasToSave: boolean
+    + {abstract} execute(itemList: ItemList): boolean
     + getExecutionUiOutput(): String
     + hasToSave(): boolean
 }
