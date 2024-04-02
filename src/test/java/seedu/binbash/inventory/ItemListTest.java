@@ -1,4 +1,4 @@
-package seedu.binbash;
+package seedu.binbash.inventory;
 
 import org.junit.jupiter.api.Test;
 
