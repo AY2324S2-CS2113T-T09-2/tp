@@ -135,6 +135,12 @@ Noted! I have added the following item into your inventory:
 	sale price: $0.00
 	expiry date: 01-01-1999
 
+2. [P][O] item with
+	description: everything(op)
+	quantity: 100
+	cost price: $100.00
+	expiry date: 01-01-1999
+
 
 -------------------------------------------------------------
 -------------------------------------------------------------
