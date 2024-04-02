@@ -435,7 +435,7 @@ public class ItemList {
      *
      * @param itemList the inventory to print, which should contain retail items.
      * @return A concatenated string of all retail item representations in the sorted list, each on a new line,
-     * along with their respective profits formatted to two decimal places.
+     *         along with their respective profits formatted to two decimal places.
      */
     public String printListSortedByProfit(List<Item> itemList) {
         int index = 1;
