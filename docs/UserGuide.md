@@ -31,8 +31,8 @@ Our long awaited first release adds everything you would expect of an inventory 
     - [Saving and Loading data](#saving-and-loading-data)
 7. [Possible issues during startup](#possible-issues-during-startup)
 8. [Command Summary](#command-summary)
-8. [FAQ](#faq)
-9. [Glossary](#glossary)
+9. [FAQ](#faq)
+10. [Glossary](#glossary)
 
 ## BinBash Overview
 
