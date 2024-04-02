@@ -23,7 +23,9 @@ Our long awaited first release adds everything you would expect of an inventory 
     - [Adding an item: `add`](#adding-an-item-add)
     - [Searching for an item: `search`](#searching-for-an-item-search)
     - [Listing current inventory: `list`](#listing-current-inventory-list)
-    - [Updating an item: `update`](#updating-an-item-delete)
+    - [Selling an item: `sell`](#selling-an-item-sell)
+    - [Restocking an item: `restock`](#restocking-an-item-restock)
+    - [Updating an item: `update`](#updating-an-item-update)
     - [Deleting an item: `delete`](#deleting-an-item-delete)
     - [Exiting the application: `bye`](#exiting-the-application-bye)
     - [Saving and Loading data](#saving-and-loading-data)
@@ -207,6 +209,34 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 >Shows a list of all tasks in your task list.
 
 **Format:** `list`
+
+### Selling an item: `sell`
+
+> Decrements the quantity of an item after it has been sold.
+
+Format: `sell -n ITEM_NAME -q ITEM_QUANTITY`
+
+* Both flags are mandatory.
+* The quantity given to this command represents the amount of item that you want to sell. This amount will be deducted
+from the existing quantity of the item in the inventory list.
+
+Examples: 
+
+- `sell -n oranges -q 20` This will deduct the quantity of "oranges" in your inventory list by 20.
+- `sell -n lego bricks -q 219` This will deduct the quantity of "lego bricks" in your inventory list by 219.
+
+### Restocking an item: `restock`
+
+> Increments the quantity of an item after it has been restocked.
+
+* Both flags are mandatory.
+* The quantity given to this command represents the amount of item that you want to restock. This amount will be added
+  to the existing quantity of the item in the inventory list.
+
+Examples:
+
+- `restock -n apples -q 50` This will add the quantity of "apples" in your inventory list by 50.
+- `restock -n kaya spread -q 35` This will add the quantity of "kaya spread" in your inventory list by 35.
 
 ### Updating an item: `update`
 
