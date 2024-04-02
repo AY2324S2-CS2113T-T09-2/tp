@@ -23,6 +23,7 @@ Our long awaited first release adds everything you would expect of an inventory 
     - [Adding an item: `add`](#adding-an-item-add)
     - [Searching for an item: `search`](#searching-for-an-item-search)
     - [Listing current inventory: `list`](#listing-current-inventory-list)
+    - [Updating an item: `update`](#updating-an-item-delete)
     - [Deleting an item: `delete`](#deleting-an-item-delete)
     - [Exiting the application: `bye`](#exiting-the-application-bye)
     - [Saving and Loading data](#saving-and-loading-data)
@@ -82,7 +83,8 @@ types of items in our inventory list. They are:
  
 - `-re` : to signify a Retail item type
 - `-op` : to signify an Operational item type
-- `-n` : name of the item that you want to add
+- `-n` : name of the item
+- `-i` : index of the item as displayed in the inventory list
 - `-d` : description of the item
 - `-q` : quantity
 - `-e` : expiry date
@@ -205,6 +207,57 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 >Shows a list of all tasks in your task list.
 
 **Format:** `list`
+
+### Updating an item: `update`
+
+> Modifies the details of an existing item in the inventory. You can identify the item that you want to update by
+> specifying the name of the object, or its index number as displayed in the inventory list.
+
+#### Updating an item using item name
+
+Format: `update -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE
+-t THRESHOLD`
+
+* The flag `-n` is used, meaning that the `item name` is used as an identifier to identify the item you wish to update.
+This flag is required.
+* Using the `item name` identifier will only update the first occurring item in the list should there be any duplicates.
+* All other flags are optional, depending on what details you wish to update.
+
+Examples:
+- `update -n banana -d ripe fruit -q 30 -e 10-10-2024 -c 0.50`
+Updates the description of the item named "banana" to "ripe fruit", its quantity to 30, its expiry date to 10 October 
+2024 and its cost price to $0.50. Other information remain unchanged.
+- `update -n "printer paper" -s 15.00 -t 5`
+Updates the sale price of the item named "printer paper" to $15.00 and its threshold to 5.
+- `update -n "chicken sandwich" -q 50 -e 01-01-2025 -t 10`
+Updates the quantity of the item named "chicken sandwich" to 50, its expiry date to 1 January 2025 and its threshold 
+to 10.
+
+ 
+#### Updating an item using item index
+
+Format: `update -i ITEM_INDEX -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE
+-t THRESHOLD`
+
+* The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to update.
+* To know the `item index`, we encourage you to first use the command `list` to find out the index of your item of 
+interest.
+* All other flags are optional,depending on what details you wish to update.
+
+Examples:
+- `update -i 2 -d "office supplies" -s 20.00`
+Updates the description of the item at index 2 to "office supplies" and its sale price to $20.00. Other information 
+remains unchanged.
+- `update -i 4 -q 10 -c 2.00 -t 2`
+Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and its threshold to 2.
+
+
+> Note:
+> - Only one item identifier flag, `-n` or `-i`, can be used with the `update` command to identify the item that you
+> want to update.
+> - There must be a minimum of one flag used, excluding the `-n` flag.
+
+
 
 ### Deleting an item: `delete`
 
