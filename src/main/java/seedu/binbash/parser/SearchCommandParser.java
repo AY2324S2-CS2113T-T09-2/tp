@@ -100,7 +100,7 @@ public class SearchCommandParser extends DefaultParser {
         }
 
         if (!hasOption) {
-            throw new ParseException("At least one of -n, -d, -c, -s, -e option required");
+            throw new ParseException("At least one of -n, -d, -q, -c, -s, -e option required");
         }
 
         if (commandLine.hasOption("list")) {

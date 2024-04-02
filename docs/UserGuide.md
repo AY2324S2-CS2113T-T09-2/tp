@@ -89,12 +89,13 @@ Examples:
 
 > Searches for items in the inventory, filtering results through a number of user-defined fields.
 
-Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`
+Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`
 
-- At least one of -n, -d, -c, -s, or -e must be set.
+- At least one of -n, -d, -q, -c, -s, or -e must be set.
 - NAME_QUERY and DESCRIPTION_QUERY perform a case-insensitive search on the name and description fields of inventory items respectively.
+- QUANTITY_RANGE takes the form {min_quantity}..{max_quantity} where at least one of min_quantity or max_quantity is required.
 - COST_PRICE_RANGE and SALE_PRICE_RANGE take the form {price_lower_bound}..{price_upper_bound} where at least one of price_lower_bound or price_upper_bound is required.
-- EXPIRY_DATE_RANGE is similar: except dates need to be specified in the format dd-MM-YYYY.
+- EXPIRY_DATE_RANGE is similar to the above range arguments: except dates need to be specified in the format dd-MM-YYYY.
 - Shows the first NUMBER_OF_RESULTS results if set, all matching results otherwise.
 
 **Examples:**
@@ -104,9 +105,11 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -c COST_PRICE_RANGE -s SALE_P
 - `search -c ..5 -l 6`
   Will return the first 6 items that cost up to $5.00.
 - `search -s 20..30`
-  Will return all items with sale prices between $20 (inclusive) and $30 (exclusive).
+  Will return all items with sale prices between $20 and $30 (inclusive).
 - `search -e 11.11.2023.. -l 1`
   Will return the first item that expires on or after 11 November 2023.
+- `search -q 50.. -e 17.09.2023..23.11.2023`
+  Will return all items with current quantity at or above 50 and that expire between 17 September and 23 November 2023 (inclusive).
 
 ### Listing current inventory: `list`
 
