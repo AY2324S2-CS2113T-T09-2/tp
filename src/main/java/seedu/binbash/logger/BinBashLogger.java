@@ -7,6 +7,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * Generates and stores logs in a text file to provide details of code execution.
+ */
 public class BinBashLogger {
     private static FileHandler fileHandler;
     private static final String logDirectoryPath = "./logs/";
@@ -15,6 +18,11 @@ public class BinBashLogger {
     private final Logger fileLogger;
     private final Logger consoleLogger;
 
+    /**
+     * Constructs a BinBashLogger object that will handle the generation and storing of logs.
+     *
+     * @param loggerName the name of the logger, which should be the name of the class the logger will be in.
+     */
     public BinBashLogger(String loggerName) {
         fileLogger = Logger.getLogger(loggerName);
         consoleLogger = Logger.getLogger("consoleLogger");
@@ -24,6 +32,10 @@ public class BinBashLogger {
         }
     }
 
+    /**
+     * Creates the log directory and the log file. Old log file will be deleted and a fresh log file
+     * will be created to replace it.
+     */
     private void createLogFile() {
         File logDirectory = new File(logDirectoryPath);
         File logFile = new File(logDirectory, logFileName);
@@ -57,6 +69,11 @@ public class BinBashLogger {
         isLogFileCreated = true;
     }
 
+    /**
+     * Generates a log message of level "info" and stores it in the log file.
+     *
+     * @param message the log message to be generated and stored.
+     */
     public void info(String message) {
         if(isLogFileCreated) {
             setFileHandler();
@@ -65,6 +82,11 @@ public class BinBashLogger {
         }
     }
 
+    /**
+     * Generates a log message of level "warning" and stores it in the log file.
+     *
+     * @param message the log message to be generated and stored.
+     */
     public void warning(String message) {
         if(isLogFileCreated) {
             setFileHandler();
@@ -73,6 +95,11 @@ public class BinBashLogger {
         }
     }
 
+    /**
+     * Generates a log message of level "severe" and stores it in the log file.
+     *
+     * @param message the log message to be generated and stored.
+     */
     public void severe(String message) {
         if(isLogFileCreated) {
             setFileHandler();
@@ -81,6 +108,13 @@ public class BinBashLogger {
         }
     }
 
+    public void consoleLog(String message) {
+        consoleLogger.log(Level.INFO, message);
+    }
+
+    /**
+     * Creates a file handler that allows log messages be written to the log file.
+     */
     private void setFileHandler() {
         try {
             fileHandler = new FileHandler(logDirectoryPath + logFileName, true);
@@ -93,6 +127,9 @@ public class BinBashLogger {
         fileLogger.addHandler(fileHandler);
     }
 
+    /**
+     * Closes the file handler to allow other loggers to access the log file.
+     */
     private void closeFileHandler() {
         fileHandler.close();
     }

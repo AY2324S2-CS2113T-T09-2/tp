@@ -4,6 +4,7 @@ package seedu.binbash;
 import seedu.binbash.command.ByeCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.exceptions.BinBashException;
+import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.parser.Parser;
 import seedu.binbash.storage.Storage;
