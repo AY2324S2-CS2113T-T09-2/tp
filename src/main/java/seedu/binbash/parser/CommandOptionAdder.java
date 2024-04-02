@@ -24,7 +24,7 @@ public class CommandOptionAdder {
                 .desc("Add a Retail Item.")
                 .argName("retail")
                 .build();
-        optionDescriptions.add(new OptDesc("-re", "--retail", "Add a Retail Item."));
+        optionDescriptions.add(new OptDesc("-re", "--retail", "retail item"));
         return reItemOption;
     }
 
@@ -36,7 +36,7 @@ public class CommandOptionAdder {
                 .desc("Add an Operational Item.")
                 .argName("operational")
                 .build();
-        optionDescriptions.add(new OptDesc("-op", "--operational", "Add an Operational Item."));
+        optionDescriptions.add(new OptDesc("-op", "--operational", "operational item"));
         return opItemOption;
     }
 
@@ -48,7 +48,7 @@ public class CommandOptionAdder {
                 .desc("Sort by cost price.")
                 .argName("cost")
                 .build();
-
+        optionDescriptions.add(new OptDesc("-c", "--cost", "sort by cost price"));
         return sortCostOption;
     }
 
@@ -60,7 +60,7 @@ public class CommandOptionAdder {
                 .desc("Sort by expiry date.")
                 .argName("expiry")
                 .build();
-
+        optionDescriptions.add(new OptDesc("-e", "--expiry", "sort by expiry date"));
         return sortExpiryOption;
     }
 
@@ -72,7 +72,7 @@ public class CommandOptionAdder {
                 .desc("Sort by sale price.")
                 .argName("sale")
                 .build();
-
+        optionDescriptions.add(new OptDesc("-s", "--sale", "sort by sale price"));
         return sortSaleOption;
     }
 
@@ -81,7 +81,6 @@ public class CommandOptionAdder {
                 .addOption(sortByCostPriceOption())
                 .addOption(sortByExpirationDateOption())
                 .addOption(sortBySalePriceOption());
-
         listTypeOptionGroup.setRequired(false);
         options.addOptionGroup(listTypeOptionGroup);
         return this;
@@ -95,7 +94,7 @@ public class CommandOptionAdder {
                 .desc("Update using name")
                 .argName("name")
                 .build();
-
+        optionDescriptions.add(new OptDesc("-n", "--name", "name of item"));
         return opItemOption;
     }
 
@@ -107,7 +106,7 @@ public class CommandOptionAdder {
                 .desc("Update using index")
                 .argName("index")
                 .build();
-
+        optionDescriptions.add(new OptDesc("-i", "--index", "index id of item"));
         return opItemOption;
     }
 
@@ -115,7 +114,6 @@ public class CommandOptionAdder {
         OptionGroup itemTypeOptionGroup = new OptionGroup()
                 .addOption(getRetailItemOption())
                 .addOption(getOperationalItemOption());
-
         itemTypeOptionGroup.setRequired(true);
         options.addOptionGroup(itemTypeOptionGroup);
         return this;
@@ -125,7 +123,6 @@ public class CommandOptionAdder {
         OptionGroup itemNameAndInxdexOptionGroup = new OptionGroup()
                 .addOption(getItemIndexOption())
                 .addOption(getItemNameOption());
-
         itemNameAndInxdexOptionGroup.setRequired(true);
         options.addOptionGroup(itemNameAndInxdexOptionGroup);
         return this;
@@ -152,6 +149,7 @@ public class CommandOptionAdder {
                 .argName("index")
                 .build();
         options.addOption(nameOption);
+        optionDescriptions.add(new OptDesc("-i", "--index", description));
         return this;
     }
 
@@ -227,8 +225,8 @@ public class CommandOptionAdder {
                 .desc(description)
                 .argName("threshold")
                 .build();
-
         options = options.addOption(thresholdOption);
+        optionDescriptions.add(new OptDesc("-t", "--threshold", description));
         return this;
     }
 
