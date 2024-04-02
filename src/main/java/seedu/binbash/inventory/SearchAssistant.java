@@ -118,7 +118,7 @@ public class SearchAssistant {
     }
 
     public SearchAssistant searchBySalePriceTo(double toPrice) {
-        if (toPrice == Double.MIN_VALUE) {
+        if (toPrice == Double.MAX_VALUE) {
             return this;
         }
         foundItems = foundItems.stream()

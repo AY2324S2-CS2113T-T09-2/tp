@@ -19,7 +19,7 @@ public class SearchCommandParserTest {
                 ParseException.class, () -> {
                     searchCommandParser.parse(invalidCommandArgs);
                 }, "ParseException was expected");
-        Assertions.assertEquals("At least one of -n, -d, -c, -s, -e option required", thrown.getMessage());
+        Assertions.assertEquals(thrown.getMessage(), "At least one of -n, -d, -q, -c, -s, -e option required");
     }
 
     @Test

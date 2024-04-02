@@ -35,6 +35,8 @@ public class SearchAssistantTest {
                         LocalDate.of(2024, 1, 6), 0.70, 0.60)); // index 7
             add(new PerishableRetailItem("Idido Yirgacheffe Ethiopia", "Coffee beans with Q-Grade score 85", 40,
                         LocalDate.of(2024, 11, 24), 30, 20)); // index 8
+            add(new OperationalItem("Philips PDIODE 14Lum", "Specialised diodes for corner lighting", 4,
+                        82.45)); // index 9
         }
     };
 
@@ -129,5 +131,26 @@ public class SearchAssistantTest {
             .getFoundItems();
         Assertions.assertEquals(foundItems.size(), 1);
         Assertions.assertEquals(foundItems.get(0), testItemList.get(5));
+    }
+
+    @Test
+    public void searchByNameThenCost_philipsMoreThan80Dollars_foundDiode() {
+        ArrayList<Item> foundItems = searchAssistant.searchByName("philips")
+            .searchByCostPriceFrom(80)
+            .getFoundItems();
+        Assertions.assertEquals(foundItems.size(), 1);
+        Assertions.assertEquals(foundItems.get(0), testItemList.get(9));
+    }
+
+    @Test
+    public void searchAllFields_placeHolderValues_unmodifiedItemList() {
+        ArrayList<Item> foundItems = searchAssistant.searchByName("")
+            .searchByDescription("")
+            .searchByQuantityBetween(Integer.MIN_VALUE, Integer.MAX_VALUE)
+            .searchByCostPriceBetween(Double.MIN_VALUE, Double.MAX_VALUE)
+            .searchBySalePriceBetween(Double.MIN_VALUE, Double.MAX_VALUE)
+            .searchByExpiryDateBetween(LocalDate.MIN, LocalDate.MAX)
+            .getFoundItems(Integer.MAX_VALUE);
+        Assertions.assertEquals(testItemList.size(), foundItems.size());
     }
 }
