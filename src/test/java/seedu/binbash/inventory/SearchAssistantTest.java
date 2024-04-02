@@ -22,7 +22,7 @@ public class SearchAssistantTest {
             add(new OperationalItem("Temus Pallet Jack 2XW10 250KG", "Pallet jack for warehouse use", 2,
                         285)); // index 1
             add(new PerishableOperationalItem("Energax 40W AAA", "Batteries for warehouse use", 500,
-                        LocalDate.of(2024, 1, 16), 0.10)); // index 2
+                        LocalDate.of(2024, 8, 16), 0.10)); // index 2
             add(new RetailItem("Zebra Sarasa Black 0.5", "Black writing pen", 50,
                         1.00, 0.70)); // index 3
             add(new PerishableRetailItem("Cavendish Banana", "Whole bananas, imported from Malaysia", 30,
@@ -34,7 +34,7 @@ public class SearchAssistantTest {
             add(new PerishableRetailItem("Red Banana", "Imported from Indonesia", 20,
                         LocalDate.of(2024, 1, 6), 0.70, 0.60)); // index 7
             add(new PerishableRetailItem("Idido Yirgacheffe Ethiopia", "Coffee beans with Q-Grade score 85", 40,
-                        LocalDate.of(2025, 1, 6), 30, 20)); // index 8
+                        LocalDate.of(2024, 11, 24), 30, 20)); // index 8
         }
     };
 
@@ -53,6 +53,16 @@ public class SearchAssistantTest {
     }
 
     @Test
+    public void searchByQuantity_between25And40_foundLEDBananaCoffee() {
+        ArrayList<Item> foundItems = searchAssistant.searchByQuantityBetween(25, 40)
+            .getFoundItems();
+        Assertions.assertEquals(foundItems.size(), 3);
+        Assertions.assertEquals(foundItems.get(0), testItemList.get(0));
+        Assertions.assertEquals(foundItems.get(1), testItemList.get(4));
+        Assertions.assertEquals(foundItems.get(2), testItemList.get(8));
+    }
+
+    @Test
     public void searchByCostPrice_between4and10_foundLEDShearsAndCoffee() {
         ArrayList<Item> foundItems = searchAssistant.searchByCostPriceBetween(4, 20)
             .getFoundItems();
@@ -60,6 +70,25 @@ public class SearchAssistantTest {
         Assertions.assertEquals(foundItems.get(0), testItemList.get(0));
         Assertions.assertEquals(foundItems.get(1), testItemList.get(6));
         Assertions.assertEquals(foundItems.get(2), testItemList.get(8));
+    }
+
+    @Test
+    public void searchBySalePrice_from1To10_foundPenMilkShears() {
+        ArrayList<Item> foundItems = searchAssistant.searchBySalePriceBetween(1, 10)
+            .getFoundItems();
+        Assertions.assertEquals(foundItems.size(), 3);
+        Assertions.assertEquals(foundItems.get(0), testItemList.get(3));
+        Assertions.assertEquals(foundItems.get(1), testItemList.get(5));
+        Assertions.assertEquals(foundItems.get(2), testItemList.get(6));
+    }
+
+    @Test
+    public void searchByExpiryDate_before20Jan2024_foundBananas() {
+        ArrayList<Item> foundItems = searchAssistant.searchByExpiryDateTo(LocalDate.of(2024, 1, 20))
+            .getFoundItems();
+        Assertions.assertEquals(foundItems.size(), 2);
+        Assertions.assertEquals(foundItems.get(0), testItemList.get(4));
+        Assertions.assertEquals(foundItems.get(1), testItemList.get(7));
     }
 
     @Test
@@ -73,31 +102,22 @@ public class SearchAssistantTest {
     }
 
     @Test
+    public void searchByQuantityThenExpiryDate_from10After15June2024_foundBatteryCoffee() {
+        ArrayList<Item> foundItems = searchAssistant.searchByQuantityFrom(10)
+            .searchByExpiryDateFrom(LocalDate.of(2024, 6, 15))
+            .getFoundItems();
+        Assertions.assertEquals(foundItems.size(), 2);
+        Assertions.assertEquals(foundItems.get(0), testItemList.get(2));
+        Assertions.assertEquals(foundItems.get(1), testItemList.get(8));
+    }
+
+    @Test
     public void searchByCostPriceThenSalePrice_from30CTo1D_foundItems() {
         ArrayList<Item> foundItems = searchAssistant.searchByCostPriceFrom(0.30)
             .searchBySalePriceTo(1)
             .getFoundItems();
         Assertions.assertEquals(foundItems.size(), 3);
         Assertions.assertEquals(foundItems.get(0), testItemList.get(3));
-        Assertions.assertEquals(foundItems.get(1), testItemList.get(4));
-        Assertions.assertEquals(foundItems.get(2), testItemList.get(7));
-    }
-
-    @Test
-    public void searchBySalePrice_from1To10_foundItems() {
-        ArrayList<Item> foundItems = searchAssistant.searchBySalePriceBetween(1, 10)
-            .getFoundItems();
-        Assertions.assertEquals(2, foundItems.size());
-        Assertions.assertEquals(foundItems.get(0), testItemList.get(5));
-        Assertions.assertEquals(foundItems.get(1), testItemList.get(6));
-    }
-
-    @Test
-    public void searchByExpiryDate_to20Jan2024_foundBatteryAndBananas() {
-        ArrayList<Item> foundItems = searchAssistant.searchByExpiryDateTo(LocalDate.of(2024, 1, 20))
-            .getFoundItems();
-        Assertions.assertEquals(foundItems.size(), 3);
-        Assertions.assertEquals(foundItems.get(0), testItemList.get(2));
         Assertions.assertEquals(foundItems.get(1), testItemList.get(4));
         Assertions.assertEquals(foundItems.get(2), testItemList.get(7));
     }

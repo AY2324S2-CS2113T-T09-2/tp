@@ -48,6 +48,32 @@ public class SearchAssistant {
         return this;
     }
 
+    public SearchAssistant searchByQuantityBetween(int from, int to) {
+        searchByQuantityFrom(from);
+        searchByQuantityTo(to);
+        return this;
+    }
+
+    public SearchAssistant searchByQuantityFrom(int from) {
+        if (from < 0) {
+            return this;
+        }
+        foundItems = foundItems.stream()
+            .filter(item -> item.getItemQuantity() >= from)
+            .collect(Collectors.toCollection(ArrayList::new));
+        return this;
+    }
+
+    public SearchAssistant searchByQuantityTo(int to) {
+        if (to == Integer.MAX_VALUE) {
+            return this;
+        }
+        foundItems = foundItems.stream()
+            .filter(item -> item.getItemQuantity() <= to)
+            .collect(Collectors.toCollection(ArrayList::new));
+        return this;
+    }
+
     public SearchAssistant searchByCostPriceBetween(double from, double to) {
         searchByCostPriceFrom(from);
         searchByCostPriceTo(to);
@@ -59,7 +85,7 @@ public class SearchAssistant {
             return this;
         }
         foundItems = foundItems.stream()
-            .filter(item -> item.getItemCostPrice() > fromPrice)
+            .filter(item -> item.getItemCostPrice() >= fromPrice)
             .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }
@@ -86,7 +112,7 @@ public class SearchAssistant {
         }
         foundItems = foundItems.stream()
             .filter(item -> item instanceof RetailItem)
-            .filter(item -> ((RetailItem) item).getItemSalePrice() > fromPrice)
+            .filter(item -> ((RetailItem) item).getItemSalePrice() >= fromPrice)
             .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }
@@ -115,10 +141,10 @@ public class SearchAssistant {
         foundItems = foundItems.stream()
             .filter(item -> item instanceof PerishableRetailItem || item instanceof PerishableOperationalItem)
             .filter(item -> item instanceof PerishableRetailItem?
-                    LocalDate.parse(((PerishableRetailItem) item).getItemExpirationDate(),
-                        DateTimeFormatter.ofPattern("dd-MM-yyyy")).isAfter(fromDate) :
-                    LocalDate.parse(((PerishableOperationalItem) item).getItemExpirationDate(),
-                        DateTimeFormatter.ofPattern("dd-MM-yyyy")).isAfter(fromDate))
+                    !LocalDate.parse(((PerishableRetailItem) item).getItemExpirationDate(),
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy")).isBefore(fromDate) :
+                    !LocalDate.parse(((PerishableOperationalItem) item).getItemExpirationDate(),
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy")).isBefore(fromDate))
             .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }
