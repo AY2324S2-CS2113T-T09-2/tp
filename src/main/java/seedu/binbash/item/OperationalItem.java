@@ -6,8 +6,9 @@ package seedu.binbash.item;
  * These Items are not meant to be sold, and thus, have no sale price.
  */
 public class OperationalItem extends Item {
-    public OperationalItem(String itemName, String itemDescription, int itemQuantity, double itemCostPrice) {
-        super(itemName, itemDescription, itemQuantity, itemCostPrice);
+    public OperationalItem(String itemName, String itemDescription, int itemQuantity, double itemCostPrice,
+                           Integer itemThreshold) {
+        super(itemName, itemDescription, itemQuantity, itemCostPrice, itemThreshold);
     }
 
     @Override
