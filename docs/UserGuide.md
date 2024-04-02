@@ -70,20 +70,109 @@ Now, you can head over to the [Features](#features) section to learn how to use 
 
 ## Features
 
+Before we dive into the features that BinBash has to offer, lets start with a little introduction. BinBash tracks four 
+types of items in our inventory list. They are:
+ - Retail item
+ - Operational Item
+ - Perishable Retail Item
+ - Perishable Operational Item
+
+ Our commands use flags to identify and differentiate the information that you give to BinBash. The following are a 
+ list of flags that you can use:
+ 
+- `-re` : to signify a Retail item type
+- `-op` : to signify an Operational item type
+- `-n` : name of the item that you want to add
+- `-d` : description of the item
+- `-q` : quantity
+- `-e` : expiry date
+- `-c` : cost price, which is the cost that you bought the item for
+- `-s` : sale price, which is the price that you are selling it for
+- `-t` : threshold, the lower limit of your item quantity, below which you will be alerted of depleting stock
+
+> #### Note:
+> - Only one item type flag can be specified for each item. This means that you can only use either `-re` or `-op` but
+> not both at the same time. 
+> - The `-e` flag determines if the item that you are adding is a Perishable item. This means that items with an expiry 
+> date are perishable.
+> - The `-s` flag determines if the item that you are adding is a Retail item. This means that an item with a sale price 
+> are retail items that are meant to be sold.
+> - The flags can be placed in any order. There is no specific order that you have to abide by.
+
 ### Adding an item: `add`
 
 > Adds an item to the inventory.
 
-Format: `add n/ITEM_NAME d/ITEM_DESCRIPTION q/ITEM_QUANTITY e/EXPIRATION_DATE s/SALE_PRICE c/COST_PRICE`
+#### Adding a Retail item
 
+Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -s SALE_PRICE -c COST_PRICE -t THRESHOLD`
+
+* `-re` specifies that this is a Retail item.
 * `ITEM_NAME`, `ITEM_DESCRIPTION`, `SALE_PRICE` and `COST_PRICE` must be specified.
 * All other fields are optional.
 * If `ITEM_QUANTITY` is not specified, a default value of `0` will be assigned to it.
-* There is no need to include the currency. A "$" sign will be appended to the prices.
+* If `THRESHOLD` is not specified, a default value of `1` will be assigned to it.
+* There is no need to include the currency. A `$` sign will be appended to the prices.
+* Retail items do not have an `expiry date` field, hence the flag `-e` is not used.
 
-Examples: 
-* `add n/apple d/a type of fruit q/10 e/12-10-2024 s/1.20 c/0.45`
-* `add n/lego d/toys q/7 s/102.00  c/34.32`
+Examples:
+
+- `add -re -n lego -d toys -q 350 -s 102.00 -c 34.32 -t 50`
+Adds an item called "lego" into your inventory list with the description "toys" that has a quantity of 350. 
+It costs $34.32 per unit item and is sold for $102.00 each. The threshold set for this item is at 50.
+- `add -re -n hammer -d tools -q 20 -s 9.00 -c 4.39 -t 10`
+Adds an item called "hammer" into your inventory list with the description "tools" that has a quantity of 20.
+It costs $4.39 per unit item and is sold for $9.00 each. The threshold set for this item is at 10.
+
+#### Adding a Perishable Retail item
+
+Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE 
+-t THRESHOLD`
+
+* The command to add a Perishable Retail item is similar to adding a Retail item.
+* An additional flag , `-e`, is used here to include the `expiry date`, hence signifying a Perishable Retail item.
+
+Examples:
+
+- `add -re -n apple -d fruit -q 50 -e 12-12-2024 -s 1.00 -c 0.39 -t 10`
+Adds an item called "apple" into your inventory list with the description "fruit" that has a quantity of 50 and will
+expire on 12 December 2024. It costs $0.39 per unit item and is sold for $1.00 each. The threshold set for this item is 
+at 10.
+- `add -re -n tuna fish -d seafood -q 5 -e 02-11-2024 -s 10 -c 4.50`
+Adds an item called "tuna fish" into your inventory list with the description "seafood" that has a quantity of 5 and 
+will expire on 02 November 2024. It costs $4.50 per unit item and is sold for $10.00 each. The threshold will be
+automatically set at 1.
+
+#### Adding an Operational item
+
+Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -s SALE_PRICE -t THRESHOLD`
+
+* `-op` specifies that this is an Operational Item.
+* `ITEM_NAME`, `ITEM_DESCRIPTION` and `SALE_PRICE` must be specified.
+* All other fields are optional.
+* If `ITEM_QUANTITY` is not specified, a default value of `0` will be assigned to it.
+* If `THRESHOLD` is not specified, a default value of `1` will be assigned to it.
+* There is no need to include the currency. A `$` sign will be appended to the prices.
+* `-s` and `-e` are not used as there are no `sale price` and `expiry date` fields for an Operational Item.
+
+Examples:
+
+- `add -op -n light bulbs -d lighting -q 5 -c 2.30 -t 3`
+Adds an item called "light bulbs" into your inventory list with the description "lighting" that has a quantity of 5. 
+It costs $2.30 per unit item. The threshold set for this item is at 3.
+
+#### Adding a Perishable Operational item
+
+Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -t THRESHOLD`
+
+* The command to add a Perishable Operational item is similar to adding an Operational item.
+* An additional flag , `-e`, is used here to include the `expiry date`, hence signifying a Perishable Operational item.
+
+Examples:
+
+- `add -op -n milk -d to make cofee -q 2 -e 03-10-2024 -c 1.30`
+Adds an item called "milk" into your inventory list with the description "to make coffee" that has a quantity of 2. It
+will expire on 3 October 2024. It costs $1.30 per unit item. The threshold is automatically set at 1.
 
 ### Searching for an item: `search`
 
