@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions;
 
 import org.apache.commons.cli.ParseException;
 
+import java.util.Arrays;
+
 public class SearchCommandParserTest {
     private final SearchCommandParser searchCommandParser = new SearchCommandParser();
 
@@ -39,6 +41,22 @@ public class SearchCommandParserTest {
             Assertions.assertTrue(searchCommand instanceof SearchCommand);
         } catch (ParseException e) {
             Assertions.fail();
+        }
+    }
+
+    @Test
+    void parseRangeArgument_multipleRanges_success() {
+        String[] rangeArguments = {"..4", "0..", "1..6", "..5..10"};
+        String[][] expectedRanges = {
+            {"", "4"}, {"0", ""}, {"1", "6"}, {"", "5"}
+        };
+        for (int i = 0; i < rangeArguments.length; i += 1) {
+            try {
+                Assertions.assertTrue(Arrays.equals(expectedRanges[i],
+                        searchCommandParser.parseRangeArgument(rangeArguments[i], "option")));
+            } catch (ParseException e) {
+                Assertions.fail();
+            }
         }
     }
 }
