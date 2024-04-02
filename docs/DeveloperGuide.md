@@ -39,35 +39,35 @@
 
 If you are using `IntelliJ IDEA`,
 
-4. Set up the correct JDK version for IntelliJ. To do this, kindly refer to the official documentation from JetBrains [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).
+1. Set up the correct JDK version for IntelliJ. To do this, kindly refer to the official documentation from JetBrains [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).
    1. Ensure that you are using **JDK version 11**. 
-5. Import the project as a **Gradle** project. 
+2. Import the project as a **Gradle** project.:q
    1. Click **Open** or **Import** in IntelliJ. 
    2. Locate the `build.gradle` file in the repository. Select it, and click OK.
    3. If prompted, choose to **Open as Project**. 
    4. Click OK to accept the default settings. 
    5. Wait for the import process to finish. This could take a few minutes.
    6. Once the importing process has completed, you should see the `Gradle Toolbar` in the IDEA interface (look for the elephant icon on the right side of your screen). 
-6. Verify that the Gradle project has been set up correctly.
-   1. Run `seedu.binbash.BinBash` and ensure you see the following output.
-   ```text
-    -------------------------------------------------------------
-      ____  _       ____            _
-    | __ )(_)_ __ | __ )  __ _ ___| |__
-    |  _ \| | '_ \|  _ \ / _` / __| '_ \
-    | |_) | | | | | |_) | (_| \__ \ | | |
-    |____/|_|_| |_|____/ \__,_|___/_| |_|
+3. Verify that the Gradle project has been set up correctly.
+   1. Run `seedu.binbash.BinBash` and ensure you see the following output.<br>
+       ```text
+       -------------------------------------------------------------
+        ____  _       ____            _
+       | __ )(_)_ __ | __ )  __ _ ___| |__
+       |  _ \| | '_ \|  _ \ / _` / __| '_ \
+       | |_) | | | | | |_) | (_| \__ \ | | |
+       |____/|_|_| |_|____/ \__,_|___/_| |_|
     
-    Welcome to BinBash!
-    -------------------------------------------------------------
-    -------------------------------------------------------------
-    Here are your metrics:
-    Total Cost: 0.00
-    Total Revenue: 0.00
-    Net Profit: 0.00
+       Welcome to BinBash!
+       -------------------------------------------------------------
+       -------------------------------------------------------------
+       Here are your metrics:
+       Total Cost: 0.00
+       Total Revenue: 0.00
+       Net Profit: 0.00
     
-    -------------------------------------------------------------
-    ```
+       -------------------------------------------------------------
+       ```
    2. Click on the Gradle icon.
    3. Run the tests (click on `tp/Tasks/verification/test`) and ensure that all tests have passed.
 
