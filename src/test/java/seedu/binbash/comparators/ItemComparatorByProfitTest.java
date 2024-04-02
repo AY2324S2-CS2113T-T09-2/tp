@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ItemComparatorByProfitTest {
 
     @Test
-    public void compare_itemsWithDifferentProfits_SortedByDescendingProfit() {
+    public void compare_itemsWithDifferentProfits_sortedByDescendingProfit() {
         List<RetailItem> itemList = new ArrayList<>();
         RetailItem item1 = new RetailItem("Item1", "Description1", 10, 15.0, 5.0);
         item1.setTotalUnitsPurchased(10);

@@ -2,7 +2,6 @@ package seedu.binbash.inventory;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.binbash.inventory.ItemList;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableOperationalItem;

@@ -20,7 +20,7 @@ public class ItemComparatorByProfit implements Comparator<Item> {
      * @param item1 The first object to be compared.
      * @param item2 The second object to be compared.
      * @return A negative integer if the first item's profit is greater than the second item's profit,
-     * a positive integer if the first item's profit is less than or equals to the second item's profit,
+     * positive integer if the first item's profit is less than or equals to the second item's profit,
      */
     public int compare(Item item1, Item item2) {
         retailItem1 = (RetailItem) item1 ;

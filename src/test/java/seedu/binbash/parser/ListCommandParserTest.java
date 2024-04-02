@@ -53,7 +53,7 @@ class ListCommandParserTest {
     }
 
     @Test
-    void parse_ProfitOption_success() {
+    void parse_profitOption_success() {
         String[] commandArgs = {"-p"};
         try {
             ListCommand searchCommand = listCommandParser.parse(commandArgs);
