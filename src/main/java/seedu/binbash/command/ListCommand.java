@@ -38,15 +38,19 @@ public class ListCommand extends Command {
     public boolean execute(ItemList itemList) {
         switch(sortType) {
         case "e":
+            commandLogger.info("Executing list sort by expiry date...");
             executionUiOutput = itemList.printListSortedByExpiryDate(itemList.getItemList());
             break;
         case "c":
+            commandLogger.info("Executing list sort by cost price...");
             executionUiOutput = itemList.printListSortedByCostPrice(itemList.getItemList());
             break;
         case "s":
+            commandLogger.info("Executing list sort by sale price...");
             executionUiOutput = itemList.printListSortedBySalePrice(itemList.getItemList());
             break;
         default:
+            commandLogger.info("Executing list unsorted...");
             executionUiOutput = itemList.printList(itemList.getItemList());
         }
 
