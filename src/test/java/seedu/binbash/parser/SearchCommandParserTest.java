@@ -33,7 +33,7 @@ public class SearchCommandParserTest {
 
     @Test
     public void parse_expiryDateOption_success() {
-        String[] commandArgs = new String[]{"-e", "23-11-2023"};
+        String[] commandArgs = new String[]{"-e", "..23-11-2023"};
         try {
             SearchCommand searchCommand = searchCommandParser.parse(commandArgs);
             Assertions.assertTrue(searchCommand instanceof SearchCommand);
