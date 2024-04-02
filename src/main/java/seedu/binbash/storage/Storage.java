@@ -58,7 +58,7 @@ public class Storage {
      * If the file is corrupted, it will attempt to handle the corrupted file
      * by renaming it and creating a new file.
      *
-     * @return A list of items loaded from the storage file. Returns an empty list if the file is corrupted.
+     * @return A list of items loaded from the storage file. Returns an incompletely loaded list if the file is corrupted.
      */
     public ArrayList<Item> loadData() {
         storageLogger.info("Preparing to load data from storage file.");
