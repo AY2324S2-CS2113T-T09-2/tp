@@ -7,7 +7,6 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.TypeHandler;
 import seedu.binbash.command.SearchCommand;
 
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
 
@@ -113,7 +112,8 @@ public class SearchCommandParser extends DefaultParser {
 
     String[] parseRangeArgument(String argument, String option) throws ParseException {
         if (!argument.contains("..") || argument.length() < 3) {
-            throw new ParseException("Format for " + option + " option: {min}..{max}. At least one of min or max is required.");
+            throw new ParseException("Format for " + option + " option: {min}..{max}. "
+                    + "At least one of min or max is required.");
         }
         String[] argumentRange = {"", ""};
         String[] values = argument.split("\\Q..\\E");

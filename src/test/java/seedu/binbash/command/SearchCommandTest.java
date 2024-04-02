@@ -1,7 +1,6 @@
 package seedu.binbash.command;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
 
 import seedu.binbash.item.Item;
@@ -41,9 +40,9 @@ public class SearchCommandTest {
         SearchCommand searchCommand = new SearchCommand();
         searchCommand.setNameField("en");
         searchCommand.setDescriptionField("w");
-        int quantityRange[] = {20, Integer.MAX_VALUE};
+        int[] quantityRange = {20, Integer.MAX_VALUE};
         searchCommand.setQuantityRange(quantityRange);
-        double costPriceRange[] = {Double.MIN_VALUE, 5};
+        double[] costPriceRange = {Double.MIN_VALUE, 5};
         searchCommand.setCostPriceRange(costPriceRange);
 
         ItemList dummyItemList = new ItemList(testItemList);
