@@ -1,27 +1,90 @@
 @startuml
-'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+abstract class Command {
+    - itemList: ItemList
+    - commandLogger: BinBashLogger
+    - executionUiOutput: String
+    - hasToSave: boolean
+    + execute(itemList: ItemList): boolean
+    + getExecutionUiOutput(): String
+    + hasToSave(): boolean
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+class AddCommand {
+    - itemType: String
+    - itemName: String
+    - itemDescription: String
+    - itemQuantity: int
+    - itemExpirationDate: LocalDate
+    - itemSalePrice: double
+    - itemCostPrice: double
+    - itemThreshold: int
+    + execute(itemList: ItemList): boolean
 }
+
+class ByeCommand {
+    + execute(itemList: ItemList): boolean
+}
+
+class DeleteCommand {
+    - keyword: String
+    - index: int
+    - isIndex: boolean
+    + execute(itemList: ItemList): boolean
+}
+
+class ListCommand {
+    + execute(itemList: ItemList): boolean
+}
+
+class ProfitCommand {
+    + execute(itemList: ItemList): boolean
+}
+
+class RestockCommand {
+    - itemName: String
+    - restockQuantity: int
+    + execute(itemList: ItemList): boolean
+}
+
+class SearchCommand {
+    - nameField: String
+    - descriptionField: String
+    - costPriceField: double
+    - salePriceField: double
+    - expiryDateField: LocalDate
+    - numberOfResults: int
+    - foundItems: ArrayList<Item>
+    + execute(itemList: ItemList): boolean
+}
+
+class SellCommand {
+    - itemName: String
+    - sellQuantity: int
+    + execute(itemList: ItemList): boolean
+}
+
+class UpdateCommand {
+    - itemName: String
+    - index: int
+    - itemDescription: String
+    - itemQuantity: int
+    - itemExpirationDate: LocalDate
+    - itemSalePrice: double
+    - itemCostPrice: double
+    - itemThreshold: int
+    - isIndex: boolean
+    + execute(itemList: ItemList): boolean
+}
+
+Command <|-- AddCommand
+Command <|-- ByeCommand
+Command <|-- DeleteCommand
+Command <|-- ListCommand
+Command <|-- ProfitCommand
+Command <|-- RestockCommand
+Command <|-- SearchCommand
+Command <|-- SellCommand
+Command <|-- UpdateCommand
 
 @enduml

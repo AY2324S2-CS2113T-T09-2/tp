@@ -1,0 +1,32 @@
+@startuml
+class BinBash {
+
+    - userInterface : Ui
+    - itemList : ItemList
+    - inputParser : Parser
+    - storage : Storage
+    - logger : BinBashLogger
+
+    + {method} BinBash()
+    + {method} run() : void
+    + {static} main(args : String[]) : void
+
+}
+
+class Storage {
+
+    + {method} Storage()
+    + {method} loadData() : ArrayList<Item>
+    - {method} handleCorruptedFile() : void
+    - {method} isCorruptedFileRenamed() : boolean
+    - {method} isNewFileCreated() : boolean
+    - {method} readTxtFile() : ArrayList<String>
+    - {method} parseLinesToItemList(stringRepresentationOfTxtFile : ArrayList<String>) : ArrayList<Item>
+    - {method} convertLineToItem(line : String) : Item
+    + {method} saveToStorage(itemList : List<Item>) : void
+    - {method} generateTextToSave(itemList : List<Item>) : String
+    - {method} generateStorageRepresentationOfSingleItem(item : Item) : String
+}
+
+BinBash --> Storage : uses
+@enduml
