@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class SearchCommand extends Command {
     private String nameField = "";
     private String descriptionField = "";
+    private int[] quantityRange = {Integer.MIN_VALUE, Integer.MAX_VALUE};
     private double[] costPriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
     private double[] salePriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
     private LocalDate[] expiryDateRange = {LocalDate.MIN, LocalDate.MAX};
@@ -28,6 +29,10 @@ public class SearchCommand extends Command {
 
     public void setDescriptionField(String descriptionField) {
         this.descriptionField = descriptionField;
+    }
+
+    public void setQuantityRange(int[] quantityRange) {
+        this.quantityRange = quantityRange;
     }
 
     public void setCostPriceRange(double[] costPriceRange) {
@@ -50,6 +55,7 @@ public class SearchCommand extends Command {
         ArrayList<Item> foundItems = itemList.getSearchAssistant()
             .searchByName(nameField)
             .searchByDescription(descriptionField)
+            .searchByQuantityBetween(quantityRange[0], quantityRange[1])
             .searchByCostPriceBetween(costPriceRange[0], costPriceRange[1])
             .searchBySalePriceBetween(salePriceRange[0], salePriceRange[1])
             .searchByExpiryDateBetween(expiryDateRange[0], expiryDateRange[1])
