@@ -59,8 +59,10 @@ class ListCommandTest {
         ItemList itemList = new ItemList();
         ListCommand listCommandCostPrice = new ListCommand("c");
 
-        itemList.addItem("retail", "testItem1", "Test item 1", 2, LocalDate.of(2024, 1, 1), 10.00, 5.00);
-        itemList.addItem("retail", "testItem2", "Test item 2", 2, LocalDate.of(2024, 1, 1), 3.00, 2.00);
+        itemList.addItem("retail", "testItem1", "Test item 1", 2,
+                LocalDate.of(2024, 1, 1), 10.00, 5.00);
+        itemList.addItem("retail", "testItem2", "Test item 2", 2,
+                LocalDate.of(2024, 1, 1), 3.00, 2.00);
 
         listCommandCostPrice.execute(itemList);
         String actualOutput = listCommandCostPrice.getExecutionUiOutput();
@@ -88,8 +90,10 @@ class ListCommandTest {
         ItemList itemList = new ItemList();
         ListCommand listCommandCostPrice = new ListCommand("e");
 
-        itemList.addItem("retail", "testItem", "Test item", 2, LocalDate.of(2024, 1, 5), 3.00, 2.00);
-        itemList.addItem("retail", "testItem", "Test item", 2, LocalDate.of(2024, 1, 1), 3.00, 2.00);
+        itemList.addItem("retail", "testItem", "Test item", 2,
+                LocalDate.of(2024, 1, 5), 3.00, 2.00);
+        itemList.addItem("retail", "testItem", "Test item", 2,
+                LocalDate.of(2024, 1, 1), 3.00, 2.00);
 
         listCommandCostPrice.execute(itemList);
         String actualOutput = listCommandCostPrice.getExecutionUiOutput();
