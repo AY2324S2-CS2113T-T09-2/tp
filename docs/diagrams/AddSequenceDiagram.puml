@@ -1,6 +1,7 @@
 @startuml
 
 participant ":BinBash"
+activate ":BinBash"
 participant "userCommand:AddCommand"
 
 ":BinBash" -> "userCommand:AddCommand" : 1. execute(itemList)
