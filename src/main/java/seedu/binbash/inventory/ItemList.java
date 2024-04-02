@@ -185,8 +185,8 @@ public class ItemList {
     public String deleteItem(String keyword) {
         int targetIndex = -1;
         Item currentItem;
-        for (int i = 0; i < itemList.size(); i ++) {
-            currentItem = itemList.get(i);
+        for (int i = 0; i < sortedOrder.size(); i ++) {
+            currentItem = itemList.get(sortedOrder.get(i));
             if (currentItem.getItemName().trim().equals(keyword)) {
                 logger.info("first matching item at index " + i + " found.");
                 targetIndex = i + 1;
