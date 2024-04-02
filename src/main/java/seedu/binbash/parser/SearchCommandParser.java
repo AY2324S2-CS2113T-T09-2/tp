@@ -18,6 +18,7 @@ public class SearchCommandParser extends DefaultParser {
         new CommandOptionAdder(options)
             .addNameOption(false, "Search by name")
             .addDescriptionOption(false, "Search by description")
+            .addQuantityOption(false, "Search by quantity")
             .addCostPriceOption(false, "Search by cost-price")
             .addSalePriceOption(false, "Search by sale-price")
             .addExpirationDateOption(false, "Search by expiry date")
@@ -39,6 +40,19 @@ public class SearchCommandParser extends DefaultParser {
         if (commandLine.hasOption("description")) {
             String descriptionField = String.join(" ", commandLine.getOptionValues("description"));
             searchCommand.setDescriptionField(descriptionField);
+            hasOption = true;
+        }
+
+        if (commandLine.hasOption("quantity")) {
+            String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("quantity"), "quantity");
+            int[] quantityRange = {Integer.MIN_VALUE, Integer.MAX_VALUE};
+            if (rangeArgument[0] != "") {
+                quantityRange[0] = TypeHandler.createNumber(rangeArgument[0]).intValue();
+            }
+            if (rangeArgument[1] != "") {
+                quantityRange[1] = TypeHandler.createNumber(rangeArgument[1]).intValue();
+            }
+            searchCommand.setQuantityRange(quantityRange);
             hasOption = true;
         }
 
