@@ -14,7 +14,6 @@ public class SearchCommand extends Command {
     private double[] salePriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
     private LocalDate[] expiryDateRange = {LocalDate.MIN, LocalDate.MAX};
     private int numberOfResults = Integer.MAX_VALUE;
-    private ArrayList<Item> foundItems;
 
     public SearchCommand() {
         commandLogger = new BinBashLogger(SearchCommand.class.getName());
@@ -47,12 +46,8 @@ public class SearchCommand extends Command {
         this.numberOfResults = numberOfResults;
     }
 
-    public ArrayList<Item> getFoundItems() {
-        return foundItems;
-    }
-
     public boolean execute(ItemList itemList) {
-        foundItems = itemList.getSearchAssistant()
+        ArrayList<Item> foundItems = itemList.getSearchAssistant()
             .searchByName(nameField)
             .searchByDescription(descriptionField)
             .searchByCostPriceBetween(costPriceRange[0], costPriceRange[1])
