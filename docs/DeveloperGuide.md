@@ -93,6 +93,8 @@ The bulk of the app's work is done by the following five components:
 - `Command`: Executes the command requested by the user.
 - `Data`: Handles the data created by the user.
 
+The `Logger` component handles the logging of events, and writes logs to a `logs.txt` log file.
+
 The user primarily interacts with the `Ui` component.
 In turn, the `Parser` interprets the user's input and creates the appropriate `Command`.
 The `Data` component then manages all data created by the user upon `Command` execution.
@@ -328,7 +330,7 @@ Small business (retail shop) owners who:
 
 ## Instructions for manual testing
 
-> Testers are encouraged to do more exploratory testing with the following commands.
+> Testers are encouraged to do more exploratory testing with the following commands. Testers can also directly read/write data and log files for testing.
 
 ### Launch and shutdown
 

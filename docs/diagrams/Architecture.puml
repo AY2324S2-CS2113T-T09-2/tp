@@ -4,6 +4,7 @@ skinparam componentStyle rectangle
 
 actor User
 folder "items.txt"
+folder "logs.txt"
 
 component {
     User .down.> [Ui]
@@ -18,6 +19,8 @@ component {
 
     [Command] ..> [Ui]
     [Storage] .right.> "items.txt"
+
+    [Logger] .right.> "logs.txt"
 }
 
 @enduml
