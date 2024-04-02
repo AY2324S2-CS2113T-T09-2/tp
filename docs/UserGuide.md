@@ -146,6 +146,15 @@ Examples:
 * `delete cookie`
 * `delete tissue paper`
 
+### Calculating the total profit: `profit`
+
+> Calculates the total profit based on the revenue and cost of items in your inventory.
+
+Format: `profit`
+
+This command computes the total profit by subtracting the total cost from the total revenue of all items in your inventory.
+The output will display the total profit in the format: Total profit: $XXX.XX
+
 ### Exiting the application: `bye`
 
 > Exits the application.
