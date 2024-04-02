@@ -11,11 +11,17 @@ import java.time.format.DateTimeFormatter;
  */
 public class PerishableRetailItem extends RetailItem {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    private final LocalDate itemExpirationDate;
+    private LocalDate itemExpirationDate;
 
     public PerishableRetailItem(String itemName, String itemDescription, int itemQuantity,
                                 LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
-        super(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice);
+        this(itemName, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice, -1);
+    }
+
+    public PerishableRetailItem(String itemName, String itemDescription, int itemQuantity,
+                                LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
+                                int itemThreshold) {
+        super(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice, itemThreshold);
         this.itemExpirationDate = itemExpirationDate;
     }
 
@@ -26,6 +32,14 @@ public class PerishableRetailItem extends RetailItem {
      */
     public String getItemExpirationDate() {
         return itemExpirationDate.format(DATE_TIME_FORMATTER);
+    }
+
+    public void setItemExpirationDate(LocalDate itemExpirationDate) {
+        this.itemExpirationDate = itemExpirationDate;
+    }
+
+    public LocalDate getLocalDateItemExpirationDate() {
+        return itemExpirationDate;
     }
 
     @Override

@@ -1,0 +1,26 @@
+@startuml
+
+skinparam componentStyle rectangle
+
+actor User
+folder "items.txt"
+folder "logs.txt"
+
+component {
+    User .down.> [Ui]
+    [BinBash] -left-> [Ui]
+    [BinBash] --> [Parser]
+    [BinBash] --> [Storage]
+    [BinBash] --> [Data]
+
+    [Parser] --> [Command]
+    [Command] --> [Data]
+    [Storage] --> [Data]
+
+    [Command] ..> [Ui]
+    [Storage] .right.> "items.txt"
+
+    [Logger] .right.> "logs.txt"
+}
+
+@enduml

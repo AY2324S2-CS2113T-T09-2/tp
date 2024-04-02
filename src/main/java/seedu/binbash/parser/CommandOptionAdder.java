@@ -40,6 +40,77 @@ public class CommandOptionAdder {
         return opItemOption;
     }
 
+    private Option sortByCostPriceOption() {
+        Option sortCostOption = Option.builder("c")
+                .hasArg(false)
+                .required(false)
+                .longOpt("cost")
+                .desc("Sort by cost price.")
+                .argName("cost")
+                .build();
+
+        return sortCostOption;
+    }
+
+    private Option sortByExpirationDateOption() {
+        Option sortExpiryOption = Option.builder("e")
+                .hasArg(false)
+                .required(false)
+                .longOpt("expiry")
+                .desc("Sort by expiry date.")
+                .argName("expiry")
+                .build();
+
+        return sortExpiryOption;
+    }
+
+    private Option sortBySalePriceOption() {
+        Option sortSaleOption = Option.builder("s")
+                .hasArg(false)
+                .required(false)
+                .longOpt("sale")
+                .desc("Sort by sale price.")
+                .argName("sale")
+                .build();
+
+        return sortSaleOption;
+    }
+
+    CommandOptionAdder addListTypeOptionGroup() {
+        OptionGroup listTypeOptionGroup = new OptionGroup()
+                .addOption(sortByCostPriceOption())
+                .addOption(sortByExpirationDateOption())
+                .addOption(sortBySalePriceOption());
+
+        listTypeOptionGroup.setRequired(false);
+        options.addOptionGroup(listTypeOptionGroup);
+        return this;
+    }
+
+    private Option getItemNameOption() {
+        Option opItemOption = Option.builder("n")
+                .hasArg(true)
+                .required(true)
+                .longOpt("name")
+                .desc("Update using name")
+                .argName("name")
+                .build();
+
+        return opItemOption;
+    }
+
+    private Option getItemIndexOption() {
+        Option opItemOption = Option.builder("i")
+                .hasArg(true)
+                .required(true)
+                .longOpt("index")
+                .desc("Update using index")
+                .argName("index")
+                .build();
+
+        return opItemOption;
+    }
+
     CommandOptionAdder addItemTypeOptionGroup() {
         OptionGroup itemTypeOptionGroup = new OptionGroup()
                 .addOption(getRetailItemOption())
@@ -47,6 +118,16 @@ public class CommandOptionAdder {
 
         itemTypeOptionGroup.setRequired(true);
         options.addOptionGroup(itemTypeOptionGroup);
+        return this;
+    }
+
+    CommandOptionAdder addItemNameAndIndexOptionGroup() {
+        OptionGroup itemNameAndInxdexOptionGroup = new OptionGroup()
+                .addOption(getItemIndexOption())
+                .addOption(getItemNameOption());
+
+        itemNameAndInxdexOptionGroup.setRequired(true);
+        options.addOptionGroup(itemNameAndInxdexOptionGroup);
         return this;
     }
 
@@ -59,6 +140,18 @@ public class CommandOptionAdder {
                 .build();
         options.addOption(nameOption);
         optionDescriptions.add(new OptDesc("-n", "--name", description));
+        return this;
+    }
+
+    CommandOptionAdder addIndexOption(boolean isRequired, String description) {
+        Option nameOption = Option.builder("i")
+                .hasArg(true)
+                .required(isRequired)
+                .longOpt("index")
+                .desc(description)
+                .argName("index")
+                .build();
+        options.addOption(nameOption);
         return this;
     }
 
@@ -123,6 +216,19 @@ public class CommandOptionAdder {
                 .build();
         options = options.addOption(expiryOption);
         optionDescriptions.add(new OptDesc("-e", "--expiry-date", description));
+        return this;
+    }
+
+    CommandOptionAdder addThresholdOption(boolean isRequired, String description) {
+        Option thresholdOption = Option.builder("t")
+                .hasArg(true)
+                .required(isRequired)
+                .longOpt("threshold")
+                .desc(description)
+                .argName("threshold")
+                .build();
+
+        options = options.addOption(thresholdOption);
         return this;
     }
 

@@ -5,21 +5,23 @@ package seedu.binbash.item;
  * Subclasses can extend Item in order to add properties that are specific to different Item types.
  */
 public abstract class Item {
-    protected final String itemName;
-    protected final String itemDescription;
+    protected String itemName;
+    protected String itemDescription;
     protected int itemQuantity;
-    protected final double itemCostPrice;
+    protected double itemCostPrice;
     protected int totalUnitsPurchased;
+    protected int itemThreshold;
+    protected boolean isAlert;
 
-    /**
-     * Constructs an Item. Provided parameters must be non-null.
-     */
-    protected Item(String itemName, String itemDescription, int itemQuantity, double itemCostPrice) {
+    public Item(String itemName, String itemDescription, int itemQuantity, double itemCostPrice,
+                int itemThreshold) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemQuantity = itemQuantity;
         this.itemCostPrice = itemCostPrice;
+        this.itemThreshold = itemThreshold;
         this.totalUnitsPurchased = itemQuantity;
+        this.isAlert = false;
     }
 
     /**
@@ -31,6 +33,10 @@ public abstract class Item {
         return itemName;
     }
 
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
     /**
      * Returns the description of the Item.
      *
@@ -38,6 +44,10 @@ public abstract class Item {
      */
     public String getItemDescription() {
         return itemDescription;
+    }
+
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
     }
 
     /**
@@ -67,6 +77,18 @@ public abstract class Item {
         return itemCostPrice;
     }
 
+    public void setItemCostPrice(double itemCostPrice) {
+        this.itemCostPrice = itemCostPrice;
+    }
+
+    public int getItemThreshold() {
+        return itemThreshold;
+    }
+
+    public void setItemThreshold(Integer itemThreshold) {
+        this.itemThreshold = itemThreshold;
+    }
+
     /**
      * Returns the number of units purchased of the Item.
      *
@@ -83,6 +105,14 @@ public abstract class Item {
      */
     public void setTotalUnitsPurchased(int totalUnitsPurchased) {
         this.totalUnitsPurchased = totalUnitsPurchased;
+    }
+
+    public boolean isAlert() {
+        return isAlert;
+    }
+
+    public void setAlert(boolean isAlert) {
+        this.isAlert = isAlert;
     }
 
     @Override
