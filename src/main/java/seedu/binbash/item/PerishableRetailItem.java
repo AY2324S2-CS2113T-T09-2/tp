@@ -28,6 +28,11 @@ public class PerishableRetailItem extends RetailItem {
         return itemExpirationDate.format(DATE_TIME_FORMATTER);
     }
 
+    /**
+     * Returns the expiration date of the Item as a LocalDate object.
+     *
+     * @return Item expiration date as a LocalDate object.
+     */
     public LocalDate getItemExpirationDateLocalDate() {
         return itemExpirationDate;
     }
