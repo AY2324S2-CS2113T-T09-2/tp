@@ -5,21 +5,24 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.TypeHandler;
+import org.jline.builtins.Completers.OptDesc;
 
 import seedu.binbash.command.UpdateCommand;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 public class UpdateCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private ArrayList<OptDesc> optionDescriptions;
     boolean hasOption;
 
     public UpdateCommandParser() {
-
         options = new Options();
-        new CommandOptionAdder(options)
+        optionDescriptions = new ArrayList<>();
+        new CommandOptionAdder(options, optionDescriptions)
                 .addItemNameAndIndexOptionGroup()
                 .addDescriptionOption(false, "Update description of item")
                 .addQuantityOption(false, "Update quantity of item")
@@ -29,6 +32,10 @@ public class UpdateCommandParser extends DefaultParser {
                         "Update expiry date of item")
                 .addThresholdOption(false,
                         "Update threshold of item");
+    }
+
+    public ArrayList<OptDesc> getOptionDecriptions() {
+        return optionDescriptions;
     }
 
     public void setHasOption(boolean hasOption) {

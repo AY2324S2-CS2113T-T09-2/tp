@@ -21,7 +21,7 @@ public class AddCommandParser extends DefaultParser {
     public AddCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
-        new CommandOptionAdder(options)
+        new CommandOptionAdder(options, optionDescriptions)
             .addItemTypeOptionGroup()
             .addNameOption(true, "Easily recognizable item name.")
             .addDescriptionOption(true, "A brief description of the item.")
