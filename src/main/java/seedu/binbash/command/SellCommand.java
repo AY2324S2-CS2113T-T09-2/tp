@@ -1,6 +1,7 @@
 package seedu.binbash.command;
 
-import seedu.binbash.ItemList;
+import seedu.binbash.logger.BinBashLogger;
+import seedu.binbash.inventory.ItemList;
 
 import java.util.regex.Pattern;
 
@@ -11,6 +12,7 @@ public class SellCommand extends Command{
                     + "n/(?<itemName>.+?)(?=q/)"
                     + "q/(?<sellQuantity>.+)"
     );
+    private static final BinBashLogger binBashLogger = new BinBashLogger(SellCommand.class.getName());
     private final String itemName;
     private final int sellQuantity;
 
@@ -18,7 +20,8 @@ public class SellCommand extends Command{
         this.itemName = itemName;
         this.sellQuantity = sellQuantity;
 
-        commandLogger.fine(String.format(
+        commandLogger=  new BinBashLogger(SellCommand.class.getName());
+        commandLogger.info(String.format(
                 "Creating Sell Command... itemName: %s, sellQuantity: %d",
                 itemName,
                 sellQuantity
@@ -27,7 +30,7 @@ public class SellCommand extends Command{
 
     @Override
     public boolean execute(ItemList itemList) {
-        executionUiOutput = itemList.updateItemQuantity(itemName, sellQuantity, COMMAND);
+        executionUiOutput = itemList.sellOrRestockItem(itemName, sellQuantity, COMMAND);
         hasToSave = true;
         return true;
     }

@@ -2,22 +2,11 @@ package seedu.binbash.command;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;
-import seedu.binbash.ItemList;
+import seedu.binbash.inventory.ItemList;
+import seedu.binbash.logger.BinBashLogger;
 
 public class AddCommand extends Command {
 
-
-    //    public static final Pattern COMMAND_FORMAT = Pattern.compile(
-    //            "add\\s" + "n/(?<itemName>.+?)\\s" + "d/(?<itemDescription>.+?)\\s" + "(q/(?<itemQuantity>.+?))?"
-    //                    + "(e/(?<itemExpirationDate>.+?))?" + "s/(?<itemSalePrice>.+?)\\s" + "c/(?<itemCostPrice>.+)"
-    //    );
-
-    /**
-     * TODO: I understand the formatting of this is cancer. I'll fix it in the future, but I hope they help clarify
-     * TODO: the regex format for future rectifications.
-     *
-     * As of now, only itemQuantity(q/) and and itemExpirationDate(e/) are optional groups.
-     */
     public static final Pattern COMMAND_FORMAT = Pattern.compile(
 
             // Match the 'add' command followed by one or more whitespace characters.
@@ -42,41 +31,48 @@ public class AddCommand extends Command {
                     // Finally, match 'c/' followed by the cost price.
                     "c/(?<itemCostPrice>.+)"
     );
+    private final String itemType;
     private final String itemName;
     private final String itemDescription;
     private final int itemQuantity;
     private final LocalDate itemExpirationDate;
     private final double itemSalePrice;
     private final double itemCostPrice;
+    private final int itemThreshold;
 
-    public AddCommand(String itemName, String itemDescription, int itemQuantity,
-                      LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
+    public AddCommand( String itemType, String itemName, String itemDescription, int itemQuantity,
+                      LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice, int itemThreshold) {
+        commandLogger = new BinBashLogger(AddCommand.class.getName());
+        this.itemType = itemType;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemQuantity = itemQuantity;
         this.itemExpirationDate = itemExpirationDate;
         this.itemSalePrice = itemSalePrice;
         this.itemCostPrice = itemCostPrice;
-        
+        this.itemThreshold = itemThreshold;
+
         assert itemName != null && !itemName.trim().isEmpty();
         assert itemQuantity >= 0;
 
-        commandLogger.fine(String.format(
+        commandLogger.info(String.format(
                 "Creating Add Command... itemName: %s, itemDescription: %s, itemQuantity: %d, itemExpirationDate: %s"
-                        + "itemSalePrice: %f, itemCostPrice: %f",
+                        + "itemSalePrice: %f, itemCostPrice: %f, itemThreshold: %d",
                 itemName,
                 itemDescription,
                 itemQuantity,
                 itemExpirationDate,
                 itemSalePrice,
-                itemCostPrice
+                itemCostPrice,
+                itemThreshold
         ));
     }
 
     @Override
     public boolean execute(ItemList itemList) {
-        executionUiOutput = itemList.addItem(itemName, itemDescription, itemQuantity, itemExpirationDate,
-                itemSalePrice, itemCostPrice);
+        executionUiOutput = itemList.addItem(itemType, itemName, itemDescription, itemQuantity, itemExpirationDate,
+                itemSalePrice, itemCostPrice, itemThreshold);
+
         hasToSave = true;
         return true;
     }
