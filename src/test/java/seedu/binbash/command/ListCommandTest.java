@@ -61,7 +61,7 @@ class ListCommandTest {
 
     @Test
     void execute_sortByCostPrice_returnsSortedList() {
-        ArrayList<Item> inventory = new ArrayList();
+        ArrayList<Item> inventory = new ArrayList<Item>();
         ItemList itemList = new ItemList(inventory);
         ListCommand listCommandCostPrice = new ListCommand(SortOptionEnum.COST);
 
@@ -95,7 +95,7 @@ class ListCommandTest {
 
     @Test
     void execute_sortByExpiryDate_returnsSortedList() {
-        ArrayList<Item> inventory = new ArrayList();
+        ArrayList<Item> inventory = new ArrayList<Item>();
         ItemList itemList = new ItemList(inventory);
         ListCommand listCommandCostPrice = new ListCommand(SortOptionEnum.EXPIRY);
 
@@ -129,7 +129,7 @@ class ListCommandTest {
 
     @Test
     void execute_sortBySalePrice_returnsSortedList() {
-        ArrayList<Item> inventory = new ArrayList();
+        ArrayList<Item> inventory = new ArrayList<Item>();
         ItemList itemList = new ItemList(inventory);
         ListCommand listCommandCostPrice = new ListCommand(SortOptionEnum.SALE);
 
@@ -157,6 +157,44 @@ class ListCommandTest {
                 "\tthreshold: 10" + System.lineSeparator() +
                 "\texpiry date: 01-01-2024" + System.lineSeparator() +
                 System.lineSeparator();
+
+        assertEquals(expectedOutput,actualOutput);
+    }
+
+    @Test
+    void execute_sortByExpiryDateNoPerishables_returnsEmptyList() {
+        ArrayList<Item> inventory = new ArrayList<Item>();
+        ItemList itemList = new ItemList(inventory);
+        ListCommand listCommandCostPrice = new ListCommand(SortOptionEnum.EXPIRY);
+
+        itemList.addItem("retail", "testItem1", "Test item 1", 2,
+                LocalDate.MIN, 10.00, 2.00, 10);
+        itemList.addItem("retail", "testItem2", "Test item 2", 2,
+                LocalDate.MIN, 3.00, 2.00, 10);
+
+        listCommandCostPrice.execute(itemList);
+        String actualOutput = listCommandCostPrice.getExecutionUiOutput();
+
+        String expectedOutput = "";
+
+        assertEquals(expectedOutput,actualOutput);
+    }
+
+    @Test
+    void execute_sortBySalePriceNoRetail_returnsEmptyList() {
+        ArrayList<Item> inventory = new ArrayList<Item>();
+        ItemList itemList = new ItemList(inventory);
+        ListCommand listCommandCostPrice = new ListCommand(SortOptionEnum.SALE);
+
+        itemList.addItem("operational", "testItem1", "Test item 1", 2,
+                LocalDate.MIN, 10.00, 2.00, 10);
+        itemList.addItem("operational", "testItem2", "Test item 2", 2,
+                LocalDate.MIN, 3.00, 2.00, 10);
+
+        listCommandCostPrice.execute(itemList);
+        String actualOutput = listCommandCostPrice.getExecutionUiOutput();
+
+        String expectedOutput = "";
 
         assertEquals(expectedOutput,actualOutput);
     }
