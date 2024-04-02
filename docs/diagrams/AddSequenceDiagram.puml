@@ -1,0 +1,25 @@
+@startuml
+
+participant ":BinBash"
+activate ":BinBash"
+participant "userCommand:AddCommand"
+
+":BinBash" -> "userCommand:AddCommand" : 1. execute(itemList)
+activate "userCommand:AddCommand"
+"userCommand:AddCommand" -> "itemList:ItemList" : 2. addItem()
+activate "itemList:ItemList"
+
+"itemList:ItemList" -> ":Item"** : 3. new Item()
+activate ":Item"
+return 4. :Item
+return 5. executionUiOutput: String
+return 6. true
+
+":BinBash" -> "userCommand:AddCommand" : 7. getExecutionUiOutput()
+activate "userCommand:AddCommand"
+return 8. executionUiOutput: String
+":BinBash" -> "userInterface:Ui" : 9. talk(executionUiOutput)
+activate "userInterface:Ui"
+return 10.
+
+@enduml

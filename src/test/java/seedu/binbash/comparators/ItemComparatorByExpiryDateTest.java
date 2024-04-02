@@ -18,10 +18,10 @@ class ItemComparatorByExpiryDateTest {
 
         PerishableOperationalItem item1 = new PerishableOperationalItem("testItem1",
                 "Test item 1", 1,
-                LocalDate.of(2024, 1, 1), 1.00);
+                LocalDate.of(2024, 1, 1), 1.00, 10);
         PerishableOperationalItem item2 = new PerishableOperationalItem("testItem2",
                 "Test item 2", 1,
-                LocalDate.of(2024, 4, 1), 1.00);
+                LocalDate.of(2024, 4, 1), 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -38,10 +38,10 @@ class ItemComparatorByExpiryDateTest {
 
         PerishableOperationalItem item1 = new PerishableOperationalItem("testItem1",
                 "Test item 1", 1,
-                LocalDate.of(2024, 4, 1), 1.00);
+                LocalDate.of(2024, 4, 1), 1.00, 10);
         PerishableOperationalItem item2 = new PerishableOperationalItem("testItem2",
                 "Test item 2", 1,
-                LocalDate.of(2024, 1, 1), 1.00);
+                LocalDate.of(2024, 1, 1), 1.00, 10);
 
 
         itemList.add(item1);
@@ -59,10 +59,10 @@ class ItemComparatorByExpiryDateTest {
 
         PerishableOperationalItem item1 = new PerishableOperationalItem("testItem1",
                 "Test item 1", 1,
-                LocalDate.of(2024, 1, 1), 1.00);
+                LocalDate.of(2024, 1, 1), 1.00, 10);
         PerishableOperationalItem item2 = new PerishableOperationalItem("testItem2",
                 "Test item 2", 1,
-                LocalDate.of(2024, 1, 1), 1.00);
+                LocalDate.of(2024, 1, 1), 1.00, 10);
 
 
         itemList.add(item1);
@@ -80,10 +80,10 @@ class ItemComparatorByExpiryDateTest {
 
         PerishableOperationalItem item1 = new PerishableOperationalItem("testItem1",
                 "Test item 1", 1,
-                LocalDate.of(2024, 1, 1), 1.00);
+                LocalDate.of(2024, 1, 1), 1.00, 10);
         PerishableRetailItem item2 = new PerishableRetailItem("testItem2",
                 "Test item 2", 1,
-                LocalDate.of(2024, 4, 1), 3.00, 1.00);
+                LocalDate.of(2024, 4, 1), 3.00, 1.00, 10);
 
 
         itemList.add(item1);
@@ -101,10 +101,10 @@ class ItemComparatorByExpiryDateTest {
 
         PerishableOperationalItem item1 = new PerishableOperationalItem("testItem1",
                 "Test item 1", 1,
-                LocalDate.of(2024, 4, 1), 1.00);
+                LocalDate.of(2024, 4, 1), 1.00, 10);
         PerishableRetailItem item2 = new PerishableRetailItem("testItem2",
                 "Test item 2", 1,
-                LocalDate.of(2024, 1, 1), 3.00, 1.00);
+                LocalDate.of(2024, 1, 1), 3.00, 1.00, 10);
 
 
         itemList.add(item1);
@@ -122,10 +122,10 @@ class ItemComparatorByExpiryDateTest {
 
         PerishableOperationalItem item1 = new PerishableOperationalItem("testItem1",
                 "Test item 1", 1,
-                LocalDate.of(2024, 1, 1), 1.00);
+                LocalDate.of(2024, 1, 1), 1.00, 10);
         PerishableRetailItem item2 = new PerishableRetailItem("testItem2",
                 "Test item 2", 1,
-                LocalDate.of(2024, 1, 1), 3.00, 1.00);
+                LocalDate.of(2024, 1, 1), 3.00, 1.00, 10);
 
 
         itemList.add(item1);
@@ -143,10 +143,10 @@ class ItemComparatorByExpiryDateTest {
 
         PerishableRetailItem item1 = new PerishableRetailItem("testItem1",
                 "Test item 1", 1,
-                LocalDate.of(2024, 1, 1), 3.00, 1.00);
+                LocalDate.of(2024, 1, 1), 3.00, 1.00, 10);
         PerishableOperationalItem item2 = new PerishableOperationalItem("testItem2",
                 "Test item 2", 1,
-                LocalDate.of(2024, 4, 1), 1.00);
+                LocalDate.of(2024, 4, 1), 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -163,10 +163,10 @@ class ItemComparatorByExpiryDateTest {
 
         PerishableRetailItem item1 = new PerishableRetailItem("testItem1",
                 "Test item 1", 1,
-                LocalDate.of(2024, 4, 1), 3.00, 1.00);
+                LocalDate.of(2024, 4, 1), 3.00, 1.00, 10);
         PerishableOperationalItem item2 = new PerishableOperationalItem("testItem2",
                 "Test item 2", 1,
-                LocalDate.of(2024, 1, 1), 1.00);
+                LocalDate.of(2024, 1, 1), 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -183,10 +183,10 @@ class ItemComparatorByExpiryDateTest {
 
         PerishableRetailItem item1 = new PerishableRetailItem("testItem1",
                 "Test item 1", 1,
-                LocalDate.of(2024, 1, 1), 3.00, 1.00);
+                LocalDate.of(2024, 1, 1), 3.00, 1.00, 10);
         PerishableOperationalItem item2 = new PerishableOperationalItem("testItem2",
                 "Test item 2", 1,
-                LocalDate.of(2024, 1, 1), 1.00);
+                LocalDate.of(2024, 1, 1), 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -202,9 +202,9 @@ class ItemComparatorByExpiryDateTest {
         ArrayList<Item> itemList = new ArrayList<Item>();
 
         PerishableRetailItem item1 = new PerishableRetailItem("testItem1", "Test item 1",
-                1, LocalDate.of(2024, 1, 1), 3.00, 1.00);
+                1, LocalDate.of(2024, 1, 1), 3.00, 1.00, 10);
         PerishableRetailItem item2 = new PerishableRetailItem("testItem2", "Test item 2",
-                1, LocalDate.of(2024, 2, 1), 3.00,1.00);
+                1, LocalDate.of(2024, 2, 1), 3.00,1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -220,9 +220,11 @@ class ItemComparatorByExpiryDateTest {
         ArrayList<Item> itemList = new ArrayList<Item>();
 
         PerishableRetailItem item1 = new PerishableRetailItem("testItem1", "Test item 1",
-                1, LocalDate.of(2024, 2, 1), 3.00, 1.00);
+                1, LocalDate.of(2024, 2, 1), 3.00,
+                1.00, 10);
         PerishableRetailItem item2 = new PerishableRetailItem("testItem2", "Test item 2",
-                1, LocalDate.of(2024, 1, 1), 3.00,1.00);
+                1, LocalDate.of(2024, 1, 1), 3.00,
+                1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -238,9 +240,11 @@ class ItemComparatorByExpiryDateTest {
         ArrayList<Item> itemList = new ArrayList<Item>();
 
         PerishableRetailItem item1 = new PerishableRetailItem("testItem1", "Test item 1",
-                1, LocalDate.of(2024, 1, 1), 3.00, 1.00);
+                1, LocalDate.of(2024, 1, 1), 3.00,
+                1.00, 10);
         PerishableRetailItem item2 = new PerishableRetailItem("testItem2", "Test item 2",
-                4, LocalDate.of(2024, 1, 1), 3.00,1.00);
+                4, LocalDate.of(2024, 1, 1), 3.00,
+                1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -256,9 +260,11 @@ class ItemComparatorByExpiryDateTest {
         ArrayList<Item> itemList = new ArrayList<Item>();
 
         PerishableRetailItem item1 = new PerishableRetailItem("testItem1", "Test item 1",
-                4, LocalDate.of(2024, 1, 1), 3.00, 1.00);
+                4, LocalDate.of(2024, 1, 1), 3.00,
+                1.00, 10);
         PerishableRetailItem item2 = new PerishableRetailItem("testItem2", "Test item 2",
-                1, LocalDate.of(2024, 1, 1), 3.00,1.00);
+                1, LocalDate.of(2024, 1, 1), 3.00,
+                1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);

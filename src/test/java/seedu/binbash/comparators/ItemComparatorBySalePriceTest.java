@@ -17,9 +17,9 @@ class ItemComparatorBySalePriceTest {
         ArrayList<RetailItem> itemList = new ArrayList<RetailItem>();
 
         RetailItem item1 = new RetailItem("testItem1", "Test item 1", 1,
-                3.00, 1.00);
+                3.00, 1.00, 10);
         RetailItem item2 = new RetailItem("testItem2", "Test item 2", 1,
-                5.00, 1.00);
+                5.00, 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -35,9 +35,9 @@ class ItemComparatorBySalePriceTest {
         ArrayList<RetailItem> itemList = new ArrayList<RetailItem>();
 
         RetailItem item1 = new RetailItem("testItem1", "Test item 1", 1,
-                5.00, 1.00);
+                5.00, 1.00, 10);
         RetailItem item2 = new RetailItem("testItem2", "Test item 2", 1,
-                3.00, 1.00);
+                3.00, 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -54,9 +54,9 @@ class ItemComparatorBySalePriceTest {
 
         Item item1 = new PerishableRetailItem("testItem1", "Test item 1",
                 1, LocalDate.of(2024, 1, 1),
-                3.00, 1.00);
+                3.00, 1.00, 10);
         Item item2 = new RetailItem("testItem2", "Test item 2", 1,
-                3.00, 1.00);
+                3.00, 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -72,10 +72,10 @@ class ItemComparatorBySalePriceTest {
         ArrayList<Item> itemList = new ArrayList<Item>();
 
         Item item1 = new RetailItem("testItem1", "Test item 1", 1,
-                3.00, 1.00);
+                3.00, 1.00, 10);
         Item item2 = new PerishableRetailItem("testItem2", "Test item 2",
                 1, LocalDate.of(2024, 1, 1),
-                3.00, 1.00);
+                3.00, 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -91,9 +91,9 @@ class ItemComparatorBySalePriceTest {
         ArrayList<Item> itemList = new ArrayList<Item>();
 
         Item item1 = new RetailItem("testItem1", "Test item 1", 1,
-                3.00, 1.00);
+                3.00, 1.00, 10);
         Item item2 = new RetailItem("testItem2", "Test item 2", 4,
-                3.00, 1.00);
+                3.00, 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -109,9 +109,9 @@ class ItemComparatorBySalePriceTest {
         ArrayList<Item> itemList = new ArrayList<Item>();
 
         Item item1 = new RetailItem("testItem1", "Test item 1", 4,
-                3.00, 1.00);
+                3.00, 1.00, 10);
         Item item2 = new RetailItem("testItem2", "Test item 2", 1,
-                3.00, 1.00);
+                3.00, 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);
@@ -127,9 +127,9 @@ class ItemComparatorBySalePriceTest {
         ArrayList<Item> itemList = new ArrayList<Item>();
 
         Item item1 = new RetailItem("testItem1", "Test item 1", 1,
-                3.00, 1.00);
+                3.00, 1.00, 10);
         Item item2 = new RetailItem("testItem2", "Test item 2", 1,
-                3.00, 1.00);
+                3.00, 1.00, 10);
 
         itemList.add(item1);
         itemList.add(item2);

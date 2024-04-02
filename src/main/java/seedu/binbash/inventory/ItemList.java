@@ -3,6 +3,7 @@ package seedu.binbash.inventory;
 import seedu.binbash.comparators.ItemComparatorByCostPrice;
 import seedu.binbash.comparators.ItemComparatorByExpiryDate;
 import seedu.binbash.comparators.ItemComparatorBySalePrice;
+import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableOperationalItem;
@@ -92,22 +93,22 @@ public class ItemList {
     }
 
     public String addItem(String itemType, String itemName, String itemDescription, int itemQuantity,
-                          LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice) {
+                          LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice, int itemThreshold) {
         Item item;
         if (itemType.equals("retail") && !itemExpirationDate.equals(LocalDate.MIN)) {
             // Perishable Retail Item
             item = new PerishableRetailItem(itemName, itemDescription, itemQuantity,
-                    itemExpirationDate, itemSalePrice, itemCostPrice);
+                    itemExpirationDate, itemSalePrice, itemCostPrice, itemThreshold);
         } else if (itemType.equals("retail") && itemExpirationDate.equals(LocalDate.MIN)) {
             // Non-perishable Retail Item
-            item = new RetailItem(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice);
+            item = new RetailItem(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice, itemThreshold);
         } else if (itemType.equals("operational") && !itemExpirationDate.equals(LocalDate.MIN)) {
             // Perishable Operational Item
             item = new PerishableOperationalItem(itemName, itemDescription, itemQuantity,
-                    itemExpirationDate, itemCostPrice);
+                    itemExpirationDate, itemCostPrice, itemThreshold);
         } else {
             // Non-perishable Operational Item
-            item = new OperationalItem(itemName, itemDescription, itemQuantity, itemCostPrice);
+            item = new OperationalItem(itemName, itemDescription, itemQuantity, itemCostPrice, itemThreshold);
         }
 
         int beforeSize = itemList.size();
@@ -121,8 +122,104 @@ public class ItemList {
         return output;
     }
 
-    public String updateItemQuantity(String itemName, int itemQuantity, String command) {
+    public String updateItemDataByName (String itemName, String itemDescription, int itemQuantity,
+                                  LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
+                                  int itemThreshold) throws InvalidArgumentException {
+        Item item = findItemByName(itemName);
+
+        updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
+                itemThreshold);
+
+        String output = "I have updated the your item information. Do check the following if it is correct."
+                + System.lineSeparator() + System.lineSeparator() + item;
+        return output;
+    }
+
+    public String updateItemDataByIndex (int index, String itemDescription, int itemQuantity,
+                                  LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
+                                  int itemThreshold) throws InvalidArgumentException {
+        Item item = itemList.get(index - 1);
+
+        updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
+                itemThreshold);
+
+        String output = "I have updated the your item information. Do check the following if it is correct."
+                + System.lineSeparator() + System.lineSeparator() + item;;
+        return output;
+    }
+
+    private void updateItemData(Item item, String itemDescription, int itemQuantity, LocalDate itemExpirationDate,
+                                double itemSalePrice, double itemCostPrice, int itemThreshold)
+            throws InvalidArgumentException {
+        updateItemDescription(item, itemDescription);
+        updateItemQuantity(item, itemQuantity);
+        updateItemExpirationDate(item, itemExpirationDate);
+        updateItemCostPrice(item, itemCostPrice);
+        updateItemSalePrice(item, itemSalePrice);
+        updateItemThreshold(item, itemThreshold);
+    }
+
+    public void updateItemDescription(Item item, String itemDescription) {
+        if (itemDescription != null) {
+            logger.info("Attempting to update item description");
+            item.setItemDescription(itemDescription);
+        }
+    }
+    public void updateItemQuantity(Item item, int itemQuantity) {
+        if (itemQuantity != Integer.MIN_VALUE) {
+            logger.info("Attempting to update item quantity");
+            item.setItemQuantity(itemQuantity);
+        }
+    }
+
+    public void updateItemExpirationDate(Item item, LocalDate itemExpirationDate) throws InvalidArgumentException {
+        if (itemExpirationDate != LocalDate.MIN) {
+            logger.info("Attempting to update item expiration date");
+            if (item instanceof PerishableOperationalItem) {
+                ((PerishableOperationalItem) item).setItemExpirationDate(itemExpirationDate);
+            } else if (item instanceof PerishableRetailItem) {
+                ((PerishableRetailItem) item).setItemExpirationDate(itemExpirationDate);
+            } else {
+                throw new InvalidArgumentException("This item is not a perishable and has no expiry date.");
+            }
+        }
+    }
+    public void updateItemSalePrice(Item item, double itemSalePrice) {
+
+        if (itemSalePrice != Double.MIN_VALUE) {
+            logger.info("Attempting to update item sale price");
+            if (item instanceof RetailItem) {
+                ((RetailItem) item).setItemSalePrice(itemSalePrice);
+            }
+        }
+    }
+
+    public void updateItemCostPrice(Item item, double itemCostPrice) {
+        if (itemCostPrice != Double.MIN_VALUE) {
+            logger.info("Attempting to update item cost price");
+            item.setItemCostPrice(itemCostPrice);
+        }
+    }
+
+    public void updateItemThreshold(Item item, int itemThreshold) {
+        if (itemThreshold != Integer.MIN_VALUE) {
+            logger.info("Attempting to update item threshold");
+            item.setItemThreshold(itemThreshold);
+        }
+    }
+
+    public Item findItemByName(String itemName) throws InvalidArgumentException {
+        for (Item item : itemList) {
+            if (item.getItemName().trim().equals(itemName.trim())) {
+                return item;
+            }
+        }
+        throw new InvalidArgumentException("Item with name '" + itemName + "' not found.");
+    }
+
+    public String sellOrRestockItem(String itemName, int itemQuantity, String command) {
         String output = "Sorry, I can't find the item you are looking for.";
+        String alertText = "";
 
         for (Item item : itemList) {
             int newQuantity = item.getItemQuantity();
@@ -147,16 +244,30 @@ public class ItemList {
                 // TODO: Add an assert statement to verify code logic.
                 RetailItem retailItem = (RetailItem)item;
 
+                int itemThreshold = retailItem.getItemThreshold();
+                if (newQuantity < itemThreshold) {
+                    alertText = alertItemQuantity(retailItem);
+                }
+
                 int totalUnitsSold = retailItem.getTotalUnitsSold();
                 retailItem.setTotalUnitsSold(totalUnitsSold + itemQuantity);
             }
             item.setItemQuantity(newQuantity);
             output = "Great! I have updated the quantity of the item for you:" + System.lineSeparator()
-                    + System.lineSeparator() + item;
+                    + System.lineSeparator() + item
+                    + alertText;
 
         }
         return output;
     }
+
+    public String alertItemQuantity(Item item) {
+        item.setAlert(true);
+        String output = System.lineSeparator() + System.lineSeparator() + "Oh no! Your item is running low!";
+
+        return output;
+    }
+
 
     /**
      * Deletes an item from the inventory by identifying the item using its index.

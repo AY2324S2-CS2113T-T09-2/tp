@@ -1,12 +1,14 @@
 package seedu.binbash.parser;
 
 import org.apache.commons.cli.ParseException;
+
 import seedu.binbash.command.AddCommand;
 import seedu.binbash.command.ByeCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.command.DeleteCommand;
-import seedu.binbash.command.ListCommand;
+import seedu.binbash.command.UpdateCommand;
 import seedu.binbash.command.SearchCommand;
+import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidArgumentException;
@@ -25,11 +27,13 @@ public class Parser {
     private RestockCommandParser restockCommandParser;
     private SellCommandParser sellCommandParser;
     private ListCommandParser listCommandParser;
+    private UpdateCommandParser updateCommandParser;
 
     public Parser() {
         addCommandParser = new AddCommandParser();
         restockCommandParser = new RestockCommandParser();
         sellCommandParser = new SellCommandParser();
+        updateCommandParser = new UpdateCommandParser();
         searchCommandParser = new SearchCommandParser();
         listCommandParser = new ListCommandParser();
     }
@@ -56,6 +60,8 @@ public class Parser {
             return parseRestockCommand(commandArgs);
         case "sell":
             return parseSellCommand(commandArgs);
+        case "update":
+            return parseUpdateCommand(commandArgs);
         case "profit":
             return new ProfitCommand();
         default:
@@ -89,6 +95,14 @@ public class Parser {
     private AddCommand parseAddCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return addCommandParser.parse(commandArgs);
+        } catch (ParseException e) {
+            throw new InvalidFormatException(e.getMessage());
+        }
+    }
+
+    private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidFormatException {
+        try {
+            return updateCommandParser.parse(commandArgs);
         } catch (ParseException e) {
             throw new InvalidFormatException(e.getMessage());
         }

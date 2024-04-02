@@ -82,6 +82,30 @@ public class CommandOptionAdder {
         return this;
     }
 
+    private Option getItemNameOption() {
+        Option opItemOption = Option.builder("n")
+                .hasArg(true)
+                .required(true)
+                .longOpt("name")
+                .desc("Update using name")
+                .argName("name")
+                .build();
+
+        return opItemOption;
+    }
+
+    private Option getItemIndexOption() {
+        Option opItemOption = Option.builder("i")
+                .hasArg(true)
+                .required(true)
+                .longOpt("index")
+                .desc("Update using index")
+                .argName("index")
+                .build();
+
+        return opItemOption;
+    }
+
     CommandOptionAdder addItemTypeOptionGroup() {
         OptionGroup itemTypeOptionGroup = new OptionGroup()
                 .addOption(getRetailItemOption())
@@ -92,12 +116,34 @@ public class CommandOptionAdder {
         return this;
     }
 
+    CommandOptionAdder addItemNameAndIndexOptionGroup() {
+        OptionGroup itemNameAndInxdexOptionGroup = new OptionGroup()
+                .addOption(getItemIndexOption())
+                .addOption(getItemNameOption());
+
+        itemNameAndInxdexOptionGroup.setRequired(true);
+        options.addOptionGroup(itemNameAndInxdexOptionGroup);
+        return this;
+    }
+
     CommandOptionAdder addNameOption(boolean isRequired, String description) {
         Option nameOption = Option.builder("n")
                 .hasArgs() // potentially more than 1 input
                 .required(isRequired)
                 .longOpt("name")
                 .desc(description)
+                .build();
+        options.addOption(nameOption);
+        return this;
+    }
+
+    CommandOptionAdder addIndexOption(boolean isRequired, String description) {
+        Option nameOption = Option.builder("i")
+                .hasArg(true)
+                .required(isRequired)
+                .longOpt("index")
+                .desc(description)
+                .argName("index")
                 .build();
         options.addOption(nameOption);
         return this;
@@ -159,6 +205,19 @@ public class CommandOptionAdder {
                 .desc(description)
                 .build();
         options = options.addOption(expiryOption);
+        return this;
+    }
+
+    CommandOptionAdder addThresholdOption(boolean isRequired, String description) {
+        Option thresholdOption = Option.builder("t")
+                .hasArg(true)
+                .required(isRequired)
+                .longOpt("threshold")
+                .desc(description)
+                .argName("threshold")
+                .build();
+
+        options = options.addOption(thresholdOption);
         return this;
     }
 

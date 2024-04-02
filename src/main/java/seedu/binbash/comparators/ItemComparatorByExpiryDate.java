@@ -55,9 +55,9 @@ public class ItemComparatorByExpiryDate implements Comparator<Item> {
      * @return compare results.
      */
     private int compareOpToOp (PerishableOperationalItem item1, PerishableOperationalItem item2) {
-        if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
+        if (item1.getLocalDateItemExpirationDate().equals(item2.getLocalDateItemExpirationDate())) {
             return compareQty(item1.getItemQuantity(), item2.getItemQuantity());
-        } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
+        } else if (item1.getLocalDateItemExpirationDate().isBefore(item2.getLocalDateItemExpirationDate())) {
             return -1;
         }
 
@@ -75,9 +75,9 @@ public class ItemComparatorByExpiryDate implements Comparator<Item> {
      * @return compare results.
      */
     private int compareOpToRe (PerishableOperationalItem item1, PerishableRetailItem item2) {
-        if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
+        if (item1.getLocalDateItemExpirationDate().equals(item2.getLocalDateItemExpirationDate())) {
             return 1;
-        } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
+        } else if (item1.getLocalDateItemExpirationDate().isBefore(item2.getLocalDateItemExpirationDate())) {
             return -1;
         }
 
@@ -94,9 +94,9 @@ public class ItemComparatorByExpiryDate implements Comparator<Item> {
      * @return compare results.
      */
     private int compareReToRe (PerishableRetailItem item1, PerishableRetailItem item2) {
-        if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
+        if (item1.getLocalDateItemExpirationDate().equals(item2.getLocalDateItemExpirationDate())) {
             return compareQty(item1.getItemQuantity(), item2.getItemQuantity());
-        } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
+        } else if (item1.getLocalDateItemExpirationDate().isBefore(item2.getLocalDateItemExpirationDate())) {
             return -1;
         }
 
@@ -114,9 +114,9 @@ public class ItemComparatorByExpiryDate implements Comparator<Item> {
      * @return compare results.
      */
     private int compareReToOp (PerishableRetailItem item1, PerishableOperationalItem item2) {
-        if (item1.getItemExpirationDateLocalDate().equals(item2.getItemExpirationDateLocalDate())) {
+        if (item1.getLocalDateItemExpirationDate().equals(item2.getLocalDateItemExpirationDate())) {
             return -1;
-        } else if (item1.getItemExpirationDateLocalDate().isBefore(item2.getItemExpirationDateLocalDate())) {
+        } else if (item1.getLocalDateItemExpirationDate().isBefore(item2.getLocalDateItemExpirationDate())) {
             return -1;
         }
 

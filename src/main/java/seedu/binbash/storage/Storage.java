@@ -230,7 +230,8 @@ public class Storage {
                 + "-n " + item.getItemName() + " "
                 + "-d " + item.getItemDescription() + " "
                 + "-q " + item.getItemQuantity() + " "
-                + "-c " + item.getItemCostPrice() + " ";
+                + "-c " + item.getItemCostPrice() + " "
+                + "-t " + item.getItemThreshold() + " ";
 
         if (item instanceof RetailItem) {
             RetailItem retailItem = (RetailItem) item;
