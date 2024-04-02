@@ -14,7 +14,12 @@ public class PerishableOperationalItem extends OperationalItem {
     private LocalDate itemExpirationDate;
 
     public PerishableOperationalItem(String itemName, String itemDescription, int itemQuantity,
-                                     LocalDate itemExpirationDate, double itemCostPrice, Integer itemThreshold) {
+                                     LocalDate itemExpirationDate, double itemCostPrice) {
+        this(itemName, itemDescription, itemQuantity, itemExpirationDate, itemCostPrice, -1);
+    }
+
+    public PerishableOperationalItem(String itemName, String itemDescription, int itemQuantity,
+                                     LocalDate itemExpirationDate, double itemCostPrice, int itemThreshold) {
         super(itemName, itemDescription, itemQuantity, itemCostPrice, itemThreshold);
         this.itemExpirationDate = itemExpirationDate;
     }

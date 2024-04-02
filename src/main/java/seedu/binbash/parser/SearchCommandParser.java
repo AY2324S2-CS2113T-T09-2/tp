@@ -7,18 +7,17 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.TypeHandler;
 import seedu.binbash.command.SearchCommand;
 
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
 
 public class SearchCommandParser extends DefaultParser {
-    protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public SearchCommandParser() {
         options = new Options();
         new CommandOptionAdder(options)
             .addNameOption(false, "Search by name")
             .addDescriptionOption(false, "Search by description")
+            .addQuantityOption(false, "Search by quantity")
             .addCostPriceOption(false, "Search by cost-price")
             .addSalePriceOption(false, "Search by sale-price")
             .addExpirationDateOption(false, "Search by expiry date")
@@ -30,41 +29,77 @@ public class SearchCommandParser extends DefaultParser {
 
         boolean hasOption = false;
         SearchCommand searchCommand = new SearchCommand();
+
         if (commandLine.hasOption("name")) {
             String nameField = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
             searchCommand.setNameField(nameField);
             hasOption = true;
         }
+
         if (commandLine.hasOption("description")) {
             String descriptionField = String.join(" ", commandLine.getOptionValues("description"));
             searchCommand.setDescriptionField(descriptionField);
             hasOption = true;
         }
-        if (commandLine.hasOption("cost-price")) {
-            double costPriceField = parsePriceField(commandLine.getOptionValue("cost-price"));
-            searchCommand.setCostPriceField(costPriceField);
-            hasOption = true;
-        }
-        if (commandLine.hasOption("sale-price")) {
-            double salePriceField = parsePriceField(commandLine.getOptionValue("sale-price"));
-            searchCommand.setSalePriceField(salePriceField);
-            hasOption = true;
-        }
-        if (commandLine.hasOption("expiry-date")) {
-            //LocalDate expiryDateField = Optional.ofNullable(commandLine.getOptionValue("expiry-date"))
-            //        .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
-            //        .orElse(LocalDate.MIN);
-            try {
-                LocalDate expiryDateField = LocalDate.parse(commandLine.getOptionValue("expiry-date"),
-                        EXPECTED_INPUT_DATE_FORMAT);
-                searchCommand.setExpiryDateField(expiryDateField);
-            } catch (DateTimeParseException e) {
-                throw new ParseException(e.getMessage());
+
+        if (commandLine.hasOption("quantity")) {
+            String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("quantity"), "quantity");
+            int[] quantityRange = {Integer.MIN_VALUE, Integer.MAX_VALUE};
+            if (rangeArgument[0] != "") {
+                quantityRange[0] = TypeHandler.createNumber(rangeArgument[0]).intValue();
             }
+            if (rangeArgument[1] != "") {
+                quantityRange[1] = TypeHandler.createNumber(rangeArgument[1]).intValue();
+            }
+            searchCommand.setQuantityRange(quantityRange);
             hasOption = true;
         }
+
+        if (commandLine.hasOption("cost-price")) {
+            String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("cost-price"), "cost-price");
+            double[] costPriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
+            if (rangeArgument[0] != "") {
+                costPriceRange[0] = TypeHandler.createNumber(rangeArgument[0]).doubleValue();
+            }
+            if (rangeArgument[1] != "") {
+                costPriceRange[1] = TypeHandler.createNumber(rangeArgument[1]).doubleValue();
+            }
+            searchCommand.setCostPriceRange(costPriceRange);
+            hasOption = true;
+        }
+
+        if (commandLine.hasOption("sale-price")) {
+            String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("sale-price"), "sale-price");
+            double[] salePriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
+            if (rangeArgument[0] != "") {
+                salePriceRange[0] = TypeHandler.createNumber(rangeArgument[0]).doubleValue();
+            }
+            if (rangeArgument[1] != "") {
+                salePriceRange[1] = TypeHandler.createNumber(rangeArgument[1]).doubleValue();
+            }
+            searchCommand.setSalePriceRange(salePriceRange);
+            hasOption = true;
+        }
+
+        if (commandLine.hasOption("expiry-date")) {
+            String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("expiry-date"), "expiry-date");
+            LocalDate[] expiryDateRange = {LocalDate.MIN, LocalDate.MAX};
+            try {
+                if (rangeArgument[0] != "") {
+                    expiryDateRange[0] = LocalDate.parse(rangeArgument[0], Parser.EXPECTED_INPUT_DATE_FORMAT);
+                }
+                if (rangeArgument[1] != "") {
+                    expiryDateRange[1] = LocalDate.parse(rangeArgument[1], Parser.EXPECTED_INPUT_DATE_FORMAT);
+                }
+            } catch (DateTimeParseException e) {
+                throw new ParseException("Invalid date");
+            }
+            searchCommand.setExpiryDateRange(expiryDateRange);
+            hasOption = true;
+        }
+
         if (!hasOption) {
-            throw new ParseException("At least one of -n, -d, -c, -s, -e option required");
+            throw new ParseException("At least one of -n, -d, -q, -c, -s, -e option required");
         }
 
         if (commandLine.hasOption("list")) {
@@ -75,23 +110,23 @@ public class SearchCommandParser extends DefaultParser {
         return searchCommand;
     }
 
-    /*
-     * Returns a negative number if searching everything less than, positive if searching more than
-     */
-    private double parsePriceField(String argument) throws ParseException {
-        if (!argument.substring(0, 1).equals("<") && !argument.substring(0, 1).equals(">")) {
-            throw new ParseException("Price argument must start with '<' or '>'!");
+    String[] parseRangeArgument(String argument, String option) throws ParseException {
+        if (!argument.contains("..") || argument.length() < 3) {
+            throw new ParseException("Format for " + option + " option: {min}..{max}. "
+                    + "At least one of min or max is required.");
         }
-        boolean isSearchSmaller = argument.substring(0, 1).equals("<");
-        double price = 0;
+        String[] argumentRange = {"", ""};
+        String[] values = argument.split("\\Q..\\E");
+        if (values[0].equals("")) {
+            argumentRange[1] = values[1];
+            return argumentRange;
+        }
+        argumentRange[0] = values[0];
         try {
-            price = Double.parseDouble(argument.substring(1));
-        } catch (NumberFormatException e) {
-            throw new ParseException("Please specify a price!");
+            argumentRange[1] = values[1];
+            return argumentRange;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return argumentRange;
         }
-        if (isSearchSmaller) {
-            price *= -1;
-        }
-        return price;
     }
 }

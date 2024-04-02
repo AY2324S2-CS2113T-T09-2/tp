@@ -14,7 +14,7 @@ public abstract class Item {
     protected boolean isAlert;
 
     public Item(String itemName, String itemDescription, int itemQuantity, double itemCostPrice,
-                Integer itemThreshold) {
+                int itemThreshold) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemQuantity = itemQuantity;
