@@ -8,7 +8,7 @@ import seedu.binbash.item.Item;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ItemComparatorByExpiryDateTest {
 

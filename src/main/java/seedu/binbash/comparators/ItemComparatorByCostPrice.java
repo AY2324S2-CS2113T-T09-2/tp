@@ -1,6 +1,8 @@
 package seedu.binbash.comparators;
 
-import seedu.binbash.item.*;
+import seedu.binbash.item.Item;
+import seedu.binbash.item.OperationalItem;
+import seedu.binbash.item.RetailItem;
 
 import java.util.Comparator;
 
