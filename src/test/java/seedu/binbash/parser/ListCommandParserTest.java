@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import seedu.binbash.command.ListCommand;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ListCommandParserTest {
     private final ListCommandParser listCommandParser = new ListCommandParser();
 
