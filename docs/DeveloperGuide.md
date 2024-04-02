@@ -6,14 +6,13 @@
 * [Setting up, getting started](#setting-up-getting-started)
 * [Design](#design)
   * [Architecture](#architecture)
+  * [Ui Component](#ui-component)
   * [Parser Component](#parser-component)
   * [Data Component](#data-component)
 * [Features](#features)
   * [Add Item to Inventory](#add-item-to-inventory)
   * [List all items in inventory](#list-all-items-in-inventory)
   * [Delete Item](#delete-item)
-  * [UI](#ui)
-* [Implementation](#implementation)
   * [[Proposed] Search by universal fields](#proposed-search-by-universal-fields)
   * [Logging](#logging)
 * [Product scope](#product-scope)
@@ -76,26 +75,34 @@ If you are using `IntelliJ IDEA`,
 
 ### Architecture
 
-Given below is a quick overview of main components and how they interact with each other.
+![Architecture](images/Architecture.png)
+
+The Architecture Diagram given above explains the high-level design of the application.
+Given below is a quick overview of the main components and how they interact with each other.
 
 #### Main components of the architecture
 
-The bulk of the app's work is done by the following six components:
+`BinBash` serves as the entry-point of the application. 
+During application startup, `BinBash` initializes the other components and connects them with each other.
+
+The bulk of the app's work is done by the following five components:
 
 - `Ui`: The UI of the App.
-- `Storage`: Reads data from and writes data to a `.txt` file.
+- `Storage`: Reads data from, and writes data to an `items.txt` file.
 - `Parser`: Makes sense of the user input to return the appropriate command.
 - `Command`: Executes the command requested by the user.
 - `Data`: Handles the data created by the user.
-- `BinBash`: Responsible for initializing the above classes in the correct sequence during startup, and connecting them up with each other.
 
-#### Sequence Diagram
+The user primarily interacts with the `Ui` component.
+In turn, the `Parser` interprets the user's input and creates the appropriate `Command`.
+The `Data` component then manages all data created by the user upon `Command` execution.
+The `Storage` component handles the storage and loading of saved user data.
+
+#### How the architecture components interact with each other
 
 The **Sequence Diagram** below shows how the components interact with each other for the scenario where the user issues the command `list`.
 
 ![Sequence Diagram](images/OverallSequenceDiagram.png)
-
-#### Figure 2: Architecture Encode Sequence Diagram
 
 1. User enters the command `list` to the `Ui`.
 2. `Ui` passes the command as a string through the method `readUserInput('list')`, called via `BinBash`.
@@ -109,6 +116,30 @@ The **Sequence Diagram** below shows how the components interact with each other
 10. `BinBash` calls the `talk()` method in `Ui`, and passes the outputString.
 11. `Ui` prints this outputString to the user.
 12. If the `Command` executed modifies the database, `BinBash` will call the `saveToStorage()` method of `Storage`
+
+### Ui Component
+
+![Ui class diagram](images/UiClassDiagram.png)
+
+API: [`Ui.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/ui/Ui.java)
+
+The above class diagram shows the components delegating separate functionalities of the Ui.
+
+The `TextIn` class is responsible for reading user input and returning it to `Ui`, upon which it is passed to the *main()* program.
+
+The `PrintStream` class writes text at the behest of `Ui` to standard output, upon which it is received by the user.
+
+Note the use of an externally provided `LineReader` object in the `TextIn` class that handles input. This allows us to greatly extend our text-based user interface with features such as:
+
+1. Command completion on tab
+
+2. Displaying option descriptions on hover
+
+3. Contextual help menus
+
+![linereader](images/ui-linereader-enhancement.png)
+
+This allows us to overload options on a small number of commands to provide full functionality of the application. Developers can then extend its features without also the worry of finding a way for users to access those features easily.
 
 ### Parser Component
 
@@ -220,32 +251,6 @@ The design of `DeleteCommand` is such that it encapsulates the delete operation,
 
 Additionally, the decision to use two constructors promotes the Single Responsibility Principle, as each constructor's logic is tailored to the type of deletion it handles.
 
-### UI
-
-API: [`Ui.java`](../src/main/java/seedu/binbash/ui/Ui.java)
-
-![Ui class diagram](images/UiClassDiagram.png)
-
-The above class diagram shows the components delegating separate functionalities of the Ui.
-
-The `TextIn` class is responsible for reading user input and returning it to `Ui`, upon which it is passed to the *main()* program.
-
-The `PrintStream` class writes text at the behest of `Ui` to standard output, upon which it is received by the user.
-
-Note the use of an externally provided `LineReader` object in the `TextIn` class that handles input. This allows us to greatly extend our text-based user interface with features such as:
-
-1. Command completion on tab
-
-2. Displaying option descriptions on hover
-
-3. Contextual help menus
-
-![linereader](images/ui-linereader-enhancement.png)
-
-This allows us to overload options on a small number of commands to provide full functionality of the application. Developers can then extend its features without also the worry of finding a way for users to access those features easily.
-
-## Implementation
-
 ### [Proposed] Search by universal fields
 
 #### Proposed Implementation
@@ -289,10 +294,26 @@ Small business (retail shop) owners who:
 
 ## User Stories
 
-| Version | As a ... | I want to ...             | So that I can ...                                           |
-| ------- | -------- | ------------------------- | ----------------------------------------------------------- |
-| v1.0    | new user | see usage instructions    | refer to them when I forget how to use the application      |
-| v2.0    | user     | find a to-do item by name | locate a to-do without having to go through the entire list |
+| Version | As a ...   | I want to ...                                                            | So that I can ...                                                                 |
+|---------|------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| v1.0    | shop owner | add new items to my inventory                                            | track them in the application                                                     |
+| v1.0    | shop owner | delete items from my inventory                                           | remove items that I no longer sell, and keep the inventory list current           |
+| v1.0    | shop owner | search for items in my inventory by name                                 | find these items quickly                                                          |
+| v1.0    | shop owner | see a list of all my items                                               | get a better understanding of my current inventory status                         |
+| v1.0    | shop owner | record the cost and sale prices of items                                 | track my investment and calculate profit margins                                  |
+| v1.0    | shop owner | receive visible feedback when I execute commands                         | know whether my command was executed successfully or not                          |
+| v1.0    | shop owner | save my inventory list to my local storage                               | exit the program without loss of data, and continue working on it at a later time |
+| v2.0    | shop owner | update the quantity of existing items when I restock                     | ensure that inventory levels are accurate                                         |
+| v2.0    | shop owner | reduce the quantity of items when they are sold                          | keep my inventory levels updated                                                  |
+| v2.0    | shop owner | categorize items in my inventory by type                                 | organize my stock better, and know which item is which                            | 
+| v2.0    | shop owner | view my overall lifetime profit margins                                  | analyze my sales volumes and know if I am profiting or incurring a loss           |
+| v2.0    | shop owner | set a minimum stock level for items                                      | be alerted when stock is low                                                      | 
+| v2.0    | shop owner | receive notifications when an item's stock level falls below its minimum | restock in time                                                                   | 
+| v2.0    | shop owner | have ease of command input (autocompletion, view command history etc.)   | quickly and efficiently type in my commands                                       |
+| v2.0    | shop owner | search through my inventory using more fields and search terms           | effectively review the items in my inventory, using more specific search terms    |
+| v3.0+   | shop owner | access inventory reports                                                 | analyze stock levels over time                                                    | 
+| v3.0+   | shop owner | view the history of stock adjustments for an item                        | track its sales and restocking events                                             |
+| v3.0+   | shop owner | see which items are most frequently restocked or sold                    | identify popular products                                                         |
 
 ## Non-Functional Requirements
 
@@ -302,8 +323,100 @@ Small business (retail shop) owners who:
 
 ## Glossary
 
-* **CLI** - Command-line Interface
+* **CLI** - Command Line Interface
+* **GUI** - Graphical User Interface
 
 ## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+> Testers are encouraged to do more exploratory testing with the following commands.
+
+### Launch and shutdown
+
+1. Launch:
+    1. Download the jar file and copy it into an empty folder.
+    2. Double-click the jar file and run it. <br>
+    Expected Output: <br>
+        ```text
+        -------------------------------------------------------------
+         ____  _       ____            _
+        | __ )(_)_ __ | __ )  __ _ ___| |__
+        |  _ \| | '_ \|  _ \ / _` / __| '_ \
+        | |_) | | | | | |_) | (_| \__ \ | | |
+        |____/|_|_| |_|____/ \__,_|___/_| |_|
+        
+        Welcome to BinBash!
+        -------------------------------------------------------------
+        -------------------------------------------------------------
+        Here are your metrics:
+        Total Cost: 0.00
+        Total Revenue: 0.00
+        Net Profit: 0.00
+        
+        -------------------------------------------------------------
+        ```
+2. To exit the application, enter `bye` into the input.
+
+### Adding a new Item
+
+1. Enter this command to create a new `RetailItem`:<br>
+`add -re -n New Retail Item -d A new retail item. -s 10.00 -c 5.00`
+2. Expected Output: <br>
+    ```text
+    -------------------------------------------------------------
+    Noted! I have added the following item into your inventory:
+    
+    [R] New Retail Item
+        description: A new retail item.
+        quantity: 0
+        cost price: $5.00
+        sale price: $10.00
+        threshold: 1
+    -------------------------------------------------------------
+    ```
+3. Exit the application using `bye`.
+4. Open `data/items.txt` and ensure the newly added item can be found.
+
+### Deleting an Item
+
+1. Enter this command to create a new `OperationalItem`:<br>
+   `add -op -n New Operational Item -d Item to be deleted. -c 5.00`
+2. Expected Output: <br>
+    ```text
+    -------------------------------------------------------------
+    Noted! I have added the following item into your inventory:
+    
+     [O] New Operational Item
+         description: Item to be deleted.
+         quantity: 0
+         cost price: $5.00
+     -------------------------------------------------------------
+     ```
+3. List out the items using `list`. Ensure that the newly added item can be found.
+4. Enter this command to delete the item:<br>
+   `delete New Operational Item`
+5. List out the items using `list`. Ensure that the item can no longer be found.
+6. Open `data/items.txt` and ensure the deleted item does not exist in this file.
+
+### Update the quantity of an Item
+
+1. Enter this command to create a new `RetailItem`:<br>
+   `add -re -n New Retail Item -d Retail Item to be updated. -s 10.00 -c 5.00`
+2. Expected Output: <br>
+    ```text
+    -------------------------------------------------------------
+    Noted! I have added the following item into your inventory:
+    
+    [R] New Retail Item
+        description: A new retail item.
+        quantity: 0
+        cost price: $5.00
+        sale price: $10.00
+        threshold: 1
+    -------------------------------------------------------------
+    ```
+3. Enter this command to increase the quantity (restock) of the item:<br>
+   `restock -n New Retail Item -q 15`
+4. List out the items using `list`. Ensure that the quantity of the newly restocked item has changed to `15`.
+5. Enter this command to reduce the quantity (sell) of the item:<br>
+   `sell -n New Retail Item -q 5`
+6. List out the items using `list`. Ensure that the quantity of the newly sold item has changed to `10`.
