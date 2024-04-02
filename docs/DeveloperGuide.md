@@ -193,7 +193,7 @@ The `XYZCommand` is then subsequently returned back to `BinBash` for code execut
 
 ## Command Component
 
-![ParseSequenceDiagram](images/CommandClassDiagram.png)
+![CommandClassDiagram](images/CommandClassDiagram.png)
 
 <!-- TODO: Link command API -->
 
