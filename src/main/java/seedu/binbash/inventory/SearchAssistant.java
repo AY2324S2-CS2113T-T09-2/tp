@@ -48,38 +48,56 @@ public class SearchAssistant {
         return this;
     }
 
-    public SearchAssistant searchByCostPrice(double from, double to) {
-        searchByCostPrice(from, false);
-        searchByCostPrice(to, true);
+    public SearchAssistant searchByCostPriceBetween(double from, double to) {
+        searchByCostPriceFrom(from);
+        searchByCostPriceTo(to);
         return this;
     }
 
-    public SearchAssistant searchByCostPrice(double costPriceField, boolean isSearchLessThan) {
-        if (costPriceField == Double.MIN_VALUE || costPriceField == Double.MAX_VALUE) {
+    public SearchAssistant searchByCostPriceFrom(double fromPrice) {
+        if (fromPrice == Double.MIN_VALUE) {
             return this;
         }
         foundItems = foundItems.stream()
-            .filter(item -> isSearchLessThan ?
-                    item.getItemCostPrice() <= costPriceField : item.getItemCostPrice() > costPriceField)
+            .filter(item -> item.getItemCostPrice() > fromPrice)
             .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }
 
-    public SearchAssistant searchBySalePrice(double from, double to) {
-        searchBySalePrice(from, false);
-        searchBySalePrice(to, true);
+    public SearchAssistant searchByCostPriceTo(double toPrice) {
+        if (toPrice == Double.MAX_VALUE) {
+            return this;
+        }
+        foundItems = foundItems.stream()
+            .filter(item -> item.getItemCostPrice() <= toPrice)
+            .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }
 
-    public SearchAssistant searchBySalePrice(double salePriceField, boolean isSearchLessThan) {
-        if (salePriceField == Double.MIN_VALUE || salePriceField == Double.MAX_VALUE) {
+    public SearchAssistant searchBySalePriceBetween(double from, double to) {
+        searchBySalePriceFrom(from);
+        searchBySalePriceTo(to);
+        return this;
+    }
+
+    public SearchAssistant searchBySalePriceFrom(double fromPrice) {
+        if (fromPrice == Double.MIN_VALUE) {
             return this;
         }
         foundItems = foundItems.stream()
             .filter(item -> item instanceof RetailItem)
-            .filter(item -> isSearchLessThan ?
-                    ((RetailItem) item).getItemSalePrice() <= salePriceField :
-                    ((RetailItem) item).getItemSalePrice() > salePriceField)
+            .filter(item -> ((RetailItem) item).getItemSalePrice() > fromPrice)
+            .collect(Collectors.toCollection(ArrayList::new));
+        return this;
+    }
+
+    public SearchAssistant searchBySalePriceTo(double toPrice) {
+        if (toPrice == Double.MIN_VALUE) {
+            return this;
+        }
+        foundItems = foundItems.stream()
+            .filter(item -> item instanceof RetailItem)
+            .filter(item -> ((RetailItem) item).getItemSalePrice() <= toPrice)
             .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }

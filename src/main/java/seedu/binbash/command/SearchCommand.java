@@ -55,8 +55,8 @@ public class SearchCommand extends Command {
         foundItems = itemList.getSearchAssistant()
             .searchByName(nameField)
             .searchByDescription(descriptionField)
-            .searchByCostPrice(costPriceRange[0], costPriceRange[1])
-            .searchBySalePrice(salePriceRange[0], salePriceRange[1])
+            .searchByCostPriceBetween(costPriceRange[0], costPriceRange[1])
+            .searchBySalePriceBetween(salePriceRange[0], salePriceRange[1])
             .searchByExpiryDateBetween(expiryDateRange[0], expiryDateRange[1])
             .getFoundItems(numberOfResults);
         executionUiOutput = itemList.printList(foundItems);
