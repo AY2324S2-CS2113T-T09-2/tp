@@ -91,24 +91,24 @@ However, if you ever need more clarification on the features provided by a speci
    3. If you're on Linux, open the terminal in your Linux distribution.
 5. Navigate to the folder containing `BinBash.jar` using the terminal/command prompt.
 6. Type `java -jar BinBash.jar` into the command prompt, and press enter. If the application has started successfully, you should see the following output:<br>
-```text
--------------------------------------------------------------
- ____  _       ____            _
-| __ )(_)_ __ | __ )  __ _ ___| |__
-|  _ \| | '_ \|  _ \ / _` / __| '_ \
-| |_) | | | | | |_) | (_| \__ \ | | |
-|____/|_|_| |_|____/ \__,_|___/_| |_|
-
-Welcome to BinBash!
--------------------------------------------------------------
--------------------------------------------------------------
-Here are your metrics:
-Total Cost: 0.00
-Total Revenue: 0.00
-Net Profit: 0.00
-
--------------------------------------------------------------
-```
+    ```text
+    -------------------------------------------------------------
+     ____  _       ____            _
+    | __ )(_)_ __ | __ )  __ _ ___| |__
+    |  _ \| | '_ \|  _ \ / _` / __| '_ \
+    | |_) | | | | | |_) | (_| \__ \ | | |
+    |____/|_|_| |_|____/ \__,_|___/_| |_|
+    
+    Welcome to BinBash!
+    -------------------------------------------------------------
+    -------------------------------------------------------------
+    Here are your metrics:
+    Total Cost: 0.00
+    Total Revenue: 0.00
+    Net Profit: 0.00
+    
+    -------------------------------------------------------------
+    ```
 
 Awesome! You've now successfully started the BinBash application!
 
