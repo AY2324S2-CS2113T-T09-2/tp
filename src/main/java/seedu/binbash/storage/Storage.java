@@ -58,7 +58,7 @@ public class Storage {
      * If the file is corrupted, it will attempt to handle the corrupted file
      * by renaming it and creating a new file.
      *
-     * @return A list of items loaded from the storage file. Returns an empty list if the file is corrupted.
+     * @return A list of items loaded from the storage file. Returns an incomplete list if the file is corrupted.
      */
     public ArrayList<Item> loadData() {
         storageLogger.info("Preparing to load data from storage file.");
@@ -88,8 +88,8 @@ public class Storage {
         storageLogger.consoleLog("Data file is corrupted. BinBash is attempting to rename the corrupted file" +
                 " and create a new data file.");
 
-        boolean isRenamed = isCorruptedFileRenamed();
-        boolean isNewFileCreated = isNewFileCreated();
+        boolean isRenamed = renameCorruptedFile();
+        boolean isNewFileCreated = createNewTxtFile();
 
         if (isRenamed && isNewFileCreated) {
             storageLogger.consoleLog("Corrupted file renamed and new items.txt file created. Old corrupted file is " +
@@ -107,7 +107,7 @@ public class Storage {
      *
      * @return true if the file is successfully renamed, false otherwise.
      */
-    private boolean isCorruptedFileRenamed() {
+    private boolean renameCorruptedFile() {
         File corruptedFile = new File(filePath);
         File renamedFile = new File(dataDirectoryPath + "items_corrupted.txt");
 
@@ -125,7 +125,7 @@ public class Storage {
      *
      * @return true if the file is successfully created, false otherwise.
      */
-    private boolean isNewFileCreated() {
+    private boolean createNewTxtFile() {
         File newFile = new File(filePath);
 
         try {

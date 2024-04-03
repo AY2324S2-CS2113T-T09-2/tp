@@ -1,6 +1,5 @@
 package seedu.binbash.command;
 
-import java.util.regex.Pattern;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 
@@ -8,7 +7,6 @@ import seedu.binbash.logger.BinBashLogger;
  * Represents the execution of the delete command that will remove an item from the inventory.
  */
 public class DeleteCommand extends Command {
-    public static final Pattern COMMAND_FORMAT = Pattern.compile("delete\\s(?<identifier>.+)");
     private String keyword;
     private int index;
     private boolean isIndex;

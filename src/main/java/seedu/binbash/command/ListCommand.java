@@ -50,6 +50,10 @@ public class ListCommand extends Command {
             commandLogger.info("Executing list sort by sale price...");
             executionUiOutput = itemList.printListSortedBySalePrice(itemList.getItemList());
             break;
+        case PROFIT:
+            commandLogger.info("Executing list sort by profits earned...");
+            executionUiOutput = itemList.printListSortedByProfit(itemList.getItemList());
+            break;
         default:
             commandLogger.info("Executing list unsorted...");
             executionUiOutput = itemList.printList(itemList.getItemList());

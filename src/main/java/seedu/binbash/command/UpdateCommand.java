@@ -1,6 +1,6 @@
 package seedu.binbash.command;
 
-import seedu.binbash.exceptions.InvalidArgumentException;
+import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 
@@ -79,7 +79,7 @@ public class UpdateCommand extends Command {
             try {
                 executionUiOutput = itemList.updateItemDataByIndex(index, itemDescription, itemQuantity,
                         itemExpirationDate, itemSalePrice, itemCostPrice, itemThreshold);
-            } catch (InvalidArgumentException e) {
+            } catch (InvalidCommandException e) {
                 executionUiOutput = e.getMessage();
                 return true;
             }
@@ -88,7 +88,7 @@ public class UpdateCommand extends Command {
             try {
                 executionUiOutput = itemList.updateItemDataByName(itemName, itemDescription, itemQuantity,
                         itemExpirationDate, itemSalePrice, itemCostPrice, itemThreshold);
-            } catch (InvalidArgumentException e) {
+            } catch (InvalidCommandException e) {
                 executionUiOutput = e.getMessage();
             }
         }

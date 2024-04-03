@@ -2,7 +2,7 @@ package seedu.binbash.command;
 
 import org.junit.jupiter.api.Test;
 import seedu.binbash.inventory.ItemList;
-import seedu.binbash.exceptions.InvalidArgumentException;
+import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.PerishableRetailItem;
 
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class UpdateCommandTest {
 
     @Test
-    void execute_updateByName_itemUpdated() throws InvalidArgumentException {
+    void execute_updateByName_itemUpdated() throws InvalidCommandException {
         ItemList itemList = new ItemList(new ArrayList<Item>());
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00, 6);
@@ -39,7 +39,7 @@ public class UpdateCommandTest {
     }
 
     @Test
-    void execute_updateByIndex_itemUpdated() throws InvalidArgumentException {
+    void execute_updateByIndex_itemUpdated() throws InvalidCommandException {
         ItemList itemList = new ItemList(new ArrayList<Item>());
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00, 6);

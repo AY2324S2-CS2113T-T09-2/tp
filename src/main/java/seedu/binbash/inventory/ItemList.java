@@ -2,8 +2,10 @@ package seedu.binbash.inventory;
 
 import seedu.binbash.comparators.ItemComparatorByCostPrice;
 import seedu.binbash.comparators.ItemComparatorByExpiryDate;
+import seedu.binbash.comparators.ItemComparatorByProfit;
 import seedu.binbash.comparators.ItemComparatorBySalePrice;
 import seedu.binbash.exceptions.InvalidArgumentException;
+import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableOperationalItem;
@@ -124,7 +126,7 @@ public class ItemList {
 
     public String updateItemDataByName (String itemName, String itemDescription, int itemQuantity,
                                   LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
-                                  int itemThreshold) throws InvalidArgumentException {
+                                  int itemThreshold) throws InvalidCommandException {
         Item item = findItemByName(itemName);
 
         updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
@@ -137,7 +139,7 @@ public class ItemList {
 
     public String updateItemDataByIndex (int index, String itemDescription, int itemQuantity,
                                   LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
-                                  int itemThreshold) throws InvalidArgumentException {
+                                  int itemThreshold) throws InvalidCommandException {
         Item item = itemList.get(index - 1);
 
         updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
@@ -150,7 +152,7 @@ public class ItemList {
 
     private void updateItemData(Item item, String itemDescription, int itemQuantity, LocalDate itemExpirationDate,
                                 double itemSalePrice, double itemCostPrice, int itemThreshold)
-            throws InvalidArgumentException {
+            throws InvalidCommandException {
         updateItemDescription(item, itemDescription);
         updateItemQuantity(item, itemQuantity);
         updateItemExpirationDate(item, itemExpirationDate);
@@ -172,7 +174,7 @@ public class ItemList {
         }
     }
 
-    public void updateItemExpirationDate(Item item, LocalDate itemExpirationDate) throws InvalidArgumentException {
+    public void updateItemExpirationDate(Item item, LocalDate itemExpirationDate) throws InvalidCommandException {
         if (itemExpirationDate != LocalDate.MIN) {
             logger.info("Attempting to update item expiration date");
             if (item instanceof PerishableOperationalItem) {
@@ -180,7 +182,7 @@ public class ItemList {
             } else if (item instanceof PerishableRetailItem) {
                 ((PerishableRetailItem) item).setItemExpirationDate(itemExpirationDate);
             } else {
-                throw new InvalidArgumentException("This item is not a perishable and has no expiry date.");
+                throw new InvalidCommandException("This item is not a perishable and has no expiry date.");
             }
         }
     }
@@ -208,16 +210,16 @@ public class ItemList {
         }
     }
 
-    public Item findItemByName(String itemName) throws InvalidArgumentException {
+    public Item findItemByName(String itemName) throws InvalidCommandException {
         for (Item item : itemList) {
             if (item.getItemName().trim().equals(itemName.trim())) {
                 return item;
             }
         }
-        throw new InvalidArgumentException("Item with name '" + itemName + "' not found.");
+        throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
     }
 
-    public String sellOrRestockItem(String itemName, int itemQuantity, String command) {
+    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidArgumentException {
         String output = "Sorry, I can't find the item you are looking for.";
         String alertText = "";
 
@@ -237,13 +239,14 @@ public class ItemList {
 
             // Selling item consists of (i) Updating itemQuantity, (ii) Updating totalUnitsSold
             } else {
-                newQuantity -= itemQuantity;
 
-                // Stinky downcast?
-                // I'm going off the assertion that only retail items (and its subclasses) can be sold.
-                // TODO: Add an assert statement to verify code logic.
+                if (newQuantity >= itemQuantity) {
+                    newQuantity -= itemQuantity;
+                } else {
+                    throw new InvalidArgumentException("You do not have enough to sell the stated quantity.");
+                }
+
                 RetailItem retailItem = (RetailItem)item;
-
                 int itemThreshold = retailItem.getItemThreshold();
                 if (newQuantity < itemThreshold) {
                     alertText = alertItemQuantity(retailItem);
@@ -420,6 +423,43 @@ public class ItemList {
         logger.info("Printing sorted list...");
         for (Item item: sortedList) {
             output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
+            index++;
+        }
+
+        return output;
+    }
+
+    /**
+     * Returns a string representation of all the retail items in the list sorted by their profits.
+     * Each item's string representation is obtained by calling its `toString` method, and the profit
+     * for each item is displayed alongside it. This method is specifically for sorting retail items,
+     * which are the only items in this inventory that can generate profits.
+     *
+     * @param itemList the inventory to print, which should contain retail items.
+     * @return A concatenated string of all retail item representations in the sorted list, each on a new line,
+     *         along with their respective profits formatted to two decimal places.
+     */
+    public String printListSortedByProfit(List<Item> itemList) {
+        int index = 1;
+        String output = "";
+
+        logger.info("Sorting inventory by profits earned for each item...");
+        ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
+                .filter((t) -> t instanceof RetailItem)
+                .sorted(new ItemComparatorByProfit())
+                .collect(toList());
+
+        logger.info("Updating sortedOrder...");
+        updateSortedOrder(itemList, sortedList);
+
+        assert sortedOrder.size() == sortedList.size();
+
+        logger.info("Printing sorted list...");
+        for (Item item: sortedList) {
+            RetailItem retailItem = (RetailItem) item;
+            output += index + ". " + retailItem.toString() + System.lineSeparator()
+                    + String.format("\tProfit: %.2f", retailItem.getItemProfit())
+                    + System.lineSeparator() + System.lineSeparator();
             index++;
         }
 

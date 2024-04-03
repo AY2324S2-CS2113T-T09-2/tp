@@ -1,5 +1,7 @@
 @startuml
 
+skinparam linetype ortho
+
 abstract class Item {
     # itemName: String
     # itemDescription: String
@@ -26,7 +28,6 @@ class RetailItem {
 }
 
 class PerishableOperationalItem{
-    - DATE_TIME_FORMATTER: DateTimeFormatter
     - itemExpirationDate: LocalDate
 
     + getItemExpirationDate(): String
@@ -34,7 +35,6 @@ class PerishableOperationalItem{
 }
 
 class PerishableRetailItem {
-    - DATE_TIME_FORMATTER: DateTimeFormatter
     - itemExpirationDate: LocalDate
 
     + getItemExpirationDate(): String
