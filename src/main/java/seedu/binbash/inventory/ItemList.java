@@ -20,6 +20,11 @@ import java.util.ArrayList;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * Represents a list of items in the inventory. This class provides methods to manage and interact
+ * with the inventory, such as adding, updating, and deleting items, as well as calculating financial
+ * metrics like total cost and revenue.
+ */
 public class ItemList {
     private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());
     private double totalRevenue;
@@ -30,19 +35,22 @@ public class ItemList {
 
     public ItemList(ArrayList<Item> itemList) {
         this.itemList = itemList;
-        this.sortedOrder = new ArrayList<Integer>();
+        this.sortedOrder = initializeSortedOrder(itemList);
         this.totalRevenue = 0;
         this.totalCost = 0;
         searchAssistant = new SearchAssistant();
     }
 
+    /**
+     * Calculates and returns the total revenue generated from all retail items in the inventory.
+     *
+     * @return the total revenue.
+     */
     public double getTotalRevenue() {
         double totalRevenue = 0;
 
         for (Item item: itemList) {
             if (item instanceof RetailItem) {
-                // Downcast made only after checking if item is a RetailItem (and below) object.
-                // TODO: Add an assert statement to verify code logic.
                 RetailItem retailItem = (RetailItem) item;
                 totalRevenue += (retailItem.getTotalUnitsSold() * retailItem.getItemSalePrice());
             }
@@ -51,6 +59,11 @@ public class ItemList {
         return totalRevenue;
     }
 
+    /**
+     * Calculates and returns the total cost incurred from purchasing all items in the inventory.
+     *
+     * @return the total cost.
+     */
     public double getTotalCost() {
         double totalCost = 0;
 
@@ -61,6 +74,11 @@ public class ItemList {
         return totalCost;
     }
 
+    /**
+     * Returns a formatted string displaying the total cost, total revenue, and net profit.
+     *
+     * @return the profit margin metrics as a string.
+     */
     public String getProfitMargin() {
         double totalCost = getTotalCost();
         double totalRevenue = getTotalRevenue();
@@ -140,7 +158,8 @@ public class ItemList {
     public String updateItemDataByIndex (int index, String itemDescription, int itemQuantity,
                                   LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
                                   int itemThreshold) throws InvalidCommandException {
-        Item item = itemList.get(index - 1);
+        //Item item = itemList.get(index - 1);
+        Item item = itemList.get(sortedOrder.get(index - 1));
 
         updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
                 itemThreshold);
@@ -211,9 +230,16 @@ public class ItemList {
     }
 
     public Item findItemByName(String itemName) throws InvalidCommandException {
-        for (Item item : itemList) {
-            if (item.getItemName().trim().equals(itemName.trim())) {
-                return item;
+//        for (Item item : itemList) {
+//            if (item.getItemName().trim().equals(itemName.trim())) {
+//                return item;
+//            }
+//        }
+        Item currentItem;
+        for (int i = 0; i < sortedOrder.size(); i++) {
+            currentItem = itemList.get(sortedOrder.get(i));
+            if (currentItem.getItemName().trim().equals(itemName)) {
+                return currentItem;
             }
         }
         throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
@@ -479,6 +505,17 @@ public class ItemList {
         for (int i = 0; i < sortedList.size(); i++) {
             sortedOrder.add(itemList.indexOf(sortedList.get(i)));
         }
+    }
+
+    private ArrayList<Integer> initializeSortedOrder(List<Item> itemList) {
+        logger.info("Generating initial sortedOrder...");
+
+        ArrayList<Integer> sortedOrder = new ArrayList<Integer>();
+        for (int i = 0; i < itemList.size(); i++) {
+            sortedOrder.add(i);
+        }
+
+        return sortedOrder;
     }
 
     @Override
