@@ -318,11 +318,16 @@ Additionally, the decision to use two constructors promotes the Single Responsib
 
 ### Search command
 
-[!SearchAssistantSequenceDiagram](images/SearchAssistantSequenceDiagram.png)
+![SearchAssistantSequenceDiagram](images/SearchAssistantSequenceDiagram.png)
 The search command calls on methods in the SearchAssistant class to perform queries.
-[!SearchAssistantReferenceFrameDiagram](images/SearchAssistantReferenceFrameDiagram.png)
-Each method searches through a corresponding field. If the argument to this method call is found to be a certain default value (MIN/MAX values for numerical arguments and empty strings for string arguments), searching through this field is skipped.
-It relies on the SearchAssistant having the full item list to search through, which is guaranteed by ItemList's setFoundItems() call.
+
+![SearchAssistantReferenceFrameDiagram](images/SearchAssistantReferenceFrameDiagram.png)
+Each method searches through a corresponding field.
+If the argument to this method is found to be a certain default value (MIN/MAX values for numerical arguments and empty strings for string arguments), searching through this field is skipped.
+
+Note that search relies on the SearchAssistant having the full item list to produce correct results.
+This is guaranteed in this case by ItemList's setFoundItems() call.
+
 After obtaining the list of found items, it then uses printList to convert this list into a user friendly string.
 
 ### Logging
