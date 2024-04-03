@@ -113,12 +113,12 @@ public class UpdateCommand extends Command {
     @Override
     public boolean execute(ItemList itemList) {
         if (isIndex) {
-            if (index <= 0 || index > itemList.getItemCount()) {
+            if (index <= 0 || index > itemList.getSortedItemCount()) {
                 commandLogger.info("Index entered is out of bounds");
                 executionUiOutput = "Index entered is out of bounds!";
                 return true;
             }
-            assert index > 0 && index <= itemList.getItemCount();
+            assert index > 0 && index <= itemList.getSortedItemCount();
             commandLogger.info("Delete identifier is detected as an index");
             try {
                 executionUiOutput = itemList.updateItemDataByIndex(index, itemDescription, itemQuantity,
