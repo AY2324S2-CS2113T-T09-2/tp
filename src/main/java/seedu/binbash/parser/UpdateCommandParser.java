@@ -15,7 +15,6 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class UpdateCommandParser extends DefaultParser {
-    protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private ArrayList<OptDesc> optionDescriptions;
     private boolean hasOption;
 
@@ -93,7 +92,7 @@ public class UpdateCommandParser extends DefaultParser {
         boolean hasOption;
         try {
             LocalDate itemExpiryDate = LocalDate.parse(commandLine.getOptionValue("expiry-date"),
-                    EXPECTED_INPUT_DATE_FORMAT);
+                    Parser.EXPECTED_INPUT_DATE_FORMAT);
             updateCommand.setItemExpirationDate(itemExpiryDate);
         } catch (DateTimeParseException e) {
             throw new ParseException(e.getMessage());

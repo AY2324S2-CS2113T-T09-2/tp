@@ -91,7 +91,7 @@ public class CommandOptionAdder {
                 .hasArg(true)
                 .required(true)
                 .longOpt("name")
-                .desc("Update using name")
+                .desc("Identify by name")
                 .argName("name")
                 .build();
         optionDescriptions.add(new OptDesc("-n", "--name", "name of item"));
@@ -103,7 +103,7 @@ public class CommandOptionAdder {
                 .hasArg(true)
                 .required(true)
                 .longOpt("index")
-                .desc("Update using index")
+                .desc("Identify by index")
                 .argName("index")
                 .build();
         optionDescriptions.add(new OptDesc("-i", "--index", "index id of item"));
