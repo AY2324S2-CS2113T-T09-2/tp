@@ -67,11 +67,11 @@ public class AddCommandParser extends DefaultParser {
                 itemCostPrice, itemThreshold);
     }
 
-    private static String getItemDescription(CommandLine commandLine) {
+    private String getItemDescription(CommandLine commandLine) {
         return String.join(" ", commandLine.getOptionValues("description"));
     }
 
-    private static String getItemName(CommandLine commandLine) {
+    private String getItemName(CommandLine commandLine) {
         return String.join(" ", commandLine.getOptionValues("name"));
     }
 
