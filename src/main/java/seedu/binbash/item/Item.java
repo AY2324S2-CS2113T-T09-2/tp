@@ -147,6 +147,11 @@ public abstract class Item {
         this.isAlert = isAlert;
     }
 
+    /**
+     * Returns a String representation of the Item object.
+     *
+     * @return A String representation of the Item object.
+     */
     @Override
     public String toString() {
         return String.format("%s" + System.lineSeparator() +

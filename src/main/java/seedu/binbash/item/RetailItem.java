@@ -30,7 +30,13 @@ public class RetailItem extends Item {
         return itemSalePrice;
     }
 
+    /**
+     * Sets the sale price of the Item.
+     *
+     * @param itemSalePrice The new sale price of the Item.
+     */
     public void setItemSalePrice(double itemSalePrice) {
+        assert itemSalePrice >= 0.0;
         this.itemSalePrice = itemSalePrice;
     }
 
@@ -49,9 +55,16 @@ public class RetailItem extends Item {
      * @param totalUnitsSold The number of units sold of the Item.
      */
     public void setTotalUnitsSold(int totalUnitsSold) {
+        assert totalUnitsSold >= 0;
         this.totalUnitsSold = totalUnitsSold;
     }
 
+    /**
+     * Computes the profit margin of the current Item.
+     * Profit is calculated using the formula: ( total_revenue - total_cost )
+     *
+     * @return Profit of the current Item as a Double value.
+     */
     public double getItemProfit() {
         double totalRevenue = this.itemSalePrice * this.totalUnitsSold;
         double totalCost = this.itemCostPrice * this.totalUnitsPurchased;

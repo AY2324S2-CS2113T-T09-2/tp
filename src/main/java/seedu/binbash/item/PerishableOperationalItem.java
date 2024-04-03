@@ -33,10 +33,20 @@ public class PerishableOperationalItem extends OperationalItem {
         return itemExpirationDate.format(DATE_TIME_FORMATTER);
     }
 
+    /**
+     * Returns the expiration date of the Item as a LocalDate object.
+     *
+     * @return Item expiration date (as LocalDate object).
+     */
     public LocalDate getLocalDateItemExpirationDate() {
         return itemExpirationDate;
     }
 
+    /**
+     * Sets the Item expiration date.
+     *
+     * @param itemExpirationDate The new expiration date of the Item.
+     */
     public void setItemExpirationDate(LocalDate itemExpirationDate) {
         this.itemExpirationDate = itemExpirationDate;
     }
