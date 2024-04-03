@@ -281,12 +281,28 @@ public class ItemList {
     public String deleteItem(int index) {
         logger.info("Attempting to delete an item");
         int beforeSize = itemList.size();
+        int temp;
+
+        if (sortedOrder.get(index - 1) <= -1) {
+            return "Item has already been deleted!";
+        }
+
         Item tempItem = itemList.remove((sortedOrder.get(index - 1).intValue()));
         assert itemList.size() == (beforeSize - 1);
+
+        temp = sortedOrder.get(index - 1);
+        sortedOrder.set(index - 1, -1);
+
+        for (int i = 0; i < sortedOrder.size(); i++){
+            if (sortedOrder.get(i) > temp) {
+                sortedOrder.set(i, sortedOrder.get(i) - 1);
+            }
+        }
 
         String output = "Got it! I've removed the following item:" + System.lineSeparator()
                 + System.lineSeparator() + tempItem;
         logger.info("An item has been deleted");
+
         return output;
     }
 
