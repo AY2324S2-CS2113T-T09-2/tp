@@ -11,9 +11,15 @@ import seedu.binbash.enums.SortOptionEnum;
 
 import java.util.ArrayList;
 
+/**
+ * Parses command line arguments for creating a ListCommand.
+ */
 public class ListCommandParser extends DefaultParser {
     private ArrayList<OptDesc> optionDescriptions;
 
+    /**
+     * Creates a new ListCommandParser.
+     */
     public ListCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
@@ -21,10 +27,22 @@ public class ListCommandParser extends DefaultParser {
                 .addListTypeOptionGroup();
     }
 
+    /**
+     * Gets the option descriptions for the list command.
+     *
+     * @return The list of option descriptions.
+     */
     public ArrayList<OptDesc> getOptionDecriptions() {
         return optionDescriptions;
     }
 
+    /**
+     * Parses the command line arguments to create a ListCommand.
+     *
+     * @param commandArgs The command arguments to parse.
+     * @return A ListCommand with the specified sort option, or a default ListCommand if no sort option is specified.
+     * @throws ParseException If there is an error parsing the command arguments.
+     */
     public ListCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
         if (commandLine.hasOption("cost")) {
