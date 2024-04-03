@@ -2,7 +2,7 @@ package seedu.binbash.command;
 
 import org.junit.jupiter.api.Test;
 import seedu.binbash.inventory.ItemList;
-import seedu.binbash.exceptions.InvalidArgumentException;
+import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
 
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class SellCommandTest {
 
     @Test
-    void execute_sellExistingItem_quantityUpdated() throws InvalidArgumentException {
+    void execute_sellExistingItem_quantityUpdated() throws InvalidCommandException {
         ItemList itemList = new ItemList(new ArrayList<Item>());
         String itemName = "testItem";
         itemList.addItem("retail", itemName, "A test item", 9,

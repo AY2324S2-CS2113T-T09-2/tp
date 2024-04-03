@@ -5,6 +5,8 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.TypeHandler;
+import org.jline.builtins.Completers.OptDesc;
+
 import seedu.binbash.command.AddCommand;
 import seedu.binbash.exceptions.InvalidArgumentException;
 
@@ -12,13 +14,16 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
+import java.util.ArrayList;
 
 public class AddCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private ArrayList<OptDesc> optionDescriptions;
 
     public AddCommandParser() {
         options = new Options();
-        new CommandOptionAdder(options)
+        optionDescriptions = new ArrayList<>();
+        new CommandOptionAdder(options, optionDescriptions)
             .addItemTypeOptionGroup()
             .addNameOption(true, "Easily recognizable item name.")
             .addDescriptionOption(true, "A brief description of the item.")
@@ -29,7 +34,14 @@ public class AddCommandParser extends DefaultParser {
             .addThresholdOption(false, "Minimum quantity, below which an alert will be displayed");
     }
 
+
+
+    public ArrayList<OptDesc> getOptionDecriptions() {
+        return optionDescriptions;
+    }
+
     public AddCommand parse(String[] commandArgs) throws ParseException, InvalidArgumentException {
+
         CommandLine commandLine = super.parse(options, commandArgs);
 
         // Determine item type to be created

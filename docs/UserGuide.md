@@ -2,6 +2,10 @@
 
 ## Introduction
 
+BinBash is a CLI-based **Inventory Management System** that is targeted at small retail business owners. 
+BinBash aims to make the inventory management process streamlined, error-free and highly efficient, through its extensive suite of inventory management features.
+BinBash also enables users to gain valuable insights on their inventory, through comprehensive profit reporting features which facilitate efficient sales and trends analysis.
+
 This document aims to provide a comprehensive and in-depth guide on how to install, configure and use BinBash. For those who just want to get started right away, head to [Getting Started](#getting-started).
 
 ### What's New in BinBash 1.0
@@ -20,6 +24,7 @@ Our long awaited first release adds everything you would expect of an inventory 
 4. [How to Use this Guide](#how-to-use-this-guide)
 5. [Getting Started](#getting-started)
 6. [Features](#features)
+    - [Notes on the Command format](#notes-on-the-command-format)
     - [Adding an item: `add`](#adding-an-item-add)
     - [Searching for an item: `search`](#searching-for-an-item-search)
     - [Listing current inventory: `list`](#listing-current-inventory-list)
@@ -27,37 +32,47 @@ Our long awaited first release adds everything you would expect of an inventory 
     - [Restocking an item: `restock`](#restocking-an-item-restock)
     - [Updating an item: `update`](#updating-an-item-update)
     - [Deleting an item: `delete`](#deleting-an-item-delete)
+    - [Calculating the total profit: `profit`](#calculating-the-total-profit-profit)
     - [Exiting the application: `bye`](#exiting-the-application-bye)
     - [Saving and Loading data](#saving-and-loading-data)
-7. [Possible issues during startup](#possible-issues-during-startup)
-8. [Command Summary](#command-summary)
-9. [FAQ](#faq)
-10. [Glossary](#glossary)
+7. [Command Summary](#command-summary)
+8. [FAQ](#faq)
+9. [Glossary](#glossary)
 
 ## BinBash Overview
 
 Welcome to BinBash, an **Inventory Management System** designed to streamline your stock control processes. 
-BinBash offers a simple and lightweight solution that makes managing your items fast and efficient.
+BinBash offers a simple and lightweight solution that makes managing your items fast and efficient, 
+thus allowing you more time to focus on your other business needs.
 It's built to handle the complexities of inventory tracking so that you don't have to. 
+
+Through BinBash, you can **add**, as well as **track** a variety of items that are present in your inventory. 
+If necessary, you can also **delete** these items if they are no longer present.
+BinBash also **alerts** you when the quantities of items are running low in your inventory, and allows you to **restock** these items when required.
+Furthermore, if items are **sold**, BinBash tracks the sale of these items and generates a **profit analysis**, 
+thus providing you with valuable insight on the sales velocity of items in your inventory!
+
 This guide will walk you through each feature, providing clear instructions and examples to ensure that you 
 can make the most out of BinBash. Let's get your inventory organized efficiently and effectively!
 
 ## How to Use this Guide
 
-Though we make no assumptions on your technical familiarity, it would help if this isn't your first time seeing a command prompt.
-
 Throughout the course of this guide we will describe the various inventory management capabilities BinBash is capable of, and how you might perform them using keyboard typed commands.
 The format and expected outputs of these commands will be enumerated in turn. Don't worry if you can't get the hang of them immediately! We'll provide some concrete examples to better illustrate their use cases.
 
-If you consider yourself a power user, we feel it is self-explanatory to jump to the [Command Summary](#command-summary).
+> :heavy_exclamation_mark: This is a warning box that may appear in the guide. Any interactions with the application that can result in issues or errors will be detailed in sections like this one here.
+
+> :information_source: This is an info box that may appear in the guide. Any additional information about a feature will be detailed in sections like this one here.
+
+If you are new to BinBash (or new to command line-based applications in general), we highly recommend that you read through the rest of this guide sequentially, following the order of sections in this guide.
+In particular, we suggest that you take note of the [command format](#notes-on-the-command-format) used by BinBash, as it would provide you with a better understanding of how BinBash processes your commands.
+
+If you consider yourself a power user, feel free to jump to the [Command Summary](#command-summary) section. 
+However, if you ever need more clarification on the features provided by a specific command, do head over to the [Features](#features) section, as detailed explanations of each command will be provided there.
 
 ## Getting Started
 
-To run BinBash, ensure that your computer meets the following minimum system requirements:
-* Operating System: Windows, macOS, or Linux
-* Java `11` is installed. Refer to our [FAQ](#faq) for more details.
-
-1. Ensure that you have Java `11` or above installed on your computer.
+1. Ensure that you have Java `11` or above installed on your computer. Refer to our [FAQ](#faq) for more details.
 2. Head over to our [GitHub Page](https://github.com/AY2324S2-CS2113T-T09-2/tp/releases) and download the latest version of `BinBash.jar`.
 3. Move the downloaded `BinBash.jar` file to an empty folder of your choice. This folder will now serve as the home folder for BinBash.
 4. Open the terminal/command prompt for your system.
@@ -65,16 +80,49 @@ To run BinBash, ensure that your computer meets the following minimum system req
    2. If you're on Mac, click on `Launchpad` > `Other` > `Terminal`. Alternatively, click on the Spotlight icon in your menu bar, and type in `Terminal`.
    3. If you're on Linux, open the terminal in your Linux distribution.
 5. Navigate to the folder containing `BinBash.jar` using the terminal/command prompt.
-6. Type `java -jar BinBash.jar` into the command prompt, and press enter.
+6. Type `java -jar BinBash.jar` into the command prompt, and press enter. If the application has started successfully, you should see the following output:
+```text
+-------------------------------------------------------------
+ ____  _       ____            _
+| __ )(_)_ __ | __ )  __ _ ___| |__
+|  _ \| | '_ \|  _ \ / _` / __| '_ \
+| |_) | | | | | |_) | (_| \__ \ | | |
+|____/|_|_| |_|____/ \__,_|___/_| |_|
+
+Welcome to BinBash!
+-------------------------------------------------------------
+-------------------------------------------------------------
+Here are your metrics:
+Total Cost: 0.00
+Total Revenue: 0.00
+Net Profit: 0.00
+
+-------------------------------------------------------------
+```
 
 Awesome! You've now successfully started the BinBash application!
 
 Now, you can head over to the [Features](#features) section to learn how to use the application.
 
+#### Possible Issues During Startup
+
+Have problems loading up BinBash? Fret not, here's how to troubleshoot some of them:
+
+1. **File is Corrupted Error**:<br>
+   If you encounter an error that says the file is corrupted, you should first take a look at your `items.txt` file. It's possible that the content of the file has become invalid. Here's what you can do:
+    - **Delete and Recreate**: If you're unsure about the formatting, simply delete the `items.txt` file. BinBash will create a new one when you restart the application.
+    - **Rectify the Content**: If you have important data you can't lose, open the `items.txt` file and fix any formatting issues. Make sure each task follows the correct structure BinBash expects. Refer to the [FAQ](#faq) for more details on the expected save file format.
+
+2. **Issues with Data Directory or File**:<br>
+   If you encounter an error about not being able to create or read/write from the data directory or file, this usually means there's a permissions issue on your system. Here's how to handle it:
+    - **Check Permissions**: Ensure that BinBash has the right permissions to access the folders it needs. Right-click on the directory and check its properties to make sure reading and writing are allowed.
+
 ## Features
 
+### Notes on the Command format
+
 Before we dive into the features that BinBash has to offer, lets start with a little introduction. BinBash tracks four 
-types of items in our inventory list. They are:
+types of items in your inventory list. They are:
  - Retail item
  - Operational Item
  - Perishable Retail Item
@@ -94,18 +142,20 @@ types of items in our inventory list. They are:
 - `-s` : sale price, which is the price that you are selling it for
 - `-t` : threshold, the lower limit of your item quantity, below which you will be alerted of depleting stock
 
-> #### Note:
+> #### :information_source: Note:
 > - Only one item type flag can be specified for each item. This means that you can only use either `-re` or `-op` but
 > not both at the same time. 
-> - The `-e` flag determines if the item that you are adding is a Perishable item. This means that items with an expiry 
-> date are perishable.
-> - The `-s` flag determines if the item that you are adding is a Retail item. This means that an item with a sale price 
-> are retail items that are meant to be sold.
+> - The `-e` flag should be provided if the item that you are adding is a Perishable item. That is to say, it will expire by 
+> the provided expiry date.
+> - The `-s` flag should be provided if the item that you are adding is a Retail item. This means that this item is
+> meant to be sold.
 > - The flags can be placed in any order. There is no specific order that you have to abide by.
+> - Words in `UPPER_CASE` are the arguments that are meant to be supplied by you. 
+> For example, in `add -n ITEM_NAME`, `ITEM_NAME` would represent the name of the item you are adding (e.g., `add -n apple`).
 
 ### Adding an item: `add`
 
-> Adds an item to the inventory.
+> This allows you to add an item to your inventory.
 
 #### Adding a Retail item
 
@@ -121,12 +171,32 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -s SALE_PRICE
 
 Examples:
 
-- `add -re -n lego -d toys -q 350 -s 102.00 -c 34.32 -t 50`
-Adds an item called "lego" into your inventory list with the description "toys" that has a quantity of 350. 
-It costs $34.32 per unit item and is sold for $102.00 each. The threshold set for this item is at 50.
-- `add -re -n hammer -d tools -q 20 -s 9.00 -c 4.39 -t 10`
-Adds an item called "hammer" into your inventory list with the description "tools" that has a quantity of 20.
-It costs $4.39 per unit item and is sold for $9.00 each. The threshold set for this item is at 10.
+- `add -re -n lego -d toys -q 350 -s 102.00 -c 34.32 -t 50`<br>
+   ```text
+   -------------------------------------------------------------
+   Noted! I have added the following item into your inventory:
+    
+   [R] lego
+       description: toys
+       quantity: 350
+       cost price: $34.32
+       sale price: $102.00
+       threshold: 50
+   -------------------------------------------------------------
+   ```
+- `add -re -n hammer -d tools -q 20 -s 9.00 -c 4.39 -t 10`<br>
+   ```text
+   -------------------------------------------------------------
+   Noted! I have added the following item into your inventory:
+    
+   [R] hammer
+       description: tools
+       quantity: 20
+       cost price: $4.39
+       sale price: $9.00
+       threshold: 10
+   -------------------------------------------------------------
+   ```
 
 #### Adding a Perishable Retail item
 
@@ -135,17 +205,38 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DAT
 
 * The command to add a Perishable Retail item is similar to adding a Retail item.
 * An additional flag , `-e`, is used here to include the `expiry date`, hence signifying a Perishable Retail item.
+  > :information_source: Ensure that the provided date is in `DD-MM-YYYY` format. For example, **20 January 2024** is represented as `20-01-2024`
 
 Examples:
 
-- `add -re -n apple -d fruit -q 50 -e 12-12-2024 -s 1.00 -c 0.39 -t 10`
-Adds an item called "apple" into your inventory list with the description "fruit" that has a quantity of 50 and will
-expire on 12 December 2024. It costs $0.39 per unit item and is sold for $1.00 each. The threshold set for this item is 
-at 10.
-- `add -re -n tuna fish -d seafood -q 5 -e 02-11-2024 -s 10 -c 4.50`
-Adds an item called "tuna fish" into your inventory list with the description "seafood" that has a quantity of 5 and 
-will expire on 02 November 2024. It costs $4.50 per unit item and is sold for $10.00 each. The threshold will be
-automatically set at 1.
+- `add -re -n apple -d fruit -q 50 -e 12-12-2024 -s 1.00 -c 0.39 -t 10`<br>
+   ```text
+   -------------------------------------------------------------
+   Noted! I have added the following item into your inventory:
+    
+   [P][R] apple
+       description: fruit
+       quantity: 50
+       cost price: $0.39
+       sale price: $1.00
+       threshold: 10
+       expiry date: 12-12-2024
+   -------------------------------------------------------------
+   ```
+- `add -re -n tuna fish -d seafood -q 5 -e 02-11-2024 -s 10 -c 4.50`<br>
+   ```text
+   -------------------------------------------------------------
+   Noted! I have added the following item into your inventory:
+    
+   [P][R] tuna fish
+       description: seafood
+       quantity: 5
+       cost price: $4.50
+       sale price: $10.00 
+       threshold: 1
+       expiry date: 02-11-2024
+   -------------------------------------------------------------
+   ```
 
 #### Adding an Operational item
 
@@ -161,9 +252,17 @@ Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -s SALE_PRICE
 
 Examples:
 
-- `add -op -n light bulbs -d lighting -q 5 -c 2.30 -t 3`
-Adds an item called "light bulbs" into your inventory list with the description "lighting" that has a quantity of 5. 
-It costs $2.30 per unit item. The threshold set for this item is at 3.
+- `add -op -n light bulbs -d lighting -q 5 -c 2.30 -t 3`<br>
+   ```text
+   -------------------------------------------------------------
+   Noted! I have added the following item into your inventory:
+    
+   [O] light bulbs
+       description: lighting
+       quantity: 5
+       cost price: $2.30
+   -------------------------------------------------------------
+   ```
 
 #### Adding a Perishable Operational item
 
@@ -171,30 +270,43 @@ Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DAT
 
 * The command to add a Perishable Operational item is similar to adding an Operational item.
 * An additional flag , `-e`, is used here to include the `expiry date`, hence signifying a Perishable Operational item.
+  > :information_source: Ensure that the provided date is in `DD-MM-YYYY` format. For example, **20 January 2024** is represented as `20-01-2024`
 
 Examples:
 
-- `add -op -n milk -d to make cofee -q 2 -e 03-10-2024 -c 1.30`
-Adds an item called "milk" into your inventory list with the description "to make coffee" that has a quantity of 2. It
-will expire on 3 October 2024. It costs $1.30 per unit item. The threshold is automatically set at 1.
+- `add -op -n milk -d to make cofee -q 2 -e 03-10-2024 -c 1.30`<br>
+   ```text
+   -------------------------------------------------------------
+   Noted! I have added the following item into your inventory:
+    
+   [P][O] milk
+       description: to make cofee
+       quantity: 2
+       cost price: $1.30
+       expiry date: 03-10-2024
+   -------------------------------------------------------------
+   ```
 
 ### Searching for an item: `search`
 
-> Searches for items in the inventory, filtering results through a number of user-defined fields.
+> This allows you to search for items in your inventory, filtering results through a number of user-defined fields.
 
 Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`
 
-- At least one of -n, -d, -q, -c, -s, or -e must be set.
-- NAME_QUERY and DESCRIPTION_QUERY perform a case-insensitive search on the name and description fields of inventory items respectively.
-- QUANTITY_RANGE takes the form {min_quantity}..{max_quantity} where at least one of min_quantity or max_quantity is required.
-- COST_PRICE_RANGE and SALE_PRICE_RANGE take the form {price_lower_bound}..{price_upper_bound} where at least one of price_lower_bound or price_upper_bound is required.
-- EXPIRY_DATE_RANGE is similar to the above range arguments: except dates need to be specified in the format dd-MM-YYYY.
-- Shows the first NUMBER_OF_RESULTS results if set, all matching results otherwise.
+- At least one of `-n`, `-d`, `-q`, `-c`, `-s`, or `-e` must be set.
+- `NAME_QUERY` and `DESCRIPTION_QUERY` perform a case-insensitive search on the name and description fields of inventory items respectively.
+- `QUANTITY_RANGE` takes the form `{min_quantity}..{max_quantity}` where at least one of `min_quantity` or `max_quantity` is required.
+  > :information_source: For example, if we intend to search for items with a quantity between 20 and 30, we should format our query as:<br> `-q 20..30`.
+- `COST_PRICE_RANGE` and `SALE_PRICE_RANGE` take the form `{price_lower_bound}..{price_upper_bound}` where at least one of `price_lower_bound` or `price_upper_bound` is required.
+  > :information_source: For example, if we intend to search for items that cost between $20 and $30, we should format our query as:<br>`-c 20..30`.
+- `EXPIRY_DATE_RANGE` is similar to the above range arguments: except dates need to be specified in the format `dd.MM.YYYY`.
+  > :information_source: For example, if we intend to search for items with an expiry date between 20 January 2024 and 30 January 2024, we should format our query as:<br> `-e 20.01.2024..30.01.2024`.
+- Shows the first `NUMBER_OF_RESULTS` results if set, else all matching results are shown.
 
 **Examples:**
 
 - `search -n snake plant`
-  Will return all items with names containing snake plant such as "snake plant" and "snake plant seeds".
+  Will return all items with names containing **snake plant**, such as "snake plant" and "snake plant seeds".
 - `search -c ..5 -l 6`
   Will return the first 6 items that cost up to $5.00.
 - `search -s 20..30`
@@ -206,13 +318,31 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 
 ### Listing current inventory: `list`
 
->Shows a list of all tasks in your task list.
+> This allows you to list out all items that you have in your inventory list. 
+> You can also use this command to display your inventory list, sorted based on cost price, sale price, profit, or expiry date.
 
-**Format:** `list`
+> :information_source: Note:
+> Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for `delete` and `update` commands.
+
+#### List inventory (unsorted)
+
+Format: `list`
+
+#### List inventory (sorted based on item cost price)
+
+Format: `list -c`
+
+#### List inventory (sorted based on item sale price)
+
+Format: `list -s`
+
+#### List inventory (sorted based on item expiry date)
+
+Format: `list -e`
 
 ### Selling an item: `sell`
 
-> Decrements the quantity of an item after it has been sold.
+> This allows you to decrement the quantity of an item after it has been sold.
 
 Format: `sell -n ITEM_NAME -q ITEM_QUANTITY`
 
@@ -227,7 +357,7 @@ Examples:
 
 ### Restocking an item: `restock`
 
-> Increments the quantity of an item after it has been restocked.
+> This allows you to increment the quantity of an item after it has been restocked.
 
 * Both flags are mandatory.
 * The quantity given to this command represents the amount of item that you want to restock. This amount will be added
@@ -240,7 +370,7 @@ Examples:
 
 ### Updating an item: `update`
 
-> Modifies the details of an existing item in the inventory. You can identify the item that you want to update by
+> This command allows you to modify the details of an existing item in the inventory. You can identify the item that you want to update, by
 > specifying the name of the object, or its index number as displayed in the inventory list.
 
 #### Updating an item using item name
@@ -269,6 +399,8 @@ to 10.
 Format: `update -i ITEM_INDEX -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE
 -t THRESHOLD`
 
+> :information_source: To determine the `index` of an item in your inventory, call the `list` command first, and note down the number displayed next to your item of interest.
+
 * The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to update.
 * To know the `item index`, we encourage you to first use the command `list` to find out the index of your item of 
 interest.
@@ -282,7 +414,7 @@ remains unchanged.
 Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and its threshold to 2.
 
 
-> Note:
+> :information_source: Note:
 > - Only one item identifier flag, `-n` or `-i`, can be used with the `update` command to identify the item that you
 > want to update.
 > - There must be a minimum of one flag used, excluding the `-n` flag.
@@ -291,63 +423,66 @@ Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and 
 
 ### Deleting an item: `delete`
 
-> Deletes an item from the inventory. Item Identifier can be either item index or item name.
+> This lets you delete an item from the inventory. You can identify an item by its name, or its index number (as displayed in the inventory list).
 
 #### Deleting an item using item index
 
-Format: `delete ITEM_INDEX`
+Format: `delete -i ITEM_INDEX`
+
+> :information_source: To determine the `index` of an item in your inventory, call the `list` command first, and note down the number displayed next to your item of interest.
 
 * `ITEM_INDEX` must be specified.
-* `ITEM_INDEX` specified must exist in the inventory, otherwise no item will be deleted
+* `ITEM_INDEX` specified must exist in the inventory, otherwise no item will be deleted.
 * Index of items can be viewed using the `list` command.
 
 Examples:
-* `delete 1` 
-* `delete 4`
+- `delete -i 1` Deletes the item with index of 1.
+- `delete -i 4` Deletes the item with index of 4.
 
 #### Deleting an item using item name
 
-Format: `delete ITEM_NAME`
+Format: `delete -n ITEM_NAME`
 
 * `ITEM_NAME` must be specified.
 * `ITEM_NAME` specified must be the exact name of the item.
 * If there are no items with item names matching `ITEM_NAME`, no items will be deleted.
+* If there are items with the same `ITEM_NAME`, only the first instance of item with `ITEM_NAME` will be deleted.
 * Item names of items in the inventory can be viewed using the `list` command.
 
 Examples:
-* `delete cookie`
-* `delete tissue paper`
+- `delete -n cookie` Deletes the first item named "cookie".
+- `delete -n tissue paper` Deletes the first item named "tissue paper".
+
+### Calculating the total profit: `profit`
+
+> This command allows you to view the total profit that you've earned, based on the revenue and cost of items in your inventory.
+
+Format: `profit`
+
+This command computes the total profit by subtracting the total cost from the total revenue of all items in your inventory.
+The output will display the total profit in the format: `Total profit: $XXX.XX`
 
 ### Exiting the application: `bye`
 
-> Exits the application.
+> This command allows you to exit the application.
 
-After a long day at work, it's time to take a rest!
-Fret not, BinBash will save the state of your current inventory, and you can always come back to it later.
+After a long day at work, it's time to take a rest! You can safely quit the application using this command.
 
 Format: `bye`
 
+> :information_source: BinBash will save the state of your current inventory, and you can always come back to it later.
+
 ### Saving and Loading data
 
-Unsure as to how you can save your BinBash data? Don't worry! Your data is automatically saved to your local storage after any command that modifies your inventory. No manual saving of data is required.
+Unsure as to how you can save your BinBash data? Don't worry! Your data is automatically saved to your local storage. No manual saving of data is required.
 
 Similarly, your saved data will be automatically loaded into BinBash when you start the application. If no previous save data was found, the application starts on a clean state.
 
-> **Caution**: For advanced users, BinBash data is stored locally as a `.txt` file in your BinBash install location (`<Location of BinBash.jar>/data/items.txt`). Do exercise caution when directly editing this file; BinBash **will not load** your save file if it is corrupted. 
-> It is highly recommended to take a backup of the file before editing it.
-
-## Possible Issues During Startup
-
-Have problems loading up BinBash? Fret not, here's how to troubleshoot some of them:
-
-1. **File is Corrupted Error**
-   If you encounter an error that says the file is corrupted, you should first take a look at your `data.txt` file. It's possible that the content of the file has become invalid. Here's what you can do:
-   - **Delete and Recreate**: If you're unsure about the formatting, simply delete the `data.txt` file. BinBash will create a new one when you restart the application.
-   - **Rectify the Content**: If you have important data you can't lose, open the `data.txt` file and fix any formatting issues. Make sure each task follows the correct structure BinBash expects.
-
-2. **Issues with Data Directory or File**
-   If you encounter an error about not being able to create or read/write from the data directory or file, this usually means there's a permissions issue on your system. Here's how to handle it:
-   - **Check Permissions**: Ensure that BinBash has the right permissions to access the folders it needs. Right-click on the directory and check its properties to make sure reading and writing are allowed.
+> :heavy_exclamation_mark: For advanced users, BinBash data is stored locally as a `.txt` file in your BinBash install location:<br>`<Location of BinBash.jar>/data/items.txt`.
+> 
+> Do exercise caution when directly editing this file, as BinBash **will not load** corrupted data (i.e., data that is not formatted correctly). 
+> 
+> We highly recommended that you take a backup of your save file before editing it.
 
 ## Command Summary
 
@@ -355,8 +490,8 @@ Have problems loading up BinBash? Fret not, here's how to troubleshoot some of t
 |--------------|--------------------------------------------------------------------------------------------------|
 | **add**      | `add n/ITEM_NAME d/ITEM_DESCRIPTION q/ITEM_QUANTITY e/EXPIRATION_DATE s/SALE_PRICE c/COST_PRICE` |
 | **search**   | `search KEYWORD`                                                                                 |
-| **list**     | `list`                                                                                           |
-| **delete**   | `delete ITEM_INDEX`                                                                              |
+| **list**     | `list` `list -c` `list -s` `list -e`                                                             |
+| **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME`                                                         |
 | **bye**      | `bye`                                                                                            |
 
 ## FAQ
@@ -382,6 +517,16 @@ If not, refer to Oracle's [guide](https://docs.oracle.com/en/java/javase/11/inst
 **Q**: Do I need an Internet connection to use BinBash? <br>
 **A**: You do not need an Internet connection. BinBash can be used offline.
 
+**Q**: I want to modify my `items.txt` file. How should I format my items?<br>
+**A**: Firstly, we recommend that you take a backup of your current `items.txt` file before editing it.
+
+Then, open the file in any text editor of your choice (you can use `Notepad` on Windows). Feel free to add, modify or remove rows, but do ensure that they adhere to this format:
+```text
+ITEM_TYPE|ITEM_NAME|ITEM_DESCRIPTION|QUANTITY|ITEM_COST_PRICE|TOTAL_UNITS_PURCHASED|ITEM_THRESHOLD|ITEM_EXPIRATION_DATE|ITEM_SALE_PRICE|TOTAL_UNITS_SOLD|
+```
+
+If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), replace its value with a whitespace.
+
 ## Glossary
 
 ### Bash
@@ -391,5 +536,4 @@ A computer program that provides a text-based interface and environment for user
 A means of interacting with a computer through keyboard typed lines of text, also known as commands. This is in contrast to the currently more popular graphical user interface (GUI), which uses visual elements that users can directly manipulate to perform their desired actions.
 
 ### Java
-From Wikipedia:
-> Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.
+Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.

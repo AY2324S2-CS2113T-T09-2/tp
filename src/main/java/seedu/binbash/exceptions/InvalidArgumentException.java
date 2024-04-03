@@ -1,10 +1,10 @@
 package seedu.binbash.exceptions;
 
 /**
- * Represents an argument-specific error that occurred during BinBash execution.
- * Used when User input does not contain valid arguments (e.g., provided list index is out of bounds).
+ * Represents a command-specific error that occurred during BinBash execution.
+ * Used when unsupported or mistyped commands are passed in by the User.
  */
-public class InvalidArgumentException extends InvalidCommandException {
+public class InvalidArgumentException extends BinBashException {
 
     /**
      * @param errorMessage A descriptive error message detailing the cause of the exception.
