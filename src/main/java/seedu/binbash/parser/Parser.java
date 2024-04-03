@@ -9,7 +9,6 @@ import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
 import seedu.binbash.exceptions.BinBashException;
-import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.exceptions.InvalidFormatException;
 
@@ -19,8 +18,6 @@ import org.jline.builtins.Completers.OptDesc;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Parser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");

@@ -10,7 +10,6 @@ import org.jline.builtins.Completers.OptDesc;
 import seedu.binbash.command.UpdateCommand;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
