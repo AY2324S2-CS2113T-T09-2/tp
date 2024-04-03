@@ -16,10 +16,17 @@ public class RestockCommand extends Command{
                     + "n/(?<itemName>.+?)(?=q/)"
                     + "q/(?<restockQuantity>.+)"
     );
-    private static final BinBashLogger binBashLogger = new BinBashLogger(RestockCommand.class.getName());
-    private final String itemName;
-    private final int restockQuantity;
+    private String itemName;
+    private int restockQuantity;
+    private int index;
+    private boolean isIndex = false;
 
+    /**
+     * Creates a new RestockCommand with the specified item name and restock quantity.
+     *
+     * @param itemName The name of the item to restock.
+     * @param restockQuantity The quantity by which to restock the item.
+     */
     public RestockCommand(String itemName, int restockQuantity) {
         this.itemName = itemName;
         this.restockQuantity = restockQuantity;
@@ -32,12 +39,53 @@ public class RestockCommand extends Command{
         ));
     }
 
+    /**
+     * Creates a new RestockCommand with the specified index and restock quantity.
+     *
+     * @param index The index of the item to restock.
+     * @param restockQuantity The quantity by which to restock the item.
+     */
+    public RestockCommand(int index, int restockQuantity) {
+        commandLogger = new BinBashLogger(RestockCommand.class.getName());
+        this.index = index;
+        this.restockQuantity = restockQuantity;
+
+        commandLogger.info(String.format(
+                "Creating Restock Command... index: %d, restockQuantity: %d",
+                index,
+                restockQuantity
+        ));
+    }
+
+    /**
+     * Marks this RestockCommand as using an index instead of an item name.
+     */
+    public void setIsIndex() {
+        this.isIndex = true;
+    }
+
     @Override
     public boolean execute(ItemList itemList) {
-        try {
-            executionUiOutput = itemList.sellOrRestockItem(itemName, restockQuantity, COMMAND);
-        } catch (InvalidArgumentException e) {
-            executionUiOutput = e.getMessage();
+        if (isIndex) {
+            if (index <= 0 || index > itemList.getItemCount()) {
+                commandLogger.info("Index entered is out of bounds");
+                executionUiOutput = "Index entered is out of bounds!";
+                return true;
+            }
+            assert index > 0 && index <= itemList.getItemCount();
+            commandLogger.info("Restock identifier is detected as an index");
+            try {
+                executionUiOutput = itemList.sellOrRestockItem(index, restockQuantity, COMMAND);
+            } catch (InvalidArgumentException e) {
+                executionUiOutput = e.getMessage();
+            }
+        } else {
+            commandLogger.info("Restock identifier is detected as an item name");
+            try {
+                executionUiOutput = itemList.sellOrRestockItem(itemName, restockQuantity, COMMAND);
+            } catch (InvalidArgumentException e) {
+                executionUiOutput = e.getMessage();
+            }
         }
         hasToSave = true;
         return true;
