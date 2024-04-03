@@ -6,7 +6,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.TypeHandler;
 import seedu.binbash.command.AddCommand;
-import seedu.binbash.command.UpdateCommand;
 import seedu.binbash.exceptions.InvalidArgumentException;
 
 import java.time.format.DateTimeFormatter;
