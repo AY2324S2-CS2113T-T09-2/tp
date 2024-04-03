@@ -316,21 +316,14 @@ The design of `DeleteCommand` is such that it encapsulates the delete operation,
 
 Additionally, the decision to use two constructors promotes the Single Responsibility Principle, as each constructor's logic is tailored to the type of deletion it handles.
 
-### [Proposed] Search by universal fields
+### Search command
 
-#### Proposed Implementation
-
-This feature redefines our current Search command to allow searching by attributes of class `Item` and not just its name. An example usage scenario is as such:
-
-The user executes the following
-
-```console
-$ search -d battery -e 2w --match 3
-```
-
-The arguments are then parsed in turn, stored in the filter for the method *SearchItem()* in `ItemList` and filtered to return an ArrayList of at most *match* items.
-
-This return value can be printed to the user as per pre-existing *print()* methods.
+[!SearchAssistantSequenceDiagram](images/SearchAssistantSequenceDiagram.png)
+The search command calls on methods in the SearchAssistant class to perform queries.
+[!SearchAssistantReferenceFrameDiagram](images/SearchAssistantReferenceFrameDiagram.png)
+Each method searches through a corresponding field. If the argument to this method call is found to be a certain default value (MIN/MAX values for numerical arguments and empty strings for string arguments), searching through this field is skipped.
+It relies on the SearchAssistant having the full item list to search through, which is guaranteed by ItemList's setFoundItems() call.
+After obtaining the list of found items, it then uses printList to convert this list into a user friendly string.
 
 ### Logging
 
