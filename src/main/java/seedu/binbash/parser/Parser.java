@@ -95,16 +95,20 @@ public class Parser {
     private AddCommand parseAddCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return addCommandParser.parse(commandArgs);
-        } catch (ParseException e) {
+        } catch (InvalidArgumentException e) {
             throw new InvalidFormatException(e.getMessage());
+        } catch (ParseException e) {
+            throw new InvalidFormatException("Please enter a valid number.");
         }
     }
 
     private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return updateCommandParser.parse(commandArgs);
-        } catch (ParseException e) {
+        } catch (InvalidArgumentException e) {
             throw new InvalidFormatException(e.getMessage());
+        } catch (ParseException e) {
+            throw new InvalidFormatException("Please enter a valid number.");
         }
     }
 
