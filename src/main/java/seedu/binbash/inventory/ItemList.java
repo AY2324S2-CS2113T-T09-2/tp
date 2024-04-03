@@ -20,6 +20,11 @@ import java.util.ArrayList;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * Represents a list of items in the inventory. This class provides methods to manage and interact
+ * with the inventory, such as adding, updating, and deleting items, as well as calculating financial
+ * metrics like total cost and revenue.
+ */
 public class ItemList {
     private static final BinBashLogger logger = new BinBashLogger(ItemList.class.getName());
     private double totalRevenue;
@@ -30,19 +35,22 @@ public class ItemList {
 
     public ItemList(ArrayList<Item> itemList) {
         this.itemList = itemList;
-        this.sortedOrder = new ArrayList<Integer>();
+        this.sortedOrder = initializeSortedOrder(itemList);
         this.totalRevenue = 0;
         this.totalCost = 0;
         searchAssistant = new SearchAssistant();
     }
 
+    /**
+     * Calculates and returns the total revenue generated from all retail items in the inventory.
+     *
+     * @return the total revenue.
+     */
     public double getTotalRevenue() {
         double totalRevenue = 0;
 
         for (Item item: itemList) {
             if (item instanceof RetailItem) {
-                // Downcast made only after checking if item is a RetailItem (and below) object.
-                // TODO: Add an assert statement to verify code logic.
                 RetailItem retailItem = (RetailItem) item;
                 totalRevenue += (retailItem.getTotalUnitsSold() * retailItem.getItemSalePrice());
             }
@@ -51,6 +59,11 @@ public class ItemList {
         return totalRevenue;
     }
 
+    /**
+     * Calculates and returns the total cost incurred from purchasing all items in the inventory.
+     *
+     * @return the total cost.
+     */
     public double getTotalCost() {
         double totalCost = 0;
 
@@ -61,6 +74,11 @@ public class ItemList {
         return totalCost;
     }
 
+    /**
+     * Returns a formatted string displaying the total cost, total revenue, and net profit.
+     *
+     * @return the profit margin metrics as a string.
+     */
     public String getProfitMargin() {
         double totalCost = getTotalCost();
         double totalRevenue = getTotalRevenue();
@@ -77,23 +95,65 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Returns the SearchAssistant object bound to the ItemList instance.
+     *
+     * @return The SearchAssistant object bound to this ItemList instance.
+     */
     public SearchAssistant getSearchAssistant() {
         searchAssistant.setFoundItems(itemList);
         return searchAssistant;
     }
 
+    /**
+     * Returns the List that contains the Items stored in the ItemList.
+     *
+     * @return A List containing Items stored in the ItemList.
+     */
     public List<Item> getItemList() {
         return itemList;
     }
 
+    /**
+     * Returns the number of Items in the ItemList.
+     *
+     * @return The number of Items in the ItemList.
+     */
     public int getItemCount() {
         return itemList.size();
     }
 
+    /**
+     * Returns the number of Items in the sorted ItemList.
+     *
+     * @return the number of Items in the sorted ItemList.
+     */
+    public int getSortedItemCount() {
+        return sortedOrder.size();
+    }
+
+    /**
+     * Returns the ArrayList containing the sorted indexes of items in the ItemList.
+     *
+     * @return the ArrayList containing the sorted indexes of items in the ItemList.
+     */
     public ArrayList<Integer> getSortedOrder() {
         return sortedOrder;
     }
 
+    /**
+     * Adds an Item to the ItemList.
+     *
+     * @param itemType A String denoting the type of Item to be added. Can be "retail" or "operational".
+     * @param itemName The name of the Item to be added.
+     * @param itemDescription The description of the Item to be added.
+     * @param itemQuantity The quantity of the Item to be added.
+     * @param itemExpirationDate The expiration date of the Item to be added.
+     * @param itemSalePrice The sale price of the Item to be added.
+     * @param itemCostPrice The cost price of the Item to be added.
+     * @param itemThreshold The quantity threshold of the Item to be added.
+     * @return The result String to indicate that a new Item was added.
+     */
     public String addItem(String itemType, String itemName, String itemDescription, int itemQuantity,
                           LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice, int itemThreshold) {
         Item item;
@@ -124,10 +184,50 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Updates an Item in the ItemList by its name.
+     *
+     * @param itemName The name of the item to be updated.
+     * @param itemDescription The new description of the item to be updated.
+     * @param itemQuantity The new quantity of the item to be updated.
+     * @param itemExpirationDate The new expiration date of the item to be updated.
+     * @param itemSalePrice The new sale price of the item to be updated.
+     * @param itemCostPrice The new cost price of the item to be updated.
+     * @param itemThreshold The new quantity threshold of the item to be updated.
+     * @return The result String indicating that the given item was updated.
+     * @throws InvalidCommandException If invalid parameters are provided.
+     */
     public String updateItemDataByName (String itemName, String itemDescription, int itemQuantity,
                                   LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
                                   int itemThreshold) throws InvalidCommandException {
         Item item = findItemByName(itemName);
+
+        updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
+                itemThreshold);
+
+        String output = "I have updated your item information. Do check the following if it is correct."
+                + System.lineSeparator() + System.lineSeparator() + item;
+        return output;
+    }
+
+    /**
+     * Updates an Item in the ItemList by its index in the inner List.
+     *
+     * @param index The index of the Item in the inner List.
+     * @param itemDescription The new description of the item to be updated.
+     * @param itemQuantity The new quantity of the item to be updated.
+     * @param itemExpirationDate The new expiration date of the item to be updated.
+     * @param itemSalePrice The new sale price of the item to be updated.
+     * @param itemCostPrice The new cost price of the item to be updated.
+     * @param itemThreshold The new quantity threshold of the item to be updated.
+     * @return The result String indicating that the given item was updated.
+     * @throws InvalidCommandException If invalid parameters are provided.
+     */
+    public String updateItemDataByIndex (int index, String itemDescription, int itemQuantity,
+                                  LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
+                                  int itemThreshold) throws InvalidCommandException {
+        //Item item = itemList.get(index - 1);
+        Item item = itemList.get(sortedOrder.get(index - 1));
 
         updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
                 itemThreshold);
@@ -137,19 +237,10 @@ public class ItemList {
         return output;
     }
 
-    public String updateItemDataByIndex (int index, String itemDescription, int itemQuantity,
-                                  LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
-                                  int itemThreshold) throws InvalidCommandException {
-        Item item = itemList.get(index - 1);
-
-        updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
-                itemThreshold);
-
-        String output = "I have updated the your item information. Do check the following if it is correct."
-                + System.lineSeparator() + System.lineSeparator() + item;;
-        return output;
-    }
-
+    /**
+     * Private helper method to update an Item with the provided parameters.
+     * Calls other private helpers to update individual attributes.
+     */
     private void updateItemData(Item item, String itemDescription, int itemQuantity, LocalDate itemExpirationDate,
                                 double itemSalePrice, double itemCostPrice, int itemThreshold)
             throws InvalidCommandException {
@@ -161,20 +252,20 @@ public class ItemList {
         updateItemThreshold(item, itemThreshold);
     }
 
-    public void updateItemDescription(Item item, String itemDescription) {
+    private void updateItemDescription(Item item, String itemDescription) {
         if (itemDescription != null) {
             logger.info("Attempting to update item description");
             item.setItemDescription(itemDescription);
         }
     }
-    public void updateItemQuantity(Item item, int itemQuantity) {
+    private void updateItemQuantity(Item item, int itemQuantity) {
         if (itemQuantity != Integer.MIN_VALUE) {
             logger.info("Attempting to update item quantity");
             item.setItemQuantity(itemQuantity);
         }
     }
 
-    public void updateItemExpirationDate(Item item, LocalDate itemExpirationDate) throws InvalidCommandException {
+    private void updateItemExpirationDate(Item item, LocalDate itemExpirationDate) throws InvalidCommandException {
         if (itemExpirationDate != LocalDate.MIN) {
             logger.info("Attempting to update item expiration date");
             if (item instanceof PerishableOperationalItem) {
@@ -186,7 +277,7 @@ public class ItemList {
             }
         }
     }
-    public void updateItemSalePrice(Item item, double itemSalePrice) {
+    private void updateItemSalePrice(Item item, double itemSalePrice) {
 
         if (itemSalePrice != Double.MIN_VALUE) {
             logger.info("Attempting to update item sale price");
@@ -196,29 +287,47 @@ public class ItemList {
         }
     }
 
-    public void updateItemCostPrice(Item item, double itemCostPrice) {
+    private void updateItemCostPrice(Item item, double itemCostPrice) {
         if (itemCostPrice != Double.MIN_VALUE) {
             logger.info("Attempting to update item cost price");
             item.setItemCostPrice(itemCostPrice);
         }
     }
 
-    public void updateItemThreshold(Item item, int itemThreshold) {
+    private void updateItemThreshold(Item item, int itemThreshold) {
         if (itemThreshold != Integer.MIN_VALUE) {
             logger.info("Attempting to update item threshold");
             item.setItemThreshold(itemThreshold);
         }
     }
 
+    /**
+     * Finds an Item in the ItemList by its name.
+     *
+     * @param itemName The name of the Item to be found.
+     * @return The Item with the given name.
+     * @throws InvalidCommandException If an Item with the provided name does not exist in the ItemList.
+     */
     public Item findItemByName(String itemName) throws InvalidCommandException {
-        for (Item item : itemList) {
-            if (item.getItemName().trim().equals(itemName.trim())) {
-                return item;
+        Item currentItem;
+        for (int i = 0; i < sortedOrder.size(); i++) {
+            currentItem = itemList.get(sortedOrder.get(i));
+            if (currentItem.getItemName().trim().equals(itemName)) {
+                return currentItem;
             }
         }
         throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
     }
 
+    /**
+     * Sells or Restocks an Item.
+     *
+     * @param itemName The name of the Item to be sold/restocked.
+     * @param itemQuantity The quantity to be sold/restocked.
+     * @param command A string representing the type of operation to be done.
+     * @return A String showing the result of the sell/restock operation.
+     * @throws InvalidArgumentException If provided item quantity is invalid (out of bounds).
+     */
     public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidArgumentException {
         String output = "Sorry, I can't find the item you are looking for.";
         String alertText = "";
@@ -264,6 +373,12 @@ public class ItemList {
         return output;
     }
 
+    /**
+     * Generates an alert that the quantity for an Item has fallen below its given threshold.
+     *
+     * @param item The Item to be flagged out.
+     * @return A String result which indicates that the Item's quantity has fallen below its threshold.
+     */
     public String alertItemQuantity(Item item) {
         item.setAlert(true);
         String output = System.lineSeparator() + System.lineSeparator() + "Oh no! Your item is running low!";
@@ -502,6 +617,23 @@ public class ItemList {
         }
     }
 
+    private ArrayList<Integer> initializeSortedOrder(List<Item> itemList) {
+        logger.info("Generating initial sortedOrder...");
+
+        ArrayList<Integer> sortedOrder = new ArrayList<>();
+        for (int i = 0; i < itemList.size(); i++) {
+            sortedOrder.add(i);
+        }
+
+        return sortedOrder;
+    }
+
+    /**
+     * Deprecated.
+     * Returns the String representation of the ItemList.
+     *
+     * @return The String representation of the ItemList.
+     */
     @Override
     public String toString() {
         return itemList.toString();
