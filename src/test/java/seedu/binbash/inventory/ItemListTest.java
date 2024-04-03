@@ -3,7 +3,11 @@ package seedu.binbash.inventory;
 import org.junit.jupiter.api.Test;
 
 import seedu.binbash.exceptions.InvalidCommandException;
-import seedu.binbash.item.*;
+import seedu.binbash.item.Item;
+import seedu.binbash.item.OperationalItem;
+import seedu.binbash.item.PerishableOperationalItem;
+import seedu.binbash.item.PerishableRetailItem;
+import seedu.binbash.item.RetailItem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -122,7 +126,13 @@ class ItemListTest {
     @Test
     public void updateItemDataByName_validUpdates_success() throws Exception {
         ArrayList<Item> items = new ArrayList<>();
-        RetailItem testItem = new RetailItem("Test Item", "A test item", 10, 20.0, 15.0, 5);
+        RetailItem testItem = new RetailItem(
+                "Test Item",
+                "A test item",
+                10,
+                20.0,
+                15.0,
+                5);
         items.add(testItem);
         ItemList itemList = new ItemList(items);
 
@@ -133,7 +143,14 @@ class ItemListTest {
         double newCostPrice = 18.0;
         int newThreshold = 7;
 
-        String result = itemList.updateItemDataByName("Test Item", newDescription, newQuantity, newExpirationDate, newSalePrice, newCostPrice, newThreshold);
+        String result = itemList.updateItemDataByName(
+                "Test Item",
+                newDescription,
+                newQuantity,
+                newExpirationDate,
+                newSalePrice,
+                newCostPrice,
+                newThreshold);
 
         RetailItem updatedItem = (RetailItem) itemList.getItemList().get(0);
 
@@ -147,12 +164,24 @@ class ItemListTest {
     @Test
     public void updateItemDataByName_nonExistingItem_throwsException() {
         ArrayList<Item> items = new ArrayList<>();
-        RetailItem testItem = new RetailItem("Test Item", "A test item", 10, 20.0, 15.0, 5);
+        RetailItem testItem = new RetailItem(
+                "Test Item",
+                "A test item",
+                10,
+                20.0,
+                15.0,
+                5);
         items.add(testItem);
         ItemList itemList = new ItemList(items);
 
         Exception exception = assertThrows(Exception.class, () -> {
-            itemList.updateItemDataByName("Non-existing Item", "New description", 10, LocalDate.MIN, 30.0, 25.0, 5);
+            itemList.updateItemDataByName(
+                    "Non-existing Item",
+                    "New description",
+                    10, LocalDate.MIN,
+                    30.0,
+                    25.0,
+                    5);
         });
 
         assertEquals("Item with name 'Non-existing Item' not found.", exception.getMessage());
@@ -161,7 +190,13 @@ class ItemListTest {
     @Test
     public void updateItemDataByIndex_validUpdates_success() throws Exception {
         ArrayList<Item> items = new ArrayList<>();
-        RetailItem testItem = new RetailItem("Test Item", "A test item", 10, 20.0, 15.0, 5);
+        RetailItem testItem = new RetailItem(
+                "Test Item",
+                "A test item",
+                10,
+                20.0,
+                15.0,
+                5);
         items.add(testItem);
         ItemList itemList = new ItemList(items);
 
@@ -172,7 +207,14 @@ class ItemListTest {
         double newCostPrice = 18.0;
         int newThreshold = 7;
 
-        String result = itemList.updateItemDataByIndex(1, newDescription, newQuantity, newExpirationDate, newSalePrice, newCostPrice, newThreshold);
+        String result = itemList.updateItemDataByIndex(
+                1,
+                newDescription,
+                newQuantity,
+                newExpirationDate,
+                newSalePrice,
+                newCostPrice,
+                newThreshold);
 
         RetailItem updatedItem = (RetailItem) itemList.getItemList().get(0);
 
@@ -186,21 +228,49 @@ class ItemListTest {
     @Test
     void updateItemDataByName_invalidItemName_throwsException() {
         ItemList itemList = new ItemList(new ArrayList<>());
-        assertThrows(InvalidCommandException.class, () -> itemList.updateItemDataByName("Nonexistent", null, Integer.MIN_VALUE, LocalDate.MIN, Double.MIN_VALUE, Double.MIN_VALUE, Integer.MIN_VALUE));
+        assertThrows(InvalidCommandException.class, () -> itemList.updateItemDataByName(
+                "Nonexistent",
+                null,
+                Integer.MIN_VALUE,
+                LocalDate.MIN,
+                Double.MIN_VALUE,
+                Double.MIN_VALUE,
+                Integer.MIN_VALUE));
     }
 
     @Test
     void updateItemDataByIndex_invalidItemIndex_throwsException() {
         ItemList itemList = new ItemList(new ArrayList<>());
-        assertThrows(IndexOutOfBoundsException.class, () -> itemList.updateItemDataByIndex(3, null, Integer.MIN_VALUE, LocalDate.MIN, Double.MIN_VALUE, Double.MIN_VALUE, Integer.MIN_VALUE));
+        assertThrows(IndexOutOfBoundsException.class, () -> itemList.updateItemDataByIndex(
+                3,
+                null,
+                Integer.MIN_VALUE,
+                LocalDate.MIN,
+                Double.MIN_VALUE,
+                Double.MIN_VALUE,
+                Integer.MIN_VALUE));
     }
 
     @Test
     void updateItemDataByName_noChanges_noChangesMade() throws InvalidCommandException {
         ItemList itemList = new ItemList(new ArrayList<>());
-        itemList.addItem("retail", "Item1", "Description1", 10, LocalDate.now(), 20.0, 10.0, 5);
+        itemList.addItem(
+                "retail",
+                "Item1",
+                "Description1",
+                10, LocalDate.now(),
+                20.0,
+                10.0,
+                5);
         Item originalItem = itemList.findItemByName("Item1");
-        itemList.updateItemDataByName("Item1", null, Integer.MIN_VALUE, LocalDate.MIN, Double.MIN_VALUE, Double.MIN_VALUE, Integer.MIN_VALUE);
+        itemList.updateItemDataByName(
+                "Item1",
+                null,
+                Integer.MIN_VALUE,
+                LocalDate.MIN,
+                Double.MIN_VALUE,
+                Double.MIN_VALUE,
+                Integer.MIN_VALUE);
         Item updatedItem = itemList.findItemByName("Item1");
         assertEquals(originalItem.toString(), updatedItem.toString());
     }
