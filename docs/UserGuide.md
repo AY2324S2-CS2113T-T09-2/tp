@@ -17,6 +17,8 @@ Our long awaited first release adds everything you would expect of an inventory 
 * Listing your entire inventory
 * and more (head to [Features](#features) to find out!)
 
+---
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Table of Contents](#table-of-contents)
@@ -55,6 +57,8 @@ thus providing you with valuable insight on the sales velocity of items in your 
 This guide will walk you through each feature, providing clear instructions and examples to ensure that you 
 can make the most out of BinBash. Let's get your inventory organized efficiently and effectively!
 
+---
+
 ## How to Use this Guide
 
 Throughout the course of this guide we will describe the various inventory management capabilities BinBash is capable of, and how you might perform them using keyboard typed commands.
@@ -69,6 +73,8 @@ In particular, we suggest that you take note of the [command format](#notes-on-t
 
 If you consider yourself a power user, feel free to jump to the [Command Summary](#command-summary) section. 
 However, if you ever need more clarification on the features provided by a specific command, do head over to the [Features](#features) section, as detailed explanations of each command will be provided there.
+
+---
 
 ## Getting Started
 
@@ -117,6 +123,8 @@ Have problems loading up BinBash? Fret not, here's how to troubleshoot some of t
    If you encounter an error about not being able to create or read/write from the data directory or file, this usually means there's a permissions issue on your system. Here's how to handle it:
     - **Check Permissions**: Ensure that BinBash has the right permissions to access the folders it needs. Right-click on the directory and check its properties to make sure reading and writing are allowed.
 
+---
+
 ## Features
 
 ### Notes on the Command format
@@ -162,6 +170,8 @@ identify and differentiate the information that you give to BinBash. The followi
 > - The flags can be placed in any order. There is no specific order that you have to abide by.
 > - Words in `UPPER_CASE` are the arguments that are meant to be supplied by you. 
 > For example, in `add -n ITEM_NAME`, `ITEM_NAME` would represent the name of the item you are adding (e.g., `add -n apple`).
+
+---
 
 ### Adding an item: `add`
 
@@ -297,6 +307,8 @@ Examples:
    -------------------------------------------------------------
    ```
 
+---
+
 ### Searching for an item: `search`
 
 > This allows you to search for items in your inventory, filtering results through a number of user-defined fields.
@@ -325,6 +337,8 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
   Will return the first item that expires on or after 11 November 2023.
 - `search -q 50.. -e 17.09.2023..23.11.2023`
   Will return all items with current quantity at or above 50 and that expire between 17 September and 23 November 2023 (inclusive).
+
+---
 
 ### Listing current inventory: `list`
 
@@ -406,6 +420,8 @@ After using `list -p`, the sorted list will be:
 - Item B, Profit: $7
 - Item A, Profit: $5
 
+---
+
 ### Selling an item: `sell`
 
 > This allows you to decrement the quantity of an item after it has been sold.
@@ -421,6 +437,8 @@ Examples:
 - `sell -n oranges -q 20` This will deduct the quantity of "oranges" in your inventory list by 20.
 - `sell -n lego bricks -q 219` This will deduct the quantity of "lego bricks" in your inventory list by 219.
 
+---
+
 ### Restocking an item: `restock`
 
 > This allows you to increment the quantity of an item after it has been restocked.
@@ -433,6 +451,8 @@ Examples:
 
 - `restock -n apples -q 50` This will add the quantity of "apples" in your inventory list by 50.
 - `restock -n kaya spread -q 35` This will add the quantity of "kaya spread" in your inventory list by 35.
+
+---
 
 ### Updating an item: `update`
 
@@ -485,7 +505,7 @@ Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and 
 > want to update.
 > - There must be a minimum of one flag used, excluding the `-n` flag.
 
-
+---
 
 ### Deleting an item: `delete`
 
@@ -519,6 +539,8 @@ Examples:
 - `list` followed by `delete -n cookie` Deletes the first item named "cookie".
 - `list` followed `delete -n tissue paper` Deletes the first item named "tissue paper".
 
+---
+
 ### Calculating the total profit: `profit`
 
 > This command allows you to view the total profit that you've earned, based on the revenue and cost of items in your inventory.
@@ -533,6 +555,7 @@ Total profit: $6907.40
 
 -------------------------------------------------------------
 ```
+---
 
 ### Exiting the application: `bye`
 
@@ -543,6 +566,8 @@ After a long day at work, it's time to take a rest! You can safely quit the appl
 Format: `bye`
 
 > :information_source: BinBash will save the state of your current inventory, and you can always come back to it later.
+
+---
 
 ### Saving and Loading data
 
@@ -556,6 +581,8 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 > 
 > We highly recommended that you take a backup of your save file before editing it.
 
+---
+
 ## Command Summary
 
 | **Commands** | **Usage**                                                                                        |
@@ -566,6 +593,8 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 | **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME` <br/>                                                   |
 | **profit**   | `profit`                                                                                         |
 | **bye**      | `bye`                                                                                            |
+
+---
 
 ## FAQ
 
@@ -599,6 +628,8 @@ ITEM_TYPE|ITEM_NAME|ITEM_DESCRIPTION|QUANTITY|ITEM_COST_PRICE|TOTAL_UNITS_PURCHA
 ```
 
 If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), replace its value with a whitespace.
+
+---
 
 ## Glossary
 
