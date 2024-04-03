@@ -210,7 +210,7 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 > expiry date.
 
 > Note:
-> - Index of the items listed, whether in a sorted list or unsorted list, can be used as reference for `delete` and `update` commands.
+> - Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for `delete` and `update` commands.
 
 #### List inventory unsorted
 
