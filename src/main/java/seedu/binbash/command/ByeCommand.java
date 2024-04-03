@@ -1,16 +1,18 @@
 package seedu.binbash.command;
 
-import seedu.binbash.ItemList;
+import seedu.binbash.inventory.ItemList;
+import seedu.binbash.logger.BinBashLogger;
 
 public class ByeCommand extends Command {
-    public ByeCommand(ItemList itemList) {
-        super(itemList);
-        commandLogger.fine("Creating Bye Command...");
+    public ByeCommand() {
+        commandLogger = new BinBashLogger(ByeCommand.class.getName());
+        commandLogger.info("Creating Bye Command...");
     }
 
     @Override
-    public boolean execute() {
-        executionUiOutput = "";
+    public boolean execute(ItemList itemList) {
+        executionUiOutput = "Bye!";
+        hasToSave = true;
         return true;
     }
 }
