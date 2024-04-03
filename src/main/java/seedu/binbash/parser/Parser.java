@@ -8,9 +8,7 @@ import seedu.binbash.command.UpdateCommand;
 import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
-import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
-import seedu.binbash.exceptions.InvalidFormatException;
 
 import org.apache.commons.cli.ParseException;
 import org.jline.builtins.Completers.OptDesc;
@@ -54,7 +52,7 @@ public class Parser {
         return allCommandsOptionDescriptions;
     }
 
-    public Command parseCommand(String userInput) throws BinBashException {
+    public Command parseCommand(String userInput) throws InvalidCommandException {
         String[] tokens = userInput.trim().split("\\s+"); // Tokenize user input
         String commandString = tokens[0].toLowerCase();
         String[] commandArgs = Arrays.copyOfRange(tokens, 1, tokens.length); // Takes only options and arguments
@@ -85,59 +83,59 @@ public class Parser {
         }
     }
 
-    private DeleteCommand parseDeleteCommand(String[] commandArgs) throws InvalidFormatException {
+    private DeleteCommand parseDeleteCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return deleteCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
-    private AddCommand parseAddCommand(String[] commandArgs) throws InvalidFormatException {
+    private AddCommand parseAddCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return addCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
-    private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidFormatException {
+    private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return updateCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
-    private Command parseRestockCommand(String[] commandArgs) throws InvalidFormatException {
+    private Command parseRestockCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return restockCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
-    private Command parseSellCommand(String[] commandArgs) throws InvalidFormatException {
+    private Command parseSellCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return sellCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
-    private SearchCommand parseSearchCommand(String[] commandArgs) throws InvalidFormatException {
+    private SearchCommand parseSearchCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return searchCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
-    private ListCommand parseListCommand(String[] commandArgs) throws InvalidFormatException {
+    private ListCommand parseListCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return listCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 }

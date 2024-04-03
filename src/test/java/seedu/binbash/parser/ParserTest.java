@@ -13,7 +13,6 @@ import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ByeCommand;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
-import seedu.binbash.exceptions.InvalidFormatException;
 import seedu.binbash.item.Item;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -49,7 +48,7 @@ public class ParserTest {
     @Test
     public void parseAddCommand_multipleItemTypeOptions_throwsInvalidCommandException() {
         assertThrows(
-                InvalidFormatException.class,
+                InvalidCommandException.class,
                 () -> parser.parseCommand("add -re -op -n Test Item -d Test Description -c 0.00")
         );
     }
@@ -110,12 +109,12 @@ public class ParserTest {
     }
 
     @Test
-    public void testParseCommand_invalidAddCommand_throwsInvalidFormatException() {
-        assertThrows(InvalidFormatException.class, () -> parser.parseCommand("add invalid format"));
+    public void testParseCommand_invalidAddCommand_throwsInvalidCommandException() {
+        assertThrows(InvalidCommandException.class, () -> parser.parseCommand("add invalid format"));
     }
 
     @Test
-    public void testParseCommand_invalidSearchCommand_throwsInvalidFormatException() {
-        assertThrows(InvalidFormatException.class, () -> parser.parseCommand("search"));
+    public void testParseCommand_invalidSearchCommand_throwsInvalidCommandException() {
+        assertThrows(InvalidCommandException.class, () -> parser.parseCommand("search"));
     }
 }
