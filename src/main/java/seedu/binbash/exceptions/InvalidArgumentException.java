@@ -2,7 +2,7 @@ package seedu.binbash.exceptions;
 
 /**
  * Represents a command-specific error that occurred during BinBash execution.
- * Used when unsupported or mistyped commands are passed in by the User.
+ * Used when improper arguments are passed in by the User.
  */
 public class InvalidArgumentException extends BinBashException {
 
