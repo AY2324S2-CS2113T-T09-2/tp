@@ -1,5 +1,6 @@
 package seedu.binbash.command;
 
+import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.inventory.ItemList;
 
@@ -30,7 +31,11 @@ public class RestockCommand extends Command{
 
     @Override
     public boolean execute(ItemList itemList) {
-        executionUiOutput = itemList.sellOrRestockItem(itemName, restockQuantity, COMMAND);
+        try {
+            executionUiOutput = itemList.sellOrRestockItem(itemName, restockQuantity, COMMAND);
+        } catch (InvalidArgumentException e) {
+            executionUiOutput = e.getMessage();
+        }
         hasToSave = true;
         return true;
     }
