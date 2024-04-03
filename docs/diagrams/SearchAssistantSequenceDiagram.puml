@@ -1,0 +1,32 @@
+@startuml
+hide footbox
+skinparam sequenceReferenceBackgroundColor white
+
+title Executing a Search Command
+
+participant "userCommand:SearchCommand" as search_command
+participant "itemList:ItemList" as item_list
+participant ":SearchAssistant" as search_assistant
+
+-> search_command : execute(itemList)
+activate search_command
+search_command -> item_list : getSearchAssistant()
+activate item_list
+
+item_list -> search_assistant : setFoundItems()
+activate search_assistant
+return searchAssistant
+return
+
+ref over search_command, search_assistant : search by item fields
+
+search_command -> search_assistant : getFoundItems(numberOfResults)
+activate search_assistant
+return foundItems
+search_command -> item_list : printList(foundItems)
+activate item_list
+return executionUiOutput
+
+return
+
+@enduml
