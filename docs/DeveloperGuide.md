@@ -283,6 +283,8 @@ The ListCommand is concerned only with the execution of the listing operation. I
 
 ### Sell item
 
+![SellSequenceDiagram](images/SellSequenceDiagram.png)
+
 API: [`SellCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/SellCommand.java)
 
 The `sell` command allows users to decrement the quantity of their item as they are being sold off. This is done by
@@ -314,6 +316,8 @@ signaling the need to persist changes to storage.
 
 ### Restock item
 
+![RestockSequenceDiagram](images/RestockSequenceDiagram.png)
+
 API: [`RestockCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/RestockCommand.java)
 
 The `restock` command allows users to increment the quantity of their item as they are being restocked. This is done by
@@ -327,6 +331,8 @@ calls the same methods from the `ItemList` class to perform the restocking opera
 ### Update item data in inventory
 
 ![UpdateSequenceDiagram](images/UpdateSequenceDiagram.png)
+
+API: [`UpdateCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/UpdateCommand.java)
 
 The `update` command allows users to modify the details of an item in the inventory. Users can update the item's,
 description, quantity, cost price, sale price, expiry date, and threshold by specifying the corresponding flags.
