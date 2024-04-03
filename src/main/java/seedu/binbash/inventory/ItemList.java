@@ -217,7 +217,7 @@ public class ItemList {
         throw new InvalidArgumentException("Item with name '" + itemName + "' not found.");
     }
 
-    public String sellOrRestockItem(String itemName, int itemQuantity, String command) {
+    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidArgumentException{
         String output = "Sorry, I can't find the item you are looking for.";
         String alertText = "";
 
@@ -237,13 +237,14 @@ public class ItemList {
 
             // Selling item consists of (i) Updating itemQuantity, (ii) Updating totalUnitsSold
             } else {
-                newQuantity -= itemQuantity;
 
-                // Stinky downcast?
-                // I'm going off the assertion that only retail items (and its subclasses) can be sold.
-                // TODO: Add an assert statement to verify code logic.
+                if (newQuantity >= itemQuantity) {
+                    newQuantity -= itemQuantity;
+                } else {
+                    throw new InvalidArgumentException("You do not have enough to sell the stated quantity.");
+                }
+
                 RetailItem retailItem = (RetailItem)item;
-
                 int itemThreshold = retailItem.getItemThreshold();
                 if (newQuantity < itemThreshold) {
                     alertText = alertItemQuantity(retailItem);
