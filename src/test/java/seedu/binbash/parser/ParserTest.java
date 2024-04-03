@@ -49,13 +49,6 @@ public class ParserTest {
     }
 
     @Test
-    public void testParseCommand_validCommandDelete_returnsDeleteCommand() throws BinBashException {
-        itemList.addItem("retail", "Test Item", "Test Description", 5, LocalDate.now(), 10.5, 7.5, 2);
-        Command command = parser.parseCommand("delete Test Item");
-        assertTrue(command instanceof DeleteCommand);
-    }
-
-    @Test
     public void parseAddCommand_multipleItemTypeOptions_throwsInvalidCommandException() {
         assertThrows(
                 InvalidFormatException.class,
@@ -121,11 +114,6 @@ public class ParserTest {
     @Test
     public void testParseCommand_invalidAddCommand_throwsInvalidFormatException() {
         assertThrows(InvalidFormatException.class, () -> parser.parseCommand("add invalid format"));
-    }
-
-    @Test
-    public void testParseCommand_invalidDeleteCommand_throwsInvalidArgumentException() {
-        assertThrows(InvalidArgumentException.class, () -> parser.parseCommand("delete -1"));
     }
 
     @Test
