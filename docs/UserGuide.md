@@ -318,9 +318,27 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 
 ### Listing current inventory: `list`
 
-> This allows you to list out all items that you have in your inventory list.
+> This allows you to list out all items that you have in your inventory list. 
+> You can also use this command to display your inventory list, sorted based on cost price, sale price, profit, or expiry date.
 
-**Format:** `list`
+> :information_source: Note:
+> Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for `delete` and `update` commands.
+
+#### List inventory (unsorted)
+
+Format: `list`
+
+#### List inventory (sorted based on item cost price)
+
+Format: `list -c`
+
+#### List inventory (sorted based on item sale price)
+
+Format: `list -s`
+
+#### List inventory (sorted based on item expiry date)
+
+Format: `list -e`
 
 ### Selling an item: `sell`
 
@@ -418,8 +436,8 @@ Format: `delete ITEM_INDEX`
 * Index of items can be viewed using the `list` command.
 
 Examples:
-* `delete 1` 
-* `delete 4`
+- `delete 1` Deletes the item with index of 1.
+- `delete 4` Deletes the item with index of 4.
 
 #### Deleting an item using item name
 
@@ -428,11 +446,12 @@ Format: `delete ITEM_NAME`
 * `ITEM_NAME` must be specified.
 * `ITEM_NAME` specified must be the exact name of the item.
 * If there are no items with item names matching `ITEM_NAME`, no items will be deleted.
+* If there are items with the same `ITEM_NAME`, only the first instance of item with `ITEM_NAME` will be deleted.
 * Item names of items in the inventory can be viewed using the `list` command.
 
 Examples:
-* `delete cookie`
-* `delete tissue paper`
+- `delete cookie` Deletes the first item with name of cookie.
+- `delete tissue paper` Deletes the first item with the name of tissue paper.
 
 ### Calculating the total profit: `profit`
 
@@ -471,8 +490,8 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 |--------------|--------------------------------------------------------------------------------------------------|
 | **add**      | `add n/ITEM_NAME d/ITEM_DESCRIPTION q/ITEM_QUANTITY e/EXPIRATION_DATE s/SALE_PRICE c/COST_PRICE` |
 | **search**   | `search KEYWORD`                                                                                 |
-| **list**     | `list`                                                                                           |
-| **delete**   | `delete ITEM_INDEX`                                                                              |
+| **list**     | `list` `list -c` `list -s` `list -e`                                                             |
+| **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME`                                                         |
 | **bye**      | `bye`                                                                                            |
 
 ## FAQ
