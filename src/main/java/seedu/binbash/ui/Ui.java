@@ -1,6 +1,17 @@
 package seedu.binbash.ui;
 
-import java.io.PrintStream;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.EndOfFileException;
+import org.jline.reader.UserInterruptException;
+import org.jline.builtins.Completers.OptDesc;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+
+import seedu.binbash.logger.BinBashLogger;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Ui {
     private static final String NEWLINE = System.lineSeparator();
@@ -11,14 +22,26 @@ public class Ui {
             " |____/|_|_| |_|____/ \\__,_|___/_| |_|" + NEWLINE + NEWLINE;
     private static final String WELCOME_MESSAGE = "Welcome to BinBash!";
     private static final String LINE_DIVIDER = "-------------------------------------------------------------";
+    private static final BinBashLogger UILOGGER = new BinBashLogger(Ui.class.getName());
 
-    private static TextIn inputReader;
-    private static PrintStream outputWriter;
+    private static LineReader inputReader;
     private static boolean isUserActive;
 
-    public Ui() {
-        inputReader = new TextIn();
-        outputWriter = System.out;
+    public Ui(ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions) {
+        System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
+        try {
+            Terminal userTerminal = TerminalBuilder.builder()
+                .system(true)
+                .dumb(true) // TODO: omit and catch using logger
+                .build();
+            inputReader = LineReaderBuilder.builder()
+                .terminal(userTerminal)
+                .completer(new CommandCompleter(allCommandsOptionDescriptions))
+                .build();
+        } catch (IOException e) {
+            UILOGGER.info("failed to get system terminal!");
+            throw new RuntimeException(e);
+        }
         isUserActive = true;
     }
 
@@ -32,7 +55,14 @@ public class Ui {
 
     public String readUserCommand() {
         assert isUserActive();
-        return inputReader.nextLine();
+        try {
+            String userInput = inputReader.readLine("binbash> ");
+            UILOGGER.info("received raw user input: " + userInput);
+            return userInput;
+        } catch (EndOfFileException | UserInterruptException e) {
+            UILOGGER.info("received EOF / interrupt exception");
+            return "bye";
+        }
     }
 
     public void greet() {
@@ -40,6 +70,6 @@ public class Ui {
     }
 
     public void talk(String line) {
-        outputWriter.println(LINE_DIVIDER + NEWLINE + line + NEWLINE + LINE_DIVIDER);
+        System.out.println(LINE_DIVIDER + NEWLINE + line + NEWLINE + LINE_DIVIDER);
     }
 }

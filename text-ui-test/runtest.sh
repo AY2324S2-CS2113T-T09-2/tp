@@ -8,15 +8,15 @@ cd ..
 
 cd text-ui-test
 
-# cleanup old data files
-rm data/items.txt
-rmdir data
+# clean up data and log files
+rm -rf data log
 
-java  -jar $(find ../build/libs/ -mindepth 1 -print -quit) < input.txt > ACTUAL.TXT
+java -jar $(find ../build/libs/ -mindepth 1 -print -quit) < input.txt &> ACTUAL.TXT
 
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix EXPECTED-UNIX.TXT ACTUAL.TXT
-diff EXPECTED-UNIX.TXT ACTUAL.TXT
+# compare the third line, after logger output onwards
+diff <(tail -n +3 ACTUAL.TXT) EXPECTED.TXT
 if [ $? -eq 0 ]
 then
     echo "Test passed!"
