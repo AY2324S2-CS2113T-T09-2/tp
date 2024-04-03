@@ -76,11 +76,24 @@ public class CommandOptionAdder {
         return sortSaleOption;
     }
 
+    private Option sortByProfitOption() {
+        Option sortProfitOption = Option.builder("p")
+                .hasArg(false)
+                .required(false)
+                .longOpt("profit")
+                .desc("Sort by profits earned for each item.")
+                .argName("profit")
+                .build();
+
+        return sortProfitOption;
+    }
+
     CommandOptionAdder addListTypeOptionGroup() {
         OptionGroup listTypeOptionGroup = new OptionGroup()
                 .addOption(sortByCostPriceOption())
                 .addOption(sortByExpirationDateOption())
-                .addOption(sortBySalePriceOption());
+                .addOption(sortBySalePriceOption())
+                .addOption(sortByProfitOption());
         listTypeOptionGroup.setRequired(false);
         options.addOptionGroup(listTypeOptionGroup);
         return this;

@@ -33,6 +33,8 @@ public class ListCommandParser extends DefaultParser {
             return new ListCommand(SortOptionEnum.EXPIRY);
         }  else if (commandLine.hasOption("sale")) {
             return new ListCommand(SortOptionEnum.SALE);
+        } else if (commandLine.hasOption("profit")) {
+            return new ListCommand(SortOptionEnum.PROFIT);
         } else {
             return new ListCommand();
         }

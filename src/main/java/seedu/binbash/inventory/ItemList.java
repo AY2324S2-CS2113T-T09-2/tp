@@ -2,6 +2,7 @@ package seedu.binbash.inventory;
 
 import seedu.binbash.comparators.ItemComparatorByCostPrice;
 import seedu.binbash.comparators.ItemComparatorByExpiryDate;
+import seedu.binbash.comparators.ItemComparatorByProfit;
 import seedu.binbash.comparators.ItemComparatorBySalePrice;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
@@ -420,6 +421,43 @@ public class ItemList {
         logger.info("Printing sorted list...");
         for (Item item: sortedList) {
             output += index + ". " + item.toString() + System.lineSeparator() + System.lineSeparator();
+            index++;
+        }
+
+        return output;
+    }
+
+    /**
+     * Returns a string representation of all the retail items in the list sorted by their profits.
+     * Each item's string representation is obtained by calling its `toString` method, and the profit
+     * for each item is displayed alongside it. This method is specifically for sorting retail items,
+     * which are the only items in this inventory that can generate profits.
+     *
+     * @param itemList the inventory to print, which should contain retail items.
+     * @return A concatenated string of all retail item representations in the sorted list, each on a new line,
+     *         along with their respective profits formatted to two decimal places.
+     */
+    public String printListSortedByProfit(List<Item> itemList) {
+        int index = 1;
+        String output = "";
+
+        logger.info("Sorting inventory by profits earned for each item...");
+        ArrayList<Item> sortedList = (ArrayList<Item>) itemList.stream()
+                .filter((t) -> t instanceof RetailItem)
+                .sorted(new ItemComparatorByProfit())
+                .collect(toList());
+
+        logger.info("Updating sortedOrder...");
+        updateSortedOrder(itemList, sortedList);
+
+        assert sortedOrder.size() == sortedList.size();
+
+        logger.info("Printing sorted list...");
+        for (Item item: sortedList) {
+            RetailItem retailItem = (RetailItem) item;
+            output += index + ". " + retailItem.toString() + System.lineSeparator()
+                    + String.format("\tProfit: %.2f", retailItem.getItemProfit())
+                    + System.lineSeparator() + System.lineSeparator();
             index++;
         }
 

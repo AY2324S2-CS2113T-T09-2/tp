@@ -51,4 +51,15 @@ class ListCommandParserTest {
             Assertions.fail();
         }
     }
+
+    @Test
+    void parse_profitOption_success() {
+        String[] commandArgs = {"-p"};
+        try {
+            ListCommand searchCommand = listCommandParser.parse(commandArgs);
+            Assertions.assertTrue(searchCommand instanceof ListCommand);
+        } catch (ParseException e) {
+            Assertions.fail();
+        }
+    }
 }
