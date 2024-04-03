@@ -17,6 +17,8 @@ Our long awaited first release adds everything you would expect of an inventory 
 * Listing your entire inventory
 * and more (head to [Features](#features) to find out!)
 
+---
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Table of Contents](#table-of-contents)
@@ -39,6 +41,8 @@ Our long awaited first release adds everything you would expect of an inventory 
 8. [FAQ](#faq)
 9. [Glossary](#glossary)
 
+---
+
 ## BinBash Overview
 
 Welcome to BinBash, an **Inventory Management System** designed to streamline your stock control processes. 
@@ -55,6 +59,9 @@ thus providing you with valuable insight on the sales velocity of items in your 
 This guide will walk you through each feature, providing clear instructions and examples to ensure that you 
 can make the most out of BinBash. Let's get your inventory organized efficiently and effectively!
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ## How to Use this Guide
 
 Throughout the course of this guide we will describe the various inventory management capabilities BinBash is capable of, and how you might perform them using keyboard typed commands.
@@ -69,6 +76,9 @@ In particular, we suggest that you take note of the [command format](#notes-on-t
 
 If you consider yourself a power user, feel free to jump to the [Command Summary](#command-summary) section. 
 However, if you ever need more clarification on the features provided by a specific command, do head over to the [Features](#features) section, as detailed explanations of each command will be provided there.
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ## Getting Started
 
@@ -117,18 +127,31 @@ Have problems loading up BinBash? Fret not, here's how to troubleshoot some of t
    If you encounter an error about not being able to create or read/write from the data directory or file, this usually means there's a permissions issue on your system. Here's how to handle it:
     - **Check Permissions**: Ensure that BinBash has the right permissions to access the folders it needs. Right-click on the directory and check its properties to make sure reading and writing are allowed.
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ## Features
 
 ### Notes on the Command format
 
 Before we dive into the features that BinBash has to offer, lets start with a little introduction. BinBash tracks four 
 types of items in your inventory list. They are:
- - Retail item
- - Operational Item
- - Perishable Retail Item
- - Perishable Operational Item
 
- Our commands use flags to identify and differentiate the information that you give to BinBash. The following are a 
+1. `Retail Item`: These are items that are intended for sale to customers. Retail items typically include products that are stocked and sold for profit.
+    - **Example**: A pair of sneakers up for sale.
+
+2. `Operational Item`: These items are used by the store for its daily operations but are not sold to customers.
+    - **Example**: An operational item could be a printer cartridge for a company printer.
+
+3. `Perishable Retail Item`: These are retail items that have an expiry date and need to be sold before they spoil.
+This category is crucial for businesses dealing with food products or other perishable goods.
+    - **Example**: AA perishable retail item could be a carton of milk to be sold, which has an expiry date.
+
+4. `Perishable Operational Item`: Similar to perishable retail items, these are operational items that have a limited shelf life.
+    - **Example**: A bottle of disinfectant used to sanitize the office, with an expiry date.
+
+Before we get started on learning the different commands available, it is worth nothing that our commands use flags to 
+identify and differentiate the information that you give to BinBash. The following are a 
  list of flags that you can use:
  
 - `-re` : to signify a Retail item type
@@ -152,6 +175,9 @@ types of items in your inventory list. They are:
 > - The flags can be placed in any order. There is no specific order that you have to abide by.
 > - Words in `UPPER_CASE` are the arguments that are meant to be supplied by you. 
 > For example, in `add -n ITEM_NAME`, `ITEM_NAME` would represent the name of the item you are adding (e.g., `add -n apple`).
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Adding an item: `add`
 
@@ -287,6 +313,9 @@ Examples:
    -------------------------------------------------------------
    ```
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ### Searching for an item: `search`
 
 > This allows you to search for items in your inventory, filtering results through a number of user-defined fields.
@@ -316,6 +345,9 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 - `search -q 50.. -e 17.09.2023..23.11.2023`
   Will return all items with current quantity at or above 50 and that expire between 17 September and 23 November 2023 (inclusive).
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ### Listing current inventory: `list`
 
 > This allows you to list out all items that you have in your inventory list. 
@@ -326,19 +358,78 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 
 #### List inventory (unsorted)
 
+Used to view the inventory in the order items were added:
+
 Format: `list`
 
 #### List inventory (sorted based on item cost price)
 
+Used to view the inventory based on the sale price of items.
+
 Format: `list -c`
+
+Example:
+
+- Item A, Cost Price: $5
+- Item B, Cost Price: $10
+- Item C, Cost Price: $8
+
+After using `list -c`, the sorted list, will be:
+
+- Item A, Cost Price: $5
+- Item C, Cost Price: $8
+- Item B, Cost Price: $10
 
 #### List inventory (sorted based on item sale price)
 
+Used to view the inventory based on the sale price of items
+
 Format: `list -s`
+
+Example:
+- Item A, Sale Price: $15
+- Item B, Sale Price: $12
+- Item C, Sale Price: $20
+
+After using `list -s`, the sorted list will be:
+- Item B, Sale Price: $12
+- Item A, Sale Price: $15
+- Item C, Sale Price: $20
 
 #### List inventory (sorted based on item expiry date)
 
+Used to view the inventory based on the expiry date of perishable items.
+
 Format: `list -e`
+
+Example:
+- Item A, Expiry Date: 2023-05-01
+- Item B, Expiry Date: 2023-04-15
+- Item C, Expiry Date: 2023-06-20
+
+After using `list -e`, the sorted list will be:
+- Item B, Expiry Date: 2023-04-15
+- Item A, Expiry Date: 2023-05-01
+- Item C, Expiry Date: 2023-06-20
+- 
+#### List Inventory (Sorted Based on Item Profit)
+
+Used to view the inventory based on the profit of items, in descending order:
+
+Format: `list -p`
+
+Example:
+- Item A, Profit: $5
+- Item B, Profit: $7
+- Item C, Profit: $8
+
+After using `list -p`, the sorted list will be:
+- Item C, Profit: $8
+- Item B, Profit: $7
+- Item A, Profit: $5
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Selling an item: `sell`
 
@@ -355,6 +446,9 @@ Examples:
 - `sell -n oranges -q 20` This will deduct the quantity of "oranges" in your inventory list by 20.
 - `sell -n lego bricks -q 219` This will deduct the quantity of "lego bricks" in your inventory list by 219.
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ### Restocking an item: `restock`
 
 > This allows you to increment the quantity of an item after it has been restocked.
@@ -367,6 +461,9 @@ Examples:
 
 - `restock -n apples -q 50` This will add the quantity of "apples" in your inventory list by 50.
 - `restock -n kaya spread -q 35` This will add the quantity of "kaya spread" in your inventory list by 35.
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Updating an item: `update`
 
@@ -419,7 +516,8 @@ Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and 
 > want to update.
 > - There must be a minimum of one flag used, excluding the `-n` flag.
 
-
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Deleting an item: `delete`
 
@@ -436,8 +534,8 @@ Format: `delete -i ITEM_INDEX`
 * Index of items can be viewed using the `list` command.
 
 Examples:
-- `delete -i 1` Deletes the item with index of 1.
-- `delete -i 4` Deletes the item with index of 4.
+- `list` followed by`delete -i 1` Deletes the item with index of 1.
+- `list` followed by `delete -i 4` Deletes the item with index of 4.
 
 #### Deleting an item using item name
 
@@ -450,8 +548,11 @@ Format: `delete -n ITEM_NAME`
 * Item names of items in the inventory can be viewed using the `list` command.
 
 Examples:
-- `delete -n cookie` Deletes the first item named "cookie".
-- `delete -n tissue paper` Deletes the first item named "tissue paper".
+- `list` followed by `delete -n cookie` Deletes the first item named "cookie".
+- `list` followed `delete -n tissue paper` Deletes the first item named "tissue paper".
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Calculating the total profit: `profit`
 
@@ -460,7 +561,16 @@ Examples:
 Format: `profit`
 
 This command computes the total profit by subtracting the total cost from the total revenue of all items in your inventory.
-The output will display the total profit in the format: `Total profit: $XXX.XX`
+The output will display the total profit in the format as seen below:
+```text
+-------------------------------------------------------------
+Total profit: $6907.40
+
+-------------------------------------------------------------
+```
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Exiting the application: `bye`
 
@@ -471,6 +581,9 @@ After a long day at work, it's time to take a rest! You can safely quit the appl
 Format: `bye`
 
 > :information_source: BinBash will save the state of your current inventory, and you can always come back to it later.
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Saving and Loading data
 
@@ -484,6 +597,9 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 > 
 > We highly recommended that you take a backup of your save file before editing it.
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ## Command Summary
 
 | **Commands** | **Usage**                                                                                        |
@@ -491,8 +607,12 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 | **add**      | `add n/ITEM_NAME d/ITEM_DESCRIPTION q/ITEM_QUANTITY e/EXPIRATION_DATE s/SALE_PRICE c/COST_PRICE` |
 | **search**   | `search KEYWORD`                                                                                 |
 | **list**     | `list` `list -c` `list -s` `list -e`                                                             |
-| **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME`                                                         |
+| **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME` <br/>                                                   |
+| **profit**   | `profit`                                                                                         |
 | **bye**      | `bye`                                                                                            |
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ## FAQ
 
@@ -526,6 +646,9 @@ ITEM_TYPE|ITEM_NAME|ITEM_DESCRIPTION|QUANTITY|ITEM_COST_PRICE|TOTAL_UNITS_PURCHA
 ```
 
 If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), replace its value with a whitespace.
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ## Glossary
 

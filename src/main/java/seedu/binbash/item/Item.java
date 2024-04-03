@@ -33,7 +33,13 @@ public abstract class Item {
         return itemName;
     }
 
+    /**
+     * Sets the name of the Item.
+     *
+     * @param itemName The new Item name.
+     */
     public void setItemName(String itemName) {
+        assert !itemName.isEmpty();
         this.itemName = itemName;
     }
 
@@ -46,6 +52,11 @@ public abstract class Item {
         return itemDescription;
     }
 
+    /**
+     * Sets the description of the Item.
+     *
+     * @param itemDescription The new Item description.
+     */
     public void setItemDescription(String itemDescription) {
         this.itemDescription = itemDescription;
     }
@@ -65,6 +76,7 @@ public abstract class Item {
      * @param itemQuantity The new Item quantity value.
      */
     public void setItemQuantity(int itemQuantity) {
+        assert itemQuantity >= 0;
         this.itemQuantity = itemQuantity;
     }
 
@@ -77,15 +89,32 @@ public abstract class Item {
         return itemCostPrice;
     }
 
+    /**
+     * Sets the cost price of the Item.
+     *
+     * @param itemCostPrice The new Item cost price.
+     */
     public void setItemCostPrice(double itemCostPrice) {
+        assert itemCostPrice >= 0.0;
         this.itemCostPrice = itemCostPrice;
     }
 
+    /**
+     * Returns the quantity threshold of the item.
+     *
+     * @return Integer value representing the Item quantity threshold.
+     */
     public int getItemThreshold() {
         return itemThreshold;
     }
 
-    public void setItemThreshold(Integer itemThreshold) {
+    /**
+     * Sets the quantity threshold of the Item.
+     *
+     * @param itemThreshold The new Item quantity threshold.
+     */
+    public void setItemThreshold(int itemThreshold) {
+        assert itemThreshold >= 0;
         this.itemThreshold = itemThreshold;
     }
 
@@ -104,17 +133,25 @@ public abstract class Item {
      * @param totalUnitsPurchased The number of units purchased of the Item.
      */
     public void setTotalUnitsPurchased(int totalUnitsPurchased) {
+        assert totalUnitsPurchased >= 0;
         this.totalUnitsPurchased = totalUnitsPurchased;
     }
 
-    public boolean isAlert() {
-        return isAlert;
-    }
-
+    /**
+     * Sets the isAlert status of the Item.
+     * This value determines if the Item quantity is running below its quantity threshold value.
+     *
+     * @param isAlert The new isAlert boolean value.
+     */
     public void setAlert(boolean isAlert) {
         this.isAlert = isAlert;
     }
 
+    /**
+     * Returns a String representation of the Item object.
+     *
+     * @return A String representation of the Item object.
+     */
     @Override
     public String toString() {
         return String.format("%s" + System.lineSeparator() +

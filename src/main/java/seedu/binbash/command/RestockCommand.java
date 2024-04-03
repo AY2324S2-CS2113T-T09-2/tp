@@ -6,7 +6,10 @@ import seedu.binbash.inventory.ItemList;
 
 import java.util.regex.Pattern;
 
-public class RestockCommand extends Command {
+/**
+ * Represents the execution of a restock command that will increase the quantity of an Item.
+ */
+public class RestockCommand extends Command{
     public static final String COMMAND = "restock";
     public static final Pattern COMMAND_FORMAT = Pattern.compile(
             "restock\\s+"

@@ -93,23 +93,23 @@ public class Parser {
         }
     }
 
-    private AddCommand parseAddCommand(String[] commandArgs) throws InvalidFormatException {
+    private AddCommand parseAddCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return addCommandParser.parse(commandArgs);
         } catch (InvalidArgumentException e) {
             throw new InvalidFormatException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidFormatException("Please enter a valid number.");
+            throw new InvalidCommandException("Please enter a valid number.");
         }
     }
 
-    private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidFormatException {
+    private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return updateCommandParser.parse(commandArgs);
         } catch (InvalidArgumentException e) {
             throw new InvalidFormatException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidFormatException("Please enter a valid number.");
+            throw new InvalidCommandException("Please enter a valid number.");
         }
     }
 
