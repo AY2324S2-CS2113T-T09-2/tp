@@ -427,21 +427,21 @@ Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and 
 
 #### Deleting an item using item index
 
-Format: `delete ITEM_INDEX`
+Format: `delete -i ITEM_INDEX`
 
 > :information_source: To determine the `index` of an item in your inventory, call the `list` command first, and note down the number displayed next to your item of interest.
 
 * `ITEM_INDEX` must be specified.
-* `ITEM_INDEX` specified must exist in the inventory, otherwise no item will be deleted
+* `ITEM_INDEX` specified must exist in the inventory, otherwise no item will be deleted.
 * Index of items can be viewed using the `list` command.
 
 Examples:
-- `delete 1` Deletes the item with index of 1.
-- `delete 4` Deletes the item with index of 4.
+- `delete -i 1` Deletes the item with index of 1.
+- `delete -i 4` Deletes the item with index of 4.
 
 #### Deleting an item using item name
 
-Format: `delete ITEM_NAME`
+Format: `delete -n ITEM_NAME`
 
 * `ITEM_NAME` must be specified.
 * `ITEM_NAME` specified must be the exact name of the item.
@@ -450,8 +450,8 @@ Format: `delete ITEM_NAME`
 * Item names of items in the inventory can be viewed using the `list` command.
 
 Examples:
-- `delete cookie` Deletes the first item with name of cookie.
-- `delete tissue paper` Deletes the first item with the name of tissue paper.
+- `delete -n cookie` Deletes the first item named "cookie".
+- `delete -n tissue paper` Deletes the first item named "tissue paper".
 
 ### Calculating the total profit: `profit`
 
