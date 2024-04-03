@@ -108,6 +108,10 @@ public class ItemList {
         return itemList.size();
     }
 
+    public int getSortedItemCount() {
+        return sortedOrder.size();
+    }
+
     public ArrayList<Integer> getSortedOrder() {
         return sortedOrder;
     }

@@ -2,6 +2,7 @@ package seedu.binbash.inventory;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.*;
 
 import java.time.LocalDate;
@@ -183,16 +184,24 @@ class ItemListTest {
     }
 
     @Test
-    public void updateItemDataByIndex_invalidIndex_throwsException() {
-        ArrayList<Item> items = new ArrayList<>();
-        RetailItem testItem = new RetailItem("Test Item", "A test item", 10, 20.0, 15.0, 5);
-        items.add(testItem);
-        ItemList itemList = new ItemList(items);
+    void updateItemDataByName_invalidItemName_throwsException() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        assertThrows(InvalidCommandException.class, () -> itemList.updateItemDataByName("Nonexistent", null, Integer.MIN_VALUE, LocalDate.MIN, Double.MIN_VALUE, Double.MIN_VALUE, Integer.MIN_VALUE));
+    }
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            itemList.updateItemDataByIndex(2, "New description", 10, LocalDate.MIN, 30.0, 25.0, 5);
-        });
+    @Test
+    void updateItemDataByIndex_invalidItemIndex_throwsException() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        assertThrows(IndexOutOfBoundsException.class, () -> itemList.updateItemDataByIndex(3, null, Integer.MIN_VALUE, LocalDate.MIN, Double.MIN_VALUE, Double.MIN_VALUE, Integer.MIN_VALUE));
+    }
 
-        assertEquals("Index 1 out of bounds for length 1", exception.getMessage());
+    @Test
+    void updateItemDataByName_noChanges_noChangesMade() throws InvalidCommandException {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "Item1", "Description1", 10, LocalDate.now(), 20.0, 10.0, 5);
+        Item originalItem = itemList.findItemByName("Item1");
+        itemList.updateItemDataByName("Item1", null, Integer.MIN_VALUE, LocalDate.MIN, Double.MIN_VALUE, Double.MIN_VALUE, Integer.MIN_VALUE);
+        Item updatedItem = itemList.findItemByName("Item1");
+        assertEquals(originalItem.toString(), updatedItem.toString());
     }
 }
