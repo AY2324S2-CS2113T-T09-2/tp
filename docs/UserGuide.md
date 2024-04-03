@@ -453,7 +453,7 @@ Examples:
 
 Format: `sell -n ITEM_INDEX -q ITEM_QUANTITY`
 
-> :information_source: To determine the `index` of an item in your inventory, call the `list` command first, and
+> ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and
 > note down the number displayed next to your item of interest.
 
 * Both flags `-i` and `-q` are mandatory.
@@ -464,7 +464,7 @@ Examples:
 - `sell -n 3 -q 35` This will decrease the quantity of the item at index 3 in your inventory list by 35.
 
 
-> :information_source: Note:
+> ℹ️ Note:
 > - Only one item identifier flag, `-n` or `-i`, can be used with the `sell` command to identify the item that you
     > want to sell.
 > - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
@@ -494,7 +494,7 @@ Examples:
 
 Format: `restock -n ITEM_INDEX -q ITEM_QUANTITY`
 
-> :information_source: To determine the `index` of an item in your inventory, call the `list` command first, and 
+> ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and 
 > note down the number displayed next to your item of interest.
 
 * Both flags `-i` and `-q` are mandatory.
@@ -505,7 +505,7 @@ Examples:
 - `restock -n 1 -q 65` This will add the quantity of the item at index 1 in your inventory list by 65.
 
 
-> :information_source: Note:
+> ℹ️ Note:
 > - Only one item identifier flag, `-n` or `-i`, can be used with the `restock` command to identify the item that you
     > want to update.
 > - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
