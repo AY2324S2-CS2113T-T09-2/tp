@@ -219,49 +219,63 @@ public class ItemList {
         throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
     }
 
-    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidArgumentException {
-        String output = "Sorry, I can't find the item you are looking for.";
+    public String sellOrRestock(Item item, int itemQuantity, String command) throws InvalidArgumentException {
         String alertText = "";
+        int newQuantity = item.getItemQuantity();
+
+        if (command.trim().equals(RestockCommand.COMMAND.trim())) {
+            if (itemQuantity > 0) {
+                newQuantity += itemQuantity;
+            } else {
+                throw new InvalidArgumentException("Please provide a positive number.");
+            }
+
+            int totalUnitsPurchased = item.getTotalUnitsPurchased();
+            item.setTotalUnitsPurchased(totalUnitsPurchased + itemQuantity);
+        } else {
+            if (newQuantity >= itemQuantity && itemQuantity > 0) {
+                newQuantity -= itemQuantity;
+            } else if (itemQuantity <= 0) {
+                throw new InvalidArgumentException("Please provide a positive number.");
+            } else {
+                throw new InvalidArgumentException("You do not have enough to sell the stated quantity.");
+            }
+
+            RetailItem retailItem = (RetailItem)item;
+            int itemThreshold = retailItem.getItemThreshold();
+
+            if (newQuantity < itemThreshold) {
+                alertText = alertItemQuantity(retailItem);
+            }
+
+            int totalUnitsSold = retailItem.getTotalUnitsSold();
+            retailItem.setTotalUnitsSold(totalUnitsSold + itemQuantity);
+        }
+        item.setItemQuantity(newQuantity);
+        String output = "Great! I have updated the quantity of the item for you:" + System.lineSeparator()
+                + System.lineSeparator() + item
+                + alertText;
+
+
+        return output;
+    }
+
+    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidArgumentException{
+        String output = "Sorry, I can't find the item you are looking for.";
 
         for (Item item : itemList) {
-            int newQuantity = item.getItemQuantity();
-
             if (!item.getItemName().trim().equals(itemName.trim())) {
                 continue;
             }
-
-            // Restocking item consists of (i) Updating itemQuantity, (ii) Updating totalUnitsPurchased
-            if (command.trim().equals(RestockCommand.COMMAND.trim())) {
-                newQuantity += itemQuantity;
-
-                int totalUnitsPurchased = item.getTotalUnitsPurchased();
-                item.setTotalUnitsPurchased(totalUnitsPurchased + itemQuantity);
-
-            // Selling item consists of (i) Updating itemQuantity, (ii) Updating totalUnitsSold
-            } else {
-
-                if (newQuantity >= itemQuantity) {
-                    newQuantity -= itemQuantity;
-                } else {
-                    throw new InvalidArgumentException("You do not have enough to sell the stated quantity.");
-                }
-
-                RetailItem retailItem = (RetailItem)item;
-                int itemThreshold = retailItem.getItemThreshold();
-                if (newQuantity < itemThreshold) {
-                    alertText = alertItemQuantity(retailItem);
-                }
-
-                int totalUnitsSold = retailItem.getTotalUnitsSold();
-                retailItem.setTotalUnitsSold(totalUnitsSold + itemQuantity);
-            }
-            item.setItemQuantity(newQuantity);
-            output = "Great! I have updated the quantity of the item for you:" + System.lineSeparator()
-                    + System.lineSeparator() + item
-                    + alertText;
-
+            output = sellOrRestock(item, itemQuantity, command);
+            break;
         }
         return output;
+    }
+
+    public String sellOrRestockItem(int index, int itemQuantity, String command) throws InvalidArgumentException {
+        Item item = itemList.get(index - 1);
+        return sellOrRestock(item, itemQuantity, command);
     }
 
     public String alertItemQuantity(Item item) {
@@ -270,7 +284,6 @@ public class ItemList {
 
         return output;
     }
-
 
     /**
      * Deletes an item from the inventory by identifying the item using its index.

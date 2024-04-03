@@ -139,7 +139,7 @@ public class UpdateCommandParser extends DefaultParser {
         setHasOption(true);
     }
 
-    private static UpdateCommand getUpdateCommand(CommandLine commandLine) {
+    private UpdateCommand getUpdateCommand(CommandLine commandLine) {
         UpdateCommand updateCommand;
         if (commandLine.hasOption("name")) {
             String itemName = String.join(" ", commandLine.getOptionValues("name"));

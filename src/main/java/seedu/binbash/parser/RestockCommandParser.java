@@ -20,7 +20,7 @@ public class RestockCommandParser extends DefaultParser {
         options = new Options();
         optionDescriptions = new ArrayList<>();
         new CommandOptionAdder(options, optionDescriptions)
-            .addNameOption(true, "Name of item.")
+            .addItemNameAndIndexOptionGroup()
             .addQuantityOption(true, "Units of item to restock.");
     }
 
@@ -29,14 +29,22 @@ public class RestockCommandParser extends DefaultParser {
     }
 
     public RestockCommand parse(String[] commandArgs) throws ParseException {
-        CommandLine commandLine = super.parse(options, commandArgs);
+        CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
+        RestockCommand restockCommand;
+        String restockQuantity = commandLine.getOptionValue("quantity");
+        int itemRestockQuantity = TypeHandler.createNumber(restockQuantity).intValue();
 
-        String itemName = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
-        int restockQuantity = TypeHandler.createNumber(
-                commandLine.getOptionValue("quantity")).intValue();
+        if (commandLine.hasOption("name")) {
+            String itemName = String.join(" ", commandLine.getOptionValues("name"));
+            restockCommand = new RestockCommand(itemName, itemRestockQuantity);
+        } else {
+            int index = Integer.parseInt(commandLine.getOptionValue("index"));
+            restockCommand = new RestockCommand(index, itemRestockQuantity);
+            restockCommand.setIsIndex();
+        }
 
         binBashLogger.info("Parsing RestockCommand...");
 
-        return new RestockCommand(itemName, restockQuantity);
+        return restockCommand;
     }
 }

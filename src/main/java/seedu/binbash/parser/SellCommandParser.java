@@ -20,7 +20,7 @@ public class SellCommandParser extends DefaultParser {
         options = new Options();
         optionDescriptions = new ArrayList<>();
         new CommandOptionAdder(options, optionDescriptions)
-            .addNameOption(true, "Name of item sold.")
+            .addItemNameAndIndexOptionGroup()
             .addQuantityOption(true, "Units of item sold.");
     }
 
@@ -29,14 +29,22 @@ public class SellCommandParser extends DefaultParser {
     }
 
     public SellCommand parse(String[] commandArgs) throws ParseException {
-        CommandLine commandLine = super.parse(options, commandArgs);
+        CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
+        SellCommand sellCommand;
+        String sellQuantity = commandLine.getOptionValue("quantity");
+        int itemSellQuantity = TypeHandler.createNumber(sellQuantity).intValue();
 
-        String itemName = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
-        int sellQuantity = TypeHandler.createNumber(
-                commandLine.getOptionValue("quantity")).intValue();
+        if (commandLine.hasOption("name")) {
+            String itemName = String.join(" ", commandLine.getOptionValues("name"));
+            sellCommand = new SellCommand(itemName, itemSellQuantity);
+        } else {
+            int index = Integer.parseInt(commandLine.getOptionValue("index"));
+            sellCommand = new SellCommand(index, itemSellQuantity);
+            sellCommand.setIsIndex();
+        }
 
-        binBashLogger.info("Parsing SellCommand...");
+        binBashLogger.info("Parsing RestockCommand...");
 
-        return new SellCommand(itemName, sellQuantity);
+        return sellCommand;
     }
 }

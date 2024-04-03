@@ -93,7 +93,7 @@ public class Parser {
         }
     }
 
-    private AddCommand parseAddCommand(String[] commandArgs) throws InvalidCommandException {
+    private AddCommand parseAddCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return addCommandParser.parse(commandArgs);
         } catch (InvalidArgumentException e) {
@@ -103,7 +103,7 @@ public class Parser {
         }
     }
 
-    private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidCommandException {
+    private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return updateCommandParser.parse(commandArgs);
         } catch (InvalidArgumentException e) {
@@ -113,19 +113,19 @@ public class Parser {
         }
     }
 
-    private Command parseRestockCommand(String[] commandArgs) throws InvalidCommandException {
+    private Command parseRestockCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return restockCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidCommandException(e.getMessage());
+            throw new InvalidFormatException("Please enter a valid number.");
         }
     }
 
-    private Command parseSellCommand(String[] commandArgs) throws InvalidCommandException {
+    private Command parseSellCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return sellCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidCommandException(e.getMessage());
+            throw new InvalidFormatException("Please enter a valid number.");
         }
     }
 
