@@ -30,6 +30,7 @@ public class Parser {
     private SellCommandParser sellCommandParser;
     private ListCommandParser listCommandParser;
     private UpdateCommandParser updateCommandParser;
+    private DeleteCommandParser deleteCommandParser;
 
     public Parser() {
         addCommandParser = new AddCommandParser();
@@ -38,14 +39,21 @@ public class Parser {
         updateCommandParser = new UpdateCommandParser();
         searchCommandParser = new SearchCommandParser();
         listCommandParser = new ListCommandParser();
+        deleteCommandParser = new DeleteCommandParser();
     }
 
     public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
-        ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>();
-        allCommandsOptionDescriptions.add(addCommandParser.getOptionDecriptions());
-        allCommandsOptionDescriptions.add(restockCommandParser.getOptionDecriptions());
-        allCommandsOptionDescriptions.add(sellCommandParser.getOptionDecriptions());
-        allCommandsOptionDescriptions.add(searchCommandParser.getOptionDecriptions());
+        ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>() {
+            {
+                add(addCommandParser.getOptionDecriptions());
+                add(restockCommandParser.getOptionDecriptions());
+                add(sellCommandParser.getOptionDecriptions());
+                add(updateCommandParser.getOptionDecriptions());
+                add(searchCommandParser.getOptionDecriptions());
+                add(listCommandParser.getOptionDecriptions());
+                add(deleteCommandParser.getOptionDecriptions());
+            }
+        };
         return allCommandsOptionDescriptions;
     }
 
@@ -62,7 +70,7 @@ public class Parser {
         case "add":
             return parseAddCommand(commandArgs);
         case "delete":
-            return parseDeleteCommand(userInput);
+            return parseDeleteCommand(commandArgs);
         case "list":
             return parseListCommand(commandArgs);
         case "search":
@@ -80,26 +88,11 @@ public class Parser {
         }
     }
 
-    private Command parseDeleteCommand(String userInput) throws InvalidFormatException,
-            InvalidArgumentException {
-        Matcher argumentMatcher = DeleteCommand.COMMAND_FORMAT.matcher(userInput);
-        if (!argumentMatcher.matches()) {
-            throw new InvalidFormatException("Delete command is not properly formatted!");
-        }
-
-        Pattern indexIdentifier = Pattern.compile("^-?[0-9]+$");
-        Matcher indexMatcher = indexIdentifier.matcher(argumentMatcher.group("identifier"));
-
-        if (indexMatcher.matches()) {
-            int index = Integer.parseInt(argumentMatcher.group("identifier"));
-            if (index < 0) {
-                throw new InvalidArgumentException("Task index cannot be negative!");
-            }
-            return new DeleteCommand(index);
-        } else {
-            String keyword = argumentMatcher.group("identifier");
-            assert !keyword.isEmpty();
-            return new DeleteCommand(keyword);
+    private DeleteCommand parseDeleteCommand(String[] commandArgs) throws InvalidFormatException {
+        try {
+            return deleteCommandParser.parse(commandArgs);
+        } catch (ParseException e) {
+            throw new InvalidFormatException(e.getMessage());
         }
     }
 
