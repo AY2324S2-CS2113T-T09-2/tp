@@ -330,13 +330,25 @@ This is guaranteed in this case by ItemList's setFoundItems() call.
 
 After obtaining the list of found items, it then uses printList to convert this list into a user friendly string.
 
-### Logging
+## Logging
 
-* We are using `java.util.logging` package for logging.
-* The `BinBashLogger` class is used to manage all logging related functions.
-* The `Logger` for a class can be obtained by constructing a `BinBashLogger` object and assigning it as a class-level variable
-* Log messages are output to a `logs.txt` file in the `*/logs/` directory by default.
-* If there are issues with the `logs.txt` file that results in no `logs` being written, warnings logs will be output through the console instead.
+Logging plays a crucial role in providing insights into the runtime behavior of the application and diagnosing issues. In this project, we utilize the `java.util.logging` package for comprehensive logging functionality.
+
+### BinBashLogger Class
+
+The `BinBashLogger` class serves as the central component for managing all logging-related operations within the application. It encapsulates the functionality provided by the `java.util.logging` package, offering a streamlined interface for logging operations.
+
+### Usage
+
+To integrate logging into a class, developers can obtain a `Logger` instance by constructing a `BinBashLogger` object and assigning it as a class-level variable. This allows for consistent and centralized logging across the entire codebase.
+
+### Log Output
+
+By default, log messages are directed to a `logs.txt` file located in the `/logs/` directory. This structured approach ensures that log data is organized and easily accessible for analysis and troubleshooting purposes.
+
+In cases where issues arise with the `logs.txt` file and no `logs` are being written, warning logs are automatically redirected to the console for immediate visibility. This fallback mechanism ensures that critical information is not lost and allows developers to promptly address any logging-related issues.
+
+Overall, effective logging implementation enhances the maintainability, reliability, and diagnosability of the application, facilitating smooth operation and efficient issue resolution.
 
 ## Product Scope
 
@@ -411,12 +423,13 @@ After obtaining the list of found items, it then uses printList to convert this 
 
 > Testers are encouraged to do more exploratory testing with the following commands. Testers can also directly read/write data and log files for testing.
 
-### Launch and shutdown
+### Launch and Shutdown
 
-1. Launch:
-    1. Download the jar file and copy it into an empty folder.
-    2. Double-click the jar file and run it. <br>
-    Expected Output: <br>
+1. **Launch:**
+    1. **Instructions for Launching:**
+        - Download the jar file and place it in an accessible location.
+        - Double-click the jar file to execute it.
+    2. **Expected Output:**
         ```text
         -------------------------------------------------------------
          ____  _       ____            _
