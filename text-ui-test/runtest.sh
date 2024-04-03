@@ -15,8 +15,8 @@ java -jar $(find ../build/libs/ -mindepth 1 -print -quit) < input.txt &> ACTUAL.
 
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix EXPECTED-UNIX.TXT ACTUAL.TXT
-# compare the second line onwards because logger date changes dynamically
-diff <(tail -n +2 EXPECTED.TXT) <(tail -n +2 ACTUAL.TXT)
+# compare the third line, after logger output onwards
+diff <(tail -n +3 ACTUAL.TXT) EXPECTED.TXT
 if [ $? -eq 0 ]
 then
     echo "Test passed!"

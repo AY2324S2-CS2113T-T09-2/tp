@@ -1,5 +1,3 @@
-Apr 03, 2024 1:00:19 PM seedu.binbash.logger.BinBashLogger consoleLog
-INFO: Data loaded successfully
 -------------------------------------------------------------
   ____  _       ____            _
  | __ )(_)_ __ | __ )  __ _ ___| |__
