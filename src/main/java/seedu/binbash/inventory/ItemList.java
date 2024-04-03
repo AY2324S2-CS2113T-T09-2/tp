@@ -234,11 +234,6 @@ public class ItemList {
     }
 
     public Item findItemByName(String itemName) throws InvalidCommandException {
-//        for (Item item : itemList) {
-//            if (item.getItemName().trim().equals(itemName.trim())) {
-//                return item;
-//            }
-//        }
         Item currentItem;
         for (int i = 0; i < sortedOrder.size(); i++) {
             currentItem = itemList.get(sortedOrder.get(i));
