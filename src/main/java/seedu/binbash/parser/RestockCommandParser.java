@@ -38,7 +38,7 @@ public class RestockCommandParser extends DefaultParser {
             String itemName = String.join(" ", commandLine.getOptionValues("name"));
             restockCommand = new RestockCommand(itemName, itemRestockQuantity);
         } else {
-            int index = Integer.parseInt(commandLine.getOptionValue("index"));
+            int index = TypeHandler.createNumber(commandLine.getOptionValue("index")).intValue();
             restockCommand = new RestockCommand(index, itemRestockQuantity);
             restockCommand.setIsIndex();
         }

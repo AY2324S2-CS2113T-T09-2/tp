@@ -38,7 +38,7 @@ public class SellCommandParser extends DefaultParser {
             String itemName = String.join(" ", commandLine.getOptionValues("name"));
             sellCommand = new SellCommand(itemName, itemSellQuantity);
         } else {
-            int index = Integer.parseInt(commandLine.getOptionValue("index"));
+            int index = TypeHandler.createNumber(commandLine.getOptionValue("index")).intValue();
             sellCommand = new SellCommand(index, itemSellQuantity);
             sellCommand.setIsIndex();
         }
