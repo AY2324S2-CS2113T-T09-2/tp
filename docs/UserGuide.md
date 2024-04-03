@@ -206,9 +206,28 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 
 ### Listing current inventory: `list`
 
->Shows a list of all tasks in your task list.
+>Shows a list of all items in the inventory. Can be set to show a sorted list based on cost price, sale price, profit, or 
+> expiry date.
 
-**Format:** `list`
+> Note:
+> - Index of the items listed, whether in a sorted list or unsorted list, can be used as reference for `delete` and `update` commands.
+
+#### List inventory unsorted
+
+Format: `list`
+
+#### List inventory sorted based on item cost price
+
+Format: `list -c`
+
+#### List inventory sorted based on item sale price
+
+Format: `list -s`
+
+#### List inventory sorted based on item expiry date
+
+Format: `list -e`
+
 
 ### Selling an item: `sell`
 
@@ -366,6 +385,7 @@ Have problems loading up BinBash? Fret not, here's how to troubleshoot some of t
 | **search**   | `search KEYWORD`                                                                                 |
 | **list**     | `list`                                                                                           |
 | **delete**   | `delete ITEM_INDEX`                                                                              |
+| **list**     | `list` `list -c` `list -s` `list -e`                                                             |
 | **bye**      | `bye`                                                                                            |
 
 ## FAQ
