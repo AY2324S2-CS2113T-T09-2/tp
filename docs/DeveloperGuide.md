@@ -5,10 +5,12 @@
 * [Acknowledgements](#acknowledgements)
 * [Setting up, getting started](#setting-up-getting-started)
 * [Design](#design)
-  * [Architecture](#architecture)
-  * [Ui Component](#ui-component)
-  * [Parser Component](#parser-component)
-  * [Data Component](#data-component)
+    * [Architecture](#architecture)
+    * [Ui Component](#ui-component)
+    * [Storage Component](#storage-component)
+    * [Parser Component](#parser-component)
+    * [Command Component](#command-component)
+    * [Data Component](#data-component)
 * [Features](#features)
   * [Add Item to Inventory](#add-item-to-inventory)
   * [List all items in inventory](#list-all-items-in-inventory)
@@ -39,35 +41,35 @@
 
 If you are using `IntelliJ IDEA`,
 
-4. Set up the correct JDK version for IntelliJ. To do this, kindly refer to the official documentation from JetBrains [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).
+1. Set up the correct JDK version for IntelliJ. To do this, kindly refer to the official documentation from JetBrains [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).
    1. Ensure that you are using **JDK version 11**. 
-5. Import the project as a **Gradle** project. 
+2. Import the project as a **Gradle** project.:q
    1. Click **Open** or **Import** in IntelliJ. 
    2. Locate the `build.gradle` file in the repository. Select it, and click OK.
    3. If prompted, choose to **Open as Project**. 
    4. Click OK to accept the default settings. 
    5. Wait for the import process to finish. This could take a few minutes.
    6. Once the importing process has completed, you should see the `Gradle Toolbar` in the IDEA interface (look for the elephant icon on the right side of your screen). 
-6. Verify that the Gradle project has been set up correctly.
-   1. Run `seedu.binbash.BinBash` and ensure you see the following output.
-   ```text
-    -------------------------------------------------------------
-      ____  _       ____            _
-    | __ )(_)_ __ | __ )  __ _ ___| |__
-    |  _ \| | '_ \|  _ \ / _` / __| '_ \
-    | |_) | | | | | |_) | (_| \__ \ | | |
-    |____/|_|_| |_|____/ \__,_|___/_| |_|
+3. Verify that the Gradle project has been set up correctly.
+   1. Run `seedu.binbash.BinBash` and ensure you see the following output.<br>
+       ```text
+       -------------------------------------------------------------
+        ____  _       ____            _
+       | __ )(_)_ __ | __ )  __ _ ___| |__
+       |  _ \| | '_ \|  _ \ / _` / __| '_ \
+       | |_) | | | | | |_) | (_| \__ \ | | |
+       |____/|_|_| |_|____/ \__,_|___/_| |_|
     
-    Welcome to BinBash!
-    -------------------------------------------------------------
-    -------------------------------------------------------------
-    Here are your metrics:
-    Total Cost: 0.00
-    Total Revenue: 0.00
-    Net Profit: 0.00
+       Welcome to BinBash!
+       -------------------------------------------------------------
+       -------------------------------------------------------------
+       Here are your metrics:
+       Total Cost: 0.00
+       Total Revenue: 0.00
+       Net Profit: 0.00
     
-    -------------------------------------------------------------
-    ```
+       -------------------------------------------------------------
+       ```
    2. Click on the Gradle icon.
    3. Run the tests (click on `tp/Tasks/verification/test`) and ensure that all tests have passed.
 
@@ -163,7 +165,7 @@ application's persistent data.
 
 ### Parser Component
 
-<!-- TODO: Create the Class diagram for the Parser package/component --> 
+![ParserClassDiagram](images/ParserClassDiagram.png)
 
 API: [`Parser.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/parser/Parser.java)
 
@@ -189,11 +191,11 @@ The `Parser` will then process the user input to determine the type of command t
 
 From here, `Parser` will self-call its corresponding `parseXYZCommand()` method.
 Upon calling `parseXYZCommand()`, the `parse()` method of an internal `XYZCommandParser` is invoked, to create the appropriate `Command` (an `XYZCommand` in this case).
-> In some instances, if the command that needs to be created is simple enough (like a `ByeCommand` or `ListCommand`), then `Parser` will directly create the `Command` without the need of an `XYZCommandParser`.
+> In some instances, if the command that needs to be created is simple enough (e.g., a `ByeCommand`), then `Parser` will directly create the `Command` without the need of an `XYZCommandParser`.
 
 The `XYZCommand` is then subsequently returned back to `BinBash` for code execution.
 
-## Command Component
+### Command Component
 
 ![CommandClassDiagram](images/CommandClassDiagram.png)
 
@@ -231,11 +233,20 @@ commands. Each command represents a single operation or action that can be perfo
 
 ![DataComponent](images/DataComponent.png)
 
-API: [`ItemList.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/inventory/ItemList.java)
+API: [`Inventory`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/inventory),
+[`Item`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/item)
 
-The `Data` component is primarily composed of an `ItemList` object that stores different types of `Item`.
+The `Data` component is responsible for the management of user data during application runtime.
 
-`Item` has different types, such as `RetailItem`, `OperationalItem`, `PerishableRetailItem`, and `PerishableOperationalItem`.
+At its core, an `ItemList` will store, and operate on different types of `Item`.
+The operations that are done on `Item` are dictated by their associated `Command`.
+For instance, the execution of `AddCommand` will entail the creation and storage of a new `Item` object in `ItemList`.
+If `SearchCommand` is executed to search through the `ItemList`, the search task will be delegated to the `SearchAssistant`.
+
+![ItemClassDiagram](images/ItemClassDiagram.png)
+
+Within this component, there are also multiple types of `Item` that can be created, stored and modified.
+The four primary types of `Item` are `RetailItem`, `OperationalItem`, `PerishableRetailItem`, and `PerishableOperationalItem`.
 
 ## Features
 
@@ -243,7 +254,7 @@ The `Data` component is primarily composed of an `ItemList` object that stores d
 
 ![AddSequenceDiagram](images/AddSequenceDiagram.png)
 
-API: [`Ui.java`](../src/main/java/seedu/binbash/ui/Ui.java)
+API: [`AddCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/AddCommand.java)
 
 The `add` command adds an `Item` to the `ItemList` object. A formatted `executionUiOutput` message which states the name, description,
 quantity, expiration date, sale price, and cost price entered for the newly created item, will also be printed out upon successful
