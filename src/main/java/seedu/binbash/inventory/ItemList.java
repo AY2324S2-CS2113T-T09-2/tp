@@ -4,7 +4,7 @@ import seedu.binbash.comparators.ItemComparatorByCostPrice;
 import seedu.binbash.comparators.ItemComparatorByExpiryDate;
 import seedu.binbash.comparators.ItemComparatorByProfit;
 import seedu.binbash.comparators.ItemComparatorBySalePrice;
-import seedu.binbash.exceptions.InvalidArgumentException;
+import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
 import seedu.binbash.item.PerishableOperationalItem;
@@ -125,7 +125,7 @@ public class ItemList {
 
     public String updateItemDataByName (String itemName, String itemDescription, int itemQuantity,
                                   LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
-                                  int itemThreshold) throws InvalidArgumentException {
+                                  int itemThreshold) throws InvalidCommandException {
         Item item = findItemByName(itemName);
 
         updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
@@ -138,7 +138,7 @@ public class ItemList {
 
     public String updateItemDataByIndex (int index, String itemDescription, int itemQuantity,
                                   LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
-                                  int itemThreshold) throws InvalidArgumentException {
+                                  int itemThreshold) throws InvalidCommandException {
         Item item = itemList.get(index - 1);
 
         updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
@@ -151,7 +151,7 @@ public class ItemList {
 
     private void updateItemData(Item item, String itemDescription, int itemQuantity, LocalDate itemExpirationDate,
                                 double itemSalePrice, double itemCostPrice, int itemThreshold)
-            throws InvalidArgumentException {
+            throws InvalidCommandException {
         updateItemDescription(item, itemDescription);
         updateItemQuantity(item, itemQuantity);
         updateItemExpirationDate(item, itemExpirationDate);
@@ -173,7 +173,7 @@ public class ItemList {
         }
     }
 
-    public void updateItemExpirationDate(Item item, LocalDate itemExpirationDate) throws InvalidArgumentException {
+    public void updateItemExpirationDate(Item item, LocalDate itemExpirationDate) throws InvalidCommandException {
         if (itemExpirationDate != LocalDate.MIN) {
             logger.info("Attempting to update item expiration date");
             if (item instanceof PerishableOperationalItem) {
@@ -181,7 +181,7 @@ public class ItemList {
             } else if (item instanceof PerishableRetailItem) {
                 ((PerishableRetailItem) item).setItemExpirationDate(itemExpirationDate);
             } else {
-                throw new InvalidArgumentException("This item is not a perishable and has no expiry date.");
+                throw new InvalidCommandException("This item is not a perishable and has no expiry date.");
             }
         }
     }
@@ -209,13 +209,13 @@ public class ItemList {
         }
     }
 
-    public Item findItemByName(String itemName) throws InvalidArgumentException {
+    public Item findItemByName(String itemName) throws InvalidCommandException {
         for (Item item : itemList) {
             if (item.getItemName().trim().equals(itemName.trim())) {
                 return item;
             }
         }
-        throw new InvalidArgumentException("Item with name '" + itemName + "' not found.");
+        throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
     }
 
     public String sellOrRestockItem(String itemName, int itemQuantity, String command) {

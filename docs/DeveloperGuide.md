@@ -5,10 +5,12 @@
 * [Acknowledgements](#acknowledgements)
 * [Setting up, getting started](#setting-up-getting-started)
 * [Design](#design)
-  * [Architecture](#architecture)
-  * [Ui Component](#ui-component)
-  * [Parser Component](#parser-component)
-  * [Data Component](#data-component)
+    * [Architecture](#architecture)
+    * [Ui Component](#ui-component)
+    * [Storage Component](#storage-component)
+    * [Parser Component](#parser-component)
+    * [Command Component](#command-component)
+    * [Data Component](#data-component)
 * [Features](#features)
   * [Add Item to Inventory](#add-item-to-inventory)
   * [List all items in inventory](#list-all-items-in-inventory)
@@ -39,35 +41,35 @@
 
 If you are using `IntelliJ IDEA`,
 
-4. Set up the correct JDK version for IntelliJ. To do this, kindly refer to the official documentation from JetBrains [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).
+1. Set up the correct JDK version for IntelliJ. To do this, kindly refer to the official documentation from JetBrains [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).
    1. Ensure that you are using **JDK version 11**. 
-5. Import the project as a **Gradle** project. 
+2. Import the project as a **Gradle** project.:q
    1. Click **Open** or **Import** in IntelliJ. 
    2. Locate the `build.gradle` file in the repository. Select it, and click OK.
    3. If prompted, choose to **Open as Project**. 
    4. Click OK to accept the default settings. 
    5. Wait for the import process to finish. This could take a few minutes.
    6. Once the importing process has completed, you should see the `Gradle Toolbar` in the IDEA interface (look for the elephant icon on the right side of your screen). 
-6. Verify that the Gradle project has been set up correctly.
-   1. Run `seedu.binbash.BinBash` and ensure you see the following output.
-   ```text
-    -------------------------------------------------------------
-      ____  _       ____            _
-    | __ )(_)_ __ | __ )  __ _ ___| |__
-    |  _ \| | '_ \|  _ \ / _` / __| '_ \
-    | |_) | | | | | |_) | (_| \__ \ | | |
-    |____/|_|_| |_|____/ \__,_|___/_| |_|
+3. Verify that the Gradle project has been set up correctly.
+   1. Run `seedu.binbash.BinBash` and ensure you see the following output.<br>
+       ```text
+       -------------------------------------------------------------
+        ____  _       ____            _
+       | __ )(_)_ __ | __ )  __ _ ___| |__
+       |  _ \| | '_ \|  _ \ / _` / __| '_ \
+       | |_) | | | | | |_) | (_| \__ \ | | |
+       |____/|_|_| |_|____/ \__,_|___/_| |_|
     
-    Welcome to BinBash!
-    -------------------------------------------------------------
-    -------------------------------------------------------------
-    Here are your metrics:
-    Total Cost: 0.00
-    Total Revenue: 0.00
-    Net Profit: 0.00
+       Welcome to BinBash!
+       -------------------------------------------------------------
+       -------------------------------------------------------------
+       Here are your metrics:
+       Total Cost: 0.00
+       Total Revenue: 0.00
+       Net Profit: 0.00
     
-    -------------------------------------------------------------
-    ```
+       -------------------------------------------------------------
+       ```
    2. Click on the Gradle icon.
    3. Run the tests (click on `tp/Tasks/verification/test`) and ensure that all tests have passed.
 
@@ -163,7 +165,7 @@ application's persistent data.
 
 ### Parser Component
 
-<!-- TODO: Create the Class diagram for the Parser package/component --> 
+![ParserClassDiagram](images/ParserClassDiagram.png)
 
 API: [`Parser.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/parser/Parser.java)
 
@@ -189,11 +191,11 @@ The `Parser` will then process the user input to determine the type of command t
 
 From here, `Parser` will self-call its corresponding `parseXYZCommand()` method.
 Upon calling `parseXYZCommand()`, the `parse()` method of an internal `XYZCommandParser` is invoked, to create the appropriate `Command` (an `XYZCommand` in this case).
-> In some instances, if the command that needs to be created is simple enough (like a `ByeCommand` or `ListCommand`), then `Parser` will directly create the `Command` without the need of an `XYZCommandParser`.
+> In some instances, if the command that needs to be created is simple enough (e.g., a `ByeCommand`), then `Parser` will directly create the `Command` without the need of an `XYZCommandParser`.
 
 The `XYZCommand` is then subsequently returned back to `BinBash` for code execution.
 
-## Command Component
+### Command Component
 
 ![CommandClassDiagram](images/CommandClassDiagram.png)
 
@@ -231,11 +233,20 @@ commands. Each command represents a single operation or action that can be perfo
 
 ![DataComponent](images/DataComponent.png)
 
-API: [`ItemList.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/inventory/ItemList.java)
+API: [`Inventory`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/inventory),
+[`Item`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/item)
 
-The `Data` component is primarily composed of an `ItemList` object that stores different types of `Item`.
+The `Data` component is responsible for the management of user data during application runtime.
 
-`Item` has different types, such as `RetailItem`, `OperationalItem`, `PerishableRetailItem`, and `PerishableOperationalItem`.
+At its core, an `ItemList` will store, and operate on different types of `Item`.
+The operations that are done on `Item` are dictated by their associated `Command`.
+For instance, the execution of `AddCommand` will entail the creation and storage of a new `Item` object in `ItemList`.
+If `SearchCommand` is executed to search through the `ItemList`, the search task will be delegated to the `SearchAssistant`.
+
+![ItemClassDiagram](images/ItemClassDiagram.png)
+
+Within this component, there are also multiple types of `Item` that can be created, stored and modified.
+The four primary types of `Item` are `RetailItem`, `OperationalItem`, `PerishableRetailItem`, and `PerishableOperationalItem`.
 
 ## Features
 
@@ -243,7 +254,7 @@ The `Data` component is primarily composed of an `ItemList` object that stores d
 
 ![AddSequenceDiagram](images/AddSequenceDiagram.png)
 
-API: [`Ui.java`](../src/main/java/seedu/binbash/ui/Ui.java)
+API: [`AddCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/AddCommand.java)
 
 The `add` command adds an `Item` to the `ItemList` object. A formatted `executionUiOutput` message which states the name, description,
 quantity, expiration date, sale price, and cost price entered for the newly created item, will also be printed out upon successful
@@ -329,22 +340,21 @@ This return value can be printed to the user as per pre-existing *print()* metho
 * Log messages are output to a `logs.txt` file in the `*/logs/` directory by default.
 * If there are issues with the `logs.txt` file that results in no `logs` being written, warnings logs will be output through the console instead.
 
-## Product scope
+## Product Scope
 
-### Target user profile
+### Target User Profile
 
-Small business (retail shop) owners who:
-* have a need to efficiently manage their shop inventory,
-* prefer desktop apps over other types of apps,
-* can type fast,
-* prefer typing to mouse interactions,
-* are reasonably comfortable using CLI apps.
+* **Retail Shop Owners**: Individuals who operate retail businesses and require efficient inventory management solutions.
+* **Preference for Desktop Apps**: Users who prefer desktop applications over other software types due to reliability and familiarity.
+* **Proficient Typists**: Individuals who can type quickly and accurately, facilitating efficient interaction with the application.
+* **Preference for Typing**: Users who prefer typing to mouse interactions for increased speed and productivity.
+* **Comfortable with CLI Apps**: Users who are reasonably comfortable using command-line interfaces (CLI) for software interaction.
 
-### Value proposition
+### Value Proposition
 
-* Manage inventory more efficiently, compared to manual stock-taking and typical mouse/GUI-driven apps.
-* Portability allows usage on multiple operating systems (E.g. Windows, Linux, Mac).
-* Lightweight, only requires entry-level hardware to run.
+* **Efficient Inventory Management**: Our solution enables retail shop owners to manage their inventory more efficiently compared to manual methods and traditional GUI-driven apps, reducing time and errors.
+* **Cross-Platform Portability**: Our application runs seamlessly on various operating systems such as Windows, Linux, and macOS, providing flexibility and accessibility across different platforms.
+* **Lightweight and Resource-Efficient**: Designed to be lightweight, our application requires only entry-level hardware to operate efficiently, ensuring minimal system resource usage and optimal performance.
 
 ## User Stories
 
@@ -371,14 +381,33 @@ Small business (retail shop) owners who:
 
 ## Non-Functional Requirements
 
-1. The application should auto-suggest commands for users, to speed up the command entry process.
-2. The user should be allowed to enter commands out-of-order. However, they must still enter the required arguments.
-3. The application should work offline with no issues.
+1. **Command Auto-Suggestion**: The application shall provide auto-suggestions for commands as users type, enhancing the command entry process and speeding up user interaction.
+
+2. **Out-of-Order Command Entry**: Users shall be allowed to enter commands out-of-order, while still ensuring that all required arguments are provided. This flexibility in command entry improves user experience and accommodates different usage patterns.
+
+3. **Offline Functionality**: The application shall seamlessly function offline without any dependency on external services or internet connectivity. Users can continue to use all core features and functionalities even when disconnected from the internet, ensuring uninterrupted operation and productivity.
 
 ## Glossary
 
-* **CLI** - Command Line Interface
-* **GUI** - Graphical User Interface
+* **Desktop Application**: A software program designed to run on a personal computer or workstation, providing functionality and features tailored to desktop computing environments.
+
+* **CLI (Command-Line Interface)**: A text-based user interface used to interact with software applications by entering commands into a terminal or command prompt.
+
+* **Cross-Platform Compatibility**: The ability of software applications to run seamlessly on multiple operating systems without requiring modification or adaptation.
+
+* **GUI (Graphical User Interface)**: A visual interface that allows users to interact with software applications using graphical elements such as windows, icons, buttons, and menus.
+
+* **Portability**: The ability of software applications to be easily transferred and deployed across different computing environments or platforms.
+
+* **Command Interpretation**: The process of analyzing user input to identify and execute corresponding commands or actions within a software application.
+
+* **Error Handling**: The mechanism employed by software applications to detect, report, and manage errors or exceptional conditions that may arise during execution.
+
+* **Logging**: The practice of recording events, actions, or messages generated by software applications for debugging, monitoring, and auditing purposes.
+
+* **Integration**: The process of combining or linking different software systems, components, or functionalities to work together seamlessly.
+
+* **Modularity**: The design principle that advocates breaking down software systems into smaller, independent components or modules that can be developed, tested, and maintained separately.
 
 ## Instructions for manual testing
 

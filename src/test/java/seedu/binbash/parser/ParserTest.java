@@ -9,13 +9,10 @@ import java.util.ArrayList;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.command.AddCommand;
 import seedu.binbash.command.Command;
-import seedu.binbash.command.DeleteCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ByeCommand;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
-import seedu.binbash.exceptions.InvalidArgumentException;
-import seedu.binbash.exceptions.InvalidFormatException;
 import seedu.binbash.item.Item;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -49,16 +46,9 @@ public class ParserTest {
     }
 
     @Test
-    public void testParseCommand_validCommandDelete_returnsDeleteCommand() throws BinBashException {
-        itemList.addItem("retail", "Test Item", "Test Description", 5, LocalDate.now(), 10.5, 7.5, 2);
-        Command command = parser.parseCommand("delete Test Item");
-        assertTrue(command instanceof DeleteCommand);
-    }
-
-    @Test
     public void parseAddCommand_multipleItemTypeOptions_throwsInvalidCommandException() {
         assertThrows(
-                InvalidFormatException.class,
+                InvalidCommandException.class,
                 () -> parser.parseCommand("add -re -op -n Test Item -d Test Description -c 0.00")
         );
     }
@@ -119,17 +109,12 @@ public class ParserTest {
     }
 
     @Test
-    public void testParseCommand_invalidAddCommand_throwsInvalidFormatException() {
-        assertThrows(InvalidFormatException.class, () -> parser.parseCommand("add invalid format"));
+    public void testParseCommand_invalidAddCommand_throwsInvalidCommandException() {
+        assertThrows(InvalidCommandException.class, () -> parser.parseCommand("add invalid format"));
     }
 
     @Test
-    public void testParseCommand_invalidDeleteCommand_throwsInvalidArgumentException() {
-        assertThrows(InvalidArgumentException.class, () -> parser.parseCommand("delete -1"));
-    }
-
-    @Test
-    public void testParseCommand_invalidSearchCommand_throwsInvalidFormatException() {
-        assertThrows(InvalidFormatException.class, () -> parser.parseCommand("search"));
+    public void testParseCommand_invalidSearchCommand_throwsInvalidCommandException() {
+        assertThrows(InvalidCommandException.class, () -> parser.parseCommand("search"));
     }
 }

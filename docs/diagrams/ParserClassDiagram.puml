@@ -1,0 +1,40 @@
+@startuml
+
+class Parser {
+    + parseCommand(userInput: String): Command
+}
+
+class AddCommandParser {
+    + parse(commandArgs: String[]): AddCommand
+}
+
+class ListCommandParser {
+    + parse(commandArgs: String[]): ListCommand
+}
+
+class RestockCommandParser {
+    + parse(commandArgs: String[]): RestockCommand
+}
+
+class SearchCommandParser {
+    + parse(commandArgs: String[]): SearchCommand
+    + parseRangeArgument(argument: String, option: String): String[]
+}
+
+class SellCommandParser {
+    + parse(commandArgs: String[]): SellCommand
+}
+
+class UpdateCommandParser {
+    + parse(commandArgs: String[]): UpdateCommand
+}
+
+AddCommandParser --* "1" Parser : < calls
+SearchCommandParser --* "1" Parser : < calls
+ListCommandParser --* "1" Parser : < calls
+
+Parser "1" *-- RestockCommandParser : > calls
+Parser "1" *-- SellCommandParser : > calls
+Parser "1" *-- UpdateCommandParser : > calls
+
+@enduml
