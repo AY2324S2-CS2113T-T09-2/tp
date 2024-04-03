@@ -315,7 +315,12 @@ public class ItemList {
     public String deleteItem(String keyword) {
         int targetIndex = -1;
         Item currentItem;
+
         for (int i = 0; i < sortedOrder.size(); i ++) {
+            if (sortedOrder.get(i) == -1) {
+                continue;
+            }
+
             currentItem = itemList.get(sortedOrder.get(i));
             if (currentItem.getItemName().trim().equals(keyword)) {
                 logger.info("first matching item at index " + i + " found.");
