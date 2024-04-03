@@ -101,7 +101,8 @@ public class CommandOptionAdder {
 
     private Option getItemNameOption() {
         Option opItemOption = Option.builder("n")
-                .hasArg(true)
+                //.hasArg(true)
+                .hasArgs() // potentially more than 1 input
                 .required(true)
                 .longOpt("name")
                 .desc("Identify by name")
