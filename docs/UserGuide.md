@@ -83,14 +83,14 @@ However, if you ever need more clarification on the features provided by a speci
 ## Getting Started
 
 1. Ensure that you have Java `11` or above installed on your computer. Refer to our [FAQ](#faq) for more details.
-2. Head over to our [GitHub Page](https://github.com/AY2324S2-CS2113T-T09-2/tp/releases) and download the latest version of `BinBash.jar`.
-3. Move the downloaded `BinBash.jar` file to an empty folder of your choice. This folder will now serve as the home folder for BinBash.
+2. Head over to our [GitHub Page](https://github.com/AY2324S2-CS2113T-T09-2/tp/releases) and download the latest version of `binbash.jar`.
+3. Move the downloaded `binbash.jar` file to an empty folder of your choice. This folder will now serve as the home folder for BinBash.
 4. Open the terminal/command prompt for your system.
    1. If you're on Windows, press `Windows Key + R` and type in `cmd`. Press enter to launch the command prompt.
    2. If you're on Mac, click on `Launchpad` > `Other` > `Terminal`. Alternatively, click on the Spotlight icon in your menu bar, and type in `Terminal`.
    3. If you're on Linux, open the terminal in your Linux distribution.
-5. Navigate to the folder containing `BinBash.jar` using the terminal/command prompt.
-6. Type `java -jar BinBash.jar` into the command prompt, and press enter. If the application has started successfully, you should see the following output:<br>
+5. Navigate to the folder containing `binbash.jar` using the terminal/command prompt.
+6. Type `java -jar binbash.jar` into the command prompt, and press enter. If the application has started successfully, you should see the following output:<br>
     ```text
     -------------------------------------------------------------
      ____  _       ____            _
@@ -639,7 +639,7 @@ Unsure as to how you can save your BinBash data? Don't worry! Your data is autom
 
 Similarly, your saved data will be automatically loaded into BinBash when you start the application. If no previous save data was found, the application starts on a clean state.
 
-> ❗ For advanced users, BinBash data is stored locally as a `.txt` file in your BinBash install location:<br>`<Location of BinBash.jar>/data/items.txt`.
+> ❗ For advanced users, BinBash data is stored locally as a `.txt` file in your BinBash install location:<br>`<Location of binbash.jar>/data/items.txt`.
 > 
 > Do exercise caution when directly editing this file, as BinBash **will not load** corrupted data (i.e., data that is not formatted correctly). 
 > 
@@ -650,14 +650,15 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 
 ## Command Summary
 
-| **Commands** | **Usage**                                                                                        |
-|--------------|--------------------------------------------------------------------------------------------------|
-| **add**      | `add n/ITEM_NAME d/ITEM_DESCRIPTION q/ITEM_QUANTITY e/EXPIRATION_DATE s/SALE_PRICE c/COST_PRICE` |
-| **search**   | `search KEYWORD`                                                                                 |
-| **list**     | `list` `list -c` `list -s` `list -e`                                                             |
-| **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME` <br/>                                                   |
-| **profit**   | `profit`                                                                                         |
-| **bye**      | `bye`                                                                                            |
+| **Commands** | **Usage**                                                                                                                                                                                              |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **add**     | `add -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRATION_DATE -s SALE_PRICE -c COST_PRICE` `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -t THRESHOLD` |
+|**search**   | `search KEYWORD`                                                                                                                                                                                       |
+| **list**    | `list` `list -c` `list -s` `list -e`                                                                                                                                                                   |
+| **delete**  | `delete ITEM_INDEX` , `delete ITEM_NAME`                                                                                                                                                               |
+| **profit**  | `profit`                                                                                                                                                                                               |
+| **bye**     | `bye`                                                                                                                                                                                                  |
+| **sell**    | `sell -n ITEM_NAME -q ITEM_QUANTITY` `sell -n ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                             
 
 * [Back to table of contents](#table-of-contents)
 ---
@@ -676,7 +677,7 @@ If not, refer to Oracle's [guide](https://docs.oracle.com/en/java/javase/11/inst
 
 **Q**: Can I move my BinBash data to another computer? <br>
 **A**: Absolutely! Here's a step-by-step guide on how you can do this:
-1. On your current computer, locate the BinBash save file. The save file can be found at `<Location of BinBash.jar>/data/items.txt`. Make a copy of this file.
+1. On your current computer, locate the BinBash save file. The save file can be found at `<Location of binbash.jar>/data/items.txt`. Make a copy of this file.
 2. Ensure that BinBash has been installed on the other computer. Refer to [this section](#getting-started) for more details.
 3. On the other computer, create the `/data` folder in the BinBash install location if it does not exist.
 4. Then, paste the copied save file in this folder. If an existing save file already exists, choose to overwrite it.
