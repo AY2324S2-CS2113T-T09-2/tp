@@ -2,16 +2,12 @@ package seedu.binbash.inventory;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.binbash.item.Item;
-import seedu.binbash.item.OperationalItem;
-import seedu.binbash.item.PerishableOperationalItem;
-import seedu.binbash.item.PerishableRetailItem;
+import seedu.binbash.item.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ItemListTest {
 
@@ -120,5 +116,83 @@ class ItemListTest {
                 System.lineSeparator();
 
         assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void updateItemDataByName_validUpdates_success() throws Exception {
+        ArrayList<Item> items = new ArrayList<>();
+        RetailItem testItem = new RetailItem("Test Item", "A test item", 10, 20.0, 15.0, 5);
+        items.add(testItem);
+        ItemList itemList = new ItemList(items);
+
+        String newDescription = "An updated test item";
+        int newQuantity = 15;
+        LocalDate newExpirationDate = LocalDate.MIN; // Non-perishable
+        double newSalePrice = 25.0;
+        double newCostPrice = 18.0;
+        int newThreshold = 7;
+
+        String result = itemList.updateItemDataByName("Test Item", newDescription, newQuantity, newExpirationDate, newSalePrice, newCostPrice, newThreshold);
+
+        RetailItem updatedItem = (RetailItem) itemList.getItemList().get(0);
+
+        assertEquals(newDescription, updatedItem.getItemDescription());
+        assertEquals(newQuantity, updatedItem.getItemQuantity());
+        assertEquals(newSalePrice, updatedItem.getItemSalePrice());
+        assertEquals(newCostPrice, updatedItem.getItemCostPrice());
+        assertEquals(newThreshold, updatedItem.getItemThreshold());
+    }
+
+    @Test
+    public void updateItemDataByName_nonExistingItem_throwsException() {
+        ArrayList<Item> items = new ArrayList<>();
+        RetailItem testItem = new RetailItem("Test Item", "A test item", 10, 20.0, 15.0, 5);
+        items.add(testItem);
+        ItemList itemList = new ItemList(items);
+
+        Exception exception = assertThrows(Exception.class, () -> {
+            itemList.updateItemDataByName("Non-existing Item", "New description", 10, LocalDate.MIN, 30.0, 25.0, 5);
+        });
+
+        assertEquals("Item with name 'Non-existing Item' not found.", exception.getMessage());
+    }
+
+    @Test
+    public void updateItemDataByIndex_validUpdates_success() throws Exception {
+        ArrayList<Item> items = new ArrayList<>();
+        RetailItem testItem = new RetailItem("Test Item", "A test item", 10, 20.0, 15.0, 5);
+        items.add(testItem);
+        ItemList itemList = new ItemList(items);
+
+        String newDescription = "An updated test item";
+        int newQuantity = 15;
+        LocalDate newExpirationDate = LocalDate.MIN; // Non-perishable
+        double newSalePrice = 25.0;
+        double newCostPrice = 18.0;
+        int newThreshold = 7;
+
+        String result = itemList.updateItemDataByIndex(1, newDescription, newQuantity, newExpirationDate, newSalePrice, newCostPrice, newThreshold);
+
+        RetailItem updatedItem = (RetailItem) itemList.getItemList().get(0);
+
+        assertEquals(newDescription, updatedItem.getItemDescription());
+        assertEquals(newQuantity, updatedItem.getItemQuantity());
+        assertEquals(newSalePrice, updatedItem.getItemSalePrice());
+        assertEquals(newCostPrice, updatedItem.getItemCostPrice());
+        assertEquals(newThreshold, updatedItem.getItemThreshold());
+    }
+
+    @Test
+    public void updateItemDataByIndex_invalidIndex_throwsException() {
+        ArrayList<Item> items = new ArrayList<>();
+        RetailItem testItem = new RetailItem("Test Item", "A test item", 10, 20.0, 15.0, 5);
+        items.add(testItem);
+        ItemList itemList = new ItemList(items);
+
+        Exception exception = assertThrows(Exception.class, () -> {
+            itemList.updateItemDataByIndex(2, "New description", 10, LocalDate.MIN, 30.0, 25.0, 5);
+        });
+
+        assertEquals("Index 1 out of bounds for length 1", exception.getMessage());
     }
 }
