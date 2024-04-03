@@ -435,17 +435,40 @@ After using `list -p`, the sorted list will be:
 
 > This allows you to decrement the quantity of an item after it has been sold.
 
+#### Selling an item using item name
+
 Format: `sell -n ITEM_NAME -q ITEM_QUANTITY`
 
-* Both flags are mandatory.
-* The quantity given to this command represents the amount of item that you want to sell. This amount will be deducted
-from the existing quantity of the item in the inventory list.
+* Both flags `-n` and `-q` are mandatory.
+* The flag `-n` is used, meaning that the `item name` is used as an identifier to identify the item you wish to sell.
+* The quantity given to this command represents the amount of item that you want to sell. This amount will be reduced
+  from the existing quantity of the item in the inventory list.
 
 Examples: 
 
 - `sell -n oranges -q 20` This will deduct the quantity of "oranges" in your inventory list by 20.
 - `sell -n lego bricks -q 219` This will deduct the quantity of "lego bricks" in your inventory list by 219.
 
+#### Selling an item using item index
+
+Format: `sell -n ITEM_INDEX -q ITEM_QUANTITY`
+
+> :information_source: To determine the `index` of an item in your inventory, call the `list` command first, and
+> note down the number displayed next to your item of interest.
+
+* Both flags `-i` and `-q` are mandatory.
+* The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to sell.
+
+Examples:
+- `sell -n 1 -q 50` This will decrease the quantity of the item at index 1 in your inventory list by 50.
+- `sell -n 3 -q 35` This will decrease the quantity of the item at index 3 in your inventory list by 35.
+
+
+> :information_source: Note:
+> - Only one item identifier flag, `-n` or `-i`, can be used with the `sell` command to identify the item that you
+    > want to sell.
+> - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
+> - 
 * [Back to table of contents](#table-of-contents)
 ---
 
@@ -453,7 +476,12 @@ Examples:
 
 > This allows you to increment the quantity of an item after it has been restocked.
 
-* Both flags are mandatory.
+#### Restocking an item using item name
+
+Format: `restock -n ITEM_NAME -q ITEM_QUANTITY`
+
+* Both flags `-n` and `-q` are mandatory.
+* The flag `-n` is used, meaning that the `item name` is used as an identifier to identify the item you wish to restock.
 * The quantity given to this command represents the amount of item that you want to restock. This amount will be added
   to the existing quantity of the item in the inventory list.
 
@@ -461,6 +489,26 @@ Examples:
 
 - `restock -n apples -q 50` This will add the quantity of "apples" in your inventory list by 50.
 - `restock -n kaya spread -q 35` This will add the quantity of "kaya spread" in your inventory list by 35.
+
+#### Restocking an item using item index
+
+Format: `restock -n ITEM_INDEX -q ITEM_QUANTITY`
+
+> :information_source: To determine the `index` of an item in your inventory, call the `list` command first, and 
+> note down the number displayed next to your item of interest.
+
+* Both flags `-i` and `-q` are mandatory.
+* The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to update.
+
+Examples:
+- `restock -n 2 -q 10` This will add the quantity of the item at index 2 in your inventory list by 10.
+- `restock -n 1 -q 65` This will add the quantity of the item at index 1 in your inventory list by 65.
+
+
+> :information_source: Note:
+> - Only one item identifier flag, `-n` or `-i`, can be used with the `restock` command to identify the item that you
+    > want to update.
+> - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
 
 * [Back to table of contents](#table-of-contents)
 ---
@@ -514,7 +562,7 @@ Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and 
 > :information_source: Note:
 > - Only one item identifier flag, `-n` or `-i`, can be used with the `update` command to identify the item that you
 > want to update.
-> - There must be a minimum of one flag used, excluding the `-n` flag.
+> - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
 
 * [Back to table of contents](#table-of-contents)
 ---
