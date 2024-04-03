@@ -660,11 +660,6 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 | **bye**     | `bye`                                                                                                                                                                                                        |
 | **sell**    | `sell -n ITEM_NAME -q ITEM_QUANTITY` `sell -n ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                   
 
-sell -n ITEM_NAME -q ITEM_QUANTITY
-sell -n ITEM_INDEX -q ITEM_QUANTITY
-
-restock -n ITEM_INDEX -q ITEM_QUANTITY
-restock -n ITEM_INDEX -q ITEM_QUANTITY|
 * [Back to table of contents](#table-of-contents)
 ---
 
