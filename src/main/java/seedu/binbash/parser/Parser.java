@@ -99,7 +99,7 @@ public class Parser {
         } catch (InvalidArgumentException e) {
             throw new InvalidFormatException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidFormatException("Please enter a valid number.");
+            throw new InvalidCommandException("Please enter a valid number.");
         }
     }
 
@@ -109,7 +109,7 @@ public class Parser {
         } catch (InvalidArgumentException e) {
             throw new InvalidFormatException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidFormatException("Please enter a valid number.");
+            throw new InvalidCommandException("Please enter a valid number.");
         }
     }
 
