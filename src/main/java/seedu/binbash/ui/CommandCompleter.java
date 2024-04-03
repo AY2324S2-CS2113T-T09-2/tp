@@ -12,47 +12,53 @@ import java.util.ArrayList;
 
 public class CommandCompleter extends AggregateCompleter {
     private static final String COMMAND_GROUP_INVENTORY = "Inventory Management";
-    private static final String COMMAND_GROUP_IN_OUT = "Inflow / Outflow Actions";
+    private static final String COMMAND_GROUP_IN_OUT = "Item Inflow-Outflow Management";
     private static final String COMMAND_GROUP_QUERY = "Inventory Query";
     private static final String COMMAND_GROUP_OTHERS = "Others";
     private static final String SUFFIX = null;
     private static final String KEY = null;
     private static final boolean IS_COMPLETE_CANDIDATE = true;
-    private static final int FIRST_SORTED_ORDER_IN_COMMAND_GROUP = 1;
-    private static final int SECOND_SORTED_ORDER_IN_COMMAND_GROUP = 2;
-    private static final int THIRD_SORTED_ORDER_IN_COMMAND_GROUP = 3;
+    private static final int FIRST_SORTED_ORDER_ON_DISPLAY = 1;
+    private static final int SECOND_SORTED_ORDER_ON_DISPLAY = 2;
+    private static final int THIRD_SORTED_ORDER_ON_DISPLAY = 3;
+    private static final int FOURTH_SORTED_ORDER_ON_DISPLAY = 4;
+    private static final int FIFTH_SORTED_ORDER_ON_DISPLAY = 5;
+    private static final int SIXTH_SORTED_ORDER_ON_DISPLAY = 6;
+    private static final int SEVENTH_SORTED_ORDER_ON_DISPLAY = 7;
+    private static final int EIGHTH_SORTED_ORDER_ON_DISPLAY = 8;
+    private static final int NINTH_SORTED_ORDER_ON_DISPLAY = 9;
     private static final int OPTION_COMPLETER_START_POS = 1;
 
     private static ArgumentCompleter addCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("add", "add", COMMAND_GROUP_INVENTORY, "add an item to the inventory",
-                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FIRST_SORTED_ORDER_IN_COMMAND_GROUP)));
+                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FIRST_SORTED_ORDER_ON_DISPLAY)));
     private static ArgumentCompleter updateCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("update", "update", COMMAND_GROUP_INVENTORY, "update an item's fields",
-                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, SECOND_SORTED_ORDER_IN_COMMAND_GROUP)));
+                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, SECOND_SORTED_ORDER_ON_DISPLAY)));
     private static ArgumentCompleter deleteCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("delete", "delete", COMMAND_GROUP_INVENTORY, "delete an item from the inventory",
-                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, THIRD_SORTED_ORDER_IN_COMMAND_GROUP)));
+                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, THIRD_SORTED_ORDER_ON_DISPLAY)));
 
     private static ArgumentCompleter restockCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("restock", "restock", COMMAND_GROUP_IN_OUT, "restock an item",
-                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FIRST_SORTED_ORDER_IN_COMMAND_GROUP)));
+                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FOURTH_SORTED_ORDER_ON_DISPLAY)));
     private static ArgumentCompleter sellCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("sell", "sell", COMMAND_GROUP_IN_OUT, "sell an item",
-                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, SECOND_SORTED_ORDER_IN_COMMAND_GROUP)));
+                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FIFTH_SORTED_ORDER_ON_DISPLAY)));
 
     private static ArgumentCompleter searchCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("search", "search", COMMAND_GROUP_QUERY, "search for an item",
-                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FIRST_SORTED_ORDER_IN_COMMAND_GROUP)));
+                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, SIXTH_SORTED_ORDER_ON_DISPLAY)));
     private static ArgumentCompleter listCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("list", "list", COMMAND_GROUP_QUERY, "list inventory",
-                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, SECOND_SORTED_ORDER_IN_COMMAND_GROUP)));
+                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, SEVENTH_SORTED_ORDER_ON_DISPLAY)));
     private static ArgumentCompleter profitCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("profit", "profit", COMMAND_GROUP_QUERY, "display total profit",
-                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, THIRD_SORTED_ORDER_IN_COMMAND_GROUP)));
+                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, EIGHTH_SORTED_ORDER_ON_DISPLAY)));
 
     private static ArgumentCompleter byeCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("exit", "exit", COMMAND_GROUP_OTHERS, "exits application",
-                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FIRST_SORTED_ORDER_IN_COMMAND_GROUP)));
+                    SUFFIX, KEY, IS_COMPLETE_CANDIDATE, NINTH_SORTED_ORDER_ON_DISPLAY)));
 
     // note the order of completers to get depends on the order in which command option descriptions
     // are added in Parser.getAllCommandsOptionDescriptions
