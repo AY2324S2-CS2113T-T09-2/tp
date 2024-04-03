@@ -106,9 +106,9 @@ public class ItemList {
     }
 
     /**
-     * Returns the List<Item> that contains the Items stored in the ItemList.
+     * Returns the List that contains the Items stored in the ItemList.
      *
-     * @return A List<Item> containing Items stored in the ItemList.
+     * @return A List containing Items stored in the ItemList.
      */
     public List<Item> getItemList() {
         return itemList;
@@ -133,9 +133,9 @@ public class ItemList {
     }
 
     /**
-     * Returns the ArrayList<Integer> containing the sorted indexes of items in the ItemList.
+     * Returns the ArrayList containing the sorted indexes of items in the ItemList.
      *
-     * @return the ArrayList<Integer> containing the sorted indexes of items in the ItemList.
+     * @return the ArrayList containing the sorted indexes of items in the ItemList.
      */
     public ArrayList<Integer> getSortedOrder() {
         return sortedOrder;
@@ -211,9 +211,9 @@ public class ItemList {
     }
 
     /**
-     * Updates an Item in the ItemList by its index in the List<Item>.
+     * Updates an Item in the ItemList by its index in the inner List.
      *
-     * @param index The index of the Item in the inner List<Item>.
+     * @param index The index of the Item in the inner List.
      * @param itemDescription The new description of the item to be updated.
      * @param itemQuantity The new quantity of the item to be updated.
      * @param itemExpirationDate The new expiration date of the item to be updated.
