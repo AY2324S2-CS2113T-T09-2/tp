@@ -5,6 +5,9 @@ import java.util.regex.Pattern;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 
+/**
+ * Represents the execution of an add command that adds an item to inventory.
+ */
 public class AddCommand extends Command {
 
     public static final Pattern COMMAND_FORMAT = Pattern.compile(
