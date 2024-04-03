@@ -108,7 +108,7 @@ public class AddCommandParser extends DefaultParser {
         double itemSalePrice = TypeHandler.createNumber(salePrice).doubleValue();
         if (itemSalePrice < 0) {
             throw new InvalidArgumentException("Sale price must be at least 0.");
-        } else if (itemSalePrice == Integer.MAX_VALUE) {
+        } else if (itemSalePrice == Double.MAX_VALUE) {
             throw new InvalidArgumentException("Your sale price is too large");
         }
         return itemSalePrice;
@@ -120,7 +120,7 @@ public class AddCommandParser extends DefaultParser {
         double itemCostPrice = TypeHandler.createNumber(costPrice).doubleValue();
         if (itemCostPrice < 0) {
             throw new InvalidArgumentException("Cost price must be at least 0.");
-        } else if (itemCostPrice == Integer.MAX_VALUE) {
+        } else if (itemCostPrice == Double.MAX_VALUE) {
             throw new InvalidArgumentException("Your cost price is too large");
         }
         return itemCostPrice;
