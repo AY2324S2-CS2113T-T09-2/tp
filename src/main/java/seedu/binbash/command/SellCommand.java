@@ -6,6 +6,9 @@ import seedu.binbash.inventory.ItemList;
 
 import java.util.regex.Pattern;
 
+/**
+ * Represents the execution of a sell command that will decrease the quantity of an Item.
+ */
 public class SellCommand extends Command{
     public static final String COMMAND = "sell";
     public static final Pattern COMMAND_FORMAT = Pattern.compile(
@@ -18,6 +21,12 @@ public class SellCommand extends Command{
     private int index;
     private boolean isIndex;
 
+    /**
+     * Creates a new SellCommand with the specified item name and sell quantity.
+     *
+     * @param itemName The name of the item to sell.
+     * @param sellQuantity The quantity by which to sell the item.
+     */
     public SellCommand(String itemName, int sellQuantity) {
         this.itemName = itemName;
         this.sellQuantity = sellQuantity;
@@ -30,6 +39,12 @@ public class SellCommand extends Command{
         ));
     }
 
+    /**
+     * Creates a new SellCommand with the specified index and sell quantity.
+     *
+     * @param index The index of the item to sell.
+     * @param sellQuantity The quantity by which to sell the item.
+     */
     public SellCommand(int index, int sellQuantity) {
         commandLogger = new BinBashLogger(SellCommand.class.getName());
         this.index = index;
@@ -42,6 +57,9 @@ public class SellCommand extends Command{
         ));
     }
 
+    /**
+     * Marks this SellCommand as using an index instead of an item name.
+     */
     public void setIsIndex() {
         this.isIndex = true;
     }

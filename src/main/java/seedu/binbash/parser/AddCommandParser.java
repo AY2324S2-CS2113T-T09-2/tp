@@ -16,10 +16,16 @@ import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.ArrayList;
 
+/**
+ * Parses command line arguments for creating a AddCommand.
+ */
 public class AddCommandParser extends DefaultParser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private ArrayList<OptDesc> optionDescriptions;
 
+    /**
+     * Creates a new AddCommandParser with the necessary options and option descriptions.
+     */
     public AddCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
@@ -34,12 +40,23 @@ public class AddCommandParser extends DefaultParser {
             .addThresholdOption(false, "Minimum quantity, below which an alert will be displayed");
     }
 
-
-
+    /**
+     * Gets the option descriptions for the list command.
+     *
+     * @return The list of option descriptions.
+     */
     public ArrayList<OptDesc> getOptionDecriptions() {
         return optionDescriptions;
     }
 
+    /**
+     * Parses the command line arguments to create an AddCommand.
+     *
+     * @param commandArgs The command line arguments to parse.
+     * @return An AddCommand with the specified item details.
+     * @throws ParseException If there is an error parsing the command arguments.
+     * @throws InvalidArgumentException If there is an invalid argument in the command.
+     */
     public AddCommand parse(String[] commandArgs) throws ParseException, InvalidArgumentException {
 
         CommandLine commandLine = super.parse(options, commandArgs);

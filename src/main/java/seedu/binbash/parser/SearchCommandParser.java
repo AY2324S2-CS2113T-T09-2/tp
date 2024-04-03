@@ -13,9 +13,15 @@ import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Parses command line arguments for creating a SearchCommand.
+ */
 public class SearchCommandParser extends DefaultParser {
     private ArrayList<OptDesc> optionDescriptions;
 
+    /**
+     * Creates a new SearchCommandParser with the necessary options and option descriptions.
+     */
     public SearchCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
@@ -29,10 +35,22 @@ public class SearchCommandParser extends DefaultParser {
             .addListOption(false, "Lists the first n results");
     }
 
+    /**
+     * Gets the option descriptions for the SearchCommandParser.
+     *
+     * @return The list of option descriptions.
+     */
     public ArrayList<OptDesc> getOptionDecriptions() {
         return optionDescriptions;
     }
 
+    /**
+     * Parses the command line arguments to create a SearchCommand.
+     *
+     * @param commandArgs The command line arguments.
+     * @return The parsed SearchCommand.
+     * @throws ParseException If an error occurs during parsing.
+     */
     public SearchCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
 
@@ -119,6 +137,14 @@ public class SearchCommandParser extends DefaultParser {
         return searchCommand;
     }
 
+    /**
+     * Parses the range argument for quantity, cost price, sale price, or expiry date options.
+     *
+     * @param argument The range argument string.
+     * @param option   The option for which the range argument is parsed.
+     * @return An array containing the minimum and maximum values of the range.
+     * @throws ParseException If the range argument is not in the correct format.
+     */
     String[] parseRangeArgument(String argument, String option) throws ParseException {
         if (!argument.contains("..") || argument.length() < 3) {
             throw new ParseException("Format for " + option + " option: {min}..{max}. "

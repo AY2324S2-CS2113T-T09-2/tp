@@ -14,10 +14,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+/**
+ * Parses command line arguments for creating an UpdateCommand.
+ */
 public class UpdateCommandParser extends DefaultParser {
     private ArrayList<OptDesc> optionDescriptions;
     private boolean hasOption;
 
+    /**
+     * Creates a new UpdateCommandParser with the necessary options and option descriptions.
+     */
     public UpdateCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
@@ -33,6 +39,11 @@ public class UpdateCommandParser extends DefaultParser {
                         "Update threshold of item");
     }
 
+    /**
+     * Gets the option descriptions for the UpdateCommandParser.
+     *
+     * @return The list of option descriptions.
+     */
     public ArrayList<OptDesc> getOptionDecriptions() {
         return optionDescriptions;
     }
@@ -41,6 +52,14 @@ public class UpdateCommandParser extends DefaultParser {
         this.hasOption = hasOption;
     }
 
+    /**
+     * Parses the command line arguments to create an UpdateCommand.
+     *
+     * @param commandArgs The command line arguments.
+     * @return The parsed UpdateCommand.
+     * @throws InvalidArgumentException If an invalid argument is encountered during parsing.
+     * @throws ParseException If an error occurs during parsing.
+     */
     public UpdateCommand parse(String[] commandArgs) throws InvalidArgumentException, ParseException {
         CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
         UpdateCommand updateCommand = getUpdateCommand(commandLine);

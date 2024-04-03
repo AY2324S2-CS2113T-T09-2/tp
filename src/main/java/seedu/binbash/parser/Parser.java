@@ -19,6 +19,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.ArrayList;
 
+/**
+ * Parses user input to generate commands for managing inventory.
+ */
 public class Parser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private AddCommandParser addCommandParser;
@@ -39,6 +42,11 @@ public class Parser {
         deleteCommandParser = new DeleteCommandParser();
     }
 
+    /**
+     * Gets the option descriptions for all commands.
+     *
+     * @return The option descriptions for all commands.
+     */
     public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
         ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>() {
             {
@@ -54,6 +62,13 @@ public class Parser {
         return allCommandsOptionDescriptions;
     }
 
+    /**
+     * Parses a command from user input.
+     *
+     * @param userInput The user input to parse.
+     * @return The parsed command.
+     * @throws InvalidCommandException If the command is invalid or cannot be parsed.
+     */
     public Command parseCommand(String userInput) throws InvalidCommandException {
         String[] tokens = userInput.trim().split("\\s+"); // Tokenize user input
         String commandString = tokens[0].toLowerCase();

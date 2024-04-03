@@ -21,6 +21,12 @@ public class RestockCommand extends Command{
     private int index;
     private boolean isIndex = false;
 
+    /**
+     * Creates a new RestockCommand with the specified item name and restock quantity.
+     *
+     * @param itemName The name of the item to restock.
+     * @param restockQuantity The quantity by which to restock the item.
+     */
     public RestockCommand(String itemName, int restockQuantity) {
         this.itemName = itemName;
         this.restockQuantity = restockQuantity;
@@ -33,6 +39,12 @@ public class RestockCommand extends Command{
         ));
     }
 
+    /**
+     * Creates a new RestockCommand with the specified index and restock quantity.
+     *
+     * @param index The index of the item to restock.
+     * @param restockQuantity The quantity by which to restock the item.
+     */
     public RestockCommand(int index, int restockQuantity) {
         commandLogger = new BinBashLogger(RestockCommand.class.getName());
         this.index = index;
@@ -45,6 +57,9 @@ public class RestockCommand extends Command{
         ));
     }
 
+    /**
+     * Marks this RestockCommand as using an index instead of an item name.
+     */
     public void setIsIndex() {
         this.isIndex = true;
     }

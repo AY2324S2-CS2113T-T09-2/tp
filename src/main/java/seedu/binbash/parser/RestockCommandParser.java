@@ -12,10 +12,16 @@ import seedu.binbash.logger.BinBashLogger;
 
 import java.util.ArrayList;
 
+/**
+ * Parses command line arguments for creating a RestockCommand.
+ */
 public class RestockCommandParser extends DefaultParser {
     private static final BinBashLogger binBashLogger = new BinBashLogger(RestockCommandParser.class.getName());
     private ArrayList<OptDesc> optionDescriptions;
 
+    /**
+     * Creates a new RestockCommandParser with the necessary options and option descriptions.
+     */
     public RestockCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
@@ -24,10 +30,22 @@ public class RestockCommandParser extends DefaultParser {
             .addQuantityOption(true, "Units of item to restock.");
     }
 
+    /**
+     * Gets the option descriptions for the RestockCommandParser.
+     *
+     * @return The list of option descriptions.
+     */
     public ArrayList<OptDesc> getOptionDecriptions() {
         return optionDescriptions;
     }
 
+    /**
+     * Parses the command line arguments to create a RestockCommand.
+     *
+     * @param commandArgs The command line arguments.
+     * @return The parsed RestockCommand.
+     * @throws ParseException If an error occurs during parsing.
+     */
     public RestockCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
         RestockCommand restockCommand;

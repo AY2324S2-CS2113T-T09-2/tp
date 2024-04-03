@@ -12,10 +12,18 @@ import seedu.binbash.logger.BinBashLogger;
 
 import java.util.ArrayList;
 
+
+/**
+ * Parses command line arguments for creating a SellCommand.
+ */
 public class SellCommandParser extends DefaultParser {
     private static final BinBashLogger binBashLogger = new BinBashLogger(SellCommandParser.class.getName());
     private ArrayList<OptDesc> optionDescriptions;
 
+
+    /**
+     * Creates a new SellCommandParser with the necessary options and option descriptions.
+     */
     public SellCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
@@ -24,10 +32,24 @@ public class SellCommandParser extends DefaultParser {
             .addQuantityOption(true, "Units of item sold.");
     }
 
+
+    /**
+     * Gets the option descriptions for the SellCommandParser.
+     *
+     * @return The list of option descriptions.
+     */
     public ArrayList<OptDesc> getOptionDecriptions() {
         return optionDescriptions;
     }
 
+
+    /**
+     * Parses the command line arguments to create a SellCommand.
+     *
+     * @param commandArgs The command line arguments.
+     * @return The parsed SellCommand.
+     * @throws ParseException If an error occurs during parsing.
+     */
     public SellCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
         SellCommand sellCommand;
