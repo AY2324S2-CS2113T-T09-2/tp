@@ -5,7 +5,6 @@ import seedu.binbash.inventory.ItemList;
 import seedu.binbash.item.Item;
 import seedu.binbash.logger.BinBashLogger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
