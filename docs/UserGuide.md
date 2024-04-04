@@ -127,6 +127,9 @@ Have problems loading up BinBash? Fret not, here's how to troubleshoot some of t
    If you encounter an error about not being able to create or read/write from the data directory or file, this usually means there's a permissions issue on your system. Here's how to handle it:
     - **Check Permissions**: Ensure that BinBash has the right permissions to access the folders it needs. Right-click on the directory and check its properties to make sure reading and writing are allowed.
 
+3. **Unable to Access System Terminal**:<br>
+   Ensure that you're using a recent version of your Operating System's Terminal application. For Windows, consider using Powershell or Terminal instead of Command Prompt.
+
 * [Back to table of contents](#table-of-contents)
 ---
 
@@ -175,6 +178,21 @@ identify and differentiate the information that you give to BinBash. The followi
 > - The flags can be placed in any order. There is no specific order that you have to abide by.
 > - Words in `UPPER_CASE` are the arguments that are meant to be supplied by you. 
 > For example, in `add -n ITEM_NAME`, `ITEM_NAME` would represent the name of the item you are adding (e.g., `add -n apple`).
+
+### Command auto-suggestions
+
+BinBash's command suggestion feature can be activated by pressing the `tab` key which either:
+1. Suggests a lists of all valid options on first press; then cycles through this list on subsequent presses; or
+2. Autocompletes the command if only 1 valid option is found
+Each suggestion is accompanied by a brief description.
+
+To use this feature on command flags, type `-` before pressing `tab`.
+As before, each flag is accompanied by an explanation.
+
+To exit command suggestion mode simply press any other key.
+
+> ℹ️ This feature is particularly handy when first learning to use BinBash. Starting from a blank input, press tab to see every command.
+> Likewise within each command, type `-` followed by `tab` to give a quick overview of all possible options.
 
 * [Back to table of contents](#table-of-contents)
 ---
