@@ -1,0 +1,50 @@
+@startuml
+
+    participant "BinBash" as BinBash
+    participant "userCommand:RestockItem" as RestockItem
+    participant "itemList:ItemList" as ItemList
+    participant ":Item" as Item
+    participant "userInterface:Ui" as Ui
+
+
+
+    activate BinBash
+    BinBash -> RestockItem : 1. execute(itemList)
+    activate RestockItem
+
+    alt isIndex = true
+        RestockItem -> ItemList : 2. sellOrRestockItem(index)
+        activate ItemList
+        ItemList -> Item : 3. sellOrRestock()
+        activate Item
+        Item --> ItemList : 4.
+        deactivate Item
+        ItemList --> RestockItem : 5. output:String
+        deactivate ItemList
+
+
+    else isIndex = false
+        RestockItem -> ItemList : 2. sellOrRestockItem(itemName)
+        activate ItemList
+        ItemList -> Item : 3. sellOrRestock()
+        activate Item
+        Item --> ItemList : 4.
+        deactivate Item
+        ItemList --> RestockItem : 5. output:String
+        deactivate ItemList
+
+    end group
+
+    RestockItem --> BinBash : 6. true
+    deactivate RestockItem
+
+    BinBash -> RestockItem: 7. getExecutionUiOutput()
+    activate RestockItem
+    RestockItem --> BinBash: 8. executionUiOutput:String
+    deactivate RestockItem
+    BinBash -> Ui : 9. talk(executionUiOutput)
+    activate Ui
+    Ui --> BinBash: 10.
+    deactivate Ui
+
+@enduml
