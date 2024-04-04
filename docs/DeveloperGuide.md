@@ -318,7 +318,9 @@ The ListCommand is concerned only with the execution of the listing operation. I
 
 ### Delete Item
 
-TODO: Sequence diagram of DeleteCommand
+![DeleteSequenceDiagram](images/DeleteSequenceDiagram.png)
+
+API: [`DeleteCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/DeleteCommand.java)
 
 The `delete` command deletes an object of the `Item` class or any of its subclasses from the inventory list and 
 prints a formatted message stating the details of the items that was deleted. 
@@ -343,6 +345,11 @@ until it finds a `Item` object whose name `equals` to that of the search paramet
 names with the search parameter, it will store the index in the `targetIndex` variable. This `deleteItem(String keyword)` method will
 then call another `deleteItem(int index)` method, but this time, the parameter passed is an integer. The execution after this
 will be exactly the same as passing an `Integer` to the `deleteItem(int index)` method mentions above.
+
+Furthermore, the `deleteItem(int index)` method will be accessing a `ArrayList<Integer` called `sortedOrder` which contains
+the index mapping between the `Item` objects stored in `itemList` and the index of `Item` printed to the user. This
+functionality is implemented to ensure that the indexes of the sorted `list` shown to the user can be used as reference
+for the deletion of items using `ITME_INDEX`.
 
 Upon completion of either operation, the `execute()` method sets the `hasToSave` flag to true, signaling the need to persist changes to storage. This entire process is logged at various levels, providing a trail for audit and debugging purposes.
 
