@@ -275,8 +275,43 @@ access to `ItemList`.
 
 ### List all items in inventory
 
-The `ListCommand` class is designed to handle the operation of listing all items in the inventory. When the `execute()` method is called, it retrieves the complete list of items from the `ItemList`
+![ListSequenceDiagram](images/ListSequenceDiagram.png)
+
+API: [`ListCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/ListCommand.java)
+
+The `ListCommand` class is designed to handle the operation of listing all items in the inventory. When the `execute()`
+method is called, it retrieves the complete list of items from the `ItemList`
 and assigns it to `executionUiOutput`.
+
+A sorting functionality is implemented within the `list` command. Depending on which flag is set, the list of 
+`Items` retrieved will be sorted in a certain order based on the specified flags.
+
+- `list` retrieves the list of `Item` without sorting.
+- `list -c` retrieves the list of `Item` sorted based on `itemCostPrice` value.
+- `list -e` retrieves the list of `Item` sorted based on `itemExpirationDate` value. Only items of the `PerishableOperationlItem` and `PerishableRetailItem` classes are retrieved.
+- `list -p` retrieves the list of `Item` sorted based on `totaRevenue - totalCost` value. Only items with of the `RetailItem` class are retrieved.
+- `list -s` retrieves the list of `Item` sorted based on `itemSalePrice` value. Only items of the `RetailItem` class are retrieved.
+
+The `ListCommand` has two constructors, `ListCommand()` and `ListCommand(SortOptionEnum)`, the former is used when no sorting
+is specified, the latter is used when the list is to be sorted where `SortOptionEnum` will be the type of sorting used.
+The `ListCommand()` constructor will set the `sortOption` varialbe to `SortOptionEnum.NONE` while the `ListCommand(SortOptionEnum)`
+will set `sortOption` based on the `SortOptionEnum` value passed into hte constructor.
+
+The enum `SortOptionEnum` contains four values `NONE`, `EXPIRY`, `SALE`, `COST`, `PROFIT`
+- `NONE` List not to be sorted
+- `EXPIRY` List sorted based on `itemExpirationDate` value.
+- `SALE` List sorted based on `itemSalePrice` value.
+- `COST` List sorted based on `itemSalePrice` value.
+- `PROFIT` List sorted based on `totaRevenue - totalCost` value.
+
+When the `execute(ItemList)` method is called, it first retrieves a `List` from the `ItemList` object passed that will
+contain all `Item` objects in the inventory. The execution will then defer depending on the `sortOption` value, which 
+can be referenced in the sequence diagram provided above.
+
+To ensure that the index of items in the printed list can be used as `ITEM_INDEX` values for the `update`, `delete`, 
+`sell` and `restock` commands, an `ArrayList<Integer>` called `sortedOrder` will be used to map the indexes of the 
+items printed to their indexes in `itemList`. `sortedOrder` will be updated on startup, adding of items, deleting of 
+items, and listing of items to ensure that the mapping is always accurate when it is referenced.
 
 #### Implementation Notes ####
 The ListCommand is concerned only with the execution of the listing operation. It follows a straightforward process that relies on the `ItemList` to format the list of items, ensuring separation of concerns between command execution and UI presentation.
