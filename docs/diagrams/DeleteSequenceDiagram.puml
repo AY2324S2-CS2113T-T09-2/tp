@@ -24,6 +24,12 @@ else else
 Delete_Command -> Item_List : deleteItem(keyword)
 activate Item_List
 Item_List -> Item_List : deleteItem(targetIndex)
+
+note right
+targetIndex is obtained by searching
+an `Item` with `keyword` as its
+name and returning its index.
+end note
 activate Item_List
 return output
 return output
