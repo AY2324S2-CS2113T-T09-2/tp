@@ -95,6 +95,12 @@ public class SearchCommand extends Command {
         this.numberOfResults = numberOfResults;
     }
 
+    /**
+     * Finds all items that match a given query then converts them into a string to present to the user.
+     *
+     * @param itemList The itemList instance with which to search through the master item list.
+     * @return True if the number of found items is no more than numberOfResults, false otherwise.
+     */
     public boolean execute(ItemList itemList) {
         ArrayList<Item> foundItems = itemList.getSearchAssistant()
             .searchByName(nameField)
