@@ -273,7 +273,7 @@ Separation of Concerns is applied to ensure the `Ui` is only responsible for pri
 of adding an item and displaying messages. This way, only classes relevant to the logic of adding an item will have 
 access to `ItemList`.
 
-### List all items in inventory
+### List command
 
 ![ListSequenceDiagram](images/ListSequenceDiagram.png)
 
@@ -405,7 +405,7 @@ The incorporation of a helper method `updateItemData` in the `ItemList` class en
 maintainability by centralizing the logic for updating item attributes. This method can be readily adjusted or expanded
 to include new attributes or validation rules in the future.
 
-### Delete Item
+### Delete command
 
 ![DeleteSequenceDiagram](images/DeleteSequenceDiagram.png)
 
@@ -435,10 +435,17 @@ names with the search parameter, it will store the index in the `targetIndex` va
 then call another `deleteItem(int index)` method, but this time, the parameter passed is an integer. The execution after this
 will be exactly the same as passing an `Integer` to the `deleteItem(int index)` method mentions above.
 
-Furthermore, the `deleteItem(int index)` method will be accessing a `ArrayList<Integer` called `sortedOrder` which contains
+Furthermore, the `deleteItem(int index)` method will be accessing a `ArrayList<Integer>` called `sortedOrder` which contains
 the index mapping between the `Item` objects stored in `itemList` and the index of `Item` printed to the user. This
-functionality is implemented to ensure that the indexes of the sorted `list` shown to the user can be used as reference
+functionality is implemented to ensure that the indexes of the sorted list shown to the user can be used as references
 for the deletion of items using `ITME_INDEX`.
+
+Example:
+
+* For itemList = {item1, item2, item3, item4}
+* If sortedList = {item2, item4, item1, item3}
+* then sortedOrder = {1, 3, 0, 2}
+
 
 Upon completion of either operation, the `execute()` method sets the `hasToSave` flag to true, signaling the need to persist changes to storage. This entire process is logged at various levels, providing a trail for audit and debugging purposes.
 
