@@ -105,6 +105,6 @@ public class SearchCommand extends Command {
             .searchByExpiryDateBetween(expiryDateRange[0], expiryDateRange[1])
             .getFoundItems(numberOfResults);
         executionUiOutput = itemList.printList(foundItems);
-        return true;
+        return foundItems.size() <= numberOfResults;
     }
 }
