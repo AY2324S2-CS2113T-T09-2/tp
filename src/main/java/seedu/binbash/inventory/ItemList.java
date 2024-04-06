@@ -357,6 +357,8 @@ public class ItemList {
             int totalUnitsSold = retailItem.getTotalUnitsSold();
             retailItem.setTotalUnitsSold(totalUnitsSold + quantityToUpdateBy);
             break;
+        default:
+            throw new InvalidArgumentException("Invalid argument!");
         }
 
         String output = "Great! I have updated the quantity of the item for you:" + System.lineSeparator()
