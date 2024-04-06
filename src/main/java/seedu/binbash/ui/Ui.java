@@ -10,7 +10,7 @@ import org.jline.reader.UserInterruptException;
 import org.jline.builtins.Completers.OptDesc;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
-import seedu.binbash.command.QuoteCommand;
+import seedu.binbash.command.QuotesCommand;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 import java.io.IOException;
@@ -131,8 +131,8 @@ public class Ui {
     }
 
     public void handleUserInput(String userInput, ItemList itemList) {
-        if (userInput.trim().equalsIgnoreCase("quote")) {
-            QuoteCommand quoteCommand = new QuoteCommand();
+        if (userInput.trim().equalsIgnoreCase("quotes")) {
+            QuotesCommand quoteCommand = new QuotesCommand();
             quoteCommand.setUi(this); // Assuming 'this' refers to the current Ui object
             quoteCommand.execute(itemList);
         }

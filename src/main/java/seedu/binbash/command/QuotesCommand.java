@@ -4,12 +4,12 @@ import seedu.binbash.inventory.ItemList;
 import seedu.binbash.ui.Ui;
 import seedu.binbash.logger.BinBashLogger;
 
-public class QuoteCommand extends Command {
+public class QuotesCommand extends Command {
     private Ui ui;
 
-    public QuoteCommand() {
-        commandLogger = new BinBashLogger(QuoteCommand.class.getName());
-        commandLogger.info("Creating Quote Command...");
+    public QuotesCommand() {
+        commandLogger = new BinBashLogger(QuotesCommand.class.getName());
+        commandLogger.info("Creating Quotes Command...");
     }
 
     @Override
@@ -21,7 +21,7 @@ public class QuoteCommand extends Command {
         String randomMessage = ui.getRandomMessage();
         ui.talk(randomMessage);
         executionUiOutput = randomMessage;
-        hasToSave = false; // Assuming you don't need to save after executing the Quote command
+        hasToSave = false; // Assuming you don't need to save after executing the Quotes command
         return true;
     }
 
