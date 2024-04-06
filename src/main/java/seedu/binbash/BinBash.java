@@ -55,8 +55,6 @@ public class BinBash {
             } catch (BinBashException e) {
                 userInterface.talk(e.getMessage());
                 logger.warning("BinBashException occurred: " + e.getMessage()); // Logging
-            } catch (Exception e) {
-                logger.severe("Unexpected error occurred: " + e.getMessage()); // Logging
             }
         }
         logger.info("BinBash exiting...");
