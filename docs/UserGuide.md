@@ -324,7 +324,7 @@ Examples:
    Noted! I have added the following item into your inventory:
     
    [P][O] milk
-       description: to make cofee
+       description: to make coffee
        quantity: 2
        cost price: $1.30
        expiry date: 03-10-2024
@@ -651,6 +651,18 @@ Format: `bye`
 * [Back to table of contents](#table-of-contents)
 ---
 
+### Getting Inspirational Quotes: `quote`
+
+> This command fetches a random quote to uplift your spirits.
+
+Need a little motivation? The quote command retrieves a random inspirational message to brighten your day. Whether you're feeling stuck or just need a boost, BinBash has got you covered!
+
+Format: `quote`
+
+> ℹ️ BinBash brings you a variety of inspiring messages to keep you motivated throughout your inventory management journey. So go ahead, type quote and let the positivity flow!
+* [Back to table of contents](#table-of-contents)
+---
+
 ### Saving and Loading data
 
 Unsure as to how you can save your BinBash data? Don't worry! Your data is automatically saved to your local storage. No manual saving of data is required.
@@ -668,15 +680,16 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 
 ## Command Summary
 
-| **Commands** | **Usage**                                                                                                                                                                                              |
-|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **add**     | `add -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRATION_DATE -s SALE_PRICE -c COST_PRICE` `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -t THRESHOLD` |
-|**search**   | `search KEYWORD`                                                                                                                                                                                       |
-| **list**    | `list` `list -c` `list -s` `list -e`                                                                                                                                                                   |
-| **delete**  | `delete ITEM_INDEX` , `delete ITEM_NAME`                                                                                                                                                               |
-| **profit**  | `profit`                                                                                                                                                                                               |
-| **bye**     | `bye`                                                                                                                                                                                                  |
-| **sell**    | `sell -n ITEM_NAME -q ITEM_QUANTITY` `sell -n ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                             
+| **Commands** | **Usage**                                                                                                                                                                                                    |
+|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **add**      | `add -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRATION_DATE -s SALE_PRICE -c COST_PRICE` `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -t THRESHOLD` |
+| **search**   | `search KEYWORD`                                                                                                                                                                                             |
+| **list**     | `list` `list -c` `list -s` `list -e`                                                                                                                                                                         |
+| **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME`                                                                                                                                                                     |
+| **profit**   | `profit`                                                                                                                                                                                                     |
+| **bye**      | `bye`                                                                                                                                                                                                        |
+| **quote**    | `quote`                                                                                                                                                                                                      |
+| **sell**     | `sell -n ITEM_NAME -q ITEM_QUANTITY` `sell -n ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                   |
 
 * [Back to table of contents](#table-of-contents)
 ---
