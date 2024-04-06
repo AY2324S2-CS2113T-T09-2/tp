@@ -32,8 +32,8 @@ public class SearchAssistant {
      * Returns at most the desired number of items found
      *
      * @param numberOfResults The number of results desired
-     * @return A list of the first numberOfResults items in foundItems if at least numberOfResults items
-     * in foundItems, the full foundItems list otherwise
+     * @return A list of the first numberOfResults items in foundItems if at least numberOfResults items 
+     *     in foundItems, the full foundItems list otherwise
      */
     public ArrayList<Item> getFoundItems(int numberOfResults) {
         if (numberOfResults > foundItems.size()) {
@@ -120,10 +120,10 @@ public class SearchAssistant {
     }
 
     /**
-     * Finds all items that cost between $<from> and $<to>, inclusive.
+     * Finds all items that cost between two values, inclusive.
      *
-     * @param from The lower bound of the range.
-     * @param to The upper bound of the range.
+     * @param from The first value.
+     * @param to The second value.
      * @return The current instance of SearchAssistant.
      */
     public SearchAssistant searchByCostPriceBetween(double from, double to) {
@@ -165,10 +165,10 @@ public class SearchAssistant {
     }
 
     /**
-     * Finds all items that sell for between $<from> and $<to>, inclusive.
+     * Finds all items that sell for between two values, inclusive.
      *
-     * @param from The lower bound of the range.
-     * @param to The upper bound of the range.
+     * @param from The first value.
+     * @param to The second value.
      * @return The current instance of SearchAssistant.
      */
     public SearchAssistant searchBySalePriceBetween(double from, double to) {

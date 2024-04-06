@@ -35,8 +35,8 @@ public class Ui {
      * instance per program run.
      *
      * @param allCommandsOptionDescriptions A list of option descriptions for all commands in this program.
-     * @throws RuntimeException If fails to get an instance of the system terminal.
      * @return The current instance of Ui.
+     * @throws RuntimeException If fails to get an instance of the system terminal.
      */
     public Ui(ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions) {
         System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
