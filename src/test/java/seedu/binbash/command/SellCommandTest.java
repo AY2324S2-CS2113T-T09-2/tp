@@ -26,7 +26,7 @@ public class SellCommandTest {
         Item updatedItem = itemList.findItemByName(itemName);
         assertEquals(4, updatedItem.getItemQuantity());
     }
-    
+
     @Test
     void execute_itemNotFound_noChangeInItemList() {
         ItemList itemList = new ItemList(new ArrayList<Item>());
