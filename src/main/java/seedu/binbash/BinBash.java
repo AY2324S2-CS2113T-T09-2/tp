@@ -2,6 +2,7 @@ package seedu.binbash;
 
 
 import seedu.binbash.command.ByeCommand;
+import seedu.binbash.command.QuoteCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.inventory.ItemList;
@@ -11,11 +12,11 @@ import seedu.binbash.storage.Storage;
 import seedu.binbash.ui.Ui;
 
 public class BinBash {
-    private Ui userInterface;
-    private ItemList itemList;
-    private Parser inputParser;
-    private Storage storage;
-    private BinBashLogger logger;
+    private final Ui userInterface;
+    private final ItemList itemList;
+    private final Parser inputParser;
+    private final Storage storage;
+    private final BinBashLogger logger;
 
     public BinBash() {
         logger = new BinBashLogger(BinBash.class.getName());
@@ -30,14 +31,18 @@ public class BinBash {
 
         userInterface.greet();
         userInterface.talk(itemList.getProfitMargin());
+        userInterface.talk(userInterface.getRandomMessage());
 
         while (userInterface.isUserActive()) {
             String userInput = userInterface.readUserCommand();
+            userInterface.handleUserInput(userInput, itemList); // Call handleUserInput
             try {
                 Command userCommand = inputParser.parseCommand(userInput);
 
                 if (userCommand instanceof ByeCommand) {
                     userInterface.setUserAsInactive();
+                } else if (userCommand instanceof QuoteCommand) { // Handle QuoteCommand
+                    userCommand.execute(itemList);
                 }
 
                 userCommand.execute(itemList);
@@ -49,11 +54,14 @@ public class BinBash {
 
             } catch (BinBashException e) {
                 userInterface.talk(e.getMessage());
+                logger.warning("BinBashException occurred: " + e.getMessage()); // Logging
+            } catch (Exception e) {
+                logger.severe("Unexpected error occurred: " + e.getMessage()); // Logging
             }
         }
         logger.info("BinBash exiting...");
     }
-    
+
     /**
      * Main entry-point for the BinBash application.
      */

@@ -8,6 +8,7 @@ import seedu.binbash.command.UpdateCommand;
 import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
+import seedu.binbash.command.QuoteCommand;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.exceptions.InvalidArgumentException;
 
@@ -24,13 +25,13 @@ import java.util.ArrayList;
  */
 public class Parser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    private AddCommandParser addCommandParser;
-    private SearchCommandParser searchCommandParser;
-    private RestockCommandParser restockCommandParser;
-    private SellCommandParser sellCommandParser;
-    private ListCommandParser listCommandParser;
-    private UpdateCommandParser updateCommandParser;
-    private DeleteCommandParser deleteCommandParser;
+    private final AddCommandParser addCommandParser;
+    private final SearchCommandParser searchCommandParser;
+    private final RestockCommandParser restockCommandParser;
+    private final SellCommandParser sellCommandParser;
+    private final ListCommandParser listCommandParser;
+    private final UpdateCommandParser updateCommandParser;
+    private final DeleteCommandParser deleteCommandParser;
 
     public Parser() {
         addCommandParser = new AddCommandParser();
@@ -95,6 +96,8 @@ public class Parser {
             return parseUpdateCommand(commandArgs);
         case "profit":
             return new ProfitCommand();
+        case "quote":
+            return new QuoteCommand();
         default:
             throw new InvalidCommandException("Invalid command: "  + commandString);
         }
@@ -159,4 +162,5 @@ public class Parser {
             throw new InvalidCommandException(e.getMessage());
         }
     }
+
 }
