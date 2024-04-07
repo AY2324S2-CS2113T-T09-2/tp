@@ -148,7 +148,7 @@ types of items in your inventory list. They are:
 
 3. `Perishable Retail Item`: These are retail items that have an expiry date and need to be sold before they spoil.
 This category is crucial for businesses dealing with food products or other perishable goods.
-    - **Example**: AA perishable retail item could be a carton of milk to be sold, which has an expiry date.
+    - **Example**: A perishable retail item could be a carton of milk to be sold, which has an expiry date.
 
 4. `Perishable Operational Item`: Similar to perishable retail items, these are operational items that have a limited shelf life.
     - **Example**: A bottle of disinfectant used to sanitize the office, with an expiry date.
