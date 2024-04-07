@@ -12,31 +12,57 @@ import seedu.binbash.logger.BinBashLogger;
 
 import java.util.ArrayList;
 
+/**
+ * Parses command line arguments for creating a RestockCommand.
+ */
 public class RestockCommandParser extends DefaultParser {
     private static final BinBashLogger binBashLogger = new BinBashLogger(RestockCommandParser.class.getName());
     private ArrayList<OptDesc> optionDescriptions;
 
+    /**
+     * Creates a new RestockCommandParser with the necessary options and option descriptions.
+     */
     public RestockCommandParser() {
         options = new Options();
         optionDescriptions = new ArrayList<>();
         new CommandOptionAdder(options, optionDescriptions)
-            .addNameOption(true, "Name of item.")
+            .addItemNameAndIndexOptionGroup()
             .addQuantityOption(true, "Units of item to restock.");
     }
 
+    /**
+     * Gets the option descriptions for the RestockCommandParser.
+     *
+     * @return The list of option descriptions.
+     */
     public ArrayList<OptDesc> getOptionDecriptions() {
         return optionDescriptions;
     }
 
+    /**
+     * Parses the command line arguments to create a RestockCommand.
+     *
+     * @param commandArgs The command line arguments.
+     * @return The parsed RestockCommand.
+     * @throws ParseException If an error occurs during parsing.
+     */
     public RestockCommand parse(String[] commandArgs) throws ParseException {
-        CommandLine commandLine = super.parse(options, commandArgs);
+        CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
+        RestockCommand restockCommand;
+        String restockQuantity = commandLine.getOptionValue("quantity");
+        int itemRestockQuantity = TypeHandler.createNumber(restockQuantity).intValue();
 
-        String itemName = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
-        int restockQuantity = TypeHandler.createNumber(
-                commandLine.getOptionValue("quantity")).intValue();
+        if (commandLine.hasOption("name")) {
+            String itemName = String.join(" ", commandLine.getOptionValues("name"));
+            restockCommand = new RestockCommand(itemName, itemRestockQuantity);
+        } else {
+            int index = TypeHandler.createNumber(commandLine.getOptionValue("index")).intValue();
+            restockCommand = new RestockCommand(index, itemRestockQuantity);
+            restockCommand.setIsIndex();
+        }
 
         binBashLogger.info("Parsing RestockCommand...");
 
-        return new RestockCommand(itemName, restockQuantity);
+        return restockCommand;
     }
 }

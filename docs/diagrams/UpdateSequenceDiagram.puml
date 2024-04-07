@@ -1,0 +1,50 @@
+@startuml
+
+    participant "BinBash" as BinBash
+    participant "userCommand:UpdateCommand" as UpdateCommand
+    participant "itemList:ItemList" as ItemList
+    participant ":Item" as Item
+    participant "userInterface:Ui" as Ui
+
+
+
+    activate BinBash
+    BinBash -> UpdateCommand : 1. execute(itemList)
+    activate UpdateCommand
+
+    alt isIndex = true
+        UpdateCommand -> ItemList : 2. updateItemDataByIndex(index)
+        activate ItemList
+        ItemList -> Item : 3. updateItemData()
+        activate Item
+        Item --> ItemList : 4.
+        deactivate Item
+        ItemList --> UpdateCommand : 5. output:String
+        deactivate ItemList
+
+
+    else isIndex = false
+        UpdateCommand -> ItemList : 2. updateItemDataByName(ItemName)
+        activate ItemList
+        ItemList -> Item : 3. updateItemData()
+        activate Item
+        Item --> ItemList : 4.
+        deactivate Item
+        ItemList --> UpdateCommand : 5. output:String
+        deactivate ItemList
+
+    end group
+
+    UpdateCommand --> BinBash : 6. true
+    deactivate UpdateCommand
+
+    BinBash -> UpdateCommand: 7. getExecutionUiOutput()
+    activate UpdateCommand
+    UpdateCommand --> BinBash: 8. executionUiOutput:String
+    deactivate UpdateCommand
+    BinBash -> Ui : 9. talk(executionUiOutput)
+    activate Ui
+    Ui --> BinBash: 10.
+    deactivate Ui
+
+@enduml

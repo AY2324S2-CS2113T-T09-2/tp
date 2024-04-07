@@ -1,0 +1,32 @@
+@startuml
+mainframe **sd**   search by item fields
+hide footbox
+
+participant "userCommand:SearchCommand" as search_command
+participant ":SearchAssistant" as search_assistant
+
+search_command -> search_assistant : searchByName(nameField)
+activate search_assistant
+opt empty string
+        search_assistant --> search_command
+end
+return
+
+search_command -> search_assistant : searchByDescriptionField(descriptionField)
+activate search_assistant
+opt empty string
+        search_assistant --> search_command
+end
+return
+
+search_command -> search_assistant : searchByQuantityBetween(from, to)
+activate search_assistant
+search_assistant -> search_assistant ++ : searchByQuantityFrom(from)
+return
+search_assistant -> search_assistant ++ : searchByQuantityTo(to)
+return
+return
+
+== Repeat for further range searches ==
+
+@enduml

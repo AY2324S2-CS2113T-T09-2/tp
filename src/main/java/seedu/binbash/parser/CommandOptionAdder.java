@@ -7,6 +7,10 @@ import org.jline.builtins.Completers.OptDesc;
 
 import java.util.ArrayList;
 
+/**
+ * A utiliy class to add and save command options, shared between command parsers and Ui
+ * command completer classes.
+ */
 public class CommandOptionAdder {
     Options options;
     ArrayList<OptDesc> optionDescriptions;
@@ -88,6 +92,11 @@ public class CommandOptionAdder {
         return sortProfitOption;
     }
 
+    /**
+     * Adds the options for the List command as an option group to options.
+     *
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addListTypeOptionGroup() {
         OptionGroup listTypeOptionGroup = new OptionGroup()
                 .addOption(sortByCostPriceOption())
@@ -101,7 +110,8 @@ public class CommandOptionAdder {
 
     private Option getItemNameOption() {
         Option opItemOption = Option.builder("n")
-                .hasArg(true)
+                //.hasArg(true)
+                .hasArgs() // potentially more than 1 input
                 .required(true)
                 .longOpt("name")
                 .desc("Identify by name")
@@ -123,6 +133,12 @@ public class CommandOptionAdder {
         return opItemOption;
     }
 
+    /**
+     * Adds the options for specifying an item type as either retail or operational
+     * as an option group to options.
+     *
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addItemTypeOptionGroup() {
         OptionGroup itemTypeOptionGroup = new OptionGroup()
                 .addOption(getRetailItemOption())
@@ -132,6 +148,12 @@ public class CommandOptionAdder {
         return this;
     }
 
+    /**
+     * Adds the options for specifying an item by either name or index id
+     * as an option group to options.
+     *
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addItemNameAndIndexOptionGroup() {
         OptionGroup itemNameAndInxdexOptionGroup = new OptionGroup()
                 .addOption(getItemIndexOption())
@@ -141,6 +163,13 @@ public class CommandOptionAdder {
         return this;
     }
 
+    /**
+     * Adds the name option and its description to options and optionDescriptions respectively.
+     *
+     * @param isRequired Whether this option needs to be specified to its parent command.
+     * @param description A brief description of the option.
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addNameOption(boolean isRequired, String description) {
         Option nameOption = Option.builder("n")
                 .hasArgs() // potentially more than 1 input
@@ -153,6 +182,13 @@ public class CommandOptionAdder {
         return this;
     }
 
+    /**
+     * Adds the index option and its description to options and optionDescriptions respectively.
+     *
+     * @param isRequired Whether this option needs to be specified to its parent command.
+     * @param description A brief description of the option.
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addIndexOption(boolean isRequired, String description) {
         Option nameOption = Option.builder("i")
                 .hasArg(true)
@@ -166,6 +202,13 @@ public class CommandOptionAdder {
         return this;
     }
 
+    /**
+     * Adds the description option and its description to options and optionDescriptions respectively.
+     *
+     * @param isRequired Whether this option needs to be specified to its parent command.
+     * @param description A brief description of the option.
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addDescriptionOption(boolean isRequired, String description) {
         Option descOption = Option.builder("d")
                 .hasArgs()
@@ -178,6 +221,13 @@ public class CommandOptionAdder {
         return this;
     }
 
+    /**
+     * Adds the cost price option and its description to options and optionDescriptions respectively.
+     *
+     * @param isRequired Whether this option needs to be specified to its parent command.
+     * @param description A brief description of the option.
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addCostPriceOption(boolean isRequired, String description) {
         Option costOption = Option.builder("c")
                 .hasArg(true)
@@ -191,6 +241,13 @@ public class CommandOptionAdder {
         return this;
     }
 
+    /**
+     * Adds the quantity option and its description to options and optionDescriptions respectively.
+     *
+     * @param isRequired Whether this option needs to be specified to its parent command.
+     * @param description A brief description of the option.
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addQuantityOption(boolean isRequired, String description) {
         Option quantOption = Option.builder("q")
                 .hasArg(true)
@@ -204,6 +261,13 @@ public class CommandOptionAdder {
         return this;
     }
 
+    /**
+     * Adds the sale price option and its description to options and optionDescriptions respectively.
+     *
+     * @param isRequired Whether this option needs to be specified to its parent command.
+     * @param description A brief description of the option.
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addSalePriceOption(boolean isRequired, String description) {
         Option saleOption = Option.builder("s")
                 .hasArg(true)
@@ -217,6 +281,13 @@ public class CommandOptionAdder {
         return this;
     }
 
+    /**
+     * Adds the expiry date option and its description to options and optionDescriptions respectively.
+     *
+     * @param isRequired Whether this option needs to be specified to its parent command.
+     * @param description A brief description of the option.
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addExpirationDateOption(boolean isRequired, String description) {
         Option expiryOption = Option.builder("e")
                 .hasArg(true)
@@ -230,6 +301,13 @@ public class CommandOptionAdder {
         return this;
     }
 
+    /**
+     * Adds the threshold option and its description to options and optionDescriptions respectively.
+     *
+     * @param isRequired Whether this option needs to be specified to its parent command.
+     * @param description A brief description of the option.
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addThresholdOption(boolean isRequired, String description) {
         Option thresholdOption = Option.builder("t")
                 .hasArg(true)
@@ -243,6 +321,13 @@ public class CommandOptionAdder {
         return this;
     }
 
+    /**
+     * Adds the list option and its description to options and optionDescriptions respectively.
+     *
+     * @param isRequired Whether this option needs to be specified to its parent command.
+     * @param description A brief description of the option.
+     * @return The current instance of CommandOptionAdder.
+     */
     CommandOptionAdder addListOption(boolean isRequired, String description) {
         Option nameOption = Option.builder("l")
                 .hasArg()

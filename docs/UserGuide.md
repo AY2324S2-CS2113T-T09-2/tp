@@ -17,6 +17,8 @@ Our long awaited first release adds everything you would expect of an inventory 
 * Listing your entire inventory
 * and more (head to [Features](#features) to find out!)
 
+---
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Table of Contents](#table-of-contents)
@@ -39,6 +41,8 @@ Our long awaited first release adds everything you would expect of an inventory 
 8. [FAQ](#faq)
 9. [Glossary](#glossary)
 
+---
+
 ## BinBash Overview
 
 Welcome to BinBash, an **Inventory Management System** designed to streamline your stock control processes. 
@@ -55,14 +59,17 @@ thus providing you with valuable insight on the sales velocity of items in your 
 This guide will walk you through each feature, providing clear instructions and examples to ensure that you 
 can make the most out of BinBash. Let's get your inventory organized efficiently and effectively!
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ## How to Use this Guide
 
 Throughout the course of this guide we will describe the various inventory management capabilities BinBash is capable of, and how you might perform them using keyboard typed commands.
 The format and expected outputs of these commands will be enumerated in turn. Don't worry if you can't get the hang of them immediately! We'll provide some concrete examples to better illustrate their use cases.
 
-> :heavy_exclamation_mark: This is a warning box that may appear in the guide. Any interactions with the application that can result in issues or errors will be detailed in sections like this one here.
+> ❗ This is a warning box that may appear in the guide. Any interactions with the application that can result in issues or errors will be detailed in sections like this one here.
 
-> :information_source: This is an info box that may appear in the guide. Any additional information about a feature will be detailed in sections like this one here.
+> ℹ️ This is an info box that may appear in the guide. Any additional information about a feature will be detailed in sections like this one here.
 
 If you are new to BinBash (or new to command line-based applications in general), we highly recommend that you read through the rest of this guide sequentially, following the order of sections in this guide.
 In particular, we suggest that you take note of the [command format](#notes-on-the-command-format) used by BinBash, as it would provide you with a better understanding of how BinBash processes your commands.
@@ -70,35 +77,38 @@ In particular, we suggest that you take note of the [command format](#notes-on-t
 If you consider yourself a power user, feel free to jump to the [Command Summary](#command-summary) section. 
 However, if you ever need more clarification on the features provided by a specific command, do head over to the [Features](#features) section, as detailed explanations of each command will be provided there.
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ## Getting Started
 
 1. Ensure that you have Java `11` or above installed on your computer. Refer to our [FAQ](#faq) for more details.
-2. Head over to our [GitHub Page](https://github.com/AY2324S2-CS2113T-T09-2/tp/releases) and download the latest version of `BinBash.jar`.
-3. Move the downloaded `BinBash.jar` file to an empty folder of your choice. This folder will now serve as the home folder for BinBash.
+2. Head over to our [GitHub Page](https://github.com/AY2324S2-CS2113T-T09-2/tp/releases) and download the latest version of `binbash.jar`.
+3. Move the downloaded `binbash.jar` file to an empty folder of your choice. This folder will now serve as the home folder for BinBash.
 4. Open the terminal/command prompt for your system.
    1. If you're on Windows, press `Windows Key + R` and type in `cmd`. Press enter to launch the command prompt.
    2. If you're on Mac, click on `Launchpad` > `Other` > `Terminal`. Alternatively, click on the Spotlight icon in your menu bar, and type in `Terminal`.
    3. If you're on Linux, open the terminal in your Linux distribution.
-5. Navigate to the folder containing `BinBash.jar` using the terminal/command prompt.
-6. Type `java -jar BinBash.jar` into the command prompt, and press enter. If the application has started successfully, you should see the following output:
-```text
--------------------------------------------------------------
- ____  _       ____            _
-| __ )(_)_ __ | __ )  __ _ ___| |__
-|  _ \| | '_ \|  _ \ / _` / __| '_ \
-| |_) | | | | | |_) | (_| \__ \ | | |
-|____/|_|_| |_|____/ \__,_|___/_| |_|
-
-Welcome to BinBash!
--------------------------------------------------------------
--------------------------------------------------------------
-Here are your metrics:
-Total Cost: 0.00
-Total Revenue: 0.00
-Net Profit: 0.00
-
--------------------------------------------------------------
-```
+5. Navigate to the folder containing `binbash.jar` using the terminal/command prompt.
+6. Type `java -jar binbash.jar` into the command prompt, and press enter. If the application has started successfully, you should see the following output:<br>
+    ```text
+    -------------------------------------------------------------
+     ____  _       ____            _
+    | __ )(_)_ __ | __ )  __ _ ___| |__
+    |  _ \| | '_ \|  _ \ / _` / __| '_ \
+    | |_) | | | | | |_) | (_| \__ \ | | |
+    |____/|_|_| |_|____/ \__,_|___/_| |_|
+    
+    Welcome to BinBash!
+    -------------------------------------------------------------
+    -------------------------------------------------------------
+    Here are your metrics:
+    Total Cost: 0.00
+    Total Revenue: 0.00
+    Net Profit: 0.00
+    
+    -------------------------------------------------------------
+    ```
 
 Awesome! You've now successfully started the BinBash application!
 
@@ -116,6 +126,12 @@ Have problems loading up BinBash? Fret not, here's how to troubleshoot some of t
 2. **Issues with Data Directory or File**:<br>
    If you encounter an error about not being able to create or read/write from the data directory or file, this usually means there's a permissions issue on your system. Here's how to handle it:
     - **Check Permissions**: Ensure that BinBash has the right permissions to access the folders it needs. Right-click on the directory and check its properties to make sure reading and writing are allowed.
+
+3. **Unable to Access System Terminal**:<br>
+   Ensure that you're using a recent version of your Operating System's Terminal application. For Windows, consider using Powershell or Terminal instead of Command Prompt.
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ## Features
 
@@ -152,7 +168,7 @@ identify and differentiate the information that you give to BinBash. The followi
 - `-s` : sale price, which is the price that you are selling it for
 - `-t` : threshold, the lower limit of your item quantity, below which you will be alerted of depleting stock
 
-> #### :information_source: Note:
+> #### ℹ️ Note:
 > - Only one item type flag can be specified for each item. This means that you can only use either `-re` or `-op` but
 > not both at the same time. 
 > - The `-e` flag should be provided if the item that you are adding is a Perishable item. That is to say, it will expire by 
@@ -162,6 +178,24 @@ identify and differentiate the information that you give to BinBash. The followi
 > - The flags can be placed in any order. There is no specific order that you have to abide by.
 > - Words in `UPPER_CASE` are the arguments that are meant to be supplied by you. 
 > For example, in `add -n ITEM_NAME`, `ITEM_NAME` would represent the name of the item you are adding (e.g., `add -n apple`).
+
+### Command auto-suggestions
+
+BinBash's command suggestion feature can be activated by pressing the `tab` key which either:
+1. Suggests a lists of all valid options on first press; then cycles through this list on subsequent presses; or
+2. Autocompletes the command if only 1 valid option is found
+Each suggestion is accompanied by a brief description.
+
+To use this feature on command flags, type `-` before pressing `tab`.
+As before, each flag is accompanied by an explanation.
+
+To exit command suggestion mode simply press any other key.
+
+> ℹ️ This feature is particularly handy when first learning to use BinBash. Starting from a blank input, press tab to see every command.
+> Likewise within each command, type `-` followed by `tab` to give a quick overview of all possible options.
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Adding an item: `add`
 
@@ -215,7 +249,7 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DAT
 
 * The command to add a Perishable Retail item is similar to adding a Retail item.
 * An additional flag , `-e`, is used here to include the `expiry date`, hence signifying a Perishable Retail item.
-  > :information_source: Ensure that the provided date is in `DD-MM-YYYY` format. For example, **20 January 2024** is represented as `20-01-2024`
+  > ℹ️ Ensure that the provided date is in `DD-MM-YYYY` format. For example, **20 January 2024** is represented as `20-01-2024`
 
 Examples:
 
@@ -280,7 +314,7 @@ Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DAT
 
 * The command to add a Perishable Operational item is similar to adding an Operational item.
 * An additional flag , `-e`, is used here to include the `expiry date`, hence signifying a Perishable Operational item.
-  > :information_source: Ensure that the provided date is in `DD-MM-YYYY` format. For example, **20 January 2024** is represented as `20-01-2024`
+  > ℹ️ Ensure that the provided date is in `DD-MM-YYYY` format. For example, **20 January 2024** is represented as `20-01-2024`
 
 Examples:
 
@@ -297,6 +331,9 @@ Examples:
    -------------------------------------------------------------
    ```
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ### Searching for an item: `search`
 
 > This allows you to search for items in your inventory, filtering results through a number of user-defined fields.
@@ -306,11 +343,11 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 - At least one of `-n`, `-d`, `-q`, `-c`, `-s`, or `-e` must be set.
 - `NAME_QUERY` and `DESCRIPTION_QUERY` perform a case-insensitive search on the name and description fields of inventory items respectively.
 - `QUANTITY_RANGE` takes the form `{min_quantity}..{max_quantity}` where at least one of `min_quantity` or `max_quantity` is required.
-  > :information_source: For example, if we intend to search for items with a quantity between 20 and 30, we should format our query as:<br> `-q 20..30`.
+  > ℹ️ For example, if we intend to search for items with a quantity between 20 and 30, we should format our query as:<br> `-q 20..30`.
 - `COST_PRICE_RANGE` and `SALE_PRICE_RANGE` take the form `{price_lower_bound}..{price_upper_bound}` where at least one of `price_lower_bound` or `price_upper_bound` is required.
-  > :information_source: For example, if we intend to search for items that cost between $20 and $30, we should format our query as:<br>`-c 20..30`.
+  > ℹ️ For example, if we intend to search for items that cost between $20 and $30, we should format our query as:<br>`-c 20..30`.
 - `EXPIRY_DATE_RANGE` is similar to the above range arguments: except dates need to be specified in the format `dd.MM.YYYY`.
-  > :information_source: For example, if we intend to search for items with an expiry date between 20 January 2024 and 30 January 2024, we should format our query as:<br> `-e 20.01.2024..30.01.2024`.
+  > ℹ️ For example, if we intend to search for items with an expiry date between 20 January 2024 and 30 January 2024, we should format our query as:<br> `-e 20.01.2024..30.01.2024`.
 - Shows the first `NUMBER_OF_RESULTS` results if set, else all matching results are shown.
 
 **Examples:**
@@ -326,12 +363,15 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 - `search -q 50.. -e 17.09.2023..23.11.2023`
   Will return all items with current quantity at or above 50 and that expire between 17 September and 23 November 2023 (inclusive).
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ### Listing current inventory: `list`
 
 > This allows you to list out all items that you have in your inventory list. 
 > You can also use this command to display your inventory list, sorted based on cost price, sale price, profit, or expiry date.
 
-> :information_source: Note:
+> ℹ️ Note:
 > Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for `delete` and `update` commands.
 
 #### List inventory (unsorted)
@@ -406,26 +446,60 @@ After using `list -p`, the sorted list will be:
 - Item B, Profit: $7
 - Item A, Profit: $5
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ### Selling an item: `sell`
 
 > This allows you to decrement the quantity of an item after it has been sold.
 
+#### Selling an item using item name
+
 Format: `sell -n ITEM_NAME -q ITEM_QUANTITY`
 
-* Both flags are mandatory.
-* The quantity given to this command represents the amount of item that you want to sell. This amount will be deducted
-from the existing quantity of the item in the inventory list.
+* Both flags `-n` and `-q` are mandatory.
+* The flag `-n` is used, meaning that the `item name` is used as an identifier to identify the item you wish to sell.
+* The quantity given to this command represents the amount of item that you want to sell. This amount will be reduced
+  from the existing quantity of the item in the inventory list.
 
 Examples: 
 
 - `sell -n oranges -q 20` This will deduct the quantity of "oranges" in your inventory list by 20.
 - `sell -n lego bricks -q 219` This will deduct the quantity of "lego bricks" in your inventory list by 219.
 
+#### Selling an item using item index
+
+Format: `sell -n ITEM_INDEX -q ITEM_QUANTITY`
+
+> ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and
+> note down the number displayed next to your item of interest.
+
+* Both flags `-i` and `-q` are mandatory.
+* The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to sell.
+
+Examples:
+- `sell -n 1 -q 50` This will decrease the quantity of the item at index 1 in your inventory list by 50.
+- `sell -n 3 -q 35` This will decrease the quantity of the item at index 3 in your inventory list by 35.
+
+
+> ℹ️ Note:
+> - Only one item identifier flag, `-n` or `-i`, can be used with the `sell` command to identify the item that you
+    > want to sell.
+> - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
+> - 
+* [Back to table of contents](#table-of-contents)
+---
+
 ### Restocking an item: `restock`
 
 > This allows you to increment the quantity of an item after it has been restocked.
 
-* Both flags are mandatory.
+#### Restocking an item using item name
+
+Format: `restock -n ITEM_NAME -q ITEM_QUANTITY`
+
+* Both flags `-n` and `-q` are mandatory.
+* The flag `-n` is used, meaning that the `item name` is used as an identifier to identify the item you wish to restock.
 * The quantity given to this command represents the amount of item that you want to restock. This amount will be added
   to the existing quantity of the item in the inventory list.
 
@@ -433,6 +507,29 @@ Examples:
 
 - `restock -n apples -q 50` This will add the quantity of "apples" in your inventory list by 50.
 - `restock -n kaya spread -q 35` This will add the quantity of "kaya spread" in your inventory list by 35.
+
+#### Restocking an item using item index
+
+Format: `restock -n ITEM_INDEX -q ITEM_QUANTITY`
+
+> ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and 
+> note down the number displayed next to your item of interest.
+
+* Both flags `-i` and `-q` are mandatory.
+* The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to update.
+
+Examples:
+- `restock -n 2 -q 10` This will add the quantity of the item at index 2 in your inventory list by 10.
+- `restock -n 1 -q 65` This will add the quantity of the item at index 1 in your inventory list by 65.
+
+
+> ℹ️ Note:
+> - Only one item identifier flag, `-n` or `-i`, can be used with the `restock` command to identify the item that you
+    > want to update.
+> - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Updating an item: `update`
 
@@ -465,7 +562,7 @@ to 10.
 Format: `update -i ITEM_INDEX -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE
 -t THRESHOLD`
 
-> :information_source: To determine the `index` of an item in your inventory, call the `list` command first, and note down the number displayed next to your item of interest.
+> ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and note down the number displayed next to your item of interest.
 
 * The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to update.
 * To know the `item index`, we encourage you to first use the command `list` to find out the index of your item of 
@@ -480,12 +577,13 @@ remains unchanged.
 Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and its threshold to 2.
 
 
-> :information_source: Note:
+> ℹ️ Note:
 > - Only one item identifier flag, `-n` or `-i`, can be used with the `update` command to identify the item that you
 > want to update.
-> - There must be a minimum of one flag used, excluding the `-n` flag.
+> - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
 
-
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Deleting an item: `delete`
 
@@ -495,7 +593,7 @@ Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and 
 
 Format: `delete -i ITEM_INDEX`
 
-> :information_source: To determine the `index` of an item in your inventory, call the `list` command first, and note down the number displayed next to your item of interest.
+> ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and note down the number displayed next to your item of interest.
 
 * `ITEM_INDEX` must be specified.
 * `ITEM_INDEX` specified must exist in the inventory, otherwise no item will be deleted.
@@ -511,13 +609,22 @@ Format: `delete -n ITEM_NAME`
 
 * `ITEM_NAME` must be specified.
 * `ITEM_NAME` specified must be the exact name of the item.
+* `ITEM_NAME` is case-sensitive. Capital letters are treated differently from lower case letters, e.g "apple" is different from "APPLE"
 * If there are no items with item names matching `ITEM_NAME`, no items will be deleted.
 * If there are items with the same `ITEM_NAME`, only the first instance of item with `ITEM_NAME` will be deleted.
 * Item names of items in the inventory can be viewed using the `list` command.
 
 Examples:
 - `list` followed by `delete -n cookie` Deletes the first item named "cookie".
+
+> ❗Item name is case-sensitive. So items with names as "COOKIE", "Cookie", etc.  will not be deleted.
+
 - `list` followed `delete -n tissue paper` Deletes the first item named "tissue paper".
+
+> ❗Item name is case-sensitive. So items with names as "TISSUE PAPER", "Tissue Paper", etc. will not be deleted.
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Calculating the total profit: `profit`
 
@@ -534,6 +641,9 @@ Total profit: $6907.40
 -------------------------------------------------------------
 ```
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ### Exiting the application: `bye`
 
 > This command allows you to exit the application.
@@ -542,7 +652,10 @@ After a long day at work, it's time to take a rest! You can safely quit the appl
 
 Format: `bye`
 
-> :information_source: BinBash will save the state of your current inventory, and you can always come back to it later.
+> ℹ️ BinBash will save the state of your current inventory, and you can always come back to it later.
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ### Saving and Loading data
 
@@ -550,22 +663,29 @@ Unsure as to how you can save your BinBash data? Don't worry! Your data is autom
 
 Similarly, your saved data will be automatically loaded into BinBash when you start the application. If no previous save data was found, the application starts on a clean state.
 
-> :heavy_exclamation_mark: For advanced users, BinBash data is stored locally as a `.txt` file in your BinBash install location:<br>`<Location of BinBash.jar>/data/items.txt`.
+> ❗ For advanced users, BinBash data is stored locally as a `.txt` file in your BinBash install location:<br>`<Location of binbash.jar>/data/items.txt`.
 > 
 > Do exercise caution when directly editing this file, as BinBash **will not load** corrupted data (i.e., data that is not formatted correctly). 
 > 
 > We highly recommended that you take a backup of your save file before editing it.
 
+* [Back to table of contents](#table-of-contents)
+---
+
 ## Command Summary
 
-| **Commands** | **Usage**                                                                                        |
-|--------------|--------------------------------------------------------------------------------------------------|
-| **add**      | `add n/ITEM_NAME d/ITEM_DESCRIPTION q/ITEM_QUANTITY e/EXPIRATION_DATE s/SALE_PRICE c/COST_PRICE` |
-| **search**   | `search KEYWORD`                                                                                 |
-| **list**     | `list` `list -c` `list -s` `list -e`                                                             |
-| **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME` <br/>                                                   |
-| **profit**   | `profit`                                                                                         |
-| **bye**      | `bye`                                                                                            |
+| **Commands** | **Usage**                                                                                                                                                                                              |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **add**     | `add -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRATION_DATE -s SALE_PRICE -c COST_PRICE` `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -t THRESHOLD` |
+|**search**   | `search KEYWORD`                                                                                                                                                                                       |
+| **list**    | `list` `list -c` `list -s` `list -e`                                                                                                                                                                   |
+| **delete**  | `delete ITEM_INDEX` , `delete ITEM_NAME`                                                                                                                                                               |
+| **profit**  | `profit`                                                                                                                                                                                               |
+| **bye**     | `bye`                                                                                                                                                                                                  |
+| **sell**    | `sell -n ITEM_NAME -q ITEM_QUANTITY` `sell -n ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                             
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ## FAQ
 
@@ -581,7 +701,7 @@ If not, refer to Oracle's [guide](https://docs.oracle.com/en/java/javase/11/inst
 
 **Q**: Can I move my BinBash data to another computer? <br>
 **A**: Absolutely! Here's a step-by-step guide on how you can do this:
-1. On your current computer, locate the BinBash save file. The save file can be found at `<Location of BinBash.jar>/data/items.txt`. Make a copy of this file.
+1. On your current computer, locate the BinBash save file. The save file can be found at `<Location of binbash.jar>/data/items.txt`. Make a copy of this file.
 2. Ensure that BinBash has been installed on the other computer. Refer to [this section](#getting-started) for more details.
 3. On the other computer, create the `/data` folder in the BinBash install location if it does not exist.
 4. Then, paste the copied save file in this folder. If an existing save file already exists, choose to overwrite it.
@@ -599,6 +719,9 @@ ITEM_TYPE|ITEM_NAME|ITEM_DESCRIPTION|QUANTITY|ITEM_COST_PRICE|TOTAL_UNITS_PURCHA
 ```
 
 If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), replace its value with a whitespace.
+
+* [Back to table of contents](#table-of-contents)
+---
 
 ## Glossary
 

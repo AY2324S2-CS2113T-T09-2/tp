@@ -2,7 +2,10 @@ package seedu.binbash.command;
 
 import seedu.binbash.enums.SortOptionEnum;
 import seedu.binbash.inventory.ItemList;
+import seedu.binbash.item.Item;
 import seedu.binbash.logger.BinBashLogger;
+
+import java.util.List;
 
 /**
  * Represents the execution of the list command that will display the inventory in a certain order.
@@ -37,26 +40,27 @@ public class ListCommand extends Command {
      * @return true if the command execution is successful.
      */
     public boolean execute(ItemList itemList) {
+        List<Item> itemArrayList = itemList.getItemList();
         switch(sortOption) {
         case EXPIRY:
             commandLogger.info("Executing list sort by expiry date...");
-            executionUiOutput = itemList.printListSortedByExpiryDate(itemList.getItemList());
+            executionUiOutput = itemList.printListSortedByExpiryDate(itemArrayList);
             break;
         case COST:
             commandLogger.info("Executing list sort by cost price...");
-            executionUiOutput = itemList.printListSortedByCostPrice(itemList.getItemList());
+            executionUiOutput = itemList.printListSortedByCostPrice(itemArrayList);
             break;
         case SALE:
             commandLogger.info("Executing list sort by sale price...");
-            executionUiOutput = itemList.printListSortedBySalePrice(itemList.getItemList());
+            executionUiOutput = itemList.printListSortedBySalePrice(itemArrayList);
             break;
         case PROFIT:
             commandLogger.info("Executing list sort by profits earned...");
-            executionUiOutput = itemList.printListSortedByProfit(itemList.getItemList());
+            executionUiOutput = itemList.printListSortedByProfit(itemArrayList);
             break;
         default:
             commandLogger.info("Executing list unsorted...");
-            executionUiOutput = itemList.printList(itemList.getItemList());
+            executionUiOutput = itemList.printList(itemArrayList);
         }
 
         return true;

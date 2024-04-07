@@ -9,14 +9,19 @@ import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
 import seedu.binbash.exceptions.InvalidCommandException;
+import seedu.binbash.exceptions.InvalidArgumentException;
 
 import org.apache.commons.cli.ParseException;
 import org.jline.builtins.Completers.OptDesc;
+import seedu.binbash.exceptions.InvalidFormatException;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.ArrayList;
 
+/**
+ * Parses user input to generate commands for managing inventory.
+ */
 public class Parser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private AddCommandParser addCommandParser;
@@ -37,6 +42,11 @@ public class Parser {
         deleteCommandParser = new DeleteCommandParser();
     }
 
+    /**
+     * Gets the option descriptions for all commands.
+     *
+     * @return The option descriptions for all commands.
+     */
     public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
         ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>() {
             {
@@ -52,6 +62,13 @@ public class Parser {
         return allCommandsOptionDescriptions;
     }
 
+    /**
+     * Parses a command from user input.
+     *
+     * @param userInput The user input to parse.
+     * @return The parsed command.
+     * @throws InvalidCommandException If the command is invalid or cannot be parsed.
+     */
     public Command parseCommand(String userInput) throws InvalidCommandException {
         String[] tokens = userInput.trim().split("\\s+"); // Tokenize user input
         String commandString = tokens[0].toLowerCase();
@@ -94,32 +111,36 @@ public class Parser {
     private AddCommand parseAddCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return addCommandParser.parse(commandArgs);
+        } catch (InvalidArgumentException e) {
+            throw new InvalidFormatException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidCommandException(e.getMessage());
+            throw new InvalidCommandException("Please enter a valid number.");
         }
     }
 
     private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return updateCommandParser.parse(commandArgs);
+        } catch (InvalidArgumentException e) {
+            throw new InvalidFormatException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidCommandException(e.getMessage());
+            throw new InvalidCommandException("Please enter a valid number.");
         }
     }
 
-    private Command parseRestockCommand(String[] commandArgs) throws InvalidCommandException {
+    private Command parseRestockCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return restockCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidCommandException(e.getMessage());
+            throw new InvalidFormatException("Please enter a valid number.");
         }
     }
 
-    private Command parseSellCommand(String[] commandArgs) throws InvalidCommandException {
+    private Command parseSellCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return sellCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidCommandException(e.getMessage());
+            throw new InvalidFormatException("Please enter a valid number.");
         }
     }
 
