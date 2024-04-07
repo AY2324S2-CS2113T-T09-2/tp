@@ -43,11 +43,9 @@ public class BinBash {
                 } else if (userCommand instanceof QuoteCommand) { // Handle QuoteCommand
                     // Initialize Ui before executing QuoteCommand
                     ((QuoteCommand) userCommand).setUi(userInterface);
-                    userCommand.execute(itemList);
-                } else {
-                    userCommand.execute(itemList);
                 }
 
+                userCommand.execute(itemList);
                 userInterface.talk(userCommand.getExecutionUiOutput());
 
                 if (userCommand.hasToSave()) {

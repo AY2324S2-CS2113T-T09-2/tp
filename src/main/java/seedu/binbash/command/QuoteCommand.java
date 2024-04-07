@@ -9,7 +9,7 @@ public class QuoteCommand extends Command {
 
     public QuoteCommand() {
         commandLogger = new BinBashLogger(QuoteCommand.class.getName());
-        commandLogger.info("Creating Quotes Command...");
+        commandLogger.info("Creating Quote Command...");
     }
 
     @Override
