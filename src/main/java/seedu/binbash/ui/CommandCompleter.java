@@ -10,6 +10,9 @@ import org.jline.reader.impl.completer.NullCompleter;
 
 import java.util.ArrayList;
 
+/**
+ * Suggests and provides descriptions on commands and command options.
+ */
 public class CommandCompleter extends AggregateCompleter {
     private static final String COMMAND_GROUP_INVENTORY = "Inventory Management";
     private static final String COMMAND_GROUP_IN_OUT = "Item Inflow-Outflow Management";
@@ -60,8 +63,13 @@ public class CommandCompleter extends AggregateCompleter {
                 new Candidate("exit", "exit", COMMAND_GROUP_OTHERS, "exits application",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, NINTH_SORTED_ORDER_ON_DISPLAY)));
 
-    // note the order of completers to get depends on the order in which command option descriptions
-    // are added in Parser.getAllCommandsOptionDescriptions
+    /**
+     * Calls on parent constructor with every completer, then updates each individual completer.
+     * Note the order of command options to get depends on the order in which those descriptions were added in Parser.
+     *
+     * @param allCommandsOptionDescriptions A list of option descriptions for all commands in this program.
+     * @return The current instance of CommandCompleter.
+     */
     public CommandCompleter(ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions) {
         super(addCompleter, searchCompleter, restockCompleter, sellCompleter, profitCompleter,
                 deleteCompleter, listCompleter, updateCompleter, byeCompleter);
