@@ -11,6 +11,7 @@ import seedu.binbash.command.AddCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ByeCommand;
+import seedu.binbash.command.QuoteCommand;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
@@ -35,6 +36,16 @@ public class ParserTest {
         try {
             Command command = parser.parseCommand("bye");
             assertTrue(command instanceof ByeCommand);
+        } catch (BinBashException e) {
+            fail("Unexpected InvalidCommandException: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testParseCommand_validCommandQuote_returnsQuoteCommand() {
+        try {
+            Command command = parser.parseCommand("quote");
+            assertTrue(command instanceof QuoteCommand);
         } catch (BinBashException e) {
             fail("Unexpected InvalidCommandException: " + e.getMessage());
         }
