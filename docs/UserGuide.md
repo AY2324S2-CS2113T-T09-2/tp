@@ -383,77 +383,44 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 > ℹ️ Note:
 > Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for `delete` and `update` commands.
 
-#### List inventory (unsorted)
+#### List Inventory (Unsorted)
 
-Used to view the inventory in the order items were added:
+View the inventory in the order items were added:
 
 Format: `list`
 
-#### List inventory (sorted based on item cost price)
+#### List Inventory (Sorted)
 
-Used to view the inventory based on the sale price of items.
+BinBash also allows you to sort your inventory based on different criteria using the following flags:
 
-Format: `list -c`
+| Flag | Description                                |
+|------|--------------------------------------------|
+| `-c` | Sort by cost price                         |
+| `-s` | Sort by sale price                         |
+| `-p` | Sort by profit                             |
+| `-e` | Sort by expiry date (for perishable items) |
 
-Example:
+Format: `list -FLAG`
 
+Example: 
+
+Say you have the following items in your inventory.
+- Item A, Cost Price: $5, Sale Price: $15, Profit: $10, Expiry Date: 2023-05-01
+- Item B, Cost Price: $10, Sale Price: $12, Profit: $2, Expiry Date: 2023-04-15
+- Item C, Cost Price: $8, Sale Price: $20, Profit: $12, Expiry Date: 2023-06-20
+
+After using `list -c`, the sorted list by cost price will be:
 - Item A, Cost Price: $5
-- Item B, Cost Price: $10
-- Item C, Cost Price: $8
-
-After using `list -c`, the sorted list, will be:
-
-- Item A, Cost Price: $5
 - Item C, Cost Price: $8
 - Item B, Cost Price: $10
 
-#### List inventory (sorted based on item sale price)
-
-Used to view the inventory based on the sale price of items
-
-Format: `list -s`
-
-Example:
-- Item A, Sale Price: $15
-- Item B, Sale Price: $12
-- Item C, Sale Price: $20
-
-After using `list -s`, the sorted list will be:
-- Item B, Sale Price: $12
-- Item A, Sale Price: $15
-- Item C, Sale Price: $20
-
-#### List inventory (sorted based on item expiry date)
-
-Used to view the inventory based on the expiry date of perishable items.
-
-Format: `list -e`
-
-Example:
-- Item A, Expiry Date: 2023-05-01
-- Item B, Expiry Date: 2023-04-15
-- Item C, Expiry Date: 2023-06-20
-
-After using `list -e`, the sorted list will be:
+If we were to use `list -e` however, the sorted list by expiry date will then be:
 - Item B, Expiry Date: 2023-04-15
 - Item A, Expiry Date: 2023-05-01
 - Item C, Expiry Date: 2023-06-20
-- 
-#### List Inventory (Sorted Based on Item Profit)
 
-Used to view the inventory based on the profit of items, in descending order:
+Similarly, you can use `list -s` and `list -p`, to sort by sale price and profit respectively.
 
-Format: `list -p`
-
-Example:
-- Item A, Profit: $5
-- Item B, Profit: $7
-- Item C, Profit: $8
-
-After using `list -p`, the sorted list will be:
-- Item C, Profit: $8
-- Item B, Profit: $7
-- Item A, Profit: $5
 
 * [Back to table of contents](#table-of-contents)
 ---
