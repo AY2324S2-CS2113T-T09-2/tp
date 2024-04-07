@@ -445,7 +445,7 @@ Examples:
 
 #### Selling an item using item index
 
-Format: `sell -n ITEM_INDEX -q ITEM_QUANTITY`
+Format: `sell -i ITEM_INDEX -q ITEM_QUANTITY`
 
 > ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and
 > note down the number displayed next to your item of interest.
@@ -480,12 +480,11 @@ Format: `restock -n ITEM_NAME -q ITEM_QUANTITY`
 
 Examples:
 
-- `restock -n apples -q 50` This will add the quantity of "apples" in your inventory list by 50.
-- `restock -n kaya spread -q 35` This will add the quantity of "kaya spread" in your inventory list by 35.
+- `restock -n apples -q 50` This will add the quantity of "apples" in your inventory list by 50. .
 
 #### Restocking an item using item index
 
-Format: `restock -n ITEM_INDEX -q ITEM_QUANTITY`
+Format: `restock -i ITEM_INDEX -q ITEM_QUANTITY`
 
 > ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and 
 > note down the number displayed next to your item of interest.
@@ -494,9 +493,7 @@ Format: `restock -n ITEM_INDEX -q ITEM_QUANTITY`
 * The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to update.
 
 Examples:
-- `restock -n 2 -q 10` This will add the quantity of the item at index 2 in your inventory list by 10.
-- `restock -n 1 -q 65` This will add the quantity of the item at index 1 in your inventory list by 65.
-
+- `restock -i 2 -q 10` This will add the quantity of the item at index 2 in your inventory list by 10.
 
 > ℹ️ Note:
 > - Only one item identifier flag, `-n` or `-i`, can be used with the `restock` command to identify the item that you
