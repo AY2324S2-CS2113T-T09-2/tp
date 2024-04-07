@@ -651,15 +651,15 @@ Format: `bye`
 * [Back to table of contents](#table-of-contents)
 ---
 
-### Getting Inspirational Quotes: `quotes`
+### Getting Inspirational Quotes: `quote`
 
-> This command fetches random quotes to uplift your spirits.
+> This command fetches a random quote to uplift your spirits.
 
 Need a little motivation? The quote command retrieves random inspirational messages to brighten your day. Whether you're feeling stuck or just need a boost, BinBash has got you covered!
 
-Format: `quotes`
+Format: `quote`
 
-> ℹ️ BinBash brings you a variety of inspiring messages to keep you motivated throughout your inventory management journey. So go ahead, type quotes and let the positivity flow!
+> ℹ️ BinBash brings you a variety of inspiring messages to keep you motivated throughout your inventory management journey. So go ahead, type quote and let the positivity flow!
 * [Back to table of contents](#table-of-contents)
 ---
 
@@ -688,7 +688,7 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 | **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME`                                                                                                                                                                     |
 | **profit**   | `profit`                                                                                                                                                                                                     |
 | **bye**      | `bye`                                                                                                                                                                                                        |
-| **quotes**   | `quotes`                                                                                                                                                                                                     |
+| **quote**    | `quote`                                                                                                                                                                                                      |
 | **sell**     | `sell -n ITEM_NAME -q ITEM_QUANTITY` `sell -n ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                   |
 
 * [Back to table of contents](#table-of-contents)

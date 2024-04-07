@@ -8,7 +8,7 @@ import seedu.binbash.command.UpdateCommand;
 import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
-import seedu.binbash.command.QuotesCommand;
+import seedu.binbash.command.QuoteCommand;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.exceptions.InvalidArgumentException;
 
@@ -96,8 +96,8 @@ public class Parser {
             return parseUpdateCommand(commandArgs);
         case "profit":
             return new ProfitCommand();
-        case "quotes":
-            return new QuotesCommand();
+        case "quote":
+            return new QuoteCommand();
         default:
             throw new InvalidCommandException("Invalid command: "  + commandString);
         }

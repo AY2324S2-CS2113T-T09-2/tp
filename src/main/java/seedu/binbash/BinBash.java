@@ -2,7 +2,7 @@ package seedu.binbash;
 
 
 import seedu.binbash.command.ByeCommand;
-import seedu.binbash.command.QuotesCommand;
+import seedu.binbash.command.QuoteCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.inventory.ItemList;
@@ -35,15 +35,14 @@ public class BinBash {
 
         while (userInterface.isUserActive()) {
             String userInput = userInterface.readUserCommand();
-            userInterface.handleUserInput(userInput, itemList); // Call handleUserInput
             try {
                 Command userCommand = inputParser.parseCommand(userInput);
 
                 if (userCommand instanceof ByeCommand) {
                     userInterface.setUserAsInactive();
-                } else if (userCommand instanceof QuotesCommand) { // Handle QuoteCommand
+                } else if (userCommand instanceof QuoteCommand) { // Handle QuoteCommand
                     // Initialize Ui before executing QuoteCommand
-                    ((QuotesCommand) userCommand).setUi(userInterface);
+                    ((QuoteCommand) userCommand).setUi(userInterface);
                     userCommand.execute(itemList);
                 } else {
                     userCommand.execute(itemList);

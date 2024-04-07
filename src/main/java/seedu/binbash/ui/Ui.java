@@ -10,8 +10,6 @@ import org.jline.reader.UserInterruptException;
 import org.jline.builtins.Completers.OptDesc;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
-import seedu.binbash.command.QuotesCommand;
-import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ public class Ui {
     private static LineReader inputReader;
     private static boolean isUserActive;
 
-    private static final String[] CUSTOM_MESSAGES = {
+    private final String[] CUSTOM_MESSAGES = {
         "Hope you have a good day of inventory management.",
         "Have a nice day!",
         "Welcome back to BinBash!",
@@ -128,13 +126,5 @@ public class Ui {
     public String getRandomMessage() {
         int randomIndex = RANDOM.nextInt(CUSTOM_MESSAGES.length);
         return CUSTOM_MESSAGES[randomIndex];
-    }
-
-    public void handleUserInput(String userInput, ItemList itemList) {
-        if (userInput.trim().equalsIgnoreCase("quotes")) {
-            QuotesCommand quoteCommand = new QuotesCommand();
-            quoteCommand.setUi(this); // Assuming 'this' refers to the current Ui object
-            quoteCommand.execute(itemList);
-        }
     }
 }
