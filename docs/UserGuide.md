@@ -609,6 +609,7 @@ Format: `delete -n ITEM_NAME`
 
 * `ITEM_NAME` must be specified.
 * `ITEM_NAME` specified must be the exact name of the item.
+* `ITEM_NAME` is case-sensitive.
 * If there are no items with item names matching `ITEM_NAME`, no items will be deleted.
 * If there are items with the same `ITEM_NAME`, only the first instance of item with `ITEM_NAME` will be deleted.
 * Item names of items in the inventory can be viewed using the `list` command.
