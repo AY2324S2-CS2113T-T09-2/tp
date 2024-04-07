@@ -153,20 +153,26 @@ This category is crucial for businesses dealing with food products or other peri
 4. `Perishable Operational Item`: Similar to perishable retail items, these are operational items that have a limited shelf life.
     - **Example**: A bottle of disinfectant used to sanitize the office, with an expiry date.
 
-Before we get started on learning the different commands available, it is worth nothing that our commands use flags to 
-identify and differentiate the information that you give to BinBash. The following are a 
- list of flags that you can use:
- 
-- `-re` : to signify a Retail item type
-- `-op` : to signify an Operational item type
-- `-n` : name of the item
-- `-i` : index of the item as displayed in the inventory list
-- `-d` : description of the item
-- `-q` : quantity
-- `-e` : expiry date
-- `-c` : cost price, which is the cost that you bought the item for
-- `-s` : sale price, which is the price that you are selling it for
-- `-t` : threshold, the lower limit of your item quantity, below which you will be alerted of depleting stock
+Before we dive into the different commands you can use, let's get familiar with a concept that's central to our command structure: flags!
+
+In BinBash, flags are like little markers that help us identify and differentiate the information you provide. They're 
+like signposts that guide the command to understand what each piece of data represents.
+
+Now, let's take a look at the flags you can use:
+
+| Flag  | Description                                                                                         |
+|-------|-----------------------------------------------------------------------------------------------------|
+| `-re` | Signifies a Retail item type                                                                        |
+| `-op` | Signifies an Operational item type                                                                  |
+| `-n`  | Name of the item                                                                                    |
+| `-i`  | Index of the item as displayed in the inventory list                                                |
+| `-d`  | Description of the item                                                                             |
+| `-q`  | Quantity                                                                                            |
+| `-e`  | Expiry date                                                                                         |
+| `-c`  | Cost price (the cost that you bought the item for)                                                  |
+| `-s`  | Sale price (the price that you are selling it for)                                                  |
+| `-t`  | Threshold (the lower limit of your item quantity, below which you'll be alerted of depleting stock) |
+
 
 > #### ℹ️ Note:
 > - Only one item type flag can be specified for each item. This means that you can only use either `-re` or `-op` but
