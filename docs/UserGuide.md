@@ -454,15 +454,14 @@ Format: `sell -n ITEM_INDEX -q ITEM_QUANTITY`
 * The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to sell.
 
 Examples:
-- `sell -n 1 -q 50` This will decrease the quantity of the item at index 1 in your inventory list by 50.
-- `sell -n 3 -q 35` This will decrease the quantity of the item at index 3 in your inventory list by 35.
+- `sell -i 1 -q 50` This will decrease the quantity of the item at index 1 in your inventory list by 50.
+- `sell -i 3 -q 35` This will decrease the quantity of the item at index 3 in your inventory list by 35.
 
 
 > ℹ️ Note:
-> - Only one item identifier flag, `-n` or `-i`, can be used with the `sell` command to identify the item that you
-    > want to sell.
+> - Only one item identifier flag, `-n` or `-i`, can be used with the `sell` command to identify the item that you want to sell.
 > - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
-> - 
+
 * [Back to table of contents](#table-of-contents)
 ---
 
