@@ -1,3 +1,5 @@
+
+INFO: Data loaded successfully
 -------------------------------------------------------------
 BinBash started up!
   ____  _       ____            _
