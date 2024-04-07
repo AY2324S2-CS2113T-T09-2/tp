@@ -185,6 +185,9 @@ Now, let's take a look at the flags you can use:
 > - Words in `UPPER_CASE` are the arguments that are meant to be supplied by you. 
 > For example, in `add -n ITEM_NAME`, `ITEM_NAME` would represent the name of the item you are adding (e.g., `add -n apple`).
 
+If you're starting to feel overwhelmed by all these flags, don't worry! Continue reading to know more about BinBash's
+Command auto-suggestions feature that can help you out. It's like having a little helper right at your fingertips!
+
 ### Command auto-suggestions
 
 BinBash's command suggestion feature can be activated by pressing the `tab` key which either:
