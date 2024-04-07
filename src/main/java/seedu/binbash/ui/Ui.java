@@ -1,7 +1,5 @@
 package seedu.binbash.ui;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
@@ -29,7 +27,7 @@ public class Ui {
     private static LineReader inputReader;
     private static boolean isUserActive;
 
-    private final String[] CUSTOM_MESSAGES = {
+    private final String[] customMessages = {
         "Hope you have a good day of inventory management.",
         "Have a nice day!",
         "Welcome back to BinBash!",
@@ -72,6 +70,14 @@ public class Ui {
         "Stay positive and BinBash strong!"
     };
 
+    /**
+     * Constructor; note that it need only be called once as there should be no more than a single
+     * instance per program run.
+     *
+     * @param allCommandsOptionDescriptions A list of option descriptions for all commands in this program.
+     * @return The current instance of Ui.
+     * @throws RuntimeException If fails to get an instance of the system terminal.
+     */
     public Ui(ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions) {
         System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
         try {
@@ -111,11 +117,7 @@ public class Ui {
     }
 
     public void greet() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = now.format(formatter);
-
-        String startupMessage = "BinBash started on: " + formattedDateTime;
+        String startupMessage = "BinBash started up!";
         talk(startupMessage + NEWLINE + LOGO + WELCOME_MESSAGE);
     }
 
@@ -124,7 +126,7 @@ public class Ui {
     }
 
     public String getRandomMessage() {
-        int randomIndex = RANDOM.nextInt(CUSTOM_MESSAGES.length);
-        return CUSTOM_MESSAGES[randomIndex];
+        int randomIndex = RANDOM.nextInt(customMessages.length);
+        return customMessages[randomIndex];
     }
 }
