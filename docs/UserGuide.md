@@ -573,7 +573,6 @@ Format: `delete -i ITEM_INDEX`
 
 Examples:
 - `list` followed by`delete -i 1` Deletes the item with index of 1.
-- `list` followed by `delete -i 4` Deletes the item with index of 4.
 
 #### Deleting an item using item name
 
