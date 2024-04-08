@@ -14,17 +14,12 @@ public class QuoteCommand extends Command {
 
     @Override
     public boolean execute(ItemList itemList) {
-        if (ui == null) {
-            throw new IllegalStateException("Ui is not initialized. Please initialize it before calling execute()");
-        }
 
         String randomMessage = ui.getRandomMessage();
         executionUiOutput = randomMessage;
-        hasToSave = false; // Assuming you don't need to save after executing the Quotes command
         return true;
     }
-
-    // Setter method to initialize Ui
+    
     public void setUi(Ui ui) {
         this.ui = ui;
     }
