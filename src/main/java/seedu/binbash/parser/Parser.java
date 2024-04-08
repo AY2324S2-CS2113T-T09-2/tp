@@ -9,7 +9,6 @@ import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
 import seedu.binbash.exceptions.InvalidCommandException;
-import seedu.binbash.exceptions.InvalidArgumentException;
 
 import org.apache.commons.cli.ParseException;
 import org.jline.builtins.Completers.OptDesc;
@@ -121,10 +120,8 @@ public class Parser {
     private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return updateCommandParser.parse(commandArgs);
-        } catch (InvalidArgumentException e) {
-            throw new InvalidFormatException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidCommandException("Please enter a valid number.");
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
