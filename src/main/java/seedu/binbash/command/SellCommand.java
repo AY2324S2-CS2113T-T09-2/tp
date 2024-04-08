@@ -1,6 +1,6 @@
 package seedu.binbash.command;
 
-import seedu.binbash.exceptions.InvalidArgumentException;
+import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.inventory.ItemList;
 
@@ -76,14 +76,14 @@ public class SellCommand extends Command{
             commandLogger.info("Sell identifier is detected as an index");
             try {
                 executionUiOutput = itemList.sellOrRestockItem(index, sellQuantity, COMMAND);
-            } catch (InvalidArgumentException e) {
+            } catch (InvalidCommandException e) {
                 executionUiOutput = e.getMessage();
             }
         } else {
             commandLogger.info("Sell identifier is detected as an item name");
             try {
                 executionUiOutput = itemList.sellOrRestockItem(itemName, sellQuantity, COMMAND);
-            } catch (InvalidArgumentException e) {
+            } catch (InvalidCommandException e) {
                 executionUiOutput = e.getMessage();
             }
         }

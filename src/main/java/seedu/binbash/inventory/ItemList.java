@@ -4,7 +4,6 @@ import seedu.binbash.comparators.ItemComparatorByCostPrice;
 import seedu.binbash.comparators.ItemComparatorByExpiryDate;
 import seedu.binbash.comparators.ItemComparatorByProfit;
 import seedu.binbash.comparators.ItemComparatorBySalePrice;
-import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
@@ -319,7 +318,7 @@ public class ItemList {
         throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
     }
 
-    private String sellOrRestock(Item item, int itemQuantity, String command) throws InvalidArgumentException {
+    private String sellOrRestock(Item item, int itemQuantity, String command) throws InvalidCommandException {
         String alertText = "";
         int newQuantity = item.getItemQuantity();
 
@@ -331,7 +330,7 @@ public class ItemList {
             if (newQuantity >= itemQuantity) {
                 newQuantity -= itemQuantity;
             } else {
-                throw new InvalidArgumentException("You do not have enough to sell the stated quantity.");
+                throw new InvalidCommandException("You do not have enough to sell the stated quantity.");
             }
 
             RetailItem retailItem = (RetailItem)item;
@@ -360,9 +359,9 @@ public class ItemList {
      * @param itemQuantity The quantity to be sold/restocked.
      * @param command A string representing the type of operation to be done.
      * @return A String showing the result of the sell/restock operation.
-     * @throws InvalidArgumentException If provided item quantity is invalid (out of bounds).
+     * @throws InvalidCommandException If provided item quantity is invalid (out of bounds).
      */
-    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidArgumentException{
+    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidCommandException{
         String output = "Sorry, I can't find the item you are looking for.";
 
         for (Item item : itemList) {
@@ -382,9 +381,9 @@ public class ItemList {
      * @param itemQuantity The quantity to be sold/restocked.
      * @param command A string representing the type of operation to be done.
      * @return A String showing the result of the sell/restock operation.
-     * @throws InvalidArgumentException If provided item quantity is invalid (out of bounds).
+     * @throws InvalidCommandException If provided item quantity is invalid (out of bounds).
      */
-    public String sellOrRestockItem(int index, int itemQuantity, String command) throws InvalidArgumentException {
+    public String sellOrRestockItem(int index, int itemQuantity, String command) throws InvalidCommandException {
         Item item = itemList.get(index - 1);
         return sellOrRestock(item, itemQuantity, command);
     }

@@ -12,7 +12,6 @@ import seedu.binbash.exceptions.InvalidCommandException;
 
 import org.apache.commons.cli.ParseException;
 import org.jline.builtins.Completers.OptDesc;
-import seedu.binbash.exceptions.InvalidFormatException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -133,11 +132,11 @@ public class Parser {
         }
     }
 
-    private Command parseSellCommand(String[] commandArgs) throws InvalidFormatException {
+    private Command parseSellCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return sellCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException("Please enter a valid number.");
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
