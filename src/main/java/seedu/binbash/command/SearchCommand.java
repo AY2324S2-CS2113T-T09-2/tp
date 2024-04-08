@@ -21,9 +21,7 @@ public class SearchCommand extends Command {
 
     public SearchCommand() {
         commandLogger = new BinBashLogger(SearchCommand.class.getName());
-        commandLogger.info(String.format(
-                "Creating Search Command..."
-        ));
+        commandLogger.info("Creating Search Command...");
     }
 
     /**

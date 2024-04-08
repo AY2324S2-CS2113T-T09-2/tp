@@ -90,7 +90,7 @@ public class UpdateCommandParser extends DefaultParser {
         if (itemThreshold < 0) {
             throw new ParseException("Threshold must be must be at least 0.");
         }
-        updateCommand.setItemThreshold((int) itemThreshold);
+        updateCommand.setItemThreshold(itemThreshold);
         setHasOption(true);
     }
 
@@ -127,7 +127,7 @@ public class UpdateCommandParser extends DefaultParser {
         if (itemQuantity < 0) {
             throw new ParseException("Quantity must be at least 0.");
         }
-        updateCommand.setItemQuantity((int) itemQuantity);
+        updateCommand.setItemQuantity(itemQuantity);
         setHasOption(true);
     }
 
