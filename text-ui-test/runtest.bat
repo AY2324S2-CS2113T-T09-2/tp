@@ -20,11 +20,4 @@ java -jar %jarloc% < ..\..\text-ui-test\input.txt > ..\..\text-ui-test\ACTUAL.TX
 
 cd ..\..\text-ui-test
 
-REM Exclude the 19th line from ACTUAL_TEMP.TXT before comparison
-set "line=0"
-(for /f "delims=" %%i in (ACTUAL.TXT) do (
-    set /a "line+=1"
-    if "!line!" neq "19" echo %%i
-)) > ACTUAL_TEMP.TXT
-
-FC ACTUAL_TEMP.TXT EXPECTED.TXT
+FC ACTUAL.TXT EXPECTED.TXT >NUL && ECHO Test passed! || Echo Test failed!
