@@ -293,7 +293,7 @@ Examples:
 
 #### Adding an Operational item
 
-Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -s SALE_PRICE -t THRESHOLD`
+Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -c COST_PRICE -t THRESHOLD`
 
 * `-op` specifies that this is an Operational Item.
 * `ITEM_NAME`, `ITEM_DESCRIPTION` and `SALE_PRICE` must be specified.
@@ -314,12 +314,13 @@ Examples:
        description: lighting
        quantity: 5
        cost price: $2.30
+       threshold: 3
    -------------------------------------------------------------
    ```
 
 #### Adding a Perishable Operational item
 
-Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -t THRESHOLD`
+Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -c COST_PRICE -t THRESHOLD`
 
 * The command to add a Perishable Operational item is similar to adding an Operational item.
 * An additional flag , `-e`, is used here to include the `expiry date`, hence signifying a Perishable Operational item.
@@ -327,15 +328,16 @@ Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DAT
 
 Examples:
 
-- `add -op -n milk -d to make cofee -q 2 -e 03-10-2024 -c 1.30`<br>
+- `add -op -n milk -d to make coffee -q 2 -e 03-10-2024 -c 1.30`<br>
    ```text
    -------------------------------------------------------------
    Noted! I have added the following item into your inventory:
     
    [P][O] milk
-       description: to make cofee
+       description: to make coffee
        quantity: 2
        cost price: $1.30
+       threshold: 1
        expiry date: 03-10-2024
    -------------------------------------------------------------
    ```
