@@ -338,6 +338,10 @@ public class ItemList {
             currentQuantity -= quantityToUpdateBy;
             item.setItemQuantity(currentQuantity);
 
+            if (!(item instanceof RetailItem)) {
+                throw new InvalidCommandException("Operational items cannot be sold.");
+            }
+
             RetailItem retailItem = (RetailItem)item;
             int itemThreshold = retailItem.getItemThreshold();
 
