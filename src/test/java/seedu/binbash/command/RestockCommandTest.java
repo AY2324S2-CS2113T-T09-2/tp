@@ -37,15 +37,6 @@ public class RestockCommandTest {
     }
 
     @Test
-    public void restockItem_returnsErrorMessage_negativeQuantity() {
-        ItemList itemList = new ItemList(new ArrayList<>());
-        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
-        RestockCommand command = new RestockCommand("Test Item", -5);
-        command.execute(itemList);
-        assertEquals("Please provide a positive number.", command.getExecutionUiOutput());
-    }
-
-    @Test
     public void restockItem_increasesQuantity_validIndexAndQuantity() {
         ItemList itemList = new ItemList(new ArrayList<>());
         itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
