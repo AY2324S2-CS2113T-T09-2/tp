@@ -9,7 +9,7 @@ BinBash started up!
 Welcome to BinBash!
 -------------------------------------------------------------
 -------------------------------------------------------------
-Here are your metrics:
+Here are your metrics: 
 	Total Cost: 0.00
 	Total Revenue: 0.00
 	Net Profit: 0.00
