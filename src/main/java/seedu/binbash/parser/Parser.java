@@ -157,15 +157,22 @@ public class Parser {
     }
 
     static int parseIntOptionValue(String argument, String option) throws ParseException {
+        long longValue;
         try {
-            int intValue = Integer.parseInt(argument);
-            return intValue;
+            longValue = Long.parseLong(argument);
         } catch (NumberFormatException e) {
             throw new ParseException(option + " must be a number");
         }
+        if (longValue > Integer.MAX_VALUE) {
+            throw new ParseException(option + " too large!");
+        }
+        return (int) longValue;
     }
 
     static double parseDoubleOptionValue(String argument, String option) throws ParseException {
+        if (argument.length() > 300) {
+            throw new ParseException(option + " number given too long!");
+        }
         try {
             double doubleValue = Double.parseDouble(argument);
             return doubleValue;
@@ -179,7 +186,7 @@ public class Parser {
             LocalDate dateValue = LocalDate.parse(argument, EXPECTED_INPUT_DATE_FORMAT);
             return dateValue;
         } catch (DateTimeParseException e) {
-            throw new ParseException(option + " invalid, required format: dd-mm-yyyy");
+            throw new ParseException(option + "is invalid. Required format: dd-mm-yyyy");
         }
     }
 }
