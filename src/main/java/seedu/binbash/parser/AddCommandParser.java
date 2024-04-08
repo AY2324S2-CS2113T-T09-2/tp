@@ -8,7 +8,6 @@ import org.apache.commons.cli.TypeHandler;
 import org.jline.builtins.Completers.OptDesc;
 
 import seedu.binbash.command.AddCommand;
-import seedu.binbash.exceptions.InvalidArgumentException;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
  * Parses command line arguments for creating a AddCommand.
  */
 public class AddCommandParser extends DefaultParser {
-    protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private ArrayList<OptDesc> optionDescriptions;
 
     /**
@@ -55,9 +53,8 @@ public class AddCommandParser extends DefaultParser {
      * @param commandArgs The command line arguments to parse.
      * @return An AddCommand with the specified item details.
      * @throws ParseException If there is an error parsing the command arguments.
-     * @throws InvalidArgumentException If there is an invalid argument in the command.
      */
-    public AddCommand parse(String[] commandArgs) throws ParseException, InvalidArgumentException {
+    public AddCommand parse(String[] commandArgs) throws ParseException {
 
         CommandLine commandLine = super.parse(options, commandArgs);
 
@@ -92,65 +89,51 @@ public class AddCommandParser extends DefaultParser {
         return String.join(" ", commandLine.getOptionValues("name"));
     }
 
-    private int getItemThreshold(CommandLine commandLine)
-            throws InvalidArgumentException {
-        String threshold = commandLine.getOptionValue("threshold");
-        int itemThreshold = Optional.ofNullable(threshold)
-                .map(Integer::parseInt)
-                .orElse(1);
+    private int getItemThreshold(CommandLine commandLine) throws ParseException {
+        String threshold = commandLine.getOptionValue("threshold", "1");
+        int itemThreshold = TypeHandler.createNumber(threshold).intValue();
         if (itemThreshold < 0) {
-            throw new InvalidArgumentException("Threshold must be must be at least 0.");
-        } else if (itemThreshold == Integer.MAX_VALUE) {
-            throw new InvalidArgumentException("Your threshold is too large");
+            throw new ParseException("Threshold must be must be at least 0.");
         }
         return itemThreshold;
     }
 
-    private LocalDate getItemExpirationDate (CommandLine commandLine) throws InvalidArgumentException {
+    private LocalDate getItemExpirationDate (CommandLine commandLine) throws ParseException {
         LocalDate itemExpiryDate;
         try {
             String expiryDate = commandLine.getOptionValue("expiry-date");
             itemExpiryDate = Optional.ofNullable(expiryDate)
-                    .map(x -> LocalDate.parse(x, EXPECTED_INPUT_DATE_FORMAT))
+                    .map(x -> LocalDate.parse(x, Parser.EXPECTED_INPUT_DATE_FORMAT))
                     .orElse(LocalDate.MIN);
         } catch (DateTimeParseException e) {
-            throw new InvalidArgumentException("Please enter a valid date with the format as such: dd-mm-yyyy");
+            throw new ParseException("Please enter a valid date with the format as such: dd-mm-yyyy");
         }
         return itemExpiryDate;
     }
 
-    private double getItemSalePrice(CommandLine commandLine)
-            throws ParseException, InvalidArgumentException {
+    private double getItemSalePrice(CommandLine commandLine) throws ParseException {
         String salePrice = commandLine.getOptionValue("sale-price", "0.00");
         double itemSalePrice = TypeHandler.createNumber(salePrice).doubleValue();
         if (itemSalePrice < 0) {
-            throw new InvalidArgumentException("Sale price must be at least 0.");
-        } else if (itemSalePrice == Double.MAX_VALUE) {
-            throw new InvalidArgumentException("Your sale price is too large");
+            throw new ParseException("Sale price must be at least 0.");
         }
         return itemSalePrice;
     }
 
-    private double getItemCostPrice(CommandLine commandLine)
-            throws ParseException, InvalidArgumentException {
+    private double getItemCostPrice(CommandLine commandLine) throws ParseException {
         String costPrice = commandLine.getOptionValue("cost-price");
         double itemCostPrice = TypeHandler.createNumber(costPrice).doubleValue();
         if (itemCostPrice < 0) {
-            throw new InvalidArgumentException("Cost price must be at least 0.");
-        } else if (itemCostPrice == Double.MAX_VALUE) {
-            throw new InvalidArgumentException("Your cost price is too large");
+            throw new ParseException("Cost price must be at least 0.");
         }
         return itemCostPrice;
     }
 
-    private int getItemQuantity(CommandLine commandLine)
-            throws ParseException, InvalidArgumentException {
+    private int getItemQuantity(CommandLine commandLine) throws ParseException {
         String quantity = commandLine.getOptionValue("quantity", "0.00");
         int itemQuantity = TypeHandler.createNumber(quantity).intValue();
         if (itemQuantity < 0) {
-            throw new InvalidArgumentException("Quantity must be at least 0.");
-        } else if (itemQuantity == Integer.MAX_VALUE) {
-            throw new InvalidArgumentException("Your quantity is too large");
+            throw new ParseException("Quantity must be at least 0.");
         }
         return itemQuantity;
     }

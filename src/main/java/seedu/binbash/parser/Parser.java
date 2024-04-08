@@ -111,10 +111,8 @@ public class Parser {
     private AddCommand parseAddCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return addCommandParser.parse(commandArgs);
-        } catch (InvalidArgumentException e) {
-            throw new InvalidFormatException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidCommandException("Please enter a valid number.");
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
