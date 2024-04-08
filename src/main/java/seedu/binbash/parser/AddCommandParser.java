@@ -9,6 +9,7 @@ import org.jline.builtins.Completers.OptDesc;
 
 import seedu.binbash.command.AddCommand;
 import seedu.binbash.exceptions.InvalidArgumentException;
+import seedu.binbash.exceptions.InvalidFormatException;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
@@ -57,7 +58,8 @@ public class AddCommandParser extends DefaultParser {
      * @throws ParseException If there is an error parsing the command arguments.
      * @throws InvalidArgumentException If there is an invalid argument in the command.
      */
-    public AddCommand parse(String[] commandArgs) throws ParseException, InvalidArgumentException {
+    public AddCommand parse(String[] commandArgs) throws
+            ParseException, InvalidArgumentException, InvalidFormatException {
 
         CommandLine commandLine = super.parse(options, commandArgs);
 
@@ -126,7 +128,12 @@ public class AddCommandParser extends DefaultParser {
     }
 
     private double getItemSalePrice(CommandLine commandLine)
-            throws ParseException, InvalidArgumentException {
+            throws ParseException, InvalidArgumentException, InvalidFormatException {
+        if (commandLine.hasOption("retail") && !commandLine.hasOption("sale-price")) {
+            // Enforce that sale price must also be provided for retail items.
+            throw new InvalidFormatException("Please enter a sale price for your retail item.");
+        }
+
         String salePrice = commandLine.getOptionValue("sale-price", "0.00");
         double itemSalePrice = TypeHandler.createNumber(salePrice).doubleValue();
         if (itemSalePrice < 0) {
