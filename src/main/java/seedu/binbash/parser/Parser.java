@@ -8,6 +8,7 @@ import seedu.binbash.command.UpdateCommand;
 import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
+import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.exceptions.InvalidArgumentException;
 
@@ -69,7 +70,7 @@ public class Parser {
      * @return The parsed command.
      * @throws InvalidCommandException If the command is invalid or cannot be parsed.
      */
-    public Command parseCommand(String userInput) throws InvalidCommandException {
+    public Command parseCommand(String userInput) throws BinBashException {
         String[] tokens = userInput.trim().split("\\s+"); // Tokenize user input
         String commandString = tokens[0].toLowerCase();
         String[] commandArgs = Arrays.copyOfRange(tokens, 1, tokens.length); // Takes only options and arguments
@@ -100,31 +101,33 @@ public class Parser {
         }
     }
 
-    private DeleteCommand parseDeleteCommand(String[] commandArgs) throws InvalidCommandException {
+    private DeleteCommand parseDeleteCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return deleteCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidCommandException(e.getMessage());
+            throw new InvalidFormatException(e.getMessage());
         }
     }
 
-    private AddCommand parseAddCommand(String[] commandArgs) throws InvalidCommandException {
+    private AddCommand parseAddCommand(String[] commandArgs) throws InvalidFormatException,
+            InvalidArgumentException {
         try {
             return addCommandParser.parse(commandArgs);
         } catch (InvalidArgumentException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidArgumentException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidCommandException("Please enter a valid number.");
+            throw new InvalidFormatException(e.getMessage());
         }
     }
 
-    private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidCommandException {
+    private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidFormatException,
+            InvalidArgumentException {
         try {
             return updateCommandParser.parse(commandArgs);
         } catch (InvalidArgumentException e) {
-            throw new InvalidFormatException(e.getMessage());
+            throw new InvalidArgumentException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidCommandException("Please enter a valid number.");
+            throw new InvalidFormatException(e.getMessage());
         }
     }
 
@@ -132,7 +135,7 @@ public class Parser {
         try {
             return restockCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException("Please enter a valid number.");
+            throw new InvalidFormatException(e.getMessage());
         }
     }
 
@@ -140,23 +143,23 @@ public class Parser {
         try {
             return sellCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException("Please enter a valid number.");
+            throw new InvalidFormatException(e.getMessage());
         }
     }
 
-    private SearchCommand parseSearchCommand(String[] commandArgs) throws InvalidCommandException {
+    private SearchCommand parseSearchCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return searchCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidCommandException(e.getMessage());
+            throw new InvalidFormatException(e.getMessage());
         }
     }
 
-    private ListCommand parseListCommand(String[] commandArgs) throws InvalidCommandException {
+    private ListCommand parseListCommand(String[] commandArgs) throws InvalidFormatException {
         try {
             return listCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidCommandException(e.getMessage());
+            throw new InvalidFormatException(e.getMessage());
         }
     }
 }
