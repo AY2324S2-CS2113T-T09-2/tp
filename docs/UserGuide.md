@@ -679,15 +679,15 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 
 ## Command Summary
 
-| **Commands** | **Usage**                                                                                                                                                                                                      |
-|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **add**      | `add -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRATION_DATE -s SALE_PRICE -c COST_PRICE` , `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -C COST_PRICE -t THRESHOLD` |
-| **search**   | `search KEYWORD`                                                                                                                                                                                               |
-| **list**     | `list` `list -c` `list -s` `list -e`                                                                                                                                                                           |
-| **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME`                                                                                                                                                                       |
-| **profit**   | `profit`                                                                                                                                                                                                       |
-| **bye**      | `bye`                                                                                                                                                                                                          |
-| **sell**     | `sell -n ITEM_NAME -q ITEM_QUANTITY` `sell -n ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                     | 
+| **Commands** | **Usage**                                                                                                                                                                                                          |
+|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **add**      | `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRATION_DATE -s SALE_PRICE -c COST_PRICE` , `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -C COST_PRICE -t THRESHOLD` |
+| **search**   | `search KEYWORD`                                                                                                                                                                                                   |
+| **list**     | `list` `list -c` `list -s` `list -e`                                                                                                                                                                               |
+| **delete**   | `delete ITEM_INDEX` , `delete ITEM_NAME`                                                                                                                                                                           |
+| **profit**   | `profit`                                                                                                                                                                                                           |
+| **bye**      | `bye`                                                                                                                                                                                                              |
+| **sell**     | `sell -n ITEM_NAME -q ITEM_QUANTITY` `sell -n ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                         | 
 
 * [Back to table of contents](#table-of-contents)
 ---
