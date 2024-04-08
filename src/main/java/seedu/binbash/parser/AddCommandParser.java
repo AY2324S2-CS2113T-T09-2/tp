@@ -119,7 +119,7 @@ public class AddCommandParser extends DefaultParser {
         try {
             itemSalePrice = Double.parseDouble(salePrice);
         } catch (NumberFormatException e) {
-            throw new ParseException(e.getMessage());
+            throw new ParseException("Sale price must be a number.");
         }
         if (itemSalePrice < 0) {
             throw new ParseException("Sale price must be at least 0.");
@@ -129,7 +129,12 @@ public class AddCommandParser extends DefaultParser {
 
     private double getItemCostPrice(CommandLine commandLine) throws ParseException {
         String costPrice = commandLine.getOptionValue("cost-price");
-        double itemCostPrice = TypeHandler.createNumber(costPrice).doubleValue();
+        double itemCostPrice;
+        try {
+            itemCostPrice = Double.parseDouble(costPrice);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Cost price must be a number.");
+        }
         if (itemCostPrice < 0) {
             throw new ParseException("Cost price must be at least 0.");
         }
@@ -137,8 +142,8 @@ public class AddCommandParser extends DefaultParser {
     }
 
     private int getItemQuantity(CommandLine commandLine) throws ParseException {
-        String quantity = commandLine.getOptionValue("quantity", "0.00");
-        int itemQuantity = TypeHandler.createNumber(quantity).intValue();
+        String quantity = commandLine.getOptionValue("quantity", "0");
+        int itemQuantity = Parser.parseIntOptionValue(quantity, "quantity");
         if (itemQuantity < 0) {
             throw new ParseException("Quantity must be at least 0.");
         }

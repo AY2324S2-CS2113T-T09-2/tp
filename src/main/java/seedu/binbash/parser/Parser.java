@@ -157,4 +157,13 @@ public class Parser {
             throw new InvalidCommandException(e.getMessage());
         }
     }
+
+    static int parseIntOptionValue(String argument, String option) throws ParseException {
+        try {
+            int intValue = Integer.parseInt(argument);
+            return intValue;
+        } catch (NumberFormatException e) {
+            throw new ParseException(option + " must be a number");
+        }
+    }
 }
