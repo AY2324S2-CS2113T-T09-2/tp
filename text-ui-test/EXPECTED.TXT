@@ -46,7 +46,7 @@ Noted! I have added the following item into your inventory:
 	cost price: $100.00
 	sale price: $0.00
 	threshold: 1
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 -------------------------------------------------------------
 binbash> -------------------------------------------------------------
 Noted! I have added the following item into your inventory:
@@ -57,7 +57,7 @@ Noted! I have added the following item into your inventory:
 	cost price: $100.00
 	sale price: $0.00
 	threshold: 1
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 -------------------------------------------------------------
 binbash> -------------------------------------------------------------
 Noted! I have added the following item into your inventory:
@@ -74,7 +74,7 @@ Noted! I have added the following item into your inventory:
 	description: everything(op)
 	quantity: 100
 	cost price: $100.00
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 -------------------------------------------------------------
 binbash> -------------------------------------------------------------
 1. [R] item with
@@ -114,7 +114,7 @@ binbash> -------------------------------------------------------------
 	cost price: $100.00
 	sale price: $0.00
 	threshold: 1
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 
 4. [P][R] item with
 	description: everything
@@ -122,7 +122,7 @@ binbash> -------------------------------------------------------------
 	cost price: $100.00
 	sale price: $0.00
 	threshold: 1
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 
 5. [O] item with
 	description: no exp(op)
@@ -133,7 +133,7 @@ binbash> -------------------------------------------------------------
 	description: everything(op)
 	quantity: 100
 	cost price: $100.00
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 
 
 -------------------------------------------------------------
@@ -144,13 +144,13 @@ binbash> -------------------------------------------------------------
 	cost price: $100.00
 	sale price: $0.00
 	threshold: 1
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 
 2. [P][O] item with
 	description: everything(op)
 	quantity: 100
 	cost price: $100.00
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 
 
 -------------------------------------------------------------
@@ -175,7 +175,7 @@ binbash> -------------------------------------------------------------
 	cost price: $100.00
 	sale price: $0.00
 	threshold: 1
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 
 4. [P][R] item with
 	description: everything
@@ -183,7 +183,7 @@ binbash> -------------------------------------------------------------
 	cost price: $100.00
 	sale price: $0.00
 	threshold: 1
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 
 5. [O] item with
 	description: no exp(op)
@@ -194,7 +194,7 @@ binbash> -------------------------------------------------------------
 	description: everything(op)
 	quantity: 100
 	cost price: $100.00
-	expiry date: 01-01-1999
+	expiry date: 01-01-2025
 
 
 -------------------------------------------------------------

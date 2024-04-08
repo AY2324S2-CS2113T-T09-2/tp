@@ -4,14 +4,11 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.TypeHandler;
 import org.jline.builtins.Completers.OptDesc;
 
 import seedu.binbash.command.UpdateCommand;
-import seedu.binbash.exceptions.InvalidArgumentException;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 /**
@@ -57,10 +54,9 @@ public class UpdateCommandParser extends DefaultParser {
      *
      * @param commandArgs The command line arguments.
      * @return The parsed UpdateCommand.
-     * @throws InvalidArgumentException If an invalid argument is encountered during parsing.
      * @throws ParseException If an error occurs during parsing.
      */
-    public UpdateCommand parse(String[] commandArgs) throws InvalidArgumentException, ParseException {
+    public UpdateCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
         UpdateCommand updateCommand = getUpdateCommand(commandLine);
 
@@ -88,82 +84,48 @@ public class UpdateCommandParser extends DefaultParser {
         return updateCommand;
     }
 
-    private void hasThresholdOption(CommandLine commandLine, UpdateCommand updateCommand)
-            throws InvalidArgumentException {
+    private void hasThresholdOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
         String threshold = commandLine.getOptionValue("threshold");
-        long itemThreshold;
-
-        try {
-            itemThreshold = TypeHandler.createNumber(threshold).longValue();
-        } catch (ParseException e) {
-            // Thrown when provided value > Long.MAX_VALUE or < Long.MIN_VALUE
-            throw new InvalidArgumentException("Threshold value is invalid!");
-        }
-
-        // Valid Long is provided, now ensure value is within Integer bounds.
+        int itemThreshold = Parser.parseIntOptionValue(threshold, "threshold");
         if (itemThreshold < 0) {
-            throw new InvalidArgumentException("Threshold must be must be at least 0.");
-        } else if (itemThreshold > Integer.MAX_VALUE) {
-            throw new InvalidArgumentException("Threshold value is too large!");
+            throw new ParseException("Threshold must be must be at least 0.");
         }
         updateCommand.setItemThreshold((int) itemThreshold);
         setHasOption(true);
     }
 
-    private void hasExpirationDateOption(CommandLine commandLine, UpdateCommand updateCommand)
-            throws InvalidArgumentException {
-        try {
-            LocalDate itemExpiryDate = LocalDate.parse(commandLine.getOptionValue("expiry-date"),
-                    Parser.EXPECTED_INPUT_DATE_FORMAT);
-            updateCommand.setItemExpirationDate(itemExpiryDate);
-        } catch (DateTimeParseException e) {
-            throw new InvalidArgumentException("Please enter a valid date with the format as such: dd-mm-yyyy");
-        }
+    private void hasExpirationDateOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
+        LocalDate itemExpiryDate = Parser.parseDateOptionValue(commandLine.getOptionValue("expiry-date"),
+                "expiry date");
+        updateCommand.setItemExpirationDate(itemExpiryDate);
         setHasOption(true);
     }
 
-    private void hasSalePriceOption(CommandLine commandLine, UpdateCommand updateCommand)
-            throws InvalidArgumentException, ParseException {
+    private void hasSalePriceOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
         String salePrice = commandLine.getOptionValue("sale-price");
-        double itemSalePrice = TypeHandler.createNumber(salePrice).doubleValue();
+        double itemSalePrice = Parser.parseDoubleOptionValue(salePrice, "sale price");
         if (itemSalePrice < 0) {
-            throw new InvalidArgumentException("Sale price must be at least 0.");
-        } else if (itemSalePrice == Double.MAX_VALUE) {
-            throw new InvalidArgumentException("Sale price is too large!");
+            throw new ParseException("Sale price must be at least 0.");
         }
         updateCommand.setItemSalePrice(itemSalePrice);
         setHasOption(true);
     }
 
-    private void hasCostPriceOption(CommandLine commandLine, UpdateCommand updateCommand)
-            throws InvalidArgumentException, ParseException {
+    private void hasCostPriceOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
         String costPrice = commandLine.getOptionValue("cost-price");
-        double itemCostPrice = TypeHandler.createNumber(costPrice).doubleValue();
+        double itemCostPrice = Parser.parseDoubleOptionValue(costPrice, "cost price");
         if (itemCostPrice < 0) {
-            throw new InvalidArgumentException("Cost price must be at least 0.");
-        } else if (itemCostPrice == Double.MAX_VALUE) {
-            throw new InvalidArgumentException("Cost price is too large!");
+            throw new ParseException("Cost price must be at least 0.");
         }
         updateCommand.setItemCostPrice(itemCostPrice);
         setHasOption(true);
     }
 
-    private void hasQuantityOption(CommandLine commandLine, UpdateCommand updateCommand)
-            throws InvalidArgumentException {
+    private void hasQuantityOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
         String quantity = commandLine.getOptionValue("quantity");
-        long itemQuantity;
-
-        try {
-            itemQuantity = TypeHandler.createNumber(quantity).longValue();
-        } catch (ParseException e) {
-            // Thrown when provided value > Long.MAX_VALUE or < Long.MIN_VALUE
-            throw new InvalidArgumentException("Quantity value is invalid!");
-        }
-
+        int itemQuantity = Parser.parseIntOptionValue(quantity, "quantity");
         if (itemQuantity < 0) {
-            throw new InvalidArgumentException("Quantity must be at least 0.");
-        } else if (itemQuantity > Integer.MAX_VALUE) {
-            throw new InvalidArgumentException("Quantity value is too large!");
+            throw new ParseException("Quantity must be at least 0.");
         }
         updateCommand.setItemQuantity((int) itemQuantity);
         setHasOption(true);
