@@ -1,5 +1,6 @@
 
 @startuml
+hide footbox
 actor user
 participant ":Ui"
 participant ":BinBash"
@@ -8,35 +9,41 @@ participant ":Command"
 participant ":ItemList"
 participant ":Storage"
 
-activate ":Ui"
 activate ":BinBash"
-activate ":Parser"
-activate ":ItemList"
-activate ":Storage"
-user -> ":Ui" : 1. 'list'
-":Ui" -> ":BinBash" : 2. readUserCommand(list)
 
-loop [isUserActive]
+loop isUserActive
+
+    ":BinBash" -> ":Ui" : 1. readUserCommand()
+    activate ":Ui"
+    user -> ":Ui" : 'list'
+    return 2. userInput:String ('list')
+
     ":BinBash" -> ":Parser" : 3. parseCommand('list')
-    ":Parser" --> ":BinBash" : 4. userCommand: ":Command"
-    ":BinBash" -> ":Command" : 5. userCommand.execute()
+    activate ":Parser"
+    return 4. userCommand:Command
+
+    ":BinBash" -> ":Command" : 5. execute()
     activate ":Command"
     ":Command" -> ":ItemList" : 6. printList()
-    ":ItemList" --> ":Command" : 7. executionUiOutput: ":String"
-    ":Command" --> ":BinBash"
+    activate ":ItemList"
+    return 7. executionUiOutput:String
+    return
+
     ":BinBash" -> ":Command" : 8. getExecutionUiOutput()
-    ":Command" --> ":BinBash" : 9. outputString: ":String"
+    activate ":Command"
+    return 9. outputString:String
+
     ":BinBash" -> ":Ui" : 10. talk(outputString)
-    ":Ui" -> user : 11. outputString
-    deactivate ":Command"
-end
+    activate ":Ui"
+    ":Ui" --> user : 11. outputString
+    return
 
-opt hasToSave
-    ":BinBash" -> ":Storage" : 12. saveToStorage()
-    ":Storage" --> ":BinBash"
-end
+    opt hasToSave
+        ":BinBash" -> ":Storage" : 12. saveToStorage()
+        activate ":Storage"
+        return
+    end
 
-deactivate ":Storage"
-deactivate ":BinBash"
+end
 
 @enduml
