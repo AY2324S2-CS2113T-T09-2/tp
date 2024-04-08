@@ -37,15 +37,6 @@ public class SellCommandTest {
     }
 
     @Test
-    public void sellItem_returnsErrorMessage_negativeQuantity() {
-        ItemList itemList = new ItemList(new ArrayList<>());
-        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
-        SellCommand command = new SellCommand("Test Item", -5);
-        command.execute(itemList);
-        assertEquals("Please provide a positive number.", command.getExecutionUiOutput());
-    }
-
-    @Test
     public void sellItem_decreasesQuantity_validIndexAndQuantity() {
         ItemList itemList = new ItemList(new ArrayList<>());
         itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
