@@ -391,7 +391,9 @@ Format: `list`
 
 #### List Inventory (Sorted)
 
-BinBash also allows you to sort your inventory based on different criteria using the following flags:
+BinBash also allows you to sort your inventory in ascending order based on different criteria. This means that items 
+with the lowest 'values' will be showed first, whilst items with the highest 'values' will be showed last. The different
+'values' that BinBash can sort by can be seen below:
 
 | Flag | Description                                |
 |------|--------------------------------------------|
@@ -404,23 +406,27 @@ Format: `list -FLAG`
 
 Example: 
 
-Say you have the following items in your inventory.
-- Item A, Cost Price: $5, Sale Price: $15, Profit: $10, Expiry Date: 2023-05-01
-- Item B, Cost Price: $10, Sale Price: $12, Profit: $2, Expiry Date: 2023-04-15
-- Item C, Cost Price: $8, Sale Price: $20, Profit: $12, Expiry Date: 2023-06-20
+Suppose you have the following items in your inventory:
+- Item A (Perishable Retail), Cost Price: $5, Sale Price: $15, Expiry Date: 01-05-2023
+- Item B (Perishable Retail), Cost Price: $10, Sale Price: $12, Expiry Date: 15-04-2023
+- Item C (Perishable Operational), Cost Price: $3, Expiry Date: 10-07-2023
+- Item D (Non-perishable Retail), Cost Price: $7, Sale Price: $14
 
-After using `list -c`, the sorted list by cost price will be:
+Using `list -c`, BinBash sorts all items by cost price in ascending order:
+- Item C, Cost Price: $3
 - Item A, Cost Price: $5
-- Item C, Cost Price: $8
+- Item D, Cost Price: $7
 - Item B, Cost Price: $10
 
-If we were to use `list -e` however, the sorted list by expiry date will then be:
-- Item B, Expiry Date: 2023-04-15
-- Item A, Expiry Date: 2023-05-01
-- Item C, Expiry Date: 2023-06-20
+Using `list -e`, BinBash sorts the items in order of which items will expire first. Notice how BinBash will filter out 
+non-perishable items (Item D) and sort the remaining items by their expiry date:
+- Item B, Expiry Date: 15-04-2023
+- Item A, Expiry Date: 01-05-2023
+- Item C, Expiry Date: 10-07-2023
 
-Similarly, you can use `list -s` and `list -p`, to sort by sale price and profit respectively.
-
+Similarly, you can use `list -s` to sort the items by sale price and `list -p` to sort by profit. Once again, 
+note that for sorting the items by sale price and by profit, operational items like Item C will not appear in these 
+sorted lists as they do not have a sale price.
 
 * [Back to table of contents](#table-of-contents)
 ---
@@ -647,7 +653,7 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 
 | **Command** | **Usage**                                                                                                                                                                                                                                   | **Description**                                                                                                  |
 |-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| **add**     | `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -s SALE_PRICE -c COST_PRICE -t THRESHOLD` <br> `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -t THRESHOLD`                             | Adds a new item to the inventory.                                                                                |
+| **add**     | `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` <br> `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -c COST_PRICE -t THRESHOLD`              | Adds a new item to the inventory.                                                                                |
 | **search**  | `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`                                                                                             | Searches for items in the inventory based on various criteria.                                                   |
 | **list**    | `list` <br> `list -c` <br> `list -s` <br> `list -e` <br> `list -p`                                                                                                                                                                          | Lists all items in the inventory, with optional sorting based on cost price, sale price, expiry date or profits. |
 | **delete**  | `delete -i ITEM_INDEX` <br> `delete -n **ITEM_NAME**`                                                                                                                                                                                       | Deletes an item from the inventory.                                                                              |
@@ -655,7 +661,7 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 | **restock** | `restock -n ITEM_NAME -q ITEM_QUANTITY` <br> `restock -i ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                                       | Increases the quantity of an item after restocking.                                                              |
 | **update**  | `update -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` <br> `update -i ITEM_INDEX -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` | Updates the details of an existing item in the inventory.                                                        |
 | **profit**  | `profit`                                                                                                                                                                                                                                    | Displays the total profit earned from the inventory.                                                             |
-| **bye**     | `bye`                                                                                                                                                                                                                                       | Exits the application.                                                                                           |
+| **bye**     | `bye` <br> `exit` <br> `quit`                                                                                                                                                                                                               | Exits the application.                                                                                           |
 
 * [Back to table of contents](#table-of-contents)
 ---
