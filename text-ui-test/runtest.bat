@@ -20,4 +20,4 @@ java -jar %jarloc% < ..\..\text-ui-test\input.txt > ..\..\text-ui-test\ACTUAL.TX
 
 cd ..\..\text-ui-test
 
-FC ACTUAL.TXT EXPECTED.TX
+FC ACTUAL.TXT EXPECTED.TXT
