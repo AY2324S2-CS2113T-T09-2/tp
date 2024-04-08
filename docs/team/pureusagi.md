@@ -155,7 +155,7 @@ Note: Some edits to formatting and wording are done by teammates.
 
 ### Delete command
 
-![DeleteSequenceDiagram](images/DeleteSequenceDiagram.png)
+![DeleteSequenceDiagram](../images/DeleteSequenceDiagram.png)
 
 API: [`DeleteCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/DeleteCommand.java)
 
@@ -210,7 +210,7 @@ Logging plays a crucial role in providing insights into the runtime behavior of 
 
 ### List command
 
-![ListSequenceDiagram](images/ListSequenceDiagram.png)
+![ListSequenceDiagram](../images/ListSequenceDiagram.png)
 
 API: [`ListCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/ListCommand.java)
 

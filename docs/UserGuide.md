@@ -27,6 +27,7 @@ Our long awaited first release adds everything you would expect of an inventory 
 5. [Getting Started](#getting-started)
 6. [Features](#features)
     - [Notes on the Command format](#notes-on-the-command-format)
+    - [Command auto-suggestions](#command-auto-suggestions)
     - [Adding an item: `add`](#adding-an-item-add)
     - [Searching for an item: `search`](#searching-for-an-item-search)
     - [Listing current inventory: `list`](#listing-current-inventory-list)
@@ -208,7 +209,7 @@ To exit command suggestion mode simply press any other key.
 
 ### Adding an item: `add`
 
-> This allows you to add an item to your inventory.
+> This allows you to add a new item to start keeping track of in your inventory.
 
 #### Adding a Retail item
 
@@ -218,9 +219,11 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -s SALE_PRICE
 * `ITEM_NAME`, `ITEM_DESCRIPTION`, `SALE_PRICE` and `COST_PRICE` must be specified.
 * All other fields are optional.
 * If `ITEM_QUANTITY` is not specified, a default value of `0` will be assigned to it.
+This allows you to create a placeholder for an item in your inventory you've yet to receive any stock of.
+  > ℹ️ Once you've received stock of the item, you can call the [`restock`](#restocking-an-item-restock) command to increase the stocked quantity of the item.
 * If `THRESHOLD` is not specified, a default value of `1` will be assigned to it.
 * There is no need to include the currency. A `$` sign will be appended to the prices.
-* Retail items do not have an `expiry date` field, hence the flag `-e` is not used.
+* Retail items do not have an `EXPIRY_DATE` field, hence the flag `-e` is not used.
 
 Examples:
 
@@ -257,7 +260,7 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DAT
 -t THRESHOLD`
 
 * The command to add a Perishable Retail item is similar to adding a Retail item.
-* An additional flag , `-e`, is used here to include the `expiry date`, hence signifying a Perishable Retail item.
+* An additional flag , `-e`, is used here to include the `EXPIRY_DATE`, hence signifying a Perishable Retail item.
   > ℹ️ Ensure that the provided date is in `DD-MM-YYYY` format. For example, **20 January 2024** is represented as `20-01-2024`
 
 Examples:
@@ -296,12 +299,14 @@ Examples:
 Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -c COST_PRICE -t THRESHOLD`
 
 * `-op` specifies that this is an Operational Item.
-* `ITEM_NAME`, `ITEM_DESCRIPTION` and `SALE_PRICE` must be specified.
+* `ITEM_NAME`, `ITEM_DESCRIPTION` and `COST_PRICE` must be specified.
 * All other fields are optional.
 * If `ITEM_QUANTITY` is not specified, a default value of `0` will be assigned to it.
+This allows you to create a placeholder for an item in your inventory you've yet to receive any stock of.
+  > ℹ️ Once you've received stock of the item, you can call the [`restock`](#restocking-an-item-restock) command to increase the stocked quantity of the item.
 * If `THRESHOLD` is not specified, a default value of `1` will be assigned to it.
 * There is no need to include the currency. A `$` sign will be appended to the prices.
-* `-s` and `-e` are not used as there are no `sale price` and `expiry date` fields for an Operational Item.
+* `-s` and `-e` are not used as there are no `SALE_PRICE` and `EXPIRY_DATE` fields for an Operational Item.
 
 Examples:
 
@@ -323,8 +328,9 @@ Examples:
 Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -c COST_PRICE -t THRESHOLD`
 
 * The command to add a Perishable Operational item is similar to adding an Operational item.
-* An additional flag , `-e`, is used here to include the `expiry date`, hence signifying a Perishable Operational item.
+* An additional flag , `-e`, is used here to include the `EXPIRY_DATE`, hence signifying a Perishable Operational item.
   > ℹ️ Ensure that the provided date is in `DD-MM-YYYY` format. For example, **20 January 2024** is represented as `20-01-2024`
+* `-s` is not used as there is no `SALE_PRICE` for a Perishable Operational Item.
 
 Examples:
 
@@ -653,17 +659,17 @@ Similarly, your saved data will be automatically loaded into BinBash when you st
 
 ## Command Summary
 
-| **Command** | **Usage**                                                                                                                                                                                                                               | **Description**                                                                                                  |
-|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| **add**     | `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` <br> `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -c COST_PRICE -t THRESHOLD`          | Adds a new item to the inventory.                                                                                |
-| **search**  | `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`                                                                                         | Searches for items in the inventory based on various criteria.                                                   |
-| **list**    | `list` <br> `list -c` <br> `list -s` <br> `list -e` <br> `list -p`                                                                                                                                                                      | Lists all items in the inventory, with optional sorting based on cost price, sale price, expiry date or profits. |
-| **delete**  | `delete -i ITEM_INDEX` <br> `delete -n ITEM_NAME`                                                                                                                                                                                       | Deletes an item from the inventory.                                                                              |
-| **sell**    | `sell -n ITEM_NAME -q ITEM_QUANTITY` <br> `sell -i ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                                         | Decreases the quantity of an item after a sale.                                                                  |
-| **restock** | `restock -n ITEM_NAME -q ITEM_QUANTITY` <br> `restock -i ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                                   | Increases the quantity of an item after restocking.                                                              |
-| **update**  | `update -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` <br> `update -i ITEM_INDEX -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` | Updates the details of an existing item in the inventory.                                                        |
-| **profit**  | `profit`                                                                                                                                                                                                                                | Displays the total profit earned from the inventory.                                                             |
-| **bye**     | `bye` <br> `exit` <br> `quit`                                                                                                                                                                                                           | Exits the application.                                                                                           |
+| **Command** | **Usage**                                                                                                                                                                                                                                     | **Description**                                                                                                       |
+|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| **add**     | `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` <br> `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -c COST_PRICE -t THRESHOLD`                | Adds a new item to the inventory.                                                                                     |
+| **search**  | `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`                                                                                               | Searches for items in the inventory based on various criteria.                                                        |
+| **list**    | `list` <br> `list -c` <br> `list -s` <br> `list -e` <br> `list -p`                                                                                                                                                                            | Lists all items in the inventory, with optional sorting based on cost price, sale price, expiry date or profits.      |
+| **delete**  | `delete -i ITEM_INDEX` <br> `delete -n ITEM_NAME`                                                                                                                                                                                             | Deletes an item from the inventory.                                                                                   |
+| **sell**    | `sell -n ITEM_NAME -q ITEM_QUANTITY` <br> `sell -i ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                                               | Decreases the quantity of an item after a sale.                                                                       |
+| **restock** | `restock -n ITEM_NAME -q ITEM_QUANTITY` <br> `restock -i ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                                         | Increases the quantity of an item after restocking.                                                                   |
+| **update**  | `update -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` <br> `update -i ITEM_INDEX -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD`   | Updates the details of an existing item in the inventory.                                                             |
+| **profit**  | `profit`                                                                                                                                                                                                                                      | Displays the total profit earned from the inventory.                                                                  |
+| **bye**     | `bye` <br> `exit` <br> `quit`                                                                                                                                                                                                                 | Exits the application.                                                                                                |
 
 * [Back to table of contents](#table-of-contents)
 ---
