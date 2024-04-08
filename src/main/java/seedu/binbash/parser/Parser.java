@@ -166,4 +166,13 @@ public class Parser {
             throw new ParseException(option + " must be a number");
         }
     }
+
+    static double parseDoubleOptionValue(String argument, String option) throws ParseException {
+        try {
+            double doubleValue = Double.parseDouble(argument);
+            return doubleValue;
+        } catch (NumberFormatException e) {
+            throw new ParseException(option + " must be a number");
+        }
+    }
 }

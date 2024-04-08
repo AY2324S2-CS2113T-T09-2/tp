@@ -4,7 +4,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.TypeHandler;
 import org.jline.builtins.Completers.OptDesc;
 
 import seedu.binbash.command.AddCommand;
@@ -89,8 +88,7 @@ public class AddCommandParser extends DefaultParser {
     }
 
     private int getItemThreshold(CommandLine commandLine) throws ParseException {
-        String threshold = commandLine.getOptionValue("threshold", "1");
-        int itemThreshold = TypeHandler.createNumber(threshold).intValue();
+        int itemThreshold = Parser.parseIntOptionValue(commandLine.getOptionValue("threshold", "1"), "threshold");
         if (itemThreshold < 0) {
             throw new ParseException("Threshold must be must be at least 0.");
         }
@@ -114,13 +112,8 @@ public class AddCommandParser extends DefaultParser {
     }
 
     private double getItemSalePrice(CommandLine commandLine) throws ParseException {
-        String salePrice = commandLine.getOptionValue("sale-price", "0.00");
-        double itemSalePrice;
-        try {
-            itemSalePrice = Double.parseDouble(salePrice);
-        } catch (NumberFormatException e) {
-            throw new ParseException("Sale price must be a number.");
-        }
+        double itemSalePrice = Parser.parseDoubleOptionValue(commandLine.getOptionValue("sale-price", "0.00"),
+                "sale price");
         if (itemSalePrice < 0) {
             throw new ParseException("Sale price must be at least 0.");
         }
@@ -128,13 +121,8 @@ public class AddCommandParser extends DefaultParser {
     }
 
     private double getItemCostPrice(CommandLine commandLine) throws ParseException {
-        String costPrice = commandLine.getOptionValue("cost-price");
-        double itemCostPrice;
-        try {
-            itemCostPrice = Double.parseDouble(costPrice);
-        } catch (NumberFormatException e) {
-            throw new ParseException("Cost price must be a number.");
-        }
+        double itemCostPrice = Parser.parseDoubleOptionValue(commandLine.getOptionValue("cost-price"),
+                "cost price");
         if (itemCostPrice < 0) {
             throw new ParseException("Cost price must be at least 0.");
         }
@@ -142,8 +130,7 @@ public class AddCommandParser extends DefaultParser {
     }
 
     private int getItemQuantity(CommandLine commandLine) throws ParseException {
-        String quantity = commandLine.getOptionValue("quantity", "0");
-        int itemQuantity = Parser.parseIntOptionValue(quantity, "quantity");
+        int itemQuantity = Parser.parseIntOptionValue(commandLine.getOptionValue("quantity", "0"), "quantity");
         if (itemQuantity < 0) {
             throw new ParseException("Quantity must be at least 0.");
         }
