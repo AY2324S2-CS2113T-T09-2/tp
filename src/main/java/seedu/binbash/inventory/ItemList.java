@@ -5,7 +5,6 @@ import seedu.binbash.comparators.ItemComparatorByCostPrice;
 import seedu.binbash.comparators.ItemComparatorByExpiryDate;
 import seedu.binbash.comparators.ItemComparatorByProfit;
 import seedu.binbash.comparators.ItemComparatorBySalePrice;
-import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
@@ -320,29 +319,21 @@ public class ItemList {
         throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
     }
 
-    private String sellOrRestock(Item item, int quantityToUpdateBy, String command) throws InvalidArgumentException {
+    private String sellOrRestock(Item item, int quantityToUpdateBy, String command) throws InvalidCommandException {
         String alertText = "";
         int currentQuantity = item.getItemQuantity();
-
         switch (command) {
         case RestockCommand.COMMAND:
-            if (quantityToUpdateBy > 0) {
-                currentQuantity += quantityToUpdateBy;
-                item.setItemQuantity(currentQuantity);
-            } else {
-                throw new InvalidArgumentException("Please provide a positive number.");
-            }
+            currentQuantity += quantityToUpdateBy;
+            item.setItemQuantity(currentQuantity);
 
             int totalUnitsPurchased = item.getTotalUnitsPurchased();
             item.setTotalUnitsPurchased(totalUnitsPurchased + quantityToUpdateBy);
 
             break;
         case SellCommand.COMMAND:
-            if (quantityToUpdateBy <= 0) {
-                throw new InvalidArgumentException("Please provide a positive number.");
-            }
             if (quantityToUpdateBy > currentQuantity) {
-                throw new InvalidArgumentException("You do not have enough to sell the stated quantity.");
+                throw new InvalidCommandException("You do not have enough to sell the stated quantity.");
             }
             currentQuantity -= quantityToUpdateBy;
             item.setItemQuantity(currentQuantity);
@@ -358,7 +349,7 @@ public class ItemList {
             retailItem.setTotalUnitsSold(totalUnitsSold + quantityToUpdateBy);
             break;
         default:
-            throw new InvalidArgumentException("Invalid argument!");
+            throw new InvalidCommandException("Invalid argument!");
         }
 
         String output = "Great! I have updated the quantity of the item for you:" + System.lineSeparator()
@@ -375,20 +366,11 @@ public class ItemList {
      * @param itemQuantity The quantity to be sold/restocked.
      * @param command A string representing the type of operation to be done.
      * @return A String showing the result of the sell/restock operation.
-     * @throws InvalidArgumentException If provided item quantity is invalid (out of bounds).
+     * @throws InvalidCommandException If provided item quantity is invalid (out of bounds).
      */
-    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidArgumentException{
-        Item item = null;
-
-        // Temporary for now. I noticed that both InvalidCommandException and InvalidArgumentException are used
-        // in this class. Would like to clarify which we are intending to use.
-        try {
-            item = findItemByName(itemName);
-        } catch (InvalidCommandException e) {
-            throw new InvalidArgumentException(e.getMessage());
-        }
+    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidCommandException{
+        Item item = findItemByName(itemName);
         String output = sellOrRestock(item, itemQuantity, command);
-
         return output;
     }
 
@@ -399,9 +381,9 @@ public class ItemList {
      * @param itemQuantity The quantity to be sold/restocked.
      * @param command A string representing the type of operation to be done.
      * @return A String showing the result of the sell/restock operation.
-     * @throws InvalidArgumentException If provided item quantity is invalid (out of bounds).
+     * @throws InvalidCommandException If provided item quantity is invalid (out of bounds).
      */
-    public String sellOrRestockItem(int index, int itemQuantity, String command) throws InvalidArgumentException {
+    public String sellOrRestockItem(int index, int itemQuantity, String command) throws InvalidCommandException {
         Item item = itemList.get(sortedOrder.get(index - 1));
         return sellOrRestock(item, itemQuantity, command);
     }
