@@ -15,7 +15,9 @@ import org.apache.commons.cli.ParseException;
 import org.jline.builtins.Completers.OptDesc;
 import seedu.binbash.exceptions.InvalidFormatException;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.ArrayList;
 
@@ -173,6 +175,15 @@ public class Parser {
             return doubleValue;
         } catch (NumberFormatException e) {
             throw new ParseException(option + " must be a number");
+        }
+    }
+
+    static LocalDate parseDateOptionValue(String argument, String option) throws ParseException {
+        try {
+            LocalDate dateValue = LocalDate.parse(argument, EXPECTED_INPUT_DATE_FORMAT);
+            return dateValue;
+        } catch (DateTimeParseException e) {
+            throw new ParseException(option + " invalid, required format: dd-mm-yyyy");
         }
     }
 }

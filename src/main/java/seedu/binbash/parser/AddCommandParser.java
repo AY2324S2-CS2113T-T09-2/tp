@@ -9,8 +9,6 @@ import org.jline.builtins.Completers.OptDesc;
 import seedu.binbash.command.AddCommand;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.Optional;
 import java.util.ArrayList;
 
 /**
@@ -96,16 +94,12 @@ public class AddCommandParser extends DefaultParser {
     }
 
     private LocalDate getItemExpirationDate (CommandLine commandLine) throws ParseException {
-        LocalDate itemExpiryDate;
-        try {
-            String expiryDate = commandLine.getOptionValue("expiry-date");
-            itemExpiryDate = Optional.ofNullable(expiryDate)
-                    .map(x -> LocalDate.parse(x, Parser.EXPECTED_INPUT_DATE_FORMAT))
-                    .orElse(LocalDate.MIN);
-        } catch (DateTimeParseException e) {
-            throw new ParseException("Please enter a valid date with the format as such: dd-mm-yyyy");
+        if (!commandLine.hasOption("expiry-date")) {
+            return LocalDate.MIN;
         }
-        if (!itemExpiryDate.isEqual(LocalDate.MIN) && itemExpiryDate.isBefore(LocalDate.now())) {
+        LocalDate itemExpiryDate = Parser.parseDateOptionValue(commandLine.getOptionValue("expiry-date"),
+                "expiry date");
+        if (itemExpiryDate.isBefore(LocalDate.now())) {
             throw new ParseException("Expiry date has already past.");
         }
         return itemExpiryDate;
