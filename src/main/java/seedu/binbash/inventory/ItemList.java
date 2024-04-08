@@ -1,5 +1,6 @@
 package seedu.binbash.inventory;
 
+import seedu.binbash.command.SellCommand;
 import seedu.binbash.comparators.ItemComparatorByCostPrice;
 import seedu.binbash.comparators.ItemComparatorByExpiryDate;
 import seedu.binbash.comparators.ItemComparatorByProfit;
@@ -302,7 +303,7 @@ public class ItemList {
     }
 
     /**
-     * Finds an Item in the ItemList by its name.
+     * Finds an item in the sorted item list by its name.
      *
      * @param itemName The name of the Item to be found.
      * @return The Item with the given name.
@@ -319,43 +320,50 @@ public class ItemList {
         throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
     }
 
-    private String sellOrRestock(Item item, int itemQuantity, String command) throws InvalidArgumentException {
+    private String sellOrRestock(Item item, int quantityToUpdateBy, String command) throws InvalidArgumentException {
         String alertText = "";
-        int newQuantity = item.getItemQuantity();
+        int currentQuantity = item.getItemQuantity();
 
-        if (command.trim().equals(RestockCommand.COMMAND.trim())) {
-            if (itemQuantity > 0) {
-                newQuantity += itemQuantity;
+        switch (command) {
+        case RestockCommand.COMMAND:
+            if (quantityToUpdateBy > 0) {
+                currentQuantity += quantityToUpdateBy;
+                item.setItemQuantity(currentQuantity);
             } else {
                 throw new InvalidArgumentException("Please provide a positive number.");
             }
 
             int totalUnitsPurchased = item.getTotalUnitsPurchased();
-            item.setTotalUnitsPurchased(totalUnitsPurchased + itemQuantity);
-        } else {
-            if (newQuantity >= itemQuantity && itemQuantity > 0) {
-                newQuantity -= itemQuantity;
-            } else if (itemQuantity <= 0) {
+            item.setTotalUnitsPurchased(totalUnitsPurchased + quantityToUpdateBy);
+
+            break;
+        case SellCommand.COMMAND:
+            if (quantityToUpdateBy <= 0) {
                 throw new InvalidArgumentException("Please provide a positive number.");
-            } else {
+            }
+            if (quantityToUpdateBy > currentQuantity) {
                 throw new InvalidArgumentException("You do not have enough to sell the stated quantity.");
             }
+            currentQuantity -= quantityToUpdateBy;
+            item.setItemQuantity(currentQuantity);
 
             RetailItem retailItem = (RetailItem)item;
             int itemThreshold = retailItem.getItemThreshold();
 
-            if (newQuantity < itemThreshold) {
+            if (currentQuantity < itemThreshold) {
                 alertText = alertItemQuantity(retailItem);
             }
 
             int totalUnitsSold = retailItem.getTotalUnitsSold();
-            retailItem.setTotalUnitsSold(totalUnitsSold + itemQuantity);
+            retailItem.setTotalUnitsSold(totalUnitsSold + quantityToUpdateBy);
+            break;
+        default:
+            throw new InvalidArgumentException("Invalid argument!");
         }
-        item.setItemQuantity(newQuantity);
+
         String output = "Great! I have updated the quantity of the item for you:" + System.lineSeparator()
                 + System.lineSeparator() + item
                 + alertText;
-
 
         return output;
     }
@@ -370,15 +378,17 @@ public class ItemList {
      * @throws InvalidArgumentException If provided item quantity is invalid (out of bounds).
      */
     public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidArgumentException{
-        String output = "Sorry, I can't find the item you are looking for.";
+        Item item = null;
 
-        for (Item item : itemList) {
-            if (!item.getItemName().trim().equals(itemName.trim())) {
-                continue;
-            }
-            output = sellOrRestock(item, itemQuantity, command);
-            break;
+        // Temporary for now. I noticed that both InvalidCommandException and InvalidArgumentException are used
+        // in this class. Would like to clarify which we are intending to use.
+        try {
+            item = findItemByName(itemName);
+        } catch (InvalidCommandException e) {
+            throw new InvalidArgumentException(e.getMessage());
         }
+        String output = sellOrRestock(item, itemQuantity, command);
+
         return output;
     }
 
@@ -392,7 +402,7 @@ public class ItemList {
      * @throws InvalidArgumentException If provided item quantity is invalid (out of bounds).
      */
     public String sellOrRestockItem(int index, int itemQuantity, String command) throws InvalidArgumentException {
-        Item item = itemList.get(index - 1);
+        Item item = itemList.get(sortedOrder.get(index - 1));
         return sellOrRestock(item, itemQuantity, command);
     }
 
@@ -403,7 +413,6 @@ public class ItemList {
      * @param item The Item to be flagged out.
      * @return A String result which indicates that the Item's quantity has fallen below its threshold.
      */
-
     public String alertItemQuantity(Item item) {
         item.setAlert(true);
         String output = System.lineSeparator() + System.lineSeparator() + "Oh no! Your item is running low!";

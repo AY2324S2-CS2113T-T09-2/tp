@@ -417,8 +417,11 @@ prints a formatted message stating the details of the items that was deleted.
 The constructor of the `DeleteCommand` class is overloaded and its behavior differs based on what search parameter is 
 entered. The possible constructors are:
 
-* `DeleteCommand(int index)`: This constructor is used if the search parameter is an `Integer`. The `isIndex` variable will be set to true, which indicates that an item should be removed by matching its `index`.
-* `DeleteCommand(String keyword)`: This constructor is used if the search parameter is a `String`. Conversely, the `isIndex` variable will be set to false, which indicates that an item should be removed by matching its `name`.
+* `DeleteCommand(int index)`: This constructor is used if the search parameter is an `Integer`. The `isIndex` variable 
+will be set to true, which indicates that an item should be removed by matching its `index`.
+* `DeleteCommand(String keyword)`: This constructor is used if the search parameter is a `String`. Conversely,
+the `isIndex` variable will be set to false, which indicates that an item should be removed by matching its `name`. 
+Note that the keyword specified is case-sensitive
 
 When the `execute()` method from `DeleteCommand` class is called, it first checks whether the search parameter entered
 is an `Integer` or a `String` using the `isIndex` variable. Once the search parameter is checked, it calls the
