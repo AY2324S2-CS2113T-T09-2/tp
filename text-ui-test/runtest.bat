@@ -24,4 +24,4 @@ REM Skip the first 20 lines and copy the rest of the file
 more +20 ACTUAL.TXT > ACTUAL_TEMP.TXT
 more +20 EXPECTED.TXT > EXPECTED_TEMP.TXT
 
-FC ACTUAL_TEMP.TXT EXPECTED_TEMP.TXT 
+FC ACTUAL_TEMP.TXT EXPECTED_TEMP.TXT >NUL && ECHO Test passed! || Echo Test failed!
