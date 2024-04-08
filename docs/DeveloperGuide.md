@@ -273,17 +273,143 @@ Separation of Concerns is applied to ensure the `Ui` is only responsible for pri
 of adding an item and displaying messages. This way, only classes relevant to the logic of adding an item will have 
 access to `ItemList`.
 
-### List all items in inventory
+### List command
 
-The `ListCommand` class is designed to handle the operation of listing all items in the inventory. When the `execute()` method is called, it retrieves the complete list of items from the `ItemList`
+![ListSequenceDiagram](images/ListSequenceDiagram.png)
+
+API: [`ListCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/ListCommand.java)
+
+The `ListCommand` class is designed to handle the operation of listing all items in the inventory. When the `execute()`
+method is called, it retrieves the complete list of items from the `ItemList`
 and assigns it to `executionUiOutput`.
+
+A sorting functionality is implemented within the `list` command. Depending on which flag is set, the list of 
+`Items` retrieved will be sorted in a certain order based on the specified flags.
+
+- `list` retrieves the list of `Item` without sorting.
+- `list -c` retrieves the list of `Item` sorted based on `itemCostPrice` value.
+- `list -e` retrieves the list of `Item` sorted based on `itemExpirationDate` value. Only items of the `PerishableOperationlItem` and `PerishableRetailItem` classes are retrieved.
+- `list -p` retrieves the list of `Item` sorted based on `totaRevenue - totalCost` value. Only items with of the `RetailItem` class are retrieved.
+- `list -s` retrieves the list of `Item` sorted based on `itemSalePrice` value. Only items of the `RetailItem` class are retrieved.
+
+The `ListCommand` has two constructors, `ListCommand()` and `ListCommand(SortOptionEnum)`, the former is used when no sorting
+is specified, the latter is used when the list is to be sorted where `SortOptionEnum` will be the type of sorting used.
+The `ListCommand()` constructor will set the `sortOption` varialbe to `SortOptionEnum.NONE` while the `ListCommand(SortOptionEnum)`
+will set `sortOption` based on the `SortOptionEnum` value passed into hte constructor.
+
+The enum `SortOptionEnum` contains four values `NONE`, `EXPIRY`, `SALE`, `COST`, `PROFIT`
+- `NONE` List not to be sorted
+- `EXPIRY` List sorted based on `itemExpirationDate` value.
+- `SALE` List sorted based on `itemSalePrice` value.
+- `COST` List sorted based on `itemSalePrice` value.
+- `PROFIT` List sorted based on `totaRevenue - totalCost` value.
+
+When the `execute(ItemList)` method is called, it first retrieves a `List` from the `ItemList` object passed that will
+contain all `Item` objects in the inventory. The execution will then defer depending on the `sortOption` value, which 
+can be referenced in the sequence diagram provided above.
+
+To ensure that the index of items in the printed list can be used as `ITEM_INDEX` values for the `update`, `delete`, 
+`sell` and `restock` commands, an `ArrayList<Integer>` called `sortedOrder` will be used to map the indexes of the 
+items printed to their indexes in `itemList`. `sortedOrder` will be updated on startup, adding of items, deleting of 
+items, and listing of items to ensure that the mapping is always accurate when it is referenced.
 
 #### Implementation Notes ####
 The ListCommand is concerned only with the execution of the listing operation. It follows a straightforward process that relies on the `ItemList` to format the list of items, ensuring separation of concerns between command execution and UI presentation.
 
-### Delete Item
+### Sell item
 
-TODO: Sequence diagram of DeleteCommand
+![SellSequenceDiagram](images/SellSequenceDiagram.png)
+
+API: [`SellCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/SellCommand.java)
+
+The `sell` command allows users to decrement the quantity of their item as they are being sold off. This is done by
+specifying wither the `name` or `index` to identify the item they want to sell, as well as the `quantity` that they want
+to sell.
+
+The constructor of the `SellCommand` class is overloaded and its behavior differs based on what identifier is
+entered. The two constructors are as follows:
+
+* `SellCommand(int index)`: This constructor is used if the identifier is an `int`. The `isIndex` variable will be set
+  to true, which indicates that an item should be identified by matching its `index` before updating its data.
+* `SellCommand(String itemName)`: This constructor is used if the identifier is a `String`. The `isIndex` variable
+  will remain false, which indicates that an item should be removed by matching its `itemName`.
+
+When the `execute()` method from the `SellCommand` class is called, it first checks whether the update identifier is
+an index of type `int` or a name of type `String` with the `isIndex` attribute. It will then call the 
+`sellOrRestockItem()` of the `ItemList` class. This method is also overloaded to take in either an `index` of type
+`int` or a `name` of type `String`. 
+
+The `sellOrRestockItem()` method then calls the `sellOrRestock()` helper method, which either increments or decrements
+the item quantity, depending on what `command` is supplied to it. The method checks whether a valid quantity is supplied
+before applying the decrement in the event that the supplied command is `sell`. This means that users will not be able 
+to sell more than the current quantity. These methods return a `String` to update users of the successful operation and 
+display the new data of the item.
+
+Upon completion of the update operation, the `execute()` method sets the `hasToSave` flag to `true`,
+signaling the need to persist changes to storage.
+
+
+### Restock item
+
+![RestockSequenceDiagram](images/RestockSequenceDiagram.png)
+
+API: [`RestockCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/RestockCommand.java)
+
+The `restock` command allows users to increment the quantity of their item as they are being restocked. This is done by
+specifying wither the `name` or `index` to identify the item they want to restock, as well as the `quantity` that they 
+to restock by.
+
+The implementation of the `restock` feature as well as the `RestockCommand` class is identical to the `sell` feature and
+calls the same methods from the `ItemList` class to perform the restocking operations.
+
+
+### Update item data in inventory
+
+![UpdateSequenceDiagram](images/UpdateSequenceDiagram.png)
+
+API: [`UpdateCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/UpdateCommand.java)
+
+The `update` command allows users to modify the details of an item in the inventory. Users can update the item's,
+description, quantity, cost price, sale price, expiry date, and threshold by specifying the corresponding flags.
+
+The constructor of the `UpdateCommand` class is overloaded and its behavior differs based on what identifier is
+entered. The two constructors are as follows:
+
+* `UpdateCommand(int index)`: This constructor is used if the identifier is an `int`. The `isIndex` variable will be set
+  to true, which indicates that an item should be identified by matching its `index` before updating its data.
+* `UpdateCommand(String itemName)`: This constructor is used if the identifier is a `String`. The `isIndex` variable
+  will remain false, which indicates that an item should be removed by matching its `itemName`.
+
+When the `execute()` method from the `UpdateCommand` class is called, it first checks whether the update identifier is
+an index of type `int` or a name of type `String` with the `isIndex` attribute.
+- If it is an index, it calls the `updateItemDataByIndex` method from the `ItemList` class.
+- If it is a name, it calls the `updateItemDataByName` method instead.
+
+These methods in the `ItemList` class then call the `updateItemData` helper method, which applies the updates to the
+specified item. The `updateItemData` method checks whether each attribute has a new value and updates the attribute
+if necessary by calling the respective setters. For perishable items, it ensures that the expiry date is only updated
+if the item is a `PerishableOperationalItem` or a `PerishableRetailItem`.
+
+Upon completion of the update operation, the `execute()` method sets the `hasToSave` flag to `true`,
+signaling the need to persist changes to storage.
+
+#### Implementation Notes
+
+Similar to other commands, the `UpdateCommand` class is designed to encapsulate the update operation, ensuring a clear
+separation of concerns. It handles the update logic internally and interacts with the `ItemList` class without revealing
+the details of the item's data structure. This modular approach  streamlines the roles of the `Parser` and `BinBash`
+(main) components, which do not need to be concerned with the details of the update operation, thus adhering to the
+principles of high cohesion and low coupling.
+
+The incorporation of a helper method `updateItemData` in the `ItemList` class enhances code reusability and
+maintainability by centralizing the logic for updating item attributes. This method can be readily adjusted or expanded
+to include new attributes or validation rules in the future.
+
+### Delete command
+
+![DeleteSequenceDiagram](images/DeleteSequenceDiagram.png)
+
+API: [`DeleteCommand.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/command/DeleteCommand.java)
 
 The `delete` command deletes an object of the `Item` class or any of its subclasses from the inventory list and 
 prints a formatted message stating the details of the items that was deleted. 
@@ -291,8 +417,11 @@ prints a formatted message stating the details of the items that was deleted.
 The constructor of the `DeleteCommand` class is overloaded and its behavior differs based on what search parameter is 
 entered. The possible constructors are:
 
-* `DeleteCommand(int index)`: This constructor is used if the search parameter is an `Integer`. The `isIndex` variable will be set to true, which indicates that an item should be removed by matching its `index`.
-* `DeleteCommand(String keyword)`: This constructor is used if the search parameter is a `String`. Conversely, the `isIndex` variable will be set to false, which indicates that an item should be removed by matching its `name`.
+* `DeleteCommand(int index)`: This constructor is used if the search parameter is an `Integer`. The `isIndex` variable 
+will be set to true, which indicates that an item should be removed by matching its `index`.
+* `DeleteCommand(String keyword)`: This constructor is used if the search parameter is a `String`. Conversely,
+the `isIndex` variable will be set to false, which indicates that an item should be removed by matching its `name`. 
+Note that the keyword specified is case-sensitive
 
 When the `execute()` method from `DeleteCommand` class is called, it first checks whether the search parameter entered
 is an `Integer` or a `String` using the `isIndex` variable. Once the search parameter is checked, it calls the
@@ -308,6 +437,18 @@ until it finds a `Item` object whose name `equals` to that of the search paramet
 names with the search parameter, it will store the index in the `targetIndex` variable. This `deleteItem(String keyword)` method will
 then call another `deleteItem(int index)` method, but this time, the parameter passed is an integer. The execution after this
 will be exactly the same as passing an `Integer` to the `deleteItem(int index)` method mentions above.
+
+Furthermore, the `deleteItem(int index)` method will be accessing a `ArrayList<Integer>` called `sortedOrder` which contains
+the index mapping between the `Item` objects stored in `itemList` and the index of `Item` printed to the user. This
+functionality is implemented to ensure that the indexes of the sorted list shown to the user can be used as references
+for the deletion of items using `ITME_INDEX`.
+
+Example:
+
+* For itemList = {item1, item2, item3, item4}
+* If sortedList = {item2, item4, item1, item3}
+* then sortedOrder = {1, 3, 0, 2}
+
 
 Upon completion of either operation, the `execute()` method sets the `hasToSave` flag to true, signaling the need to persist changes to storage. This entire process is logged at various levels, providing a trail for audit and debugging purposes.
 

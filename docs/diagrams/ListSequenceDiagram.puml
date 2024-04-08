@@ -1,0 +1,65 @@
+@startuml
+
+hide footbox
+title Executing a List Command
+
+participant "userCommand:ListCommand" as List_Command
+participant "itemList:ItemList" as Item_List
+
+-> List_Command : execute(itemList)
+activate List_Command
+
+List_Command -> Item_List : getItemList()
+activate Item_List
+return itemList
+
+alt sortOption == EXPIRY
+
+List_Command -> Item_List : printListSortedByExpiryDate(itemArrayList)
+activate Item_List
+Item_List -> Item_List: updateSortedOrder(itemList, sortedList)
+activate Item_List
+return
+return output
+
+else sortOption == COST
+
+List_Command -> Item_List : printListSortedByCostPrice(itemArrayList)
+activate Item_List
+Item_List -> Item_List : updateSortedOrder(itemList, sortedList)
+activate Item_List
+return
+return output
+
+else sortOption == SALE
+
+List_Command -> Item_List : printListSortedBySalePrice(itemArrayList)
+activate Item_List
+Item_List -> Item_List : updateSortedOrder(itemList, sortedList)
+activate Item_List
+return
+return output
+
+else sortOption == PROFIT
+
+List_Command -> Item_List : printListSortedByProfit(itemArrayList)
+activate Item_List
+Item_List -> Item_List : updateSortedOrder(itemList, sortedList)
+activate Item_List
+return
+return output
+
+else else
+
+List_Command -> Item_List: printList(itemArrayList)
+activate Item_List
+return output
+
+end
+
+return
+
+
+
+
+@enduml

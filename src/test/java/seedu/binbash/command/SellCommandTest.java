@@ -35,4 +35,51 @@ public class SellCommandTest {
         assertTrue(restockCommand.execute(itemList));
         assertEquals(0, itemList.getItemCount());
     }
+
+    @Test
+    public void sellItem_returnsErrorMessage_negativeQuantity() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
+        SellCommand command = new SellCommand("Test Item", -5);
+        command.execute(itemList);
+        assertEquals("Please provide a positive number.", command.getExecutionUiOutput());
+    }
+
+    @Test
+    public void sellItem_decreasesQuantity_validIndexAndQuantity() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
+        SellCommand command = new SellCommand(1, 5);
+        command.setIsIndex();
+        command.execute(itemList);
+        assertEquals(5, itemList.getItemList().get(0).getItemQuantity());
+    }
+
+    @Test
+    public void sellItem_returnsErrorMessage_negativeQuantityByIndex() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
+        SellCommand command = new SellCommand(1, -5);
+        command.setIsIndex();
+        command.execute(itemList);
+        assertEquals("Please provide a positive number.", command.getExecutionUiOutput());
+    }
+
+    @Test
+    public void sellItem_returnsErrorMessage_nonExistingItem() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        SellCommand command = new SellCommand("Non-Existing Item", 5);
+        command.execute(itemList);
+        assertEquals("Item with name 'Non-Existing Item' not found.", command.getExecutionUiOutput());
+    }
+
+    @Test
+    public void sellItem_returnsErrorMessage_invalidIndex() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
+        SellCommand command = new SellCommand(2, 5);
+        command.setIsIndex();
+        command.execute(itemList);
+        assertEquals("Index entered is out of bounds!", command.getExecutionUiOutput());
+    }
 }

@@ -1,5 +1,6 @@
 package seedu.binbash.inventory;
 
+import seedu.binbash.command.SellCommand;
 import seedu.binbash.comparators.ItemComparatorByCostPrice;
 import seedu.binbash.comparators.ItemComparatorByExpiryDate;
 import seedu.binbash.comparators.ItemComparatorByProfit;
@@ -301,7 +302,7 @@ public class ItemList {
     }
 
     /**
-     * Finds an Item in the ItemList by its name.
+     * Finds an item in the sorted item list by its name.
      *
      * @param itemName The name of the Item to be found.
      * @return The Item with the given name.
@@ -318,36 +319,42 @@ public class ItemList {
         throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
     }
 
-    private String sellOrRestock(Item item, int itemQuantity, String command) throws InvalidCommandException {
+    private String sellOrRestock(Item item, int quantityToUpdateBy, String command) throws InvalidCommandException {
         String alertText = "";
-        int newQuantity = item.getItemQuantity();
+        int currentQuantity = item.getItemQuantity();
+        switch (command) {
+        case RestockCommand.COMMAND:
+            currentQuantity += quantityToUpdateBy;
+            item.setItemQuantity(currentQuantity);
 
-        if (command.trim().equals(RestockCommand.COMMAND.trim())) {
-            newQuantity += itemQuantity;
             int totalUnitsPurchased = item.getTotalUnitsPurchased();
-            item.setTotalUnitsPurchased(totalUnitsPurchased + itemQuantity);
-        } else {
-            if (newQuantity >= itemQuantity) {
-                newQuantity -= itemQuantity;
-            } else {
+            item.setTotalUnitsPurchased(totalUnitsPurchased + quantityToUpdateBy);
+
+            break;
+        case SellCommand.COMMAND:
+            if (quantityToUpdateBy > currentQuantity) {
                 throw new InvalidCommandException("You do not have enough to sell the stated quantity.");
             }
+            currentQuantity -= quantityToUpdateBy;
+            item.setItemQuantity(currentQuantity);
 
             RetailItem retailItem = (RetailItem)item;
             int itemThreshold = retailItem.getItemThreshold();
 
-            if (newQuantity < itemThreshold) {
+            if (currentQuantity < itemThreshold) {
                 alertText = alertItemQuantity(retailItem);
             }
 
             int totalUnitsSold = retailItem.getTotalUnitsSold();
-            retailItem.setTotalUnitsSold(totalUnitsSold + itemQuantity);
+            retailItem.setTotalUnitsSold(totalUnitsSold + quantityToUpdateBy);
+            break;
+        default:
+            throw new InvalidCommandException("Invalid argument!");
         }
-        item.setItemQuantity(newQuantity);
+
         String output = "Great! I have updated the quantity of the item for you:" + System.lineSeparator()
                 + System.lineSeparator() + item
                 + alertText;
-
 
         return output;
     }
@@ -362,15 +369,8 @@ public class ItemList {
      * @throws InvalidCommandException If provided item quantity is invalid (out of bounds).
      */
     public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidCommandException{
-        String output = "Sorry, I can't find the item you are looking for.";
-
-        for (Item item : itemList) {
-            if (!item.getItemName().trim().equals(itemName.trim())) {
-                continue;
-            }
-            output = sellOrRestock(item, itemQuantity, command);
-            break;
-        }
+        Item item = findItemByName(itemName);
+        String output = sellOrRestock(item, itemQuantity, command);
         return output;
     }
 
@@ -384,7 +384,7 @@ public class ItemList {
      * @throws InvalidCommandException If provided item quantity is invalid (out of bounds).
      */
     public String sellOrRestockItem(int index, int itemQuantity, String command) throws InvalidCommandException {
-        Item item = itemList.get(index - 1);
+        Item item = itemList.get(sortedOrder.get(index - 1));
         return sellOrRestock(item, itemQuantity, command);
     }
 
@@ -395,7 +395,6 @@ public class ItemList {
      * @param item The Item to be flagged out.
      * @return A String result which indicates that the Item's quantity has fallen below its threshold.
      */
-
     public String alertItemQuantity(Item item) {
         item.setAlert(true);
         String output = System.lineSeparator() + System.lineSeparator() + "Oh no! Your item is running low!";

@@ -3,6 +3,8 @@ package seedu.binbash.command;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 
+import java.util.ArrayList;
+
 /**
  * Represents the execution of the delete command that will remove an item from the inventory.
  */
@@ -43,12 +45,13 @@ public class DeleteCommand extends Command {
      */
     public boolean execute(ItemList itemList) {
         if (isIndex) {
-            if (index <= 0 || index > itemList.getSortedOrder().size()) {
+            ArrayList<Integer> itemListSortedOrder = itemList.getSortedOrder();
+            if (index <= 0 || index > itemListSortedOrder.size()) {
                 commandLogger.info("Index entered is out of bounds");
                 executionUiOutput = "Index entered is out of bounds!";
                 return true;
             }
-            assert index > 0 && index <= itemList.getSortedOrder().size();
+            assert index > 0 && index <= itemListSortedOrder.size();
             commandLogger.info("Delete identifier is detected as an index");
             executionUiOutput = itemList.deleteItem(index);
         } else {

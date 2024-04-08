@@ -1,0 +1,41 @@
+@startuml
+hide footbox
+
+title Executing a Delete Command
+
+participant "userCommand:DeleteCommand" as Delete_Command
+participant "itemList:ItemList" as Item_List
+
+-> Delete_Command : execute(itemList)
+activate Delete_Command
+
+alt isIndex
+
+Delete_Command -> Item_List : getSortedOrder()
+activate Item_List
+return sortedOrder
+
+Delete_Command -> Item_List : deleteItem(index)
+activate Item_List
+return output
+
+else else
+
+Delete_Command -> Item_List : deleteItem(keyword)
+activate Item_List
+Item_List -> Item_List : deleteItem(targetIndex)
+
+note right
+targetIndex is obtained by searching
+an `Item` with `keyword` as its
+name and returning its index.
+end note
+activate Item_List
+return output
+return output
+
+end
+
+return
+
+@enduml
