@@ -20,7 +20,7 @@ java -jar %jarloc% < ..\..\text-ui-test\input.txt > ..\..\text-ui-test\ACTUAL.TX
 
 cd ..\..\text-ui-test
 
-REM Skip the first 20 lines and copy the rest of the file
+REM Skip the first 20 lines and copy the rest of the file, so lines are compared after the quote.
 more +20 ACTUAL.TXT > ACTUAL_TEMP.TXT
 more +20 EXPECTED.TXT > EXPECTED_TEMP.TXT
 
