@@ -12,11 +12,11 @@ import seedu.binbash.storage.Storage;
 import seedu.binbash.ui.Ui;
 
 public class BinBash {
-    private final Ui userInterface;
-    private final ItemList itemList;
-    private final Parser inputParser;
-    private final Storage storage;
-    private final BinBashLogger logger;
+    private Ui userInterface;
+    private ItemList itemList;
+    private Parser inputParser;
+    private Storage storage;
+    private BinBashLogger logger;
 
     public BinBash() {
         logger = new BinBashLogger(BinBash.class.getName());
