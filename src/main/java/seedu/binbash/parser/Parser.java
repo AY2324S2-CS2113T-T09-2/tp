@@ -25,13 +25,13 @@ import java.util.ArrayList;
  */
 public class Parser {
     protected static final DateTimeFormatter EXPECTED_INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    private final AddCommandParser addCommandParser;
-    private final SearchCommandParser searchCommandParser;
-    private final RestockCommandParser restockCommandParser;
-    private final SellCommandParser sellCommandParser;
-    private final ListCommandParser listCommandParser;
-    private final UpdateCommandParser updateCommandParser;
-    private final DeleteCommandParser deleteCommandParser;
+    private AddCommandParser addCommandParser;
+    private SearchCommandParser searchCommandParser;
+    private RestockCommandParser restockCommandParser;
+    private SellCommandParser sellCommandParser;
+    private ListCommandParser listCommandParser;
+    private UpdateCommandParser updateCommandParser;
+    private DeleteCommandParser deleteCommandParser;
 
     public Parser() {
         addCommandParser = new AddCommandParser();
