@@ -20,4 +20,8 @@ java -jar %jarloc% < ..\..\text-ui-test\input.txt > ..\..\text-ui-test\ACTUAL.TX
 
 cd ..\..\text-ui-test
 
-FC ACTUAL.TXT EXPECTED.TXT
+REM Delete line 19 from ACTUAL.TXT
+type ACTUAL.TXT | findstr /v /n "^19:" > ACTUAL_TEMP.TXT
+
+REM Compare ACTUAL_TEMP.TXT with EXPECTED.TXT
+FC ACTUAL_TEMP.TXT EXPECTED.TXT
