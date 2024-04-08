@@ -20,8 +20,4 @@ java -jar %jarloc% < ..\..\text-ui-test\input.txt > ..\..\text-ui-test\ACTUAL.TX
 
 cd ..\..\text-ui-test
 
-REM Exclude line 19 from both ACTUAL.TXT and EXPECTED.TXT before running comparison
-findstr /V /N "^" ACTUAL.TXT | findstr /V /C:"19:" > ACTUAL_TMP.TXT
-findstr /V /N "^" EXPECTED.TXT | findstr /V /C:"19:" > EXPECTED_TMP.TXT
-
 FC ACTUAL.TXT EXPECTED.TXT >NUL && ECHO Test passed! || Echo Test failed!

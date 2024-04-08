@@ -15,11 +15,6 @@ java -jar $(find ../build/libs/ -mindepth 1 -print -quit) < input.txt &> ACTUAL.
 
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix EXPECTED-UNIX.TXT ACTUAL.TXT
-
-# Remove line 19 from both ACTUAL.TXT and EXPECTED-UNIX.TXT, so the quote is not compared
-sed -i '19d' ACTUAL.TXT
-sed -i '19d' EXPECTED-UNIX.TXT
-
 # compare the third line, after logger output onwards
 diff <(tail -n +3 ACTUAL.TXT) EXPECTED.TXT
 if [ $? -eq 0 ]
