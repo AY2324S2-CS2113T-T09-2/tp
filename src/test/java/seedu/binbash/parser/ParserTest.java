@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import seedu.binbash.exceptions.InvalidFormatException;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.command.AddCommand;
 import seedu.binbash.command.Command;
@@ -48,7 +49,7 @@ public class ParserTest {
     @Test
     public void parseAddCommand_multipleItemTypeOptions_throwsInvalidCommandException() {
         assertThrows(
-                InvalidCommandException.class,
+                InvalidFormatException.class,
                 () -> parser.parseCommand("add -re -op -n Test Item -d Test Description -c 0.00")
         );
     }
@@ -110,11 +111,11 @@ public class ParserTest {
 
     @Test
     public void testParseCommand_invalidAddCommand_throwsInvalidCommandException() {
-        assertThrows(InvalidCommandException.class, () -> parser.parseCommand("add invalid format"));
+        assertThrows(InvalidFormatException.class, () -> parser.parseCommand("add invalid format"));
     }
 
     @Test
     public void testParseCommand_invalidSearchCommand_throwsInvalidCommandException() {
-        assertThrows(InvalidCommandException.class, () -> parser.parseCommand("search"));
+        assertThrows(InvalidFormatException.class, () -> parser.parseCommand("search"));
     }
 }
