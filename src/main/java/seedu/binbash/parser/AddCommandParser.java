@@ -100,7 +100,7 @@ public class AddCommandParser extends DefaultParser {
         LocalDate itemExpiryDate = Parser.parseDateOptionValue(commandLine.getOptionValue("expiry-date"),
                 "expiry date");
         if (itemExpiryDate.isBefore(LocalDate.now())) {
-            throw new ParseException("Expiry date has already past.");
+            throw new ParseException("Expiry date has already past. Item not added.");
         }
         return itemExpiryDate;
     }
