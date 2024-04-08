@@ -12,11 +12,14 @@
     * [Command Component](#command-component)
     * [Data Component](#data-component)
 * [Features](#features)
-  * [Add Item to Inventory](#add-item-to-inventory)
-  * [List all items in inventory](#list-all-items-in-inventory)
-  * [Delete Item](#delete-item)
-  * [[Proposed] Search by universal fields](#proposed-search-by-universal-fields)
-  * [Logging](#logging)
+    * [Add Item to Inventory](#add-item-to-inventory)
+    * [List command](#list-command)
+    * [Sell item](#sell-item)
+    * [Restock item](#restock-item)
+    * [Update item data in inventory](#update-item-data-in-inventory)
+    * [Delete command](#delete-command)
+    * [Search command](#search-command)
+* [Logging](#logging)
 * [Product scope](#product-scope)
   * [Target user profile](#target-user-profile)
   * [Value proposition](#value-proposition)
@@ -108,17 +111,17 @@ The **Sequence Diagram** below shows how the components interact with each other
 
 ![Sequence Diagram](images/OverallSequenceDiagram.png)
 
-1. User enters the command `list` to the `Ui`.
-2. `Ui` passes the command as a string through the method `readUserInput('list')`, called via `BinBash`.
-3. `BinBash` passes the string to `Parser` through the method `parseCommand('list')`.
-4. `Parser` returns a new `Command` object. (In this specific case, it would be a ListCommand object)
+1. `BinBash` invokes `Ui`'s `readUserCommand()` method to read in the user input, which in this case is a `list` command.
+2. `Ui` returns the `list` command as a `userInput` String.
+3. `BinBash` passes the String to `Parser` through the method `parseCommand('list')`.
+4. `Parser` returns a new `Command` object. (In this specific case, it would be a `ListCommand` object)
 5. `BinBash` calls the `execute()` method of `Command`.
 6. `Command` then interacts with `ItemList`, and calls the relevant method.
-7. `ItemList` returns the executionUiOutput, in the form of a String object. 
-8. `BinBash` calls the `getExecutionUiOutput` command in `Command`
-9. `Command` returns the outputString, in the form of a String object.
-10. `BinBash` calls the `talk()` method in `Ui`, and passes the outputString.
-11. `Ui` prints this outputString to the user.
+7. `ItemList` returns the `executionUiOutput`, in the form of a String object. 
+8. `BinBash` calls the `getExecutionUiOutput()` method in `Command`.
+9. `Command` returns the `outputString`, in the form of a String object.
+10. `BinBash` calls the `talk()` method in `Ui`, and passes the `outputString`.
+11. `Ui` prints this `outputString` to the user.
 12. If the `Command` executed modifies the database, `BinBash` will call the `saveToStorage()` method of `Storage`
 
 ### Ui Component
@@ -294,7 +297,7 @@ A sorting functionality is implemented within the `list` command. Depending on w
 
 The `ListCommand` has two constructors, `ListCommand()` and `ListCommand(SortOptionEnum)`, the former is used when no sorting
 is specified, the latter is used when the list is to be sorted where `SortOptionEnum` will be the type of sorting used.
-The `ListCommand()` constructor will set the `sortOption` varialbe to `SortOptionEnum.NONE` while the `ListCommand(SortOptionEnum)`
+The `ListCommand()` constructor will set the `sortOption` variable to `SortOptionEnum.NONE` while the `ListCommand(SortOptionEnum)`
 will set `sortOption` based on the `SortOptionEnum` value passed into hte constructor.
 
 The enum `SortOptionEnum` contains four values `NONE`, `EXPIRY`, `SALE`, `COST`, `PROFIT`
@@ -460,16 +463,18 @@ Additionally, the decision to use two constructors promotes the Single Responsib
 ### Search command
 
 ![SearchAssistantSequenceDiagram](images/SearchAssistantSequenceDiagram.png)
+
 The search command calls on methods in the SearchAssistant class to perform queries.
 
 ![SearchAssistantReferenceFrameDiagram](images/SearchAssistantReferenceFrameDiagram.png)
+
 Each method searches through a corresponding field.
 If the argument to this method is found to be a certain default value (MIN/MAX values for numerical arguments and empty strings for string arguments), searching through this field is skipped.
 
 Note that search relies on the SearchAssistant having the full item list to produce correct results.
 This is guaranteed in this case by ItemList's setFoundItems() call.
 
-After obtaining the list of found items, it then uses printList to convert this list into a user friendly string.
+After obtaining the list of found items, it then uses printList to convert this list into a user-friendly string.
 
 ## Logging
 
