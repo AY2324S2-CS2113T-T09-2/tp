@@ -209,7 +209,7 @@ To exit command suggestion mode simply press any other key.
 
 ### Adding an item: `add`
 
-> This allows you to add a new item to your inventory.
+> This allows you to add a new item to start keeping track of in your inventory.
 
 #### Adding a Retail item
 
@@ -219,8 +219,8 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -s SALE_PRICE
 * `ITEM_NAME`, `ITEM_DESCRIPTION`, `SALE_PRICE` and `COST_PRICE` must be specified.
 * All other fields are optional.
 * If `ITEM_QUANTITY` is not specified, a default value of `0` will be assigned to it.
-This allows you to store an item in your inventory without tracking its quantity.
-  > ℹ️ If `ITEM_QUANTITY` is `0`, you can call the [`restock`](#restocking-an-item-restock) command to increase the stocked quantity of the item.
+This allows you to create a placeholder for an item in your inventory you've yet to receive any stock of.
+  > ℹ️ Once you've received stock of the item, you can call the [`restock`](#restocking-an-item-restock) command to increase the stocked quantity of the item.
 * If `THRESHOLD` is not specified, a default value of `1` will be assigned to it.
 * There is no need to include the currency. A `$` sign will be appended to the prices.
 * Retail items do not have an `EXPIRY_DATE` field, hence the flag `-e` is not used.
@@ -302,8 +302,8 @@ Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -c COST_PRICE
 * `ITEM_NAME`, `ITEM_DESCRIPTION` and `COST_PRICE` must be specified.
 * All other fields are optional.
 * If `ITEM_QUANTITY` is not specified, a default value of `0` will be assigned to it.
-This allows you to store an item in your inventory without tracking its quantity.
-  > ℹ️ If `ITEM_QUANTITY` is `0`, you can call the [`restock`](#restocking-an-item-restock) command to increase the stocked quantity of the item.
+This allows you to create a placeholder for an item in your inventory you've yet to receive any stock of.
+  > ℹ️ Once you've received stock of the item, you can call the [`restock`](#restocking-an-item-restock) command to increase the stocked quantity of the item.
 * If `THRESHOLD` is not specified, a default value of `1` will be assigned to it.
 * There is no need to include the currency. A `$` sign will be appended to the prices.
 * `-s` and `-e` are not used as there are no `SALE_PRICE` and `EXPIRY_DATE` fields for an Operational Item.
