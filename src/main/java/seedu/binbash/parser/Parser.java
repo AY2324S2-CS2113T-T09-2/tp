@@ -9,13 +9,13 @@ import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
 import seedu.binbash.exceptions.InvalidCommandException;
-import seedu.binbash.exceptions.InvalidArgumentException;
 
 import org.apache.commons.cli.ParseException;
 import org.jline.builtins.Completers.OptDesc;
-import seedu.binbash.exceptions.InvalidFormatException;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.ArrayList;
 
@@ -111,36 +111,32 @@ public class Parser {
     private AddCommand parseAddCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return addCommandParser.parse(commandArgs);
-        } catch (InvalidArgumentException e) {
-            throw new InvalidFormatException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidCommandException("Please enter a valid number.");
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
     private UpdateCommand parseUpdateCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return updateCommandParser.parse(commandArgs);
-        } catch (InvalidArgumentException e) {
-            throw new InvalidFormatException(e.getMessage());
         } catch (ParseException e) {
-            throw new InvalidCommandException("Please enter a valid number.");
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
-    private Command parseRestockCommand(String[] commandArgs) throws InvalidFormatException {
+    private Command parseRestockCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return restockCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException("Please enter a valid number.");
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
-    private Command parseSellCommand(String[] commandArgs) throws InvalidFormatException {
+    private Command parseSellCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return sellCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException("Please enter a valid number.");
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 
@@ -157,6 +153,40 @@ public class Parser {
             return listCommandParser.parse(commandArgs);
         } catch (ParseException e) {
             throw new InvalidCommandException(e.getMessage());
+        }
+    }
+
+    static int parseIntOptionValue(String argument, String option) throws ParseException {
+        long longValue;
+        try {
+            longValue = Long.parseLong(argument);
+        } catch (NumberFormatException e) {
+            throw new ParseException(option + " must be a number");
+        }
+        if (longValue > Integer.MAX_VALUE) {
+            throw new ParseException(option + " too large!");
+        }
+        return (int) longValue;
+    }
+
+    static double parseDoubleOptionValue(String argument, String option) throws ParseException {
+        if (argument.length() > 300) {
+            throw new ParseException(option + " number given too long!");
+        }
+        try {
+            double doubleValue = Double.parseDouble(argument);
+            return doubleValue;
+        } catch (NumberFormatException e) {
+            throw new ParseException(option + " must be a number");
+        }
+    }
+
+    static LocalDate parseDateOptionValue(String argument, String option) throws ParseException {
+        try {
+            LocalDate dateValue = LocalDate.parse(argument, EXPECTED_INPUT_DATE_FORMAT);
+            return dateValue;
+        } catch (DateTimeParseException e) {
+            throw new ParseException(option + "is invalid. Required format: dd-mm-yyyy");
         }
     }
 }
