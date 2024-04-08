@@ -111,7 +111,7 @@ The **Sequence Diagram** below shows how the components interact with each other
 
 ![Sequence Diagram](images/OverallSequenceDiagram.png)
 
-1. `BinBash` calls the `Ui` to read the user's `list` command, through the `readUserCommand()` method.
+1. `BinBash` invokes `Ui`'s `readUserCommand()` method to read in the user input, which in this case is a `list` command.
 2. `Ui` returns the `list` command as a `userInput` String.
 3. `BinBash` passes the String to `Parser` through the method `parseCommand('list')`.
 4. `Parser` returns a new `Command` object. (In this specific case, it would be a `ListCommand` object)
