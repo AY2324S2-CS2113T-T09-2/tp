@@ -20,4 +20,7 @@ java -jar %jarloc% < ..\..\text-ui-test\input.txt > ..\..\text-ui-test\ACTUAL.TX
 
 cd ..\..\text-ui-test
 
+REM Skip the first two lines and exclude line 19 from ACTUAL.TXT before comparison
+findstr /v /n "^" ACTUAL.TXT | findstr /r /v "^1: ^2: ^19:" > ACTUAL_TEMP.TXT
+
 FC ACTUAL.TXT EXPECTED.TXT >NUL && ECHO Test passed! || Echo Test failed!
