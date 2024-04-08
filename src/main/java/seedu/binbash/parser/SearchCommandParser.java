@@ -6,7 +6,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.TypeHandler;
 import org.jline.builtins.Completers.OptDesc;
 
 import java.time.format.DateTimeParseException;
@@ -73,10 +72,10 @@ public class SearchCommandParser extends DefaultParser {
             String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("quantity"), "quantity");
             int[] quantityRange = {Integer.MIN_VALUE, Integer.MAX_VALUE};
             if (rangeArgument[0] != "") {
-                quantityRange[0] = TypeHandler.createNumber(rangeArgument[0]).intValue();
+                quantityRange[0] = Parser.parseIntOptionValue(rangeArgument[0], "quantity lower bound");
             }
             if (rangeArgument[1] != "") {
-                quantityRange[1] = TypeHandler.createNumber(rangeArgument[1]).intValue();
+                quantityRange[1] = Parser.parseIntOptionValue(rangeArgument[1], "quantity upper bound");
             }
             searchCommand.setQuantityRange(quantityRange);
             hasOption = true;
@@ -86,10 +85,10 @@ public class SearchCommandParser extends DefaultParser {
             String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("cost-price"), "cost-price");
             double[] costPriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
             if (rangeArgument[0] != "") {
-                costPriceRange[0] = TypeHandler.createNumber(rangeArgument[0]).doubleValue();
+                costPriceRange[0] = Parser.parseDoubleOptionValue(rangeArgument[0], "cost price lower bound");
             }
             if (rangeArgument[1] != "") {
-                costPriceRange[1] = TypeHandler.createNumber(rangeArgument[1]).doubleValue();
+                costPriceRange[1] = Parser.parseDoubleOptionValue(rangeArgument[1], "cost price upper bound");
             }
             searchCommand.setCostPriceRange(costPriceRange);
             hasOption = true;
@@ -99,10 +98,10 @@ public class SearchCommandParser extends DefaultParser {
             String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("sale-price"), "sale-price");
             double[] salePriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
             if (rangeArgument[0] != "") {
-                salePriceRange[0] = TypeHandler.createNumber(rangeArgument[0]).doubleValue();
+                salePriceRange[0] = Parser.parseDoubleOptionValue(rangeArgument[0], "sale price lower bound");
             }
             if (rangeArgument[1] != "") {
-                salePriceRange[1] = TypeHandler.createNumber(rangeArgument[1]).doubleValue();
+                salePriceRange[1] = Parser.parseDoubleOptionValue(rangeArgument[1], "sale price upper bound");
             }
             searchCommand.setSalePriceRange(salePriceRange);
             hasOption = true;
@@ -111,15 +110,11 @@ public class SearchCommandParser extends DefaultParser {
         if (commandLine.hasOption("expiry-date")) {
             String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("expiry-date"), "expiry-date");
             LocalDate[] expiryDateRange = {LocalDate.MIN, LocalDate.MAX};
-            try {
-                if (rangeArgument[0] != "") {
-                    expiryDateRange[0] = LocalDate.parse(rangeArgument[0], Parser.EXPECTED_INPUT_DATE_FORMAT);
-                }
-                if (rangeArgument[1] != "") {
-                    expiryDateRange[1] = LocalDate.parse(rangeArgument[1], Parser.EXPECTED_INPUT_DATE_FORMAT);
-                }
-            } catch (DateTimeParseException e) {
-                throw new ParseException("Invalid date");
+            if (rangeArgument[0] != "") {
+                expiryDateRange[0] = Parser.parseDateOptionValue(rangeArgument[0], "expiry date lower bound");
+            }
+            if (rangeArgument[1] != "") {
+                expiryDateRange[1] = Parser.parseDateOptionValue(rangeArgument[1], "expiry date upper bound");
             }
             searchCommand.setExpiryDateRange(expiryDateRange);
             hasOption = true;
@@ -130,8 +125,7 @@ public class SearchCommandParser extends DefaultParser {
         }
 
         if (commandLine.hasOption("list")) {
-            int numberOfResults = TypeHandler.createNumber(
-                    commandLine.getOptionValue("list")).intValue();
+            int numberOfResults = Parser.parseIntOptionValue(commandLine.getOptionValue("list"), "number of results");
             searchCommand.setNumberOfResults(numberOfResults);
         }
         return searchCommand;
