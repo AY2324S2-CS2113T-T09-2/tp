@@ -9,7 +9,6 @@ import org.jline.builtins.Completers.OptDesc;
 
 import seedu.binbash.command.AddCommand;
 
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
@@ -108,12 +107,20 @@ public class AddCommandParser extends DefaultParser {
         } catch (DateTimeParseException e) {
             throw new ParseException("Please enter a valid date with the format as such: dd-mm-yyyy");
         }
+        if (!itemExpiryDate.isEqual(LocalDate.MIN) && itemExpiryDate.isBefore(LocalDate.now())) {
+            throw new ParseException("Expiry date has already past.");
+        }
         return itemExpiryDate;
     }
 
     private double getItemSalePrice(CommandLine commandLine) throws ParseException {
         String salePrice = commandLine.getOptionValue("sale-price", "0.00");
-        double itemSalePrice = TypeHandler.createNumber(salePrice).doubleValue();
+        double itemSalePrice;
+        try {
+            itemSalePrice = Double.parseDouble(salePrice);
+        } catch (NumberFormatException e) {
+            throw new ParseException(e.getMessage());
+        }
         if (itemSalePrice < 0) {
             throw new ParseException("Sale price must be at least 0.");
         }
