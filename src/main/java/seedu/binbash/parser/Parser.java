@@ -125,11 +125,11 @@ public class Parser {
         }
     }
 
-    private Command parseRestockCommand(String[] commandArgs) throws InvalidFormatException {
+    private Command parseRestockCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return restockCommandParser.parse(commandArgs);
         } catch (ParseException e) {
-            throw new InvalidFormatException("Please enter a valid number.");
+            throw new InvalidCommandException(e.getMessage());
         }
     }
 

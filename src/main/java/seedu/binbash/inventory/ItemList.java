@@ -324,19 +324,12 @@ public class ItemList {
         int newQuantity = item.getItemQuantity();
 
         if (command.trim().equals(RestockCommand.COMMAND.trim())) {
-            if (itemQuantity > 0) {
-                newQuantity += itemQuantity;
-            } else {
-                throw new InvalidArgumentException("Please provide a positive number.");
-            }
-
+            newQuantity += itemQuantity;
             int totalUnitsPurchased = item.getTotalUnitsPurchased();
             item.setTotalUnitsPurchased(totalUnitsPurchased + itemQuantity);
         } else {
-            if (newQuantity >= itemQuantity && itemQuantity > 0) {
+            if (newQuantity >= itemQuantity) {
                 newQuantity -= itemQuantity;
-            } else if (itemQuantity <= 0) {
-                throw new InvalidArgumentException("Please provide a positive number.");
             } else {
                 throw new InvalidArgumentException("You do not have enough to sell the stated quantity.");
             }
