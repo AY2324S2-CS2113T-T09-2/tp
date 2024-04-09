@@ -333,7 +333,8 @@ class ItemListTest {
     }
 
     @Test
-    void sellOrRestockItem_validSellOperationWithQuantityBelowThreshold_returnsAlertMessage() throws InvalidCommandException {
+    void sellOrRestockItem_validSellOperationWithQuantityBelowThreshold_returnsAlertMessage()
+            throws InvalidCommandException {
         ItemList itemList = new ItemList(new ArrayList<>());
         itemList.addItem("retail", "Item1", "Description1", 6, LocalDate.now(), 20.0, 10.0, 5);
         String result = itemList.sellOrRestockItem("Item1", 2, "sell");
