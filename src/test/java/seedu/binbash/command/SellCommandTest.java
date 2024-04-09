@@ -51,7 +51,7 @@ public class SellCommandTest {
         ItemList itemList = new ItemList(new ArrayList<>());
         SellCommand command = new SellCommand("Non-Existing Item", 5);
         command.execute(itemList);
-        assertEquals("Item with name 'Non-Existing Item' not found.", command.getExecutionUiOutput());
+        assertEquals("Item with name 'Non-Existing Item' not found!", command.getExecutionUiOutput());
     }
 
     @Test
