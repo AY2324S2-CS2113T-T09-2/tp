@@ -99,15 +99,15 @@ class ListCommandTest {
         ItemList itemList = new ItemList(inventory);
         ListCommand listCommandCostPrice = new ListCommand(SortOptionEnum.EXPIRY);
 
-        itemList.addItem("retail", "testItem", "Test item", 2,
+        itemList.addItem("retail", "testItem1", "Test item", 2,
                 LocalDate.of(2024, 1, 5), 3.00, 2.00, 10);
-        itemList.addItem("retail", "testItem", "Test item", 2,
+        itemList.addItem("retail", "testItem2", "Test item", 2,
                 LocalDate.of(2024, 1, 1), 3.00, 2.00, 10);
 
         listCommandCostPrice.execute(itemList);
         String actualOutput = listCommandCostPrice.getExecutionUiOutput();
 
-        String expectedOutput = "1. [P][R] testItem" + System.lineSeparator() +
+        String expectedOutput = "1. [P][R] testItem2" + System.lineSeparator() +
                 "\tdescription: Test item" + System.lineSeparator() +
                 "\tquantity: 2" + System.lineSeparator() +
                 "\tcost price: $2.00" + System.lineSeparator() +
@@ -115,7 +115,7 @@ class ListCommandTest {
                 "\tthreshold: 10" + System.lineSeparator() +
                 "\texpiry date: 01-01-2024" + System.lineSeparator() +
                 System.lineSeparator() +
-                "2. [P][R] testItem" + System.lineSeparator() +
+                "2. [P][R] testItem1" + System.lineSeparator() +
                 "\tdescription: Test item" + System.lineSeparator() +
                 "\tquantity: 2" + System.lineSeparator() +
                 "\tcost price: $2.00" + System.lineSeparator() +
