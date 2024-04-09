@@ -14,10 +14,10 @@ Here are your metrics:
 	Net Profit: 0.00
 
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 Noted! I have added the following item into your inventory:
 
 [R] item1 with
@@ -27,7 +27,7 @@ Noted! I have added the following item into your inventory:
 	sale price: $0.00
 	threshold: 1
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 Noted! I have added the following item into your inventory:
 
 [R] item2 with
@@ -37,7 +37,7 @@ Noted! I have added the following item into your inventory:
 	sale price: $0.00
 	threshold: 1
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 Noted! I have added the following item into your inventory:
 
 [P][R] item3 with
@@ -48,7 +48,7 @@ Noted! I have added the following item into your inventory:
 	threshold: 1
 	expiry date: 01-01-2025
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 Noted! I have added the following item into your inventory:
 
 [P][R] item4 with
@@ -59,7 +59,7 @@ Noted! I have added the following item into your inventory:
 	threshold: 1
 	expiry date: 01-01-2025
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 Noted! I have added the following item into your inventory:
 
 [O] item5 with
@@ -68,7 +68,7 @@ Noted! I have added the following item into your inventory:
 	cost price: $100.00
 	threshold: 1
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 Noted! I have added the following item into your inventory:
 
 [P][O] item6 with
@@ -78,7 +78,7 @@ Noted! I have added the following item into your inventory:
 	threshold: 1
 	expiry date: 01-01-2025
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 Noted! I have added the following item into your inventory:
 
 [P][O] item with
@@ -88,7 +88,7 @@ Noted! I have added the following item into your inventory:
 	threshold: 1
 	expiry date: 01-01-2025
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 1. [R] item1 with
 	description: no exp or quantity
 	quantity: 0
@@ -105,7 +105,7 @@ Noted! I have added the following item into your inventory:
 
 
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 1. [P][O] item with
 	description: duplicate name
 	quantity: 100
@@ -115,7 +115,7 @@ Noted! I have added the following item into your inventory:
 
 
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 1. [P][R] item4 with
 	description: everything
 	quantity: 100
@@ -133,7 +133,7 @@ Noted! I have added the following item into your inventory:
 
 
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 1. [R] item1 with
 	description: no exp or quantity
 	quantity: 0
@@ -186,6 +186,6 @@ Noted! I have added the following item into your inventory:
 
 
 -------------------------------------------------------------
--------------------------------------------------------------
+binbash> -------------------------------------------------------------
 Bye!
 -------------------------------------------------------------
