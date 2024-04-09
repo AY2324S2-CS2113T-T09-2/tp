@@ -72,7 +72,7 @@ public class Ui {
     public String readUserCommand() {
         assert isUserActive();
         try {
-            String userInput = inputReader.readLine("binbash> ");
+            String userInput = inputReader.readLine();
             UILOGGER.info("received raw user input: " + userInput);
             return userInput;
         } catch (EndOfFileException | UserInterruptException e) {
