@@ -11,7 +11,7 @@ cd text-ui-test
 # clean up data and log files
 rm -rf data log
 
-java -jar $(find ../build/libs/ -mindepth 1 -print -quit) < input.txt &> ACTUAL.TXT | sed '/^binbash> $/d' &> ACTUAL.TXT
+java -jar $(find ../build/libs/ -mindepth 1 -print -quit) < input.txt &> ACTUAL.TXT
 
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix EXPECTED-UNIX.TXT ACTUAL.TXT
