@@ -319,6 +319,7 @@ Examples:
        description: lighting
        quantity: 5
        cost price: $2.30
+       threshold: 3
    -------------------------------------------------------------
    ```
 
@@ -333,15 +334,16 @@ Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DAT
 
 Examples:
 
-- `add -op -n milk -d to make cofee -q 2 -e 03-10-2024 -c 1.30`<br>
+- `add -op -n milk -d to make coffee -q 2 -e 03-10-2024 -c 1.30`<br>
    ```text
    -------------------------------------------------------------
    Noted! I have added the following item into your inventory:
     
    [P][O] milk
-       description: to make cofee
+       description: to make coffee
        quantity: 2
        cost price: $1.30
+       threshold: 1
        expiry date: 03-10-2024
    -------------------------------------------------------------
    ```

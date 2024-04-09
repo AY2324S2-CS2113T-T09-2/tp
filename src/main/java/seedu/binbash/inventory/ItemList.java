@@ -277,12 +277,14 @@ public class ItemList {
             }
         }
     }
-    private void updateItemSalePrice(Item item, double itemSalePrice) {
+    private void updateItemSalePrice(Item item, double itemSalePrice) throws InvalidCommandException {
 
         if (itemSalePrice != Double.MIN_VALUE) {
             logger.info("Attempting to update item sale price");
             if (item instanceof RetailItem) {
                 ((RetailItem) item).setItemSalePrice(itemSalePrice);
+            } else {
+                throw new InvalidCommandException("This item is not a retail item and has no sale price");
             }
         }
     }
@@ -337,6 +339,10 @@ public class ItemList {
             }
             currentQuantity -= quantityToUpdateBy;
             item.setItemQuantity(currentQuantity);
+
+            if (!(item instanceof RetailItem)) {
+                throw new InvalidCommandException("Operational items cannot be sold.");
+            }
 
             RetailItem retailItem = (RetailItem)item;
             int itemThreshold = retailItem.getItemThreshold();

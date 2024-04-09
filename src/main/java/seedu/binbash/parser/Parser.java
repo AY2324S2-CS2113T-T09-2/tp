@@ -162,7 +162,7 @@ public class Parser {
         try {
             longValue = Long.parseLong(argument);
         } catch (NumberFormatException e) {
-            throw new ParseException(option + " must be a number");
+            throw new ParseException(option + " must be a whole number.");
         }
         if (longValue > Integer.MAX_VALUE) {
             throw new ParseException(option + " too large!");
@@ -178,7 +178,7 @@ public class Parser {
             double doubleValue = Double.parseDouble(argument);
             return doubleValue;
         } catch (NumberFormatException e) {
-            throw new ParseException(option + " must be a number");
+            throw new ParseException(option + " must be a number.");
         }
     }
 
