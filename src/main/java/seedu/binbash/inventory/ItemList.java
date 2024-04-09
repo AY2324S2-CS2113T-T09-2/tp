@@ -14,7 +14,6 @@ import seedu.binbash.item.RetailItem;
 import seedu.binbash.command.RestockCommand;
 import seedu.binbash.logger.BinBashLogger;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
