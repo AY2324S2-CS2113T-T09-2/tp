@@ -90,6 +90,7 @@ public class AddCommandParser extends DefaultParser {
         if (itemThreshold < 0) {
             throw new ParseException("Threshold must be must be at least 0.");
         }
+
         return itemThreshold;
     }
 
@@ -128,6 +129,7 @@ public class AddCommandParser extends DefaultParser {
         if (itemQuantity < 0) {
             throw new ParseException("Quantity must be at least 0.");
         }
+
         return itemQuantity;
     }
 }

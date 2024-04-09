@@ -13,14 +13,16 @@ component {
     [BinBash] --> [Storage]
     [BinBash] --> [Data]
 
-    [Parser] --> [Command]
     [Command] --> [Data]
-    [Storage] --> [Data]
+    [Command] .up.> [Ui]
 
-    [Command] ..> [Ui]
+    [Storage] --> [Data]
     [Storage] .right.> "items.txt"
 
     [Logger] .right.> "logs.txt"
+
+    [Storage] -[hidden]left- [Parser]
+    [Parser] -[hidden]-- [Data]
 }
 
 @enduml

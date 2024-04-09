@@ -8,6 +8,7 @@ import seedu.binbash.command.UpdateCommand;
 import seedu.binbash.command.SearchCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
+import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
 
 import org.apache.commons.cli.ParseException;
@@ -69,7 +70,7 @@ public class Parser {
      * @return The parsed command.
      * @throws InvalidCommandException If the command is invalid or cannot be parsed.
      */
-    public Command parseCommand(String userInput) throws InvalidCommandException {
+    public Command parseCommand(String userInput) throws BinBashException {
         String[] tokens = userInput.trim().split("\\s+"); // Tokenize user input
         String commandString = tokens[0].toLowerCase();
         String[] commandArgs = Arrays.copyOfRange(tokens, 1, tokens.length); // Takes only options and arguments
@@ -161,7 +162,7 @@ public class Parser {
         try {
             longValue = Long.parseLong(argument);
         } catch (NumberFormatException e) {
-            throw new ParseException(option + " must be an integer");
+            throw new ParseException(option + " must be a whole number.");
         }
         if (longValue > Integer.MAX_VALUE) {
             throw new ParseException(option + " too large!");
@@ -180,7 +181,7 @@ public class Parser {
             double doubleValue = Double.parseDouble(argument);
             return doubleValue;
         } catch (NumberFormatException e) {
-            throw new ParseException(option + " must be a number");
+            throw new ParseException(option + " must be a number.");
         }
     }
 
