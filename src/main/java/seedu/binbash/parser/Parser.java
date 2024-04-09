@@ -167,6 +167,9 @@ public class Parser {
         if (longValue > Integer.MAX_VALUE) {
             throw new ParseException(option + " too large!");
         }
+        if (longValue < Integer.MIN_VALUE) {
+            throw new ParseException(option + " too small!");
+        }
         return (int) longValue;
     }
 
@@ -187,7 +190,7 @@ public class Parser {
             LocalDate dateValue = LocalDate.parse(argument, EXPECTED_INPUT_DATE_FORMAT);
             return dateValue;
         } catch (DateTimeParseException e) {
-            throw new ParseException(option + "is invalid. Required format: dd-mm-yyyy");
+            throw new ParseException(option + " is invalid. Required format: dd-mm-yyyy");
         }
     }
 }

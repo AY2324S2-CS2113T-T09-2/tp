@@ -353,32 +353,34 @@ Examples:
 
 ### Searching for an item: `search`
 
-> This allows you to search for items in your inventory, filtering results through a number of user-defined fields.
+> This allows you to search for items in your inventory, filtering results through a number of item-specific fields.
 
 Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`
 
 - At least one of `-n`, `-d`, `-q`, `-c`, `-s`, or `-e` must be set.
 - `NAME_QUERY` and `DESCRIPTION_QUERY` perform a case-insensitive search on the name and description fields of inventory items respectively.
-- `QUANTITY_RANGE` takes the form `{min_quantity}..{max_quantity}` where at least one of `min_quantity` or `max_quantity` is required.
-  > ℹ️ For example, if we intend to search for items with a quantity between 20 and 30, we should format our query as:<br> `-q 20..30`.
-- `COST_PRICE_RANGE` and `SALE_PRICE_RANGE` take the form `{price_lower_bound}..{price_upper_bound}` where at least one of `price_lower_bound` or `price_upper_bound` is required.
-  > ℹ️ For example, if we intend to search for items that cost between $20 and $30, we should format our query as:<br>`-c 20..30`.
-- `EXPIRY_DATE_RANGE` is similar to the above range arguments: except dates need to be specified in the format `dd.MM.YYYY`.
-  > ℹ️ For example, if we intend to search for items with an expiry date between 20 January 2024 and 30 January 2024, we should format our query as:<br> `-e 20.01.2024..30.01.2024`.
+- `RANGE` searches take the form `{min_value}..{max_value}` and are inclusive of the minimum or maximum values specified.
+  - At least one of `min_value` or `max_value` is required.
+  - Omitting `min_value` searches for everything up to and including the `max_value`.
+  - Omitting `max_value` searches for everything with at least `min_value`.
+  > ℹ️ For example, to search for items with a quantity up to and including 20, we should format our query as:<br> `-q ..20`.
+  > ℹ️ To search for items that cost at least $15, we should format our query as:<br>`-c 15..`.
+- `EXPIRY_DATE_RANGE` is similar to the above range arguments: except dates need to be specified in the format `dd-MM-YYYY`.
+  > ℹ️ For example, to search for items with an expiry date between 20 January 2024 and 30 January 2024, we should format our query as:<br> `-e 20-01-2024..30-01-2024`.
 - Shows the first `NUMBER_OF_RESULTS` results if set, else all matching results are shown.
 
 **Examples:**
 
 - `search -n snake plant`
   Will return all items with names containing **snake plant**, such as "snake plant" and "snake plant seeds".
-- `search -c ..5 -l 6`
-  Will return the first 6 items that cost up to $5.00.
+- `search -l 6 -c ..5`
+  Will return the first 6 items that cost up to and including $5.00.
 - `search -s 20..30`
   Will return all items with sale prices between $20 and $30 (inclusive).
-- `search -e 11.11.2023.. -l 1`
-  Will return the first item that expires on or after 11 November 2023.
-- `search -q 50.. -e 17.09.2023..23.11.2023`
-  Will return all items with current quantity at or above 50 and that expire between 17 September and 23 November 2023 (inclusive).
+- `search -l 1 -e 11-11-2023.. -d seeds`
+  Will return the first item expiring on or after 11 November 2023 and that contain the word "seeds" in its description.
+- `search -q 50.. -e 17-09-2023..23-11-2023`
+  Will return all items with current quantity at or above 50 and that expire between 17 September 2023 and 23 November 2023 (inclusive).
 
 * [Back to table of contents](#table-of-contents)
 ---
