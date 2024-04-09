@@ -161,7 +161,7 @@ public class Parser {
         try {
             longValue = Long.parseLong(argument);
         } catch (NumberFormatException e) {
-            throw new ParseException(option + " must be a number");
+            throw new ParseException(option + " must be an integer");
         }
         if (longValue > Integer.MAX_VALUE) {
             throw new ParseException(option + " too large!");
