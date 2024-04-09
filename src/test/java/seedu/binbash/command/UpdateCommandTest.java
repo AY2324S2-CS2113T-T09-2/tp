@@ -75,7 +75,7 @@ public class UpdateCommandTest {
         updateCommand.setItemThreshold(8);
 
         assertTrue(updateCommand.execute(itemList));
-        assertEquals("Item with name 'nonexistentItem' not found.", updateCommand.getExecutionUiOutput());
+        assertEquals("Item with name 'nonexistentItem' not found!", updateCommand.getExecutionUiOutput());
     }
 
     @Test
