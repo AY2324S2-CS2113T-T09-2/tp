@@ -158,7 +158,9 @@ public class ItemList {
     public String addItem(String itemType, String itemName, String itemDescription, int itemQuantity,
                           LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice, int itemThreshold) {
         // Checking for existence of an item with the same name
-        ArrayList<Item> searchOutput = searchAssistant.searchByExactName(itemName).getFoundItems();
+        ArrayList<Item> searchOutput = getSearchAssistant()
+                .searchByExactName(itemName)
+                .getFoundItems();
         if (!searchOutput.isEmpty()) {
             return String.format("An item with the name '%s' already exists in the inventory. " +
                     "Please use a different name.", itemName);
