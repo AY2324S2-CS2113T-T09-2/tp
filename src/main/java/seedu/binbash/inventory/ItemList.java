@@ -200,8 +200,8 @@ public class ItemList {
     public String updateItemDataByName (String itemName, String itemDescription, int itemQuantity,
                                   LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
                                   int itemThreshold) throws InvalidCommandException {
-        Item item = findItemByName(itemName);
 
+        Item item = findItemByName(itemName);
         updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
                 itemThreshold);
 
@@ -278,7 +278,6 @@ public class ItemList {
         }
     }
     private void updateItemSalePrice(Item item, double itemSalePrice) throws InvalidCommandException {
-
         if (itemSalePrice != Double.MIN_VALUE) {
             logger.info("Attempting to update item sale price");
             if (item instanceof RetailItem) {
@@ -311,14 +310,24 @@ public class ItemList {
      * @throws InvalidCommandException If an Item with the provided name does not exist in the ItemList.
      */
     public Item findItemByName(String itemName) throws InvalidCommandException {
-        Item currentItem;
-        for (int i = 0; i < sortedOrder.size(); i++) {
-            currentItem = itemList.get(sortedOrder.get(i));
-            if (currentItem.getItemName().trim().equals(itemName)) {
-                return currentItem;
-            }
+        ArrayList<Item> foundItems = getSearchAssistant()
+                .searchByName(itemName)
+                .getFoundItems();
+
+        if (foundItems.isEmpty()) {
+            throw new InvalidCommandException(String.format("Item with name %s not found!", itemName));
         }
-        throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
+
+        if (foundItems.size() > 1) {
+            throw new InvalidCommandException(
+                    String.format(
+                    "There are multiple items containing the string '%s'", itemName)
+                    + System.lineSeparator() + System.lineSeparator()
+                    + "Please provide a more specific name or consider using the item's index, " +
+                    "which can be found using the list command.");
+        }
+
+        return foundItems.get(0);
     }
 
     private String sellOrRestock(Item item, int quantityToUpdateBy, String command) throws InvalidCommandException {
@@ -376,6 +385,7 @@ public class ItemList {
      */
     public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidCommandException{
         Item item = findItemByName(itemName);
+
         String output = sellOrRestock(item, itemQuantity, command);
         return output;
     }
@@ -450,6 +460,7 @@ public class ItemList {
      */
     public String deleteItem(String keyword) {
         int targetIndex = -1;
+        int count = 0;
         Item currentItem;
 
         for (int i = 0; i < sortedOrder.size(); i ++) {
@@ -461,13 +472,23 @@ public class ItemList {
             if (currentItem.getItemName().trim().equals(keyword)) {
                 logger.info("first matching item at index " + i + " found.");
                 targetIndex = i + 1;
-                break;
+                count += 1;
             }
         }
 
         if (targetIndex == -1) {
             logger.info("No matching item was found, no item was deleted.");
             String output = "Item not found! Nothing was deleted!";
+            return output;
+        }
+
+        if (count > 1) {
+            logger.info("Multitple items were found with the same name.");
+            String output = String.format(
+                    "There are multiple items containing the name '%s'", keyword)
+                    + System.lineSeparator() + System.lineSeparator()
+                    + "Please provide a more specific name or consider deleting using the item's index, " +
+                    "which can be found using the list command.";
             return output;
         }
 
