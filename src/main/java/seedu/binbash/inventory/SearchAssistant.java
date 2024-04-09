@@ -18,7 +18,7 @@ public class SearchAssistant {
     private ArrayList<Item> foundItems;
 
     /**
-     * Note that the list of items to search through has to be explicity set by the caller.
+     * Note that the list of items to search through has to be explicitly set by the caller.
      */
     public void setFoundItems(ArrayList<Item> foundItems) {
         this.foundItems = foundItems;
