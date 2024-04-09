@@ -79,14 +79,7 @@ Noted! I have added the following item into your inventory:
 	expiry date: 01-01-2025
 -------------------------------------------------------------
 binbash> -------------------------------------------------------------
-Noted! I have added the following item into your inventory:
-
-[P][O] item with
-	description: duplicate name
-	quantity: 100
-	cost price: $100.00
-	threshold: 1
-	expiry date: 01-01-2025
+An item with the name 'item1 with' already exists in the inventory. Please use a different name.
 -------------------------------------------------------------
 binbash> -------------------------------------------------------------
 1. [R] item1 with
@@ -106,12 +99,12 @@ binbash> -------------------------------------------------------------
 
 -------------------------------------------------------------
 binbash> -------------------------------------------------------------
-1. [P][O] item with
-	description: duplicate name
-	quantity: 100
+1. [R] item1 with
+	description: no exp or quantity
+	quantity: 0
 	cost price: $100.00
+	sale price: $0.00
 	threshold: 1
-	expiry date: 01-01-2025
 
 
 -------------------------------------------------------------
@@ -172,13 +165,6 @@ binbash> -------------------------------------------------------------
 
 6. [P][O] item6 with
 	description: everything(op)
-	quantity: 100
-	cost price: $100.00
-	threshold: 1
-	expiry date: 01-01-2025
-
-7. [P][O] item with
-	description: duplicate name
 	quantity: 100
 	cost price: $100.00
 	threshold: 1
