@@ -315,7 +315,7 @@ public class ItemList {
                 .getFoundItems();
 
         if (foundItems.isEmpty()) {
-            throw new InvalidCommandException(String.format("Item with name %s not found!", itemName));
+            throw new InvalidCommandException(String.format("Item with name '%s' not found!", itemName));
         }
 
         if (foundItems.size() > 1) {
