@@ -26,7 +26,7 @@ public class ItemComparatorByProfit implements Comparator<Item> {
         retailItem1 = (RetailItem) item1 ;
         retailItem2 = (RetailItem) item2;
 
-        if (retailItem1.getItemProfit() > retailItem2.getItemProfit()) {
+        if (retailItem1.getItemProfit() < retailItem2.getItemProfit()) {
             return -1;
         } else {
             return 1;
