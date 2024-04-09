@@ -23,9 +23,11 @@ Given below are my contributions to the project.
 - Furthered usefulness by allowing for filtering through number of desired results.
 - Implemented using a `SearchAssistant` class to be shared using other features such as Update.
 
-**Command Parsers**: Wrote Delete and Search command parsers.
+**CommandOptionAdder**: Added the common utility class for parsers to get and add options and option descriptions.
+- Increased maintainability and extensibility for new command parsers.
+- Uniformly adopted across all command parsers.
 
-**CommandOptionAdder**
+**Command Parsers**: Wrote Delete and Search command parsers.
 
 #### Enhancemennts Implemented
 
@@ -36,6 +38,9 @@ Given below are my contributions to the project.
 - Option suggestions to nearest match or cycle through matches on `tab` key
 
 **General refactoring**: Heavily refactored parsers and exception classes
+- Refined Apache commons library implementation by refactoring command parsers into separate classes.
+- Extracted common methods for parsing values from sub-parsers into `Parser` class, allowing for more rigorous error handling.
+- Unified all parser related exceptions into a single class, maintaining expressiveness of exception messages with the use of 3rd party library exceptions.
 
 #### Contributions to Documentation
 
@@ -49,11 +54,13 @@ Given below are my contributions to the project.
 
 **Reviewed major changes to code base**
 - [Migration to Commons CLI parser library](https://github.com/AY2324S2-CS2113T-T09-2/tp/pull/108#pullrequestreview-1962307487)
+- [Changes to item](https://github.com/AY2324S2-CS2113T-T09-2/tp/pull/97)[ and classes](https://github.com/AY2324S2-CS2113T-T09-2/tp/pull/126#pullrequestreview-1968282135)
 - [Implementation of update and notification features](https://github.com/AY2324S2-CS2113T-T09-2/tp/pull/139#pullrequestreview-1970164721)
 
 **Suggested code improvements to team members**
 - Provided idea for maintaining a sorted item index list in implementation of List feature.
 - Suggested refactors to Update feature saving ~80 LOC.
+- Recommended the approach of parsing values by delimiters in load/save Storage feature.
 
 #### Contributions Beyond Project Team
 
