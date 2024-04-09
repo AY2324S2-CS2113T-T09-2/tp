@@ -313,9 +313,9 @@ public class ItemList {
      * Finds an item in the item list by its name using the SearchAssistant class.
      * This method conducts a case-sensitive search for the exact name of the item.
      *
-     * @param itemName The name of the item to be found.
-     * @return The item with the given name.
-     * @throws InvalidCommandException If an item with the provided name does not exist in the inventory.
+     * @param itemName The name of the Item to be found.
+     * @return The Item with the given name.
+     * @throws InvalidCommandException If an Item with the provided name does not exist in the ItemList.
      */
     public Item findItemByName(String itemName) throws InvalidCommandException {
         logger.info(String.format("Searching for item with name %s", itemName));
