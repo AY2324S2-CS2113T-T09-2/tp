@@ -135,6 +135,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns an integer value parsed from a provided string.
+     *
+     * @param argument The provided string.
+     * @param option The option taking this parsed value as an argument.
+     * @return Parsed integer value.
+     * @throws ParseException If argument is not the string representation of a Java int.
+     */
     static int parseIntOptionValue(String argument, String option) throws ParseException {
         long longValue;
         try {
@@ -151,6 +159,14 @@ public class Parser {
         return (int) longValue;
     }
 
+    /**
+     * Returns a double value parsed from a provided string.
+     *
+     * @param argument The provided string.
+     * @param option The option taking this parsed value as an argument.
+     * @return Parsed double value.
+     * @throws ParseException If argument is not the string representation of a Java double.
+     */
     static double parseDoubleOptionValue(String argument, String option) throws ParseException {
         if (argument.length() > 300) {
             throw new ParseException(option + " number given too long!");
@@ -163,6 +179,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns a LocalDate parsed from a provided string.
+     *
+     * @param argument The provided string.
+     * @param option The option taking this parsed value as an argument.
+     * @return Parsed date.
+     * @throws ParseException If argument is not the string representation of a LocalDate formatted in
+     *     EXPECTED_INPUT_DATE_FORMAT.
+     */
     static LocalDate parseDateOptionValue(String argument, String option) throws ParseException {
         try {
             LocalDate dateValue = LocalDate.parse(argument, EXPECTED_INPUT_DATE_FORMAT);
