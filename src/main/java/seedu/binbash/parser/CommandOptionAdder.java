@@ -111,7 +111,7 @@ public class CommandOptionAdder {
                 .desc("Sort by profits earned for each item.")
                 .argName("profit")
                 .build();
-
+        optionDescriptions.add(new OptDesc("-p", "--profit", "sort by profit"));
         return sortProfitOption;
     }
 
