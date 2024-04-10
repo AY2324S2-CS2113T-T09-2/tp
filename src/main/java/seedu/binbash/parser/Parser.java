@@ -51,7 +51,6 @@ public class Parser {
     public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
         ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>() {
             {
-                add(sellCommandParser.getOptionDecriptions());
                 add(updateCommandParser.getOptionDecriptions());
                 add(searchCommandParser.getOptionDecriptions());
                 add(listCommandParser.getOptionDecriptions());
