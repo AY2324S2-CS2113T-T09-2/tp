@@ -12,13 +12,11 @@ import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
 
 import org.apache.commons.cli.ParseException;
-import org.jline.builtins.Completers.OptDesc;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.ArrayList;
 
 /**
  * Parses user input to generate commands for managing inventory.
@@ -41,16 +39,6 @@ public class Parser {
         searchCommandParser = new SearchCommandParser();
         listCommandParser = new ListCommandParser();
         deleteCommandParser = new DeleteCommandParser();
-    }
-
-    /**
-     * Gets the option descriptions for all commands.
-     *
-     * @return The option descriptions for all commands.
-     */
-    public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
-        ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>();
-        return allCommandsOptionDescriptions;
     }
 
     /**

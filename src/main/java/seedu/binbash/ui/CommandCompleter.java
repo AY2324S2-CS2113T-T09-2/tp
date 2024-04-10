@@ -72,7 +72,7 @@ public class CommandCompleter extends AggregateCompleter {
      * @param allCommandsOptionDescriptions A list of option descriptions for all commands in this program.
      * @return The current instance of CommandCompleter.
      */
-    public CommandCompleter(ArrayList<ArrayList<OptDesc>> notAllCommandsOptionDescriptions) {
+    public CommandCompleter() {
         super(addCompleter, searchCompleter, restockCompleter, sellCompleter, profitCompleter,
                 deleteCompleter, listCompleter, updateCompleter, byeCompleter);
         ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new CommandOptionAdder()

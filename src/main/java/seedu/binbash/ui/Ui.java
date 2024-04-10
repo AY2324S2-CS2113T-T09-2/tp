@@ -4,14 +4,12 @@ import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.UserInterruptException;
-import org.jline.builtins.Completers.OptDesc;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
 import seedu.binbash.logger.BinBashLogger;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * The user facing text interface of the program.
@@ -38,16 +36,16 @@ public class Ui {
      * @return The current instance of Ui.
      * @throws RuntimeException If fails to get an instance of the system terminal.
      */
-    public Ui(ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions) {
+    public Ui() {
         System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
         try {
             Terminal userTerminal = TerminalBuilder.builder()
                 .system(true)
-                .dumb(true) // TODO: omit and catch using logger
+                .dumb(true)
                 .build();
             inputReader = LineReaderBuilder.builder()
                 .terminal(userTerminal)
-                .completer(new CommandCompleter(allCommandsOptionDescriptions))
+                .completer(new CommandCompleter())
                 .build();
         } catch (IOException e) {
             UILOGGER.info("failed to get system terminal!");
