@@ -6,13 +6,14 @@ import org.apache.commons.cli.Options;
 import org.jline.builtins.Completers.OptDesc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A utility class to add and save command options, shared between command parsers and Ui
  * command completer classes.
  */
 public class CommandOptionAdder {
-    private static ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>();
+    private static HashMap<String, ArrayList<OptDesc>> allCommandsOptionDescriptions = new HashMap<>();
     private Options options;
     private ArrayList<OptDesc> optionDescriptions;
 
@@ -25,7 +26,7 @@ public class CommandOptionAdder {
         optionDescriptions = new ArrayList<>();
     }
 
-    public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
+    public HashMap<String, ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
         return allCommandsOptionDescriptions;
     }
 
@@ -35,7 +36,7 @@ public class CommandOptionAdder {
      * @param command The name of the command.
      */
     void saveCommandOptionDescriptions(String command) {
-        allCommandsOptionDescriptions.add(optionDescriptions);
+        allCommandsOptionDescriptions.put(command, optionDescriptions);
     }
 
     private Option getRetailItemOption() {

@@ -11,6 +11,7 @@ import org.jline.reader.impl.completer.NullCompleter;
 import seedu.binbash.parser.CommandOptionAdder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Suggests and provides descriptions on commands and command options.
@@ -67,30 +68,28 @@ public class CommandCompleter extends AggregateCompleter {
 
     /**
      * Calls on parent constructor with every completer, then updates each individual completer.
-     * Note the order of command options to get depends on the order in which those descriptions were added in Parser.
      *
-     * @param allCommandsOptionDescriptions A list of option descriptions for all commands in this program.
      * @return The current instance of CommandCompleter.
      */
     public CommandCompleter() {
         super(addCompleter, searchCompleter, restockCompleter, sellCompleter, profitCompleter,
                 deleteCompleter, listCompleter, updateCompleter, byeCompleter);
-        ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new CommandOptionAdder()
+        HashMap<String, ArrayList<OptDesc>> allCommandsOptionDescriptions = new CommandOptionAdder()
             .getAllCommandsOptionDescriptions();
         addCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(0), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("add"), OPTION_COMPLETER_START_POS));
         restockCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(1), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("restock"), OPTION_COMPLETER_START_POS));
         sellCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(2), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("sell"), OPTION_COMPLETER_START_POS));
         updateCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(3), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("update"), OPTION_COMPLETER_START_POS));
         searchCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(4), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("search"), OPTION_COMPLETER_START_POS));
         listCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(5), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("list"), OPTION_COMPLETER_START_POS));
         deleteCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(6), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("delete"), OPTION_COMPLETER_START_POS));
         profitCompleter.getCompleters().add(NullCompleter.INSTANCE);
         byeCompleter.getCompleters().add(NullCompleter.INSTANCE);
     }
