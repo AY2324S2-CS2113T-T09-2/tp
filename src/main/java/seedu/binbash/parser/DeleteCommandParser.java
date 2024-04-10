@@ -24,7 +24,8 @@ public class DeleteCommandParser extends DefaultParser {
         options = new Options();
         optionDescriptions = new ArrayList<>();
         new CommandOptionAdder(options, optionDescriptions)
-            .addItemNameAndIndexOptionGroup();
+            .addItemNameAndIndexOptionGroup()
+            .saveCommandOptionDescriptions("delete");
     }
 
     /**

@@ -8,6 +8,8 @@ import org.jline.reader.impl.completer.AggregateCompleter;
 import org.jline.reader.impl.completer.StringsCompleter;
 import org.jline.reader.impl.completer.NullCompleter;
 
+import seedu.binbash.parser.CommandOptionAdder;
+
 import java.util.ArrayList;
 
 /**
@@ -70,9 +72,11 @@ public class CommandCompleter extends AggregateCompleter {
      * @param allCommandsOptionDescriptions A list of option descriptions for all commands in this program.
      * @return The current instance of CommandCompleter.
      */
-    public CommandCompleter(ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions) {
+    public CommandCompleter(ArrayList<ArrayList<OptDesc>> notAllCommandsOptionDescriptions) {
         super(addCompleter, searchCompleter, restockCompleter, sellCompleter, profitCompleter,
                 deleteCompleter, listCompleter, updateCompleter, byeCompleter);
+        ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new CommandOptionAdder()
+            .getAllCommandsOptionDescriptions();
         addCompleter.getCompleters().add(new OptionCompleter(
                     allCommandsOptionDescriptions.get(0), OPTION_COMPLETER_START_POS));
         restockCompleter.getCompleters().add(new OptionCompleter(

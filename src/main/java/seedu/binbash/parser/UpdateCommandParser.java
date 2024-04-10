@@ -30,10 +30,9 @@ public class UpdateCommandParser extends DefaultParser {
                 .addQuantityOption(false, "Update quantity of item")
                 .addCostPriceOption(false, "Update cost price of item")
                 .addSalePriceOption(false, "Update sale price of item")
-                .addExpirationDateOption(false,
-                        "Update expiry date of item")
-                .addThresholdOption(false,
-                        "Update threshold of item");
+                .addExpirationDateOption(false, "Update expiry date of item")
+                .addThresholdOption(false, "Update threshold of item")
+                .saveCommandOptionDescriptions("update");
     }
 
     /**

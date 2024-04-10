@@ -24,7 +24,8 @@ public class ListCommandParser extends DefaultParser {
         options = new Options();
         optionDescriptions = new ArrayList<>();
         new CommandOptionAdder(options, optionDescriptions)
-                .addListTypeOptionGroup();
+                .addListTypeOptionGroup()
+                .saveCommandOptionDescriptions("list");
     }
 
     /**

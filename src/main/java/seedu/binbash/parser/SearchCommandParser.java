@@ -30,7 +30,8 @@ public class SearchCommandParser extends DefaultParser {
             .addCostPriceOption(false, "Search by cost-price")
             .addSalePriceOption(false, "Search by sale-price")
             .addExpirationDateOption(false, "Search by expiry date")
-            .addListOption(false, "Lists the first n results");
+            .addListOption(false, "Lists the first n results")
+            .saveCommandOptionDescriptions("search");
     }
 
     /**

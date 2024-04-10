@@ -26,7 +26,8 @@ public class RestockCommandParser extends DefaultParser {
         optionDescriptions = new ArrayList<>();
         new CommandOptionAdder(options, optionDescriptions)
             .addItemNameAndIndexOptionGroup()
-            .addQuantityOption(true, "Units of item to restock.");
+            .addQuantityOption(true, "Units of item to restock.")
+            .saveCommandOptionDescriptions("restock");
     }
 
     /**

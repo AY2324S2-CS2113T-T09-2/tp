@@ -28,7 +28,8 @@ public class SellCommandParser extends DefaultParser {
         optionDescriptions = new ArrayList<>();
         new CommandOptionAdder(options, optionDescriptions)
             .addItemNameAndIndexOptionGroup()
-            .addQuantityOption(true, "Units of item sold.");
+            .addQuantityOption(true, "Units of item sold.")
+            .saveCommandOptionDescriptions("sell");
     }
 
 
