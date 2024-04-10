@@ -28,13 +28,17 @@
 * [Glossary](#glossary)
 * [Instructions for manual testing](#instructions-for-manual-testing)
 
+---
+
 ## Acknowledgements
 
 [AB3 Developer Guide](https://se-education.org/addressbook-level3/DeveloperGuide.html)
 
 [AB3 GitHub Project Repository](https://github.com/se-edu/addressbook-level3)
 
+---
 ## Setting up, getting started
+
 
 1. Ensure you have Java `11` and above. If you do not have the required version, you can install the Java `11` JDK from this [link](https://www.oracle.com/sg/java/technologies/javase/jdk11-archive-downloads.html).
 2. **Fork** the BinBash repository [here](https://github.com/AY2324S2-CS2113T-T09-2/tp).
@@ -75,6 +79,8 @@ If you are using `IntelliJ IDEA`,
        ```
    2. Click on the Gradle icon.
    3. Run the tests (click on `tp/Tasks/verification/test`) and ensure that all tests have passed.
+
+---
 
 ## Design
 
@@ -124,6 +130,8 @@ The **Sequence Diagram** below shows how the components interact with each other
 11. `Ui` prints this `outputString` to the user.
 12. If the `Command` executed modifies the database, `BinBash` will call the `saveToStorage()` method of `Storage`
 
+---
+
 ### Ui Component
 
 ![]()
@@ -139,6 +147,8 @@ Note the use of an externally provided `LineReader` object in the `TextIn` class
 ![linereader](images/ui-linereader-enhancement.png)
 
 This allows us to overload options on a small number of commands to provide full functionality of the application. Developers can then extend its features without also the worry of finding a way for users to access those features easily.
+
+---
 
 ### Storage Component
 
@@ -157,6 +167,7 @@ application's persistent data.
 - **Corruption Handling**: If data corruption is detected, `handleCorruptedFile()` attempts to recover by renaming the corrupted file and creating a new one.
 - **Data Parsing**: The class contains methods for parsing data from and to the storage format, specifically `parseLinesToItemList(ArrayList<String>)` and `generateStorageRepresentationOfSingleItem(Item)`.
 
+---
 
 ### Parser Component
 
@@ -189,6 +200,8 @@ Upon calling `parseXYZCommand()`, the `parse()` method of an internal `XYZComman
 > In some instances, if the command that needs to be created is simple enough (e.g., a `ByeCommand`), then `Parser` will directly create the `Command` without the need of an `XYZCommandParser`.
 
 The `XYZCommand` is then subsequently returned back to `BinBash` for code execution.
+
+---
 
 ### Command Component
 
@@ -224,6 +237,8 @@ commands. Each command represents a single operation or action that can be perfo
 3. The `execute` method of the created `Command` object is called by `BinBash`.
 4. If `hasToSave` is true post-execution, `BinBash` triggers the `Storage` class to save the current state.
 
+---
+
 ### Data Component
 
 ![DataComponent](images/DataComponent.png)
@@ -242,6 +257,8 @@ If `SearchCommand` is executed to search through the `ItemList`, the search task
 
 Within this component, there are also multiple types of `Item` that can be created, stored and modified.
 The four primary types of `Item` are `RetailItem`, `OperationalItem`, `PerishableRetailItem`, and `PerishableOperationalItem`.
+
+---
 
 ## Features
 
@@ -267,6 +284,8 @@ Separation of Concerns is applied to ensure the `Ui` is only responsible for pri
 `ItemList` class deals with the logic of creating and adding an item to the list. This implementation also encapsulates the details 
 of adding an item and displaying messages. This way, only classes relevant to the logic of adding an item will have 
 access to `ItemList`.
+
+---
 
 ### List command
 
@@ -311,6 +330,8 @@ items, and listing of items to ensure that the mapping is always accurate when i
 #### Implementation Notes ####
 The ListCommand is concerned only with the execution of the listing operation. It follows a straightforward process that relies on the `ItemList` to format the list of items, ensuring separation of concerns between command execution and UI presentation.
 
+---
+
 ### Sell item
 
 ![SellSequenceDiagram](images/SellSequenceDiagram.png)
@@ -343,6 +364,7 @@ display the new data of the item.
 Upon completion of the update operation, the `execute()` method sets the `hasToSave` flag to `true`,
 signaling the need to persist changes to storage.
 
+---
 
 ### Restock item
 
@@ -357,6 +379,7 @@ to restock by.
 The implementation of the `restock` feature as well as the `RestockCommand` class is identical to the `sell` feature and
 calls the same methods from the `ItemList` class to perform the restocking operations.
 
+---
 
 ### Update item data in inventory
 
@@ -399,6 +422,8 @@ principles of high cohesion and low coupling.
 The incorporation of a helper method `updateItemData` in the `ItemList` class enhances code reusability and
 maintainability by centralizing the logic for updating item attributes. This method can be readily adjusted or expanded
 to include new attributes or validation rules in the future.
+
+---
 
 ### Delete command
 
@@ -452,6 +477,8 @@ The design of `DeleteCommand` is such that it encapsulates the delete operation,
 
 Additionally, the decision to use two constructors promotes the Single Responsibility Principle, as each constructor's logic is tailored to the type of deletion it handles.
 
+---
+
 ### Search command
 
 ![SearchAssistantSequenceDiagram](images/SearchAssistantSequenceDiagram.png)
@@ -468,6 +495,8 @@ This is guaranteed in this case by ItemList's setFoundItems() call.
 
 After obtaining the list of found items, it then uses printList to convert this list into a user-friendly string.
 
+---
+
 ## Logging
 
 Logging plays a crucial role in providing insights into the runtime behavior of the application and diagnosing issues. In this project, we utilize the `java.util.logging` package for comprehensive logging functionality.
@@ -480,6 +509,7 @@ The `BinBashLogger` class serves as the central component for managing all loggi
 
 To integrate logging into a class, developers can obtain a `Logger` instance by constructing a `BinBashLogger` object and assigning it as a class-level variable. This allows for consistent and centralized logging across the entire codebase.
 
+
 ### Log Output
 
 By default, log messages are directed to a `logs.txt` file located in the `/logs/` directory. This structured approach ensures that log data is organized and easily accessible for analysis and troubleshooting purposes.
@@ -487,6 +517,8 @@ By default, log messages are directed to a `logs.txt` file located in the `/logs
 In cases where issues arise with the `logs.txt` file and no `logs` are being written, warning logs are automatically redirected to the console for immediate visibility. This fallback mechanism ensures that critical information is not lost and allows developers to promptly address any logging-related issues.
 
 Overall, effective logging implementation enhances the maintainability, reliability, and diagnosability of the application, facilitating smooth operation and efficient issue resolution.
+
+---
 
 ## Product Scope
 
@@ -503,6 +535,8 @@ Overall, effective logging implementation enhances the maintainability, reliabil
 * **Efficient Inventory Management**: Our solution enables retail shop owners to manage their inventory more efficiently compared to manual methods and traditional GUI-driven apps, reducing time and errors.
 * **Cross-Platform Portability**: Our application runs seamlessly on various operating systems such as Windows, Linux, and macOS, providing flexibility and accessibility across different platforms.
 * **Lightweight and Resource-Efficient**: Designed to be lightweight, our application requires only entry-level hardware to operate efficiently, ensuring minimal system resource usage and optimal performance.
+
+---
 
 ## User Stories
 
@@ -527,6 +561,8 @@ Overall, effective logging implementation enhances the maintainability, reliabil
 | v3.0+   | shop owner | view the history of stock adjustments for an item                        | track its sales and restocking events                                             |
 | v3.0+   | shop owner | see which items are most frequently restocked or sold                    | identify popular products                                                         |
 
+---
+
 ## Non-Functional Requirements
 
 1. **Command Auto-Suggestion**: The application shall provide auto-suggestions for commands as users type, enhancing the command entry process and speeding up user interaction.
@@ -534,6 +570,8 @@ Overall, effective logging implementation enhances the maintainability, reliabil
 2. **Out-of-Order Command Entry**: Users shall be allowed to enter commands out-of-order, while still ensuring that all required arguments are provided. This flexibility in command entry improves user experience and accommodates different usage patterns.
 
 3. **Offline Functionality**: The application shall seamlessly function offline without any dependency on external services or internet connectivity. Users can continue to use all core features and functionalities even when disconnected from the internet, ensuring uninterrupted operation and productivity.
+
+---
 
 ## Glossary
 
@@ -556,6 +594,8 @@ Overall, effective logging implementation enhances the maintainability, reliabil
 * **Integration**: The process of combining or linking different software systems, components, or functionalities to work together seamlessly.
 
 * **Modularity**: The design principle that advocates breaking down software systems into smaller, independent components or modules that can be developed, tested, and maintained separately.
+
+---
 
 ## Instructions for manual testing
 

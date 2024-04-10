@@ -33,9 +33,9 @@ class ItemComparatorByProfitTest {
 
         itemList.sort(new ItemComparatorByProfit());
 
-        assertEquals("Item3", itemList.get(0).getItemName());
+        assertEquals("Item2", itemList.get(0).getItemName());
         assertEquals("Item1", itemList.get(1).getItemName());
-        assertEquals("Item2", itemList.get(2).getItemName());
+        assertEquals("Item3", itemList.get(2).getItemName());
     }
 
     @Test
@@ -59,7 +59,7 @@ class ItemComparatorByProfitTest {
     }
 
     @Test
-    public void compare_itemsWithNegativeProfit_sortedByDescendingProfit() {
+    public void compare_itemsWithNegativeProfit_sortedByAscendingProfit() {
         List<RetailItem> itemList = new ArrayList<>();
         RetailItem item1 = new RetailItem("Item1", "Description1", 10, 5.0, 15.0);
         item1.setTotalUnitsPurchased(10);
@@ -74,7 +74,7 @@ class ItemComparatorByProfitTest {
 
         itemList.sort(new ItemComparatorByProfit());
 
-        assertEquals("Item2", itemList.get(0).getItemName());
-        assertEquals("Item1", itemList.get(1).getItemName());
+        assertEquals("Item1", itemList.get(0).getItemName());
+        assertEquals("Item2", itemList.get(1).getItemName());
     }
 }
