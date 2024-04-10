@@ -25,11 +25,6 @@ public class CommandOptionAdder {
         optionDescriptions = new ArrayList<>();
     }
 
-    public CommandOptionAdder(Options options, ArrayList<OptDesc> optionDescriptions) {
-        this.options = options;
-        this.optionDescriptions = optionDescriptions;
-    }
-
     public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
         return allCommandsOptionDescriptions;
     }
