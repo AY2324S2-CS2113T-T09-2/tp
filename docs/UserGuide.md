@@ -631,13 +631,13 @@ Total profit: $6907.40
 * [Back to table of contents](#table-of-contents)
 ---
 
-### Exiting the application: `bye`
+### Exiting the application: `bye`, `exit`, `quit`
 
-> This command allows you to exit the application.
+> Any one of these commands allow you to exit the application.
 
 After a long day at work, it's time to take a rest! You can safely quit the application using this command.
 
-Format: `bye`
+Format: `bye`, `exit`, `quit`
 
 > ℹ️ BinBash will save the state of your current inventory, and you can always come back to it later.
 
