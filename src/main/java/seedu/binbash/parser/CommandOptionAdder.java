@@ -8,16 +8,35 @@ import org.jline.builtins.Completers.OptDesc;
 import java.util.ArrayList;
 
 /**
- * A utiliy class to add and save command options, shared between command parsers and Ui
+ * A utility class to add and save command options, shared between command parsers and Ui
  * command completer classes.
  */
 public class CommandOptionAdder {
-    Options options;
-    ArrayList<OptDesc> optionDescriptions;
+    private static ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>();
+    private Options options;
+    private ArrayList<OptDesc> optionDescriptions;
+
+    public CommandOptionAdder(Options options) {
+        this.options = options;
+        optionDescriptions = new ArrayList<>();
+    }
 
     public CommandOptionAdder(Options options, ArrayList<OptDesc> optionDescriptions) {
         this.options = options;
         this.optionDescriptions = optionDescriptions;
+    }
+
+    public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
+        return allCommandsOptionDescriptions;
+    }
+
+    /**
+     * Saves option descriptions for the current command after all options are added.
+     *
+     * @param command The name of the command.
+     */
+    void saveCommandOptionDescriptions(String command) {
+        allCommandsOptionDescriptions.add(optionDescriptions);
     }
 
     private Option getRetailItemOption() {
