@@ -49,11 +49,7 @@ public class Parser {
      * @return The option descriptions for all commands.
      */
     public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
-        ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>() {
-            {
-                add(deleteCommandParser.getOptionDecriptions());
-            }
-        };
+        ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>();
         return allCommandsOptionDescriptions;
     }
 
