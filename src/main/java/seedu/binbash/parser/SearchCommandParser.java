@@ -113,6 +113,9 @@ public class SearchCommandParser extends DefaultParser {
 
         if (commandLine.hasOption("list")) {
             int numberOfResults = Parser.parseIntOptionValue(commandLine.getOptionValue("list"), "number of results");
+            if (numberOfResults <= 0) {
+                throw new ParseException("number of results must be positive");
+            }
             searchCommand.setNumberOfResults(numberOfResults);
         }
         return searchCommand;
