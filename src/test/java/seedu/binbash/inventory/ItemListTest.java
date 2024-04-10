@@ -1,5 +1,6 @@
 package seedu.binbash.inventory;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import seedu.binbash.exceptions.InvalidCommandException;
@@ -22,7 +23,7 @@ class ItemListTest {
     void deleteItem_indexOfItemInItemList_itemRemovedFromItemList() {
         ItemList itemList = new ItemList(new ArrayList<Item>());
         itemList.addItem("retail", "testItem", "A test item", 2,
-                LocalDate.now(), 4.00, 5.00, 6);
+                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
 
         itemList.deleteItem(1);
 
@@ -33,7 +34,7 @@ class ItemListTest {
     void deleteItem_nameOfItemInItemList_itemRemovedFromItemList() {
         ItemList itemList = new ItemList(new ArrayList<Item>());
         itemList.addItem("retail", "testItem", "A test item", 2,
-                LocalDate.now(), 4.00, 5.00,6);
+                LocalDate.of(2024, 12 , 12), 4.00, 5.00,6);
 
         itemList.deleteItem("testItem");
 
@@ -44,7 +45,7 @@ class ItemListTest {
     void deleteItem_nameOfItemNotInItemList_itemNotRemovedFromItemList() {
         ItemList itemList = new ItemList(new ArrayList<Item>());
         itemList.addItem("retail", "testItem", "A test item", 2,
-                LocalDate.now(), 4.00, 5.00, 6);
+                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
 
         itemList.deleteItem("notTestItem");
 
@@ -56,7 +57,7 @@ class ItemListTest {
         ItemList itemList = new ItemList(new ArrayList<Item>());
 
         itemList.addItem("retail", "testItem", "A test item", 2,
-                LocalDate.now(), 4.00, 5.00, 6);
+                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
         assertEquals(1, itemList.getItemCount());
     }
 
@@ -186,7 +187,9 @@ class ItemListTest {
                     5);
         });
 
-        assertEquals("Item with name 'Non-existing Item' not found.", exception.getMessage());
+        assertEquals("Item with name 'Non-existing Item' not found! " +
+                "Consider using the search or the list command to find the exact name of your item!",
+                exception.getMessage());
     }
 
     @Test
@@ -260,7 +263,7 @@ class ItemListTest {
                 "retail",
                 "Item1",
                 "Description1",
-                10, LocalDate.now(),
+                10, LocalDate.of(2024, 12 , 12),
                 20.0,
                 10.0,
                 5);
@@ -276,4 +279,89 @@ class ItemListTest {
         Item updatedItem = itemList.findItemByName("Item1");
         assertEquals(originalItem.toString(), updatedItem.toString());
     }
+
+    @Test
+    void sellOrRestockItem_validRestockOperation_success() {
+        try {
+            ItemList itemList = new ItemList(new ArrayList<>());
+            itemList.addItem("operational", "Item1", "Description1", 10, LocalDate.MIN, 0.0, 10.0, 5);
+            itemList.sellOrRestockItem("Item1", 5, "restock");
+            OperationalItem item = (OperationalItem) itemList.getItemList().get(0);
+            assertEquals(15, item.getItemQuantity());
+        } catch (InvalidCommandException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    void sellOrRestockItem_sellingMoreThanAvailableQuantity_throwsException() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "Item1", "Description1", 10, LocalDate.of(2024, 12 ,12), 20.0, 10.0, 5);
+        assertThrows(InvalidCommandException.class, () -> itemList.sellOrRestockItem("Item1", 15, "sell"));
+    }
+
+    @Test
+    void sellOrRestockItem_validSellOperationWithQuantityBelowThreshold_returnsAlertMessage()
+            throws InvalidCommandException {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "Item1", "Description1", 6, LocalDate.of(2024, 12, 12), 20.0, 10.0, 5);
+        String result = itemList.sellOrRestockItem("Item1", 2, "sell");
+        RetailItem item = (RetailItem) itemList.getItemList().get(0);
+
+        String expectedMessage = "Great! I have updated the quantity of the item for you:"
+                + System.lineSeparator() + System.lineSeparator()
+                + "[P][R] Item1" +System.lineSeparator()
+                +"\tdescription: Description1" +System.lineSeparator() +
+                "\tquantity: 4" + System.lineSeparator() +
+                "\tcost price: $10.00" +System.lineSeparator() +
+                "\tsale price: $20.00" + System.lineSeparator() +
+                "\tthreshold: 5" + System.lineSeparator() +
+                "\texpiry date: 12-12-2024"
+                + System.lineSeparator() + System.lineSeparator() +
+                "Oh no! Your item is running low!";
+        assertEquals(expectedMessage, result);
+        assertEquals(4, item.getItemQuantity());
+        assertEquals(2, item.getTotalUnitsSold());
+    }
+
+    @Test
+    void getTotalRevenue_multipleRetailItems_correctTotalRevenue() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        RetailItem item1 = new RetailItem("Item1", "Description1", 10, 20.0, 10.0, 5);
+        RetailItem item2 = new RetailItem("Item2", "Description2", 5, 15.0, 7.0, 3);
+        item1.setTotalUnitsSold(10);
+        item2.setTotalUnitsSold(5);
+        itemList.getItemList().add(item1);
+        itemList.getItemList().add(item2);
+        assertEquals(275, itemList.getTotalRevenue());
+    }
+
+    @Test
+    void getTotalCost_multipleOperationalItems_correctTotalCost() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        OperationalItem item1 = new OperationalItem("Item1", "Description1", 10, 10.0, 5);
+        OperationalItem item2 = new OperationalItem("Item2", "Description2", 5, 7.0, 3);
+        item1.setTotalUnitsPurchased(10);
+        item2.setTotalUnitsPurchased(5);
+        itemList.getItemList().add(item1);
+        itemList.getItemList().add(item2);
+        assertEquals(135, itemList.getTotalCost());
+    }
+
+    @Test
+    void getProfitMargin_multipleItems_correctProfitMargin() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        RetailItem item1 = new RetailItem("Item1", "Description1", 10, 20.0, 10.0, 5);
+        OperationalItem item2 = new OperationalItem("Item2", "Description2", 5, 7.0, 3);
+        item1.setTotalUnitsSold(10);
+        item1.setTotalUnitsPurchased(10);
+        item2.setTotalUnitsPurchased(5);
+        itemList.getItemList().add(item1);
+        itemList.getItemList().add(item2);
+        assertEquals("Here are your metrics: " + System.lineSeparator()
+                + "\tTotal Cost: 135.00" + System.lineSeparator()
+                + "\tTotal Revenue: 200.00" + System.lineSeparator()
+                + "\tNet Profit: 65.00" + System.lineSeparator() , itemList.getProfitMargin());
+    }
+
 }
