@@ -29,10 +29,9 @@ public class Ui {
     private static boolean isUserActive;
 
     /**
-     * Constructor; note that it need only be called once as there should be no more than a single
-     * instance per program run.
+     * Note this constructor need only be called once as there should be no more than a single
+     * instance of UI per program run.
      *
-     * @param allCommandsOptionDescriptions A list of option descriptions for all commands in this program.
      * @return The current instance of Ui.
      * @throws RuntimeException If fails to get an instance of the system terminal.
      */
@@ -79,6 +78,9 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints a greeting message to standard output.
+     */
     public void greet() {
         talk(LOGO + WELCOME_MESSAGE);
     }
