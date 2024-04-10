@@ -39,7 +39,7 @@ public class UpdateCommandParser extends DefaultParser {
      * @throws ParseException If an error occurs during parsing.
      */
     public UpdateCommand parse(String[] commandArgs) throws ParseException {
-        CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
+        CommandLine commandLine = super.parse(options, commandArgs);
         UpdateCommand updateCommand = getUpdateCommand(commandLine);
 
         if (commandLine.hasOption("description")) {
@@ -61,7 +61,7 @@ public class UpdateCommandParser extends DefaultParser {
             hasThresholdOption(commandLine, updateCommand);
         }
         if (!hasOption) {
-            throw new ParseException("At least one of -n, -d, -c, -s, -e option required");
+            throw new ParseException("At least one of -d, -q, -c, -s, -e, -t option required");
         }
         return updateCommand;
     }
