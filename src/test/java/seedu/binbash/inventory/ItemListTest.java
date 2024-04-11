@@ -3,6 +3,8 @@ package seedu.binbash.inventory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import seedu.binbash.command.ListCommand;
+import seedu.binbash.enums.SortOptionEnum;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
@@ -124,6 +126,168 @@ class ItemListTest {
                 System.lineSeparator();
 
         assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    void printListSortedByProfit_unsortedListByProfit_returnsSortedList() {
+        ArrayList<Item> inventory = new ArrayList<Item>();
+        RetailItem testItem1 = new RetailItem("testItem1", "Test item 1", 10,
+                10.00, 5.00, 10);
+        RetailItem testItem2 = new RetailItem("testItem2", "Test item 2", 10,
+                3.00, 2.00, 10);
+        testItem1.setTotalUnitsSold(5);
+        testItem1.setTotalUnitsPurchased(5);
+        testItem2.setTotalUnitsSold(1);
+        testItem2.setTotalUnitsPurchased(1);
+        inventory.add(testItem1);
+        inventory.add(testItem2);
+
+        ItemList itemList = new ItemList(inventory);
+
+        String actualOutput = itemList.printListSortedByProfit(itemList.getItemList());
+
+        String expectedOutput = "1. [R] testItem2" + System.lineSeparator() +
+                "\tdescription: Test item 2" + System.lineSeparator() +
+                "\tquantity: 10" + System.lineSeparator() +
+                "\tcost price: $2.00" + System.lineSeparator() +
+                "\tsale price: $3.00" + System.lineSeparator() +
+                "\tthreshold: 10" + System.lineSeparator() +
+                "\tProfit: 1.00" + System.lineSeparator() +
+                System.lineSeparator() +
+                "2. [R] testItem1" + System.lineSeparator() +
+                "\tdescription: Test item 1" + System.lineSeparator() +
+                "\tquantity: 10" + System.lineSeparator() +
+                "\tcost price: $5.00" + System.lineSeparator() +
+                "\tsale price: $10.00" + System.lineSeparator() +
+                "\tthreshold: 10" + System.lineSeparator() +
+                "\tProfit: 25.00" + System.lineSeparator() +
+                System.lineSeparator();
+
+        assertEquals(expectedOutput,actualOutput);
+    }
+
+    @Test
+    void printListSortedByCostPrice_unsortedListByCostPrice_returnsSortedList() {
+        ArrayList<Item> inventory = new ArrayList<Item>();
+        inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
+                LocalDate.of(2024, 1, 1), 10.00, 5.00, 10));
+        inventory.add(new PerishableRetailItem("testItem2", "Test item 2", 2,
+                LocalDate.of(2024, 1, 1), 3.00, 2.00, 10));
+        ItemList itemList = new ItemList(inventory);
+
+        String actualOutput = itemList.printListSortedByCostPrice(itemList.getItemList());
+
+        String expectedOutput = "1. [P][R] testItem2" + System.lineSeparator() +
+                "\tdescription: Test item 2" + System.lineSeparator() +
+                "\tquantity: 2" + System.lineSeparator() +
+                "\tcost price: $2.00" + System.lineSeparator() +
+                "\tsale price: $3.00" + System.lineSeparator() +
+                "\tthreshold: 10" + System.lineSeparator() +
+                "\texpiry date: 01-01-2024" + System.lineSeparator() +
+                System.lineSeparator() +
+                "2. [P][R] testItem1" + System.lineSeparator() +
+                "\tdescription: Test item 1" + System.lineSeparator() +
+                "\tquantity: 2" + System.lineSeparator() +
+                "\tcost price: $5.00" + System.lineSeparator() +
+                "\tsale price: $10.00" + System.lineSeparator() +
+                "\tthreshold: 10" + System.lineSeparator() +
+                "\texpiry date: 01-01-2024" + System.lineSeparator() +
+                System.lineSeparator();
+
+        assertEquals(expectedOutput,actualOutput);
+    }
+
+    @Test
+    void printListSortedByExpiryDate_unsortedListByExpiryDate_returnsSortedList() {
+        ArrayList<Item> inventory = new ArrayList<Item>();
+        inventory.add(new PerishableRetailItem("testItem1", "Test item", 2,
+                LocalDate.of(2024, 1, 5), 3.00, 2.00, 10));
+        inventory.add(new PerishableRetailItem("testItem2", "Test item", 2,
+                LocalDate.of(2024, 1, 1), 3.00, 2.00, 10));
+        ItemList itemList = new ItemList(inventory);
+
+        String actualOutput = itemList.printListSortedByExpiryDate(itemList.getItemList());
+
+        String expectedOutput = "1. [P][R] testItem2" + System.lineSeparator() +
+                "\tdescription: Test item" + System.lineSeparator() +
+                "\tquantity: 2" + System.lineSeparator() +
+                "\tcost price: $2.00" + System.lineSeparator() +
+                "\tsale price: $3.00" + System.lineSeparator() +
+                "\tthreshold: 10" + System.lineSeparator() +
+                "\texpiry date: 01-01-2024" + System.lineSeparator() +
+                System.lineSeparator() +
+                "2. [P][R] testItem1" + System.lineSeparator() +
+                "\tdescription: Test item" + System.lineSeparator() +
+                "\tquantity: 2" + System.lineSeparator() +
+                "\tcost price: $2.00" + System.lineSeparator() +
+                "\tsale price: $3.00" + System.lineSeparator() +
+                "\tthreshold: 10" + System.lineSeparator() +
+                "\texpiry date: 05-01-2024" + System.lineSeparator() +
+                System.lineSeparator();
+
+        assertEquals(expectedOutput,actualOutput);
+    }
+
+    @Test
+    void printListSortedBySalePrice_unsortedListBySalePrice_returnsSortedList() {
+        ArrayList<Item> inventory = new ArrayList<Item>();
+        inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
+                LocalDate.of(2024, 1, 1), 10.00, 2.00, 10));
+        inventory.add(new PerishableRetailItem("testItem2", "Test item 2", 2,
+                LocalDate.of(2024, 1, 1), 3.00, 2.00, 10));
+        ItemList itemList = new ItemList(inventory);
+
+        String actualOutput = itemList.printListSortedBySalePrice(itemList.getItemList());
+
+        String expectedOutput = "1. [P][R] testItem2" + System.lineSeparator() +
+                "\tdescription: Test item 2" + System.lineSeparator() +
+                "\tquantity: 2" + System.lineSeparator() +
+                "\tcost price: $2.00" + System.lineSeparator() +
+                "\tsale price: $3.00" + System.lineSeparator() +
+                "\tthreshold: 10" + System.lineSeparator() +
+                "\texpiry date: 01-01-2024" + System.lineSeparator() +
+                System.lineSeparator() +
+                "2. [P][R] testItem1" + System.lineSeparator() +
+                "\tdescription: Test item 1" + System.lineSeparator() +
+                "\tquantity: 2" + System.lineSeparator() +
+                "\tcost price: $2.00" + System.lineSeparator() +
+                "\tsale price: $10.00" + System.lineSeparator() +
+                "\tthreshold: 10" + System.lineSeparator() +
+                "\texpiry date: 01-01-2024" + System.lineSeparator() +
+                System.lineSeparator();
+
+        assertEquals(expectedOutput,actualOutput);
+    }
+
+    @Test
+    void printListSortedByExpiryDate_noPerishables_returnsEmptyList() {
+        ArrayList<Item> inventory = new ArrayList<Item>();
+        inventory.add(new RetailItem("testItem1", "Test item 1",
+                2, 2.00, 10));
+        inventory.add(new RetailItem("testItem2", "Test item 2",
+                2, 3.00, 2.00, 10));
+        ItemList itemList = new ItemList(inventory);
+
+        String actualOutput = itemList.printListSortedByExpiryDate(itemList.getItemList());
+        String expectedOutput = "";
+
+        assertEquals(expectedOutput,actualOutput);
+    }
+
+    @Test
+    void printListSortedBySalePrice_noRetailItems_returnsEmptyList() {
+        ArrayList<Item> inventory = new ArrayList<Item>();
+        inventory.add(new PerishableOperationalItem("testItem1", "Test item 1",
+                2, LocalDate.MIN, 2.00, 10));
+        inventory.add(new PerishableOperationalItem("testItem2", "Test item 2",
+                2, LocalDate.MIN, 2.00, 10));
+
+        ItemList itemList = new ItemList(inventory);
+
+        String actualOutput = itemList.printListSortedBySalePrice(itemList.getItemList());
+        String expectedOutput = "";
+
+        assertEquals(expectedOutput,actualOutput);
     }
 
     @Test
