@@ -177,22 +177,22 @@ class ItemListTest {
 
         String actualOutput = itemList.printListSortedByCostPrice(itemList.getItemList());
 
-        String expectedOutput = "1. [P][R] testItem2" + System.lineSeparator() +
-                "\tdescription: Test item 2" + System.lineSeparator() +
-                "\tquantity: 2" + System.lineSeparator() +
-                "\tcost price: $2.00" + System.lineSeparator() +
-                "\tsale price: $3.00" + System.lineSeparator() +
-                "\tthreshold: 10" + System.lineSeparator() +
-                "\texpiry date: 01-01-2024" + System.lineSeparator() +
-                System.lineSeparator() +
-                "2. [P][R] testItem1" + System.lineSeparator() +
-                "\tdescription: Test item 1" + System.lineSeparator() +
-                "\tquantity: 2" + System.lineSeparator() +
-                "\tcost price: $5.00" + System.lineSeparator() +
-                "\tsale price: $10.00" + System.lineSeparator() +
-                "\tthreshold: 10" + System.lineSeparator() +
-                "\texpiry date: 01-01-2024" + System.lineSeparator() +
-                System.lineSeparator();
+        String expectedOutput = "1. [P][R] testItem2" + System.lineSeparator()
+                + "\tdescription: Test item 2" + System.lineSeparator()
+                + "\tquantity: 2" + System.lineSeparator()
+                + "\tcost price: $2.00" + System.lineSeparator()
+                + "\tsale price: $3.00" + System.lineSeparator()
+                + "\tthreshold: 10" + System.lineSeparator()
+                + "\texpiry date: 01-01-2024" + System.lineSeparator()
+                + System.lineSeparator()
+                + "2. [P][R] testItem1" + System.lineSeparator()
+                + "\tdescription: Test item 1" + System.lineSeparator()
+                + "\tquantity: 2" + System.lineSeparator()
+                + "\tcost price: $5.00" + System.lineSeparator()
+                + "\tsale price: $10.00" + System.lineSeparator()
+                + "\tthreshold: 10" + System.lineSeparator()
+                + "\texpiry date: 01-01-2024" + System.lineSeparator()
+                + System.lineSeparator();
 
         assertEquals(expectedOutput,actualOutput);
     }
