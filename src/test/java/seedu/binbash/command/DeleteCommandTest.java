@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DeleteCommandTest {
 
@@ -22,6 +23,7 @@ class DeleteCommandTest {
         deleteCommand.execute(itemList);
 
         assertEquals(0, itemList.getItemCount());
+        assertTrue(deleteCommand.hasToSave());
     }
 
     @Test
@@ -33,7 +35,9 @@ class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand("test");
         deleteCommand.execute(itemList);
 
+
         assertEquals(0, itemList.getItemCount());
+        assertTrue(deleteCommand.hasToSave());
     }
 
     @Test
