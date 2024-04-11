@@ -134,6 +134,70 @@ Have problems loading up BinBash? Fret not, here's how to troubleshoot some of t
 * [Back to table of contents](#table-of-contents)
 ---
 
+## Key Definitions
+
+### Item
+
+An `Item` in BinBash represents an entity within your inventory system, which could be anything from products for sale 
+to supplies for operations. Items are characterized by their attributes, which provide detailed information for 
+inventory management.
+
+BinBash categorizes items into **four** types, each with its attributes that facilitate proper inventory tracking. A 
+brief description of the four item types is as follows:
+
+1. `Retail Item`: These are items that are intended for sale to customers. Retail items typically include products that are stocked and sold for profit.
+    - **Example**: A pair of sneakers up for sale.
+
+2. `Operational Item`: These items are used by the store for its daily operations but are not sold to customers.
+    - **Example**: An operational item could be a printer cartridge for a company printer.
+
+3. `Perishable Retail Item`: These are retail items that have an expiry date and need to be sold before they spoil.
+   This category is crucial for businesses dealing with food products or other perishable goods.
+    - **Example**: A perishable retail item could be a carton of milk to be sold, which has an expiry date.
+
+4. `Perishable Operational Item`: Similar to perishable retail items, these are operational items that have a limited shelf life.
+    - **Example**: A bottle of disinfectant used to sanitize the office, with an expiry date.
+
+Each of the four item types in BinBash may have various attributes, which provide important details for managing your 
+inventory. Here are some attributes that may apply to the different item types:
+
+- **Item name**: The unique identifier for the item.
+- **Item description**: A narrative describing the item.
+- **Item quantity**: How many units of the item are currently in stock.
+- **Sale price**: The price at which the item will be sold to customers.
+- **Cost price**: The price at which the item was purchased by the store.
+- **Threshold**: A number indicating the minimum stock level before a restock is needed.
+- **Expiry date**: The date when a perishable item should be sold or used before it spoils.
+
+For all item types, BinBash uses the item name as a primary identifier. It is important to use distinct names for 
+different items.
+
+### Flags
+
+Flags are delimiters in BinBash that enable the system to distinguish different parameters without ambiguity. 
+You would enter the corresponding Placeholder immediately after each flag.
+
+> 💡 **TIP**
+> You may find the following image taken from the subsequent Command Format section helpful:
+>
+> ![Command Format Diagram](https://path_to_your_image.com/command_format_diagram.png)
+> *Illustration of how flags and placeholders are used in BinBash command structure.*
+>
+> Please refer to the subsequent Command Format section to see how Flags and Placeholders are used together.
+
+| Flag  | Corresponding Placeholder           |
+|-------|-------------------------------------|
+| `-n`  | ITEM_NAME                           |
+| `-i`  | ITEM_INDEX                          |
+| `-d`  | ITEM_DESCRIPTION                    |
+| `-q`  | QUANTITY                            |
+| `-e`  | EXPIRY_DATE (Perishable items only) |
+| `-c`  | COST_PRICE                          |
+| `-s`  | SALE_PRICE (Retail items only)      |
+| `-t`  | THRESHOLD                           |
+| `-re` | -                                   |
+| `-op` | -                                   |
+
 ## Features
 
 ### Notes on the Command format
@@ -210,6 +274,9 @@ To exit command suggestion mode simply press any other key.
 ### Adding an item: `add`
 
 > This allows you to add a new item to start keeping track of in your inventory.
+> 
+> **Note:** The `ITEM_NAME` field must be unique for each item in your inventory. If you wish to add different batches 
+> of the same item with different expiry dates, consider naming them with a suffix, e.g., `Milo_1`, `Milo_2`.
 
 #### Adding a Retail item
 
