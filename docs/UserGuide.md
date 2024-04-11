@@ -87,9 +87,15 @@ However, if you ever need more clarification on the features provided by a speci
 2. Head over to our [GitHub Page](https://github.com/AY2324S2-CS2113T-T09-2/tp/releases) and download the latest version of `binbash.jar`.
 3. Move the downloaded `binbash.jar` file to an empty folder of your choice. This folder will now serve as the home folder for BinBash.
 4. Open the terminal/command prompt for your system.
-   1. If you're on Windows, press `Windows Key + R` and type in `cmd`. Press enter to launch the command prompt.
-   2. If you're on Mac, click on `Launchpad` > `Other` > `Terminal`. Alternatively, click on the Spotlight icon in your menu bar, and type in `Terminal`.
-   3. If you're on Linux, open the terminal in your Linux distribution.
+   1. Windows
+      * If you're on Windows, press `Windows Key + R` and type in `cmd`. Click `Ok` to launch the command prompt.
+      ![Windows run](images/Run.png)
+      * You should see a window appear similar to the one shown below.
+      ![Windows Cmd](images/Cmd.png)
+   2. Mac
+      * If you're on Mac, click on `Launchpad` > `Other` > `Terminal`. Alternatively, click on the Spotlight icon in your menu bar, and type in `Terminal`.
+   3. Linux
+      * If you're on Linux, open the terminal in your Linux distribution.
 5. Navigate to the folder containing `binbash.jar` using the terminal/command prompt.
 6. Type `java -jar binbash.jar` into the command prompt, and press enter. If the application has started successfully, you should see the following output:<br>
     ```text
