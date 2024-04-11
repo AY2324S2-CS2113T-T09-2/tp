@@ -55,6 +55,38 @@ class ItemListTest {
     }
 
     @Test
+    void deleteItem_deleteItemTwiceByIndex_returnItemAlreadyDeleted() {
+        ItemList itemList = new ItemList(new ArrayList<Item>());
+        itemList.addItem("retail", "testItem1", "Test item 1", 2,
+                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
+        itemList.addItem("retail", "testItem2", "Test item 2", 2,
+                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
+
+        itemList.deleteItem(1);
+        String actualOutput = itemList.deleteItem(1);
+
+        String expectedOutput = "Item has already been deleted!";
+
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    void deleteItem_deleteItemTwiceByName_returnNoItemFound() {
+        ItemList itemList = new ItemList(new ArrayList<Item>());
+        itemList.addItem("retail", "testItem1", "Test item 1", 2,
+                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
+        itemList.addItem("retail", "testItem2", "Test item 2", 2,
+                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
+
+        itemList.deleteItem("testItem1");
+        String actualOutput = itemList.deleteItem("testItem1");
+
+        String expectedOutput = "Item not found! Nothing was deleted!";
+
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
     void addItem_noItemInItemList_oneItemInItemList() {
         ItemList itemList = new ItemList(new ArrayList<Item>());
 
@@ -526,6 +558,38 @@ class ItemListTest {
                 + "\tTotal Cost: 135.00" + System.lineSeparator()
                 + "\tTotal Revenue: 200.00" + System.lineSeparator()
                 + "\tNet Profit: 65.00" + System.lineSeparator() , itemList.getProfitMargin());
+    }
+
+    @Test
+    void toString_oneItemInList_returnList() {
+        ArrayList<Item> inventory = new ArrayList<Item>();
+        inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
+                LocalDate.of(2024, 1, 1), 10.00, 2.00, 10));
+        ItemList itemList = new ItemList(inventory);
+
+        String actualOutput = itemList.toString();
+
+        String expectedOutput = "[[P][R] testItem1" + System.lineSeparator()
+                + "\tdescription: Test item 1" + System.lineSeparator()
+                + "\tquantity: 2" + System.lineSeparator()
+                + "\tcost price: $2.00" + System.lineSeparator()
+                + "\tsale price: $10.00" + System.lineSeparator()
+                + "\tthreshold: 10" + System.lineSeparator()
+                + "\texpiry date: 01-01-2024]";
+
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    void toString_noItemInList_returnEmptyList() {
+        ArrayList<Item> inventory = new ArrayList<Item>();
+        ItemList itemList = new ItemList(inventory);
+
+        String actualOutput = itemList.toString();
+
+        String expectedOutput = "[]";
+
+        assertEquals(expectedOutput, actualOutput);
     }
 
 }
