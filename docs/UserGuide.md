@@ -258,9 +258,10 @@ and how they can be of use to your business!
 ## Features
 
 This section shares with you on the different features available in BinBash. Before continuing, ensure you have read the
-section on [Flags](#flags) and [Placeholders](#placeholders).
+section on [Flags](#flags) and [Placeholders](#placeholders). 
 
-What you should expect to find here:
+Each feature in BinBash can be implemented through the use of a command, and for each of the commands, you may expect 
+the following:
 - A description of the command
 - The format of the command
 - The expected behavior of the command
