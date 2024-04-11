@@ -90,7 +90,7 @@ However, if you ever need more clarification on the features provided by a speci
    1. Windows
       * If you're on Windows, press `Windows Key + R` and type in `cmd`. Click `Ok` to launch the command prompt.
       ![Windows run](images/Run.png)
-      * You should see a window appear similar to the one shown below.
+      * You should see a window appear that is similar to the one shown below.
       ![Windows Cmd](images/Cmd.png)
    2. Mac
       * If you're on Mac, click on `Launchpad` > `Other` > `Terminal`. Alternatively, click on the Spotlight icon in your menu bar, and type in `Terminal`.
