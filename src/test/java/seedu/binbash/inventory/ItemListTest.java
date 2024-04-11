@@ -3,8 +3,6 @@ package seedu.binbash.inventory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import seedu.binbash.command.ListCommand;
-import seedu.binbash.enums.SortOptionEnum;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;

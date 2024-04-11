@@ -4,9 +4,6 @@ import org.apache.commons.cli.ParseException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import seedu.binbash.command.DeleteCommand;
-import seedu.binbash.command.SearchCommand;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DeleteCommandParserTest {
 

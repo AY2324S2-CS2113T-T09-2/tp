@@ -6,7 +6,7 @@ import seedu.binbash.item.Item;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ByeCommandTest {
 
