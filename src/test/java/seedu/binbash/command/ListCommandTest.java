@@ -165,15 +165,15 @@ class ListCommandTest {
     void execute_sortByExpiryDateNoPerishables_returnsEmptyList() {
         ArrayList<Item> inventory = new ArrayList<Item>();
         ItemList itemList = new ItemList(inventory);
-        ListCommand listCommandCostPrice = new ListCommand(SortOptionEnum.EXPIRY);
+        ListCommand listCommandExpiryDate = new ListCommand(SortOptionEnum.EXPIRY);
 
         itemList.addItem("retail", "testItem1", "Test item 1", 2,
                 LocalDate.MIN, 10.00, 2.00, 10);
         itemList.addItem("retail", "testItem2", "Test item 2", 2,
                 LocalDate.MIN, 3.00, 2.00, 10);
 
-        listCommandCostPrice.execute(itemList);
-        String actualOutput = listCommandCostPrice.getExecutionUiOutput();
+        listCommandExpiryDate.execute(itemList);
+        String actualOutput = listCommandExpiryDate.getExecutionUiOutput();
 
         String expectedOutput = "";
 
