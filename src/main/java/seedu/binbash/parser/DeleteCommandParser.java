@@ -6,34 +6,20 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.TypeHandler;
-import org.jline.builtins.Completers.OptDesc;
-
-import java.util.ArrayList;
 
 /**
  * Parses command line arguments for creating a DeleteCommand.
  */
 public class DeleteCommandParser extends DefaultParser {
-    private ArrayList<OptDesc> optionDescriptions;
 
     /**
      * Creates a new DeleteCommandParser with the necessary options and option descriptions.
      */
     public DeleteCommandParser() {
         options = new Options();
-        optionDescriptions = new ArrayList<>();
-        new CommandOptionAdder(options, optionDescriptions)
-            .addItemNameAndIndexOptionGroup();
-    }
-
-    /**
-     * Gets the option descriptions for the list command.
-     *
-     * @return The list of option descriptions.
-     */
-    public ArrayList<OptDesc> getOptionDecriptions() {
-        return optionDescriptions;
+        new CommandOptionAdder(options)
+            .addItemNameAndIndexOptionGroup()
+            .saveCommandOptionDescriptions("delete");
     }
 
     /**
@@ -50,9 +36,10 @@ public class DeleteCommandParser extends DefaultParser {
             String nameField = String.join(" ", commandLine.getOptionValues("name"));
             return new DeleteCommand(nameField);
         }
-
-        int indexField = TypeHandler.createNumber(
-                commandLine.getOptionValue("index")).intValue();
+        int indexField = Parser.parseIntOptionValue(commandLine.getOptionValue("index"), "item index");
+        if (indexField <= 0) {
+            throw new ParseException("item index must be positive");
+        }
         return new DeleteCommand(indexField);
     }
 }

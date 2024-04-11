@@ -12,13 +12,11 @@ import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
 
 import org.apache.commons.cli.ParseException;
-import org.jline.builtins.Completers.OptDesc;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.ArrayList;
 
 /**
  * Parses user input to generate commands for managing inventory.
@@ -41,26 +39,6 @@ public class Parser {
         searchCommandParser = new SearchCommandParser();
         listCommandParser = new ListCommandParser();
         deleteCommandParser = new DeleteCommandParser();
-    }
-
-    /**
-     * Gets the option descriptions for all commands.
-     *
-     * @return The option descriptions for all commands.
-     */
-    public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
-        ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>() {
-            {
-                add(addCommandParser.getOptionDecriptions());
-                add(restockCommandParser.getOptionDecriptions());
-                add(sellCommandParser.getOptionDecriptions());
-                add(updateCommandParser.getOptionDecriptions());
-                add(searchCommandParser.getOptionDecriptions());
-                add(listCommandParser.getOptionDecriptions());
-                add(deleteCommandParser.getOptionDecriptions());
-            }
-        };
-        return allCommandsOptionDescriptions;
     }
 
     /**
@@ -157,6 +135,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns an integer value parsed from a provided string.
+     *
+     * @param argument The provided string.
+     * @param option The option taking this parsed value as an argument.
+     * @return Parsed integer value.
+     * @throws ParseException If argument is not the string representation of a Java int.
+     */
     static int parseIntOptionValue(String argument, String option) throws ParseException {
         long longValue;
         try {
@@ -173,6 +159,14 @@ public class Parser {
         return (int) longValue;
     }
 
+    /**
+     * Returns a double value parsed from a provided string.
+     *
+     * @param argument The provided string.
+     * @param option The option taking this parsed value as an argument.
+     * @return Parsed double value.
+     * @throws ParseException If argument is not the string representation of a Java double.
+     */
     static double parseDoubleOptionValue(String argument, String option) throws ParseException {
         if (argument.length() > 300) {
             throw new ParseException(option + " number given too long!");
@@ -185,6 +179,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns a LocalDate parsed from a provided string.
+     *
+     * @param argument The provided string.
+     * @param option The option taking this parsed value as an argument.
+     * @return Parsed date.
+     * @throws ParseException If argument is not the string representation of a LocalDate formatted in
+     *     EXPECTED_INPUT_DATE_FORMAT.
+     */
     static LocalDate parseDateOptionValue(String argument, String option) throws ParseException {
         try {
             LocalDate dateValue = LocalDate.parse(argument, EXPECTED_INPUT_DATE_FORMAT);

@@ -4,43 +4,26 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.jline.builtins.Completers.OptDesc;
 
 import seedu.binbash.command.SellCommand;
 import seedu.binbash.logger.BinBashLogger;
-
-import java.util.ArrayList;
-
 
 /**
  * Parses command line arguments for creating a SellCommand.
  */
 public class SellCommandParser extends DefaultParser {
     private static final BinBashLogger binBashLogger = new BinBashLogger(SellCommandParser.class.getName());
-    private ArrayList<OptDesc> optionDescriptions;
-
 
     /**
      * Creates a new SellCommandParser with the necessary options and option descriptions.
      */
     public SellCommandParser() {
         options = new Options();
-        optionDescriptions = new ArrayList<>();
-        new CommandOptionAdder(options, optionDescriptions)
+        new CommandOptionAdder(options)
             .addItemNameAndIndexOptionGroup()
-            .addQuantityOption(true, "Units of item sold.");
+            .addQuantityOption(true, "Units of item sold.")
+            .saveCommandOptionDescriptions("sell");
     }
-
-
-    /**
-     * Gets the option descriptions for the SellCommandParser.
-     *
-     * @return The list of option descriptions.
-     */
-    public ArrayList<OptDesc> getOptionDecriptions() {
-        return optionDescriptions;
-    }
-
 
     /**
      * Parses the command line arguments to create a SellCommand.
