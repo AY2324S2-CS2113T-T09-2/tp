@@ -205,7 +205,7 @@ You would enter the corresponding [Placeholder](#placeholders) immediately after
 | `-t`  | THRESHOLD                           |
 | `-re` | Not Applicable                      |
 | `-op` | Not Applicable                      |
-| `-i`  | Not Applicable                      |
+| `-p`  | Not Applicable                      |
 
 > **NOTE**
 > The flags `-re`, `-op` and `-p` do not have any corresponding placeholders. They are marked as "Not Applicable" in 
