@@ -59,39 +59,26 @@ public class SearchCommandParser extends DefaultParser {
             String nameField = String.join(" ", commandLine.getOptionValues("name"));
             searchCommand.setNameField(nameField);
         }
-
         if (commandLine.hasOption("description")) {
             String descriptionField = String.join(" ", commandLine.getOptionValues("description"));
             searchCommand.setDescriptionField(descriptionField);
         }
-
         if (commandLine.hasOption("quantity")) {
             String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("quantity"), "quantity");
             searchCommand.setQuantityRange(parseNonNegativeIntRange(rangeArgument, "quantity"));
         }
-
         if (commandLine.hasOption("cost-price")) {
             String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("cost-price"), "cost-price");
             searchCommand.setCostPriceRange(parseNonNegativeDoubleRange(rangeArgument, "cost price"));
         }
-
         if (commandLine.hasOption("sale-price")) {
             String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("sale-price"), "sale-price");
             searchCommand.setSalePriceRange(parseNonNegativeDoubleRange(rangeArgument, "sale price"));
         }
-
         if (commandLine.hasOption("expiry-date")) {
             String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("expiry-date"), "expiry-date");
-            LocalDate[] expiryDateRange = {LocalDate.MIN, LocalDate.MAX};
-            if (rangeArgument[0] != "") {
-                expiryDateRange[0] = Parser.parseDateOptionValue(rangeArgument[0], "expiry date lower bound");
-            }
-            if (rangeArgument[1] != "") {
-                expiryDateRange[1] = Parser.parseDateOptionValue(rangeArgument[1], "expiry date upper bound");
-            }
-            searchCommand.setExpiryDateRange(expiryDateRange);
+            searchCommand.setExpiryDateRange(parseDateRange(rangeArgument, "expiry date"));
         }
-
         if (commandLine.hasOption("list")) {
             int numberOfResults = Parser.parseIntOptionValue(commandLine.getOptionValue("list"), "number of results");
             if (numberOfResults <= 0) {
@@ -140,6 +127,20 @@ public class SearchCommandParser extends DefaultParser {
             throw new ParseException(type + " lower bound is more than upper bound");
         }
         return intRange;
+    }
+
+    private LocalDate[] parseDateRange(String[] rangeArgument, String type) throws ParseException {
+        LocalDate[] dateRange = {LocalDate.MIN, LocalDate.MAX};
+        if (rangeArgument[0] != "") {
+            dateRange[0] = Parser.parseDateOptionValue(rangeArgument[0], "expiry date lower bound");
+        }
+        if (rangeArgument[1] != "") {
+            dateRange[1] = Parser.parseDateOptionValue(rangeArgument[1], "expiry date upper bound");
+        }
+        if (dateRange[0].isAfter(dateRange[1])) {
+            throw new ParseException(type + " lower bound is more than upper bound");
+        }
+        return dateRange;
     }
 
     /**
