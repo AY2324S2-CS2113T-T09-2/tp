@@ -79,26 +79,12 @@ public class SearchCommandParser extends DefaultParser {
 
         if (commandLine.hasOption("cost-price")) {
             String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("cost-price"), "cost-price");
-            double[] costPriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
-            if (rangeArgument[0] != "") {
-                costPriceRange[0] = Parser.parseDoubleOptionValue(rangeArgument[0], "cost price lower bound");
-            }
-            if (rangeArgument[1] != "") {
-                costPriceRange[1] = Parser.parseDoubleOptionValue(rangeArgument[1], "cost price upper bound");
-            }
-            searchCommand.setCostPriceRange(costPriceRange);
+            searchCommand.setCostPriceRange(parsePriceRange(rangeArgument, "cost price"));
         }
 
         if (commandLine.hasOption("sale-price")) {
             String[] rangeArgument = parseRangeArgument(commandLine.getOptionValue("sale-price"), "sale-price");
-            double[] salePriceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
-            if (rangeArgument[0] != "") {
-                salePriceRange[0] = Parser.parseDoubleOptionValue(rangeArgument[0], "sale price lower bound");
-            }
-            if (rangeArgument[1] != "") {
-                salePriceRange[1] = Parser.parseDoubleOptionValue(rangeArgument[1], "sale price upper bound");
-            }
-            searchCommand.setSalePriceRange(salePriceRange);
+            searchCommand.setSalePriceRange(parsePriceRange(rangeArgument, "sale price"));
         }
 
         if (commandLine.hasOption("expiry-date")) {
@@ -121,6 +107,23 @@ public class SearchCommandParser extends DefaultParser {
             searchCommand.setNumberOfResults(numberOfResults);
         }
         return searchCommand;
+    }
+
+    double[] parsePriceRange(String[] rangeArgument, String type) throws ParseException {
+        double[] priceRange = {Double.MIN_VALUE, Double.MAX_VALUE};
+        if (rangeArgument[0] != "") {
+            priceRange[0] = Parser.parseDoubleOptionValue(rangeArgument[0], type + " lower bound");
+            if (priceRange[0] < 0) {
+                throw new ParseException(type + " lower bound cannot be negative");
+            }
+        }
+        if (rangeArgument[1] != "") {
+            priceRange[1] = Parser.parseDoubleOptionValue(rangeArgument[1], type + " upper bound");
+            if (priceRange[1] < 0) {
+                throw new ParseException(type + " upper bound cannot be negative");
+            }
+        }
+        return priceRange;
     }
 
     /**
