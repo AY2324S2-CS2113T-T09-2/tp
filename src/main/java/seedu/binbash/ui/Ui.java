@@ -68,8 +68,11 @@ public class Ui {
                 userCommand = readUserInput();
             }
             return userCommand;
-        } catch (EndOfFileException | UserInterruptException e) {
-            UILOGGER.info("received EOF / interrupt exception");
+        } catch (EndOfFileException e) {
+            UILOGGER.info(e.getMessage());
+            return "bye";
+        } catch (UserInterruptException e) {
+            UILOGGER.info("received user interrupt");
             return "bye";
         }
     }
