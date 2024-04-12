@@ -16,6 +16,8 @@ import java.io.IOException;
  */
 public class Ui {
     private static final String NEWLINE = System.lineSeparator();
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_RED = "\u001B[31m";
     private static final String LOGO = "  ____  _       ____            _" + NEWLINE +
             " | __ )(_)_ __ | __ )  __ _ ___| |__" + NEWLINE +
             " |  _ \\| | '_ \\|  _ \\ / _` / __| '_ \\" + NEWLINE +
@@ -60,7 +62,8 @@ public class Ui {
     /**
      * Returns a non-empty string received by the user.
      *
-     * @return "bye" if end of file or program termination detected, a non-empty string otherwise.
+     * @return "bye" if EOF (^D) signal detected, a non-empty string otherwise.
+     * @throws BinBashException if user interrupt (^C) signal detected.
      */
     public String readUserCommand() throws BinBashException {
         try {
@@ -73,17 +76,10 @@ public class Ui {
             UILOGGER.info("received EOF, exiting gracefully");
             return "bye";
         } catch (UserInterruptException e) {
-            UILOGGER.info("received user interrupt, halting application now");
+            UILOGGER.info("received user interrupt, halting application immediately");
             setUserAsInactive();
             throw new BinBashException("");
         }
-    }
-
-    private String readUserInput() throws EndOfFileException, UserInterruptException {
-        assert isUserActive;
-        String userInput = inputReader.readLine("binbash> ");
-        UILOGGER.info("received raw user input: " + userInput);
-        return userInput;
     }
 
     /**
@@ -94,9 +90,9 @@ public class Ui {
     }
 
     /**
-     * Prints text to standard output as an explicit response or acknowledgement of some user command.
+     * Prints a response to or acknowledgement of some user command to standard output.
      *
-     * @param line The text to print.
+     * @param line The response to print.
      */
     public void talk(String line) {
         if (line == "Bye!") {
@@ -106,7 +102,7 @@ public class Ui {
     }
 
     /**
-     * Prints text to standard output to warn the user of some unexpected application behaviour.
+     * Prints a warning of some unexpected application behaviour to standard output.
      *
      * @param line The text to print.
      */
@@ -114,6 +110,13 @@ public class Ui {
         if (!isUserActive) {
             assert line == "";
         }
-        System.out.println(line);
+        System.out.println(ANSI_RED + line + ANSI_RESET);
+    }
+
+    private String readUserInput() throws EndOfFileException, UserInterruptException {
+        assert isUserActive;
+        String userInput = inputReader.readLine("binbash> ");
+        UILOGGER.info("received raw user input: " + userInput);
+        return userInput;
     }
 }
