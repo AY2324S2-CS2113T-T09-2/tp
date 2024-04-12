@@ -99,9 +99,21 @@ public class Ui {
      * @param line The text to print.
      */
     public void talk(String line) {
-        if (!isUserActive) {
-            assert line == "Bye!" || line == "";
+        if (line == "Bye!") {
+            assert !isUserActive;
         }
         System.out.println(LINE_DIVIDER + NEWLINE + line + NEWLINE + LINE_DIVIDER);
+    }
+
+    /**
+     * Prints text to standard output to warn the user of some unexpected application behaviour.
+     *
+     * @param line The text to print.
+     */
+    public void warn(String line) {
+        if (!isUserActive) {
+            assert line == "";
+        }
+        System.out.println(line);
     }
 }

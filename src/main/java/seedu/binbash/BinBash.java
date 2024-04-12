@@ -47,7 +47,7 @@ public class BinBash {
                 }
 
             } catch (BinBashException e) {
-                userInterface.talk(e.getMessage());
+                userInterface.warn(e.getMessage());
             }
         }
         logger.info("BinBash exiting...");
