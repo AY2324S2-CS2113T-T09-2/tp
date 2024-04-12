@@ -4,7 +4,6 @@ import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.UserInterruptException;
-import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
 import seedu.binbash.logger.BinBashLogger;
@@ -38,17 +37,13 @@ public class Ui {
     public Ui() {
         System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
         try {
-            Terminal userTerminal = TerminalBuilder.builder()
-                .system(true)
-                .dumb(true)
-                .build();
             inputReader = LineReaderBuilder.builder()
-                .terminal(userTerminal)
+                .terminal(TerminalBuilder.builder().system(true).dumb(true).build())
                 .completer(new CommandCompleter())
                 .build();
         } catch (IOException e) {
             UILOGGER.info("failed to get system terminal!");
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         isUserActive = true;
     }
@@ -67,7 +62,7 @@ public class Ui {
      * @return "bye" if end of file or program termination detected, a string read from standard input otherwise.
      */
     public String readUserCommand() {
-        assert isUserActive();
+        assert isUserActive;
         try {
             String userInput = inputReader.readLine("binbash> ");
             UILOGGER.info("received raw user input: " + userInput);
@@ -91,6 +86,9 @@ public class Ui {
      * @param line The text to print.
      */
     public void talk(String line) {
+        if (!isUserActive) {
+            assert line == "Bye!";
+        }
         System.out.println(LINE_DIVIDER + NEWLINE + line + NEWLINE + LINE_DIVIDER);
     }
 }
