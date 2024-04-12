@@ -264,6 +264,7 @@ each command in BinBash.
 The <code>COMMAND_WORD</code> placeholder does not have a corresponding flag and is marked as "Not Applicable" in the table below.
 </div>
 
+<!-- Replaced with HTML table
 | Placeholder        | Corresponding Flag | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 |--------------------|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `ITEM_NAME`        | `-n`               | ITEM_NAME is the name used to identify an item.<br>**Info:**<ul><li>May contain alphanumeric and special characters but cannot be blank.</li><li>It's unique and case-sensitive.</li><li>Leading and trailing spaces are trimmed.</li></ul>**Valid Examples:** `sneakers`, `printer cartridge`<br>**Invalid Examples:** (Any non-unique or blank entry)                                                                                                           |
@@ -275,6 +276,64 @@ The <code>COMMAND_WORD</code> placeholder does not have a corresponding flag and
 | `INDEX`            | `-i`               | The INDEX is the number to the left of the item name when the `list` command is called.<br>**Info:**<ul><li>INDEX must be a whole number larger than 0.</li><li>It is dependent on the current view of the item list.</li><li>Do not use thousands separators like `,` in INDEX.</li></ul>**Valid Examples:** `1`, `124`<br>**Invalid Examples:** `-1`, `1.5`, `1,132`, `1 132`                                                                                   |
 | `THRESHOLD`        | `-t`               | THRESHOLD is the minimum stock before an alert is issued.<br>**Info:**<ul><li>Must be a non-negative whole number.</li><li>If not specified, `1` is used by default.</li></ul>**Valid Examples:** `50`, `10`<br>**Invalid Examples:** `-50`, `10.5`                                                                                                                                                                                                               |
 | `COMMAND_WORD`     | (Not Applicable)   | The COMMAND_WORD is a specific keyword that triggers a command in BinBash.<br>**Info:**<ul><li>COMMAND_WORD is strictly one of the specified keywords below.</li></ul>**Valid Examples:**<ul><li>`add`</li><li>`bye`</li><li>`exit`</li><li>`quit`</li><li>`delete`</li><li>`list`</li><li>`profit`</li><li>`restock`</li><li>`search`</li><li>`sell`</li><li>`update`</li></ul>**Invalid Examples:**<ul><li>Any text not listed in the valid examples.</li></ul> |
+-->
+
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Corresponding Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ITEM_NAME</code></td>
+<td><code>-n</code></td>
+<td>ITEM_NAME is the name used to identify an item.<br><strong>Info:</strong><ul><li>May contain alphanumeric and special characters but cannot be blank.</li><li>It&#39;s unique and case-sensitive.</li><li>Leading and trailing spaces are trimmed.</li></ul><strong>Valid Examples:</strong> <code>sneakers</code>, <code>printer cartridge</code><br><strong>Invalid Examples:</strong> (Any non-unique or blank entry)</td>
+</tr>
+<tr>
+<td><code>ITEM_DESCRIPTION</code></td>
+<td><code>-d</code></td>
+<td>ITEM_DESCRIPTION provides details about the item.<br><strong>Info:</strong><ul><li>Can include most characters and symbols.</li><li>Should give a clear idea of the item&#39;s features or use.</li></ul><strong>Valid Examples:</strong> <code>Black and white running sneakers</code>, <code>High-yield color cartridge</code><br><strong>Invalid Examples:</strong> (Any unclear or overly lengthy description)</td>
+</tr>
+<tr>
+<td><code>ITEM_QUANTITY</code></td>
+<td><code>-q</code></td>
+<td>ITEM_QUANTITY is how much of the item is in stock.<br><strong>Info:</strong><ul><li>Must be a non-negative whole number.</li></ul><strong>Valid Examples:</strong> <code>350</code>, <code>20</code><br><strong>Invalid Examples:</strong> <code>-10</code>, <code>100.5</code></td>
+</tr>
+<tr>
+<td><code>EXPIRY_DATE</code></td>
+<td><code>-e</code></td>
+<td>EXPIRY_DATE is when a perishable item will spoil.<br><strong>Info:</strong><ul><li>Must be in <code>DD-MM-YYYY</code> format.</li><li>Relevant for perishable items only.</li></ul><strong>Valid Examples:</strong> <code>12-12-2024</code>, <code>02-11-2024</code><br><strong>Invalid Examples:</strong> <code>2024-12-12</code>, <code>12/12/2024</code></td>
+</tr>
+<tr>
+<td><code>COST_PRICE</code></td>
+<td><code>-c</code></td>
+<td>COST_PRICE is the buying price of the item. It is the price that the store owner bought the item for. <br><strong>Info:</strong><ul><li>Is a non-negative number with up to 2 decimal places.</li></ul><strong>Valid Examples:</strong> <code>34.32</code>, <code>1.30</code><br><strong>Invalid Examples:</strong> <code>-34.32</code>, <code>$34.32</code></td>
+</tr>
+<tr>
+<td><code>SALE_PRICE</code></td>
+<td><code>-s</code></td>
+<td>SALE_PRICE is the selling price for retail items.<br><strong>Info:</strong><ul><li>Is a non-negative number. </li><li>Used only for retail items.</li><li>A <code>$</code> is automatically prefixed.</li></ul><strong>Valid Examples:</strong> <code>102.00</code>, <code>10.00</code><br><strong>Invalid Examples:</strong> <code>-102.00</code>, <code>$10.00</code></td>
+</tr>
+<tr>
+<td><code>INDEX</code></td>
+<td><code>-i</code></td>
+<td>The INDEX is the number to the left of the item name when the <code>list</code> command is called.<br><strong>Info:</strong><ul><li>INDEX must be a whole number larger than 0.</li><li>It is dependent on the current view of the item list.</li><li>Do not use thousands separators like <code>,</code> in INDEX.</li></ul><strong>Valid Examples:</strong> <code>1</code>, <code>124</code><br><strong>Invalid Examples:</strong> <code>-1</code>, <code>1.5</code>, <code>1,132</code>, <code>1 132</code></td>
+</tr>
+<tr>
+<td><code>THRESHOLD</code></td>
+<td><code>-t</code></td>
+<td>THRESHOLD is the minimum stock before an alert is issued.<br><strong>Info:</strong><ul><li>Must be a non-negative whole number.</li><li>If not specified, <code>1</code> is used by default.</li></ul><strong>Valid Examples:</strong> <code>50</code>, <code>10</code><br><strong>Invalid Examples:</strong> <code>-50</code>, <code>10.5</code></td>
+</tr>
+<tr>
+<td><code>COMMAND_WORD</code></td>
+<td>(Not Applicable)</td>
+<td>The COMMAND_WORD is a specific keyword that triggers a command in BinBash.<br><strong>Info:</strong><ul><li>COMMAND_WORD is strictly one of the specified keywords below.</li></ul><strong>Valid Examples:</strong><ul><li><code>add</code></li><li><code>bye</code></li><li><code>exit</code></li><li><code>quit</code></li><li><code>delete</code></li><li><code>list</code></li><li><code>profit</code></li><li><code>restock</code></li><li><code>search</code></li><li><code>sell</code></li><li><code>update</code></li></ul><strong>Invalid Examples:</strong><ul><li>Any text not listed in the valid examples.</li></ul></td>
+</tr>
+</tbody>
+</table>
 
 ### Command Format
 
