@@ -2,7 +2,8 @@
 
 ## Welcome!
 BinBash is a **desktop application** designed to streamline inventory management for small businesses. Featuring a
-user-friendly **Command Line Interface (CLI)**, this lightweight tool efficiently handles all essential inventory tasks.
+user-friendly **Command Line Interface (CLI)**, this lightweight tool efficiently handles all essential inventory tasks
+for your daily operations.
 
 
 ## Features
