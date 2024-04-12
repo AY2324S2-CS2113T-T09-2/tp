@@ -14,12 +14,74 @@ public class SearchCommandParserTest {
 
     @Test
     public void parse_noOptionSpecified_throwsParseExceptionWithWarning() {
-        String[] invalidCommandArgs = new String[]{"3", "-l", "2"};
+        String[] invalidCommandArgs = new String[]{"-l", "2", "-l", "3"};
         ParseException thrown = Assertions.assertThrows(
                 ParseException.class, () -> {
                     searchCommandParser.parse(invalidCommandArgs);
                 }, "ParseException was expected");
         Assertions.assertEquals(thrown.getMessage(), "At least one of -n, -d, -q, -c, -s, -e option required");
+    }
+
+    @Test
+    public void parse_invalidQuantityRange_correctExceptionMessage() {
+        String[] invalidCommandArgs = new String[]{"-q", "invalid"};
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    searchCommandParser.parse(invalidCommandArgs);
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "Format for quantity option: {min}..{max}. "
+                + "At least one of min or max is required.");
+    }
+
+    @Test
+    public void parse_invalidCostPriceUpperBound_correctExceptionMessage() {
+        String[] invalidCommandArgs = new String[]{"-c", "2..-5"};
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    searchCommandParser.parse(invalidCommandArgs);
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "cost price upper bound cannot be negative");
+    }
+
+    @Test
+    public void parse_invalidSalePriceLowerBound_correctExceptionMessage() {
+        String[] invalidCommandArgs = new String[]{"-s", "sam..3.30"};
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    searchCommandParser.parse(invalidCommandArgs);
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "sale price lower bound must be a number.");
+    }
+
+    @Test
+    public void parse_invalidExpiryDateBounds_correctExceptionMessage() {
+        String[] invalidCommandArgs = new String[]{"-e", "11-02-2025..11-03-2024"};
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    searchCommandParser.parse(invalidCommandArgs);
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "expiry date lower bound is more than upper bound");
+    }
+
+    @Test
+    public void parse_negativeResultsSpecified_correctExceptionMessage() {
+        String[] invalidCommandArgs = new String[]{"-n", " ", "-l", "-20"};
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    searchCommandParser.parse(invalidCommandArgs);
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "number of results must be positive");
+    }
+
+    @Test
+    public void parse_quantityRangeSpecified_correctlyParsesQuantityRange() {
+        String[] invalidCommandArgs = new String[]{"-q", "0..-0"};
+        try {
+            SearchCommand searchCommand = searchCommandParser.parse(invalidCommandArgs);
+            Assertions.assertTrue(searchCommand instanceof SearchCommand);
+        } catch (ParseException e) {
+            Assertions.fail();
+        }
     }
 
     @Test
@@ -38,6 +100,17 @@ public class SearchCommandParserTest {
         String[] commandArgs = new String[]{"-e", "..23-11-2023"};
         try {
             SearchCommand searchCommand = searchCommandParser.parse(commandArgs);
+            Assertions.assertTrue(searchCommand instanceof SearchCommand);
+        } catch (ParseException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    public void parse_rangeBounds_correctlyParsesRanges() {
+        String[] invalidCommandArgs = new String[]{"-c", "15.49..15.50", "-s", "..-0", "-e", "07-07-2007..07-07-2007"};
+        try {
+            SearchCommand searchCommand = searchCommandParser.parse(invalidCommandArgs);
             Assertions.assertTrue(searchCommand instanceof SearchCommand);
         } catch (ParseException e) {
             Assertions.fail();

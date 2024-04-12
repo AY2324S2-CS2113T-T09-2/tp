@@ -40,21 +40,9 @@ public class SearchCommandParser extends DefaultParser {
      */
     public SearchCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
-
-        Option[] processedOptions = commandLine.getOptions();
-        boolean hasNonListOption = false;
-        for (Option processedOption : processedOptions) {
-            if (processedOption.getLongOpt() != "list") {
-                hasNonListOption = true;
-                break;
-            }
-        }
-        if (!hasNonListOption) {
-            throw new ParseException("At least one of -n, -d, -q, -c, -s, -e option required");
-        }
+        checkNonListOption(commandLine.getOptions());
 
         SearchCommand searchCommand = new SearchCommand();
-
         if (commandLine.hasOption("name")) {
             String nameField = String.join(" ", commandLine.getOptionValues("name"));
             searchCommand.setNameField(nameField);
@@ -87,6 +75,34 @@ public class SearchCommandParser extends DefaultParser {
             searchCommand.setNumberOfResults(numberOfResults);
         }
         return searchCommand;
+    }
+
+    /**
+     * Parses the range argument for quantity, cost price, sale price, or expiry date options.
+     *
+     * @param argument The range argument string.
+     * @param option   The option for which the range argument is parsed.
+     * @return An array containing the minimum and maximum values of the range.
+     * @throws ParseException If the range argument is not in the correct format.
+     */
+    String[] parseRangeArgument(String argument, String option) throws ParseException {
+        if (!argument.contains("..") || argument.length() < 3) {
+            throw new ParseException("Format for " + option + " option: {min}..{max}. "
+                    + "At least one of min or max is required.");
+        }
+        String[] argumentRange = {"", ""};
+        String[] values = argument.split("\\Q..\\E");
+        if (values[0].equals("")) {
+            argumentRange[1] = values[1];
+            return argumentRange;
+        }
+        argumentRange[0] = values[0];
+        try {
+            argumentRange[1] = values[1];
+            return argumentRange;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return argumentRange;
+        }
     }
 
     private double[] parseNonNegativeDoubleRange(String[] rangeArgument, String type) throws ParseException {
@@ -143,31 +159,12 @@ public class SearchCommandParser extends DefaultParser {
         return dateRange;
     }
 
-    /**
-     * Parses the range argument for quantity, cost price, sale price, or expiry date options.
-     *
-     * @param argument The range argument string.
-     * @param option   The option for which the range argument is parsed.
-     * @return An array containing the minimum and maximum values of the range.
-     * @throws ParseException If the range argument is not in the correct format.
-     */
-    String[] parseRangeArgument(String argument, String option) throws ParseException {
-        if (!argument.contains("..") || argument.length() < 3) {
-            throw new ParseException("Format for " + option + " option: {min}..{max}. "
-                    + "At least one of min or max is required.");
+    private void checkNonListOption(Option[] processedOptions) throws ParseException {
+        for (Option processedOption : processedOptions) {
+            if (processedOption.getLongOpt() != "list") {
+                return;
+            }
         }
-        String[] argumentRange = {"", ""};
-        String[] values = argument.split("\\Q..\\E");
-        if (values[0].equals("")) {
-            argumentRange[1] = values[1];
-            return argumentRange;
-        }
-        argumentRange[0] = values[0];
-        try {
-            argumentRange[1] = values[1];
-            return argumentRange;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return argumentRange;
-        }
+        throw new ParseException("At least one of -n, -d, -q, -c, -s, -e option required");
     }
 }
