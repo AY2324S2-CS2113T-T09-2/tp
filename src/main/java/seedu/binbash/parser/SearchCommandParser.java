@@ -4,6 +4,7 @@ import seedu.binbash.command.SearchCommand;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
@@ -40,19 +41,28 @@ public class SearchCommandParser extends DefaultParser {
     public SearchCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
 
-        boolean hasOption = false;
+        Option[] processedOptions = commandLine.getOptions();
+        boolean hasNonListOption = false;
+        for (Option processedOption : processedOptions) {
+            if (processedOption.getLongOpt() != "list") {
+                hasNonListOption = true;
+                break;
+            }
+        }
+        if (!hasNonListOption) {
+            throw new ParseException("At least one of -n, -d, -q, -c, -s, -e option required");
+        }
+
         SearchCommand searchCommand = new SearchCommand();
 
         if (commandLine.hasOption("name")) {
             String nameField = String.join(" ", commandLine.getOptionValues("name"));// Allow multiple arguments
             searchCommand.setNameField(nameField);
-            hasOption = true;
         }
 
         if (commandLine.hasOption("description")) {
             String descriptionField = String.join(" ", commandLine.getOptionValues("description"));
             searchCommand.setDescriptionField(descriptionField);
-            hasOption = true;
         }
 
         if (commandLine.hasOption("quantity")) {
@@ -65,7 +75,6 @@ public class SearchCommandParser extends DefaultParser {
                 quantityRange[1] = Parser.parseIntOptionValue(rangeArgument[1], "quantity upper bound");
             }
             searchCommand.setQuantityRange(quantityRange);
-            hasOption = true;
         }
 
         if (commandLine.hasOption("cost-price")) {
@@ -78,7 +87,6 @@ public class SearchCommandParser extends DefaultParser {
                 costPriceRange[1] = Parser.parseDoubleOptionValue(rangeArgument[1], "cost price upper bound");
             }
             searchCommand.setCostPriceRange(costPriceRange);
-            hasOption = true;
         }
 
         if (commandLine.hasOption("sale-price")) {
@@ -91,7 +99,6 @@ public class SearchCommandParser extends DefaultParser {
                 salePriceRange[1] = Parser.parseDoubleOptionValue(rangeArgument[1], "sale price upper bound");
             }
             searchCommand.setSalePriceRange(salePriceRange);
-            hasOption = true;
         }
 
         if (commandLine.hasOption("expiry-date")) {
@@ -104,11 +111,6 @@ public class SearchCommandParser extends DefaultParser {
                 expiryDateRange[1] = Parser.parseDateOptionValue(rangeArgument[1], "expiry date upper bound");
             }
             searchCommand.setExpiryDateRange(expiryDateRange);
-            hasOption = true;
-        }
-
-        if (!hasOption) {
-            throw new ParseException("At least one of -n, -d, -q, -c, -s, -e option required");
         }
 
         if (commandLine.hasOption("list")) {
