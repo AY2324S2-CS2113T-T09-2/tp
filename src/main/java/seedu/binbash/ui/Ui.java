@@ -57,20 +57,28 @@ public class Ui {
     }
 
     /**
-     * Returns a string received by the user.
+     * Returns a non-empty string received by the user.
      *
-     * @return "bye" if end of file or program termination detected, a string read from standard input otherwise.
+     * @return "bye" if end of file or program termination detected, a non-empty string otherwise.
      */
     public String readUserCommand() {
-        assert isUserActive;
         try {
-            String userInput = inputReader.readLine("binbash> ");
-            UILOGGER.info("received raw user input: " + userInput);
-            return userInput;
+            String userCommand = readUserInput();
+            while (userCommand.trim().equals("")) {
+                userCommand = readUserInput();
+            }
+            return userCommand;
         } catch (EndOfFileException | UserInterruptException e) {
             UILOGGER.info("received EOF / interrupt exception");
             return "bye";
         }
+    }
+
+    private String readUserInput() throws EndOfFileException, UserInterruptException {
+        assert isUserActive;
+        String userInput = inputReader.readLine("binbash> ");
+        UILOGGER.info("received raw user input: " + userInput);
+        return userInput;
     }
 
     /**
