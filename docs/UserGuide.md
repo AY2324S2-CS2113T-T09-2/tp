@@ -193,19 +193,19 @@ You would enter the corresponding [Placeholder](#placeholders) immediately after
 > Please refer to the subsequent [Command Format](#command-format) section to see how Flags and Placeholders are used 
 > together.
 
-| Flag  | Corresponding Placeholder           |
-|-------|-------------------------------------|
-| `-n`  | ITEM_NAME                           |
-| `-i`  | ITEM_INDEX                          |
-| `-d`  | ITEM_DESCRIPTION                    |
-| `-q`  | QUANTITY                            |
-| `-e`  | EXPIRY_DATE (Perishable items only) |
-| `-c`  | COST_PRICE                          |
-| `-s`  | SALE_PRICE (Retail items only)      |
-| `-t`  | THRESHOLD                           |
-| `-re` | Not Applicable                      |
-| `-op` | Not Applicable                      |
-| `-p`  | Not Applicable                      |
+| Flag  | Corresponding Placeholder               |
+|-------|-----------------------------------------|
+| `-n`  | ITEM_NAME                               |
+| `-i`  | ITEM_INDEX                              |
+| `-d`  | ITEM_DESCRIPTION                        |
+| `-q`  | QUANTITY                                |
+| `-e`  | EXPIRY_DATE **(Perishable items only)** |
+| `-c`  | COST_PRICE                              |
+| `-s`  | SALE_PRICE **(Retail items only)**      |
+| `-t`  | THRESHOLD                               |
+| `-re` | Not Applicable                          |
+| `-op` | Not Applicable                          |
+| `-p`  | Not Applicable                          |
 
 > **NOTE**
 > The flags `-re`, `-op` and `-p` do not have any corresponding placeholders. They are marked as "Not Applicable" in 
@@ -222,16 +222,16 @@ each command in BinBash.
 > **Note:**
 > The `COMMAND_WORD` placeholder does not have a corresponding flag and is marked as "Not Applicable" in the table below.
 
-| Placeholder        | Corresponding Flag | Description                                                                                                                                                                                                                                                                                                                                                                     |
-|--------------------|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ITEM_NAME`        | `-n`               | ITEM_NAME is the name used to identify an item.<br>**Info:**<ul><li>May contain alphanumeric and special characters but cannot be blank.</li><li>It's unique and case-sensitive.</li><li>Leading and trailing spaces are trimmed.</li></ul>**Valid Examples:** `sneakers`, `printer cartridge`<br>**Invalid Examples:** (Any non-unique or blank entry)                         |
-| `ITEM_DESCRIPTION` | `-d`               | ITEM_DESCRIPTION provides details about the item.<br>**Info:**<ul><li>Can include most characters and symbols.</li><li>Should give a clear idea of the item's features or use.</li></ul>**Valid Examples:** `Black and white running sneakers`, `High-yield color cartridge`<br>**Invalid Examples:** (Any unclear or overly lengthy description)                               |
-| `ITEM_QUANTITY`    | `-q`               | ITEM_QUANTITY is how much of the item is in stock.<br>**Info:**<ul><li>Must be a non-negative integer.</li></ul>**Valid Examples:** `350`, `20`<br>**Invalid Examples:** `-10`, `100.5`                                                                                                                                                                                         |
-| `EXPIRY_DATE`      | `-e`               | EXPIRY_DATE is when a perishable item will spoil.<br>**Info:**<ul><li>Must be in `DD-MM-YYYY` format.</li><li>Relevant for perishable items only.</li></ul>**Valid Examples:** `12-12-2024`, `02-11-2024`<br>**Invalid Examples:** `2024-12-12`, `12/12/2024`                                                                                                                   |
-| `COST_PRICE`       | `-c`               | COST_PRICE is the buying price of the item. It is the price that the store owner bought the item for. <br>**Info:**<ul><li>Is a non-negative number with up to 2 decimal places.</li></ul>**Valid Examples:** `34.32`, `1.30`<br>**Invalid Examples:** `-34.32`, `$34.32`                                                                                                       |
-| `SALE_PRICE`       | `-s`               | SALE_PRICE is the selling price for retail items.<br>**Info:**<ul><li>Is a non-negative number. </li><li>Used only for retail items.</li><li>A `$` is automatically prefixed.</li></ul>**Valid Examples:** `102.00`, `10.00`<br>**Invalid Examples:** `-102.00`, `$10.00`                                                                                                       |
-| `INDEX`            | `-i`               | The INDEX is the number to the left of the item name when the `list` command is called.<br>**Info:**<ul><li>INDEX must be a whole number larger than 0.</li><li>It is dependent on the current view of the item list.</li><li>Do not use thousands separators like `,` in INDEX.</li></ul>**Valid Examples:** `1`, `124`<br>**Invalid Examples:** `-1`, `1.5`, `1,132`, `1 132` |
-| `THRESHOLD`        | `-t`               | THRESHOLD is the minimum stock before an alert is issued.<br>**Info:**<ul><li>Must be a non-negative integer.</li><li>If not specified, `1` is used by default.</li></ul>**Valid Examples:** `50`, `10`<br>**Invalid Examples:** `-50`, `10.5`                                                                                                                                  |
+| Placeholder        | Corresponding Flag | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|--------------------|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ITEM_NAME`        | `-n`               | ITEM_NAME is the name used to identify an item.<br>**Info:**<ul><li>May contain alphanumeric and special characters but cannot be blank.</li><li>It's unique and case-sensitive.</li><li>Leading and trailing spaces are trimmed.</li></ul>**Valid Examples:** `sneakers`, `printer cartridge`<br>**Invalid Examples:** (Any non-unique or blank entry)                                                                                                           |
+| `ITEM_DESCRIPTION` | `-d`               | ITEM_DESCRIPTION provides details about the item.<br>**Info:**<ul><li>Can include most characters and symbols.</li><li>Should give a clear idea of the item's features or use.</li></ul>**Valid Examples:** `Black and white running sneakers`, `High-yield color cartridge`<br>**Invalid Examples:** (Any unclear or overly lengthy description)                                                                                                                 |
+| `ITEM_QUANTITY`    | `-q`               | ITEM_QUANTITY is how much of the item is in stock.<br>**Info:**<ul><li>Must be a non-negative whole number.</li></ul>**Valid Examples:** `350`, `20`<br>**Invalid Examples:** `-10`, `100.5`                                                                                                                                                                                                                                                                      |
+| `EXPIRY_DATE`      | `-e`               | EXPIRY_DATE is when a perishable item will spoil.<br>**Info:**<ul><li>Must be in `DD-MM-YYYY` format.</li><li>Relevant for perishable items only.</li></ul>**Valid Examples:** `12-12-2024`, `02-11-2024`<br>**Invalid Examples:** `2024-12-12`, `12/12/2024`                                                                                                                                                                                                     |
+| `COST_PRICE`       | `-c`               | COST_PRICE is the buying price of the item. It is the price that the store owner bought the item for. <br>**Info:**<ul><li>Is a non-negative number with up to 2 decimal places.</li></ul>**Valid Examples:** `34.32`, `1.30`<br>**Invalid Examples:** `-34.32`, `$34.32`                                                                                                                                                                                         |
+| `SALE_PRICE`       | `-s`               | SALE_PRICE is the selling price for retail items.<br>**Info:**<ul><li>Is a non-negative number. </li><li>Used only for retail items.</li><li>A `$` is automatically prefixed.</li></ul>**Valid Examples:** `102.00`, `10.00`<br>**Invalid Examples:** `-102.00`, `$10.00`                                                                                                                                                                                         |
+| `INDEX`            | `-i`               | The INDEX is the number to the left of the item name when the `list` command is called.<br>**Info:**<ul><li>INDEX must be a whole number larger than 0.</li><li>It is dependent on the current view of the item list.</li><li>Do not use thousands separators like `,` in INDEX.</li></ul>**Valid Examples:** `1`, `124`<br>**Invalid Examples:** `-1`, `1.5`, `1,132`, `1 132`                                                                                   |
+| `THRESHOLD`        | `-t`               | THRESHOLD is the minimum stock before an alert is issued.<br>**Info:**<ul><li>Must be a non-negative whole number.</li><li>If not specified, `1` is used by default.</li></ul>**Valid Examples:** `50`, `10`<br>**Invalid Examples:** `-50`, `10.5`                                                                                                                                                                                                               |
 | `COMMAND_WORD`     | (Not Applicable)   | The COMMAND_WORD is a specific keyword that triggers a command in BinBash.<br>**Info:**<ul><li>COMMAND_WORD is strictly one of the specified keywords below.</li></ul>**Valid Examples:**<ul><li>`add`</li><li>`bye`</li><li>`exit`</li><li>`quit`</li><li>`delete`</li><li>`list`</li><li>`profit`</li><li>`restock`</li><li>`search`</li><li>`sell`</li><li>`update`</li></ul>**Invalid Examples:**<ul><li>Any text not listed in the valid examples.</li></ul> |
 
 ### Command Format
