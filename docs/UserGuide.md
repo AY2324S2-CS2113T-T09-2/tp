@@ -36,7 +36,7 @@ Our long awaited first release adds everything you would expect of an inventory 
     - [Updating an item: `update`](#updating-an-item-update)
     - [Deleting an item: `delete`](#deleting-an-item-delete)
     - [Calculating the total profit: `profit`](#calculating-the-total-profit-profit)
-    - [Exiting the application: `bye`](#exiting-the-application-bye)
+    - [Exiting the application: `bye`](#exiting-the-application-bye-exit-quit)
     - [Saving and Loading data](#saving-and-loading-data)
 7. [Command Summary](#command-summary)
 8. [FAQ](#faq)
@@ -68,9 +68,17 @@ can make the most out of BinBash. Let's get your inventory organized efficiently
 Throughout the course of this guide we will describe the various inventory management capabilities BinBash is capable of, and how you might perform them using keyboard typed commands.
 The format and expected outputs of these commands will be enumerated in turn. Don't worry if you can't get the hang of them immediately! We'll provide some concrete examples to better illustrate their use cases.
 
-> ❗ This is a warning box that may appear in the guide. Any interactions with the application that can result in issues or errors will be detailed in sections like this one here.
+<div id="warningCallout" style="padding: 1em; border: 0 solid #feb144;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #fff8e6;">
+❗ This is a warning box that may appear in the guide. Any interactions with the application that can result in issues or errors will be detailed in sections like this one here.
+</div>
 
-> ℹ️ This is an info box that may appear in the guide. Any additional information about a feature will be detailed in sections like this one here.
+<div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
+ℹ️ This is an info box that may appear in the guide. Any additional information about a feature will be detailed in sections like this one here.
+</div>
+
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 This is a tip box that may appear in the guide. Things that might be useful for you can be found in sections like this one here.
+</div>
 
 If you are new to BinBash (or new to command line-based applications in general), we highly recommend that you read through the rest of this guide sequentially, following the order of sections in this guide.
 In particular, we suggest that you take note of the [command format](#notes-on-the-command-format) used by BinBash, as it would provide you with a better understanding of how BinBash processes your commands.
@@ -175,16 +183,16 @@ Now, let's take a look at the flags you can use:
 | `-t`  | Threshold (the lower limit of your item quantity, below which you'll be alerted of depleting stock) |
 
 
-> #### ℹ️ Note:
-> - Only one item type flag can be specified for each item. This means that you can only use either `-re` or `-op` but
-> not both at the same time. 
-> - The `-e` flag should be provided if the item that you are adding is a Perishable item. That is to say, it will expire by 
-> the provided expiry date.
-> - The `-s` flag should be provided if the item that you are adding is a Retail item. This means that this item is
-> meant to be sold.
-> - The flags can be placed in any order. There is no specific order that you have to abide by.
-> - Words in `UPPER_CASE` are the arguments that are meant to be supplied by you. 
-> For example, in `add -n ITEM_NAME`, `ITEM_NAME` would represent the name of the item you are adding (e.g., `add -n apple`).
+<div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
+ℹ️ <strong>Note:</strong>
+<ul>
+<li>Only one item type flag can be specified for each item. This means that you can only use either <code>-re</code> or <code>-op</code> but not both at the same time. </li> 
+<li>The <code>-e</code> flag should be provided if the item that you are adding is a Perishable item. That is to say, it will expire by the provided expiry date.</li>
+<li>The <code>-s</code> flag should be provided if the item that you are adding is a Retail item. This means that this item is meant to be sold.</li>
+<li>The flags can be placed in any order. There is no specific order that you have to abide by.</li>
+<li>Words in <code>UPPER_CASE</code> are the arguments that are meant to be supplied by you.<br>For example, in <code>-n ITEM_NAME</code>, <code>ITEM_NAME</code> would represent the name of the item you are adding (e.g., <code>add -n apple</code>).</li>
+</ul>
+</div>
 
 If you're starting to feel overwhelmed by all these flags, don't worry! Continue reading to know more about BinBash's
 Command auto-suggestions feature that can help you out. It's like having a little helper right at your fingertips!
@@ -201,8 +209,10 @@ As before, each flag is accompanied by an explanation.
 
 To exit command suggestion mode simply press any other key.
 
-> ℹ️ This feature is particularly handy when first learning to use BinBash. Starting from a blank input, press tab to see every command.
-> Likewise within each command, type `-` followed by `tab` to give a quick overview of all possible options.
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 This feature is particularly handy when first learning to use BinBash. Starting from a blank input, press tab to see every command.<br>
+Likewise within each command, type <code>-</code> followed by <code>TAB</code> to give a quick overview of all possible options.
+</div>
 
 * [Back to table of contents](#table-of-contents)
 ---
@@ -220,7 +230,11 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -s SALE_PRICE
 * All other fields are optional.
 * If `ITEM_QUANTITY` is not specified, a default value of `0` will be assigned to it.
 This allows you to create a placeholder for an item in your inventory you've yet to receive any stock of.
-  > ℹ️ Once you've received stock of the item, you can call the [`restock`](#restocking-an-item-restock) command to increase the stocked quantity of the item.
+
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 Once you've received stock of the item, you can call the <a href="#restocking-an-item-restock"><code>restock</code></a> command to increase the stocked quantity of the item.
+</div>
+
 * If `THRESHOLD` is not specified, a default value of `1` will be assigned to it.
 * There is no need to include the currency. A `$` sign will be appended to the prices.
 * Retail items do not have an `EXPIRY_DATE` field, hence the flag `-e` is not used.
@@ -261,7 +275,10 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DAT
 
 * The command to add a Perishable Retail item is similar to adding a Retail item.
 * An additional flag , `-e`, is used here to include the `EXPIRY_DATE`, hence signifying a Perishable Retail item.
-  > ℹ️ Ensure that the provided date is in `DD-MM-YYYY` format. For example, **20 January 2024** is represented as `20-01-2024`
+
+<div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
+ℹ️ Ensure that the provided date is in <code>DD-MM-YYYY</code> format. For example, <strong>20 January 2024</strong> is represented as <code>20-01-2024</code>.
+</div>
 
 Examples:
 
@@ -303,7 +320,11 @@ Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -c COST_PRICE
 * All other fields are optional.
 * If `ITEM_QUANTITY` is not specified, a default value of `0` will be assigned to it.
 This allows you to create a placeholder for an item in your inventory you've yet to receive any stock of.
-  > ℹ️ Once you've received stock of the item, you can call the [`restock`](#restocking-an-item-restock) command to increase the stocked quantity of the item.
+
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 Once you've received stock of the item, you can call the <a href="#restocking-an-item-restock"><code>restock</code></a> command to increase the stocked quantity of the item.
+</div>
+
 * If `THRESHOLD` is not specified, a default value of `1` will be assigned to it.
 * There is no need to include the currency. A `$` sign will be appended to the prices.
 * `-s` and `-e` are not used as there are no `SALE_PRICE` and `EXPIRY_DATE` fields for an Operational Item.
@@ -329,7 +350,11 @@ Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DAT
 
 * The command to add a Perishable Operational item is similar to adding an Operational item.
 * An additional flag , `-e`, is used here to include the `EXPIRY_DATE`, hence signifying a Perishable Operational item.
-  > ℹ️ Ensure that the provided date is in `DD-MM-YYYY` format. For example, **20 January 2024** is represented as `20-01-2024`
+
+<div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
+ℹ️ Ensure that the provided date is in <code>DD-MM-YYYY</code> format. For example, <strong>20 January 2024</strong> is represented as <code>20-01-2024</code>.
+</div>
+
 * `-s` is not used as there is no `SALE_PRICE` for a Perishable Operational Item.
 
 Examples:
@@ -363,10 +388,21 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
   - At least one of `min_value` or `max_value` is required.
   - Omitting `min_value` searches for everything up to and including the `max_value`.
   - Omitting `max_value` searches for everything with at least `min_value`.
-  > ℹ️ For example, to search for items with a quantity up to and including 20, we should format our query as:<br> `-q ..20`.
-  > ℹ️ To search for items that cost at least $15, we should format our query as:<br>`-c 15..`.
+
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 For example, to search for items with a quantity up to and including 20, we should format our query as:<br>
+<code>-q ..20</code>.<br>
+To search for items that cost at least $15, we should format our query as:<br>
+<code>-c 15..</code>.
+</div>
+
 - `EXPIRY_DATE_RANGE` is similar to the above range arguments: except dates need to be specified in the format `dd-MM-YYYY`.
-  > ℹ️ For example, to search for items with an expiry date between 20 January 2024 and 30 January 2024, we should format our query as:<br> `-e 20-01-2024..30-01-2024`.
+
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 For example, to search for items with an expiry date between 20 January 2024 and 30 January 2024, we should format our query as:<br>
+<code>-e 20-01-2024..30-01-2024</code>.
+</div>
+
 - Shows the first `NUMBER_OF_RESULTS` results if set, else all matching results are shown.
 
 **Examples:**
@@ -390,8 +426,9 @@ Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRI
 > This allows you to list out all items that you have in your inventory list. 
 > You can also use this command to display your inventory list, sorted based on cost price, sale price, profit, or expiry date.
 
-> ℹ️ Note:
-> Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for `delete` and `update` commands.
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for <code>delete</code> and <code>update</code> commands.
+</div>
 
 #### List Inventory (Unsorted)
 
@@ -463,8 +500,9 @@ Examples:
 
 Format: `sell -i ITEM_INDEX -q ITEM_QUANTITY`
 
-> ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and
-> note down the number displayed next to your item of interest.
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 To determine the <code>index</code> of an item in your inventory, call the <code>list</code> command first, and note down the number displayed next to your item of interest.
+</div>
 
 * Both flags `-i` and `-q` are mandatory.
 * The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to sell.
@@ -473,10 +511,11 @@ Examples:
 - `sell -i 1 -q 50` This will decrease the quantity of the item at index 1 in your inventory list by 50.
 - `sell -i 3 -q 35` This will decrease the quantity of the item at index 3 in your inventory list by 35.
 
-
-> ℹ️ Note:
-> - Only one item identifier flag, `-n` or `-i`, can be used with the `sell` command to identify the item that you want to sell.
-> - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
+<div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
+ℹ️ <strong>Note:</strong><br> 
+<li>Only one item identifier flag, <code>-n</code> or <code>-i</code>, can be used with the <code>sell</code> command to identify the item that you want to sell.</li>
+<li>There must be a minimum of one flag used, excluding the <code>-n</code> or <code>-i</code> flag.</li>
+</div>
 
 * [Back to table of contents](#table-of-contents)
 ---
@@ -502,8 +541,9 @@ Examples:
 
 Format: `restock -i ITEM_INDEX -q ITEM_QUANTITY`
 
-> ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and 
-> note down the number displayed next to your item of interest.
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 To determine the <code>index</code> of an item in your inventory, call the <code>list</code> command first, and note down the number displayed next to your item of interest.
+</div>
 
 * Both flags `-i` and `-q` are mandatory.
 * The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to update.
@@ -511,10 +551,11 @@ Format: `restock -i ITEM_INDEX -q ITEM_QUANTITY`
 Examples:
 - `restock -i 2 -q 10` This will add the quantity of the item at index 2 in your inventory list by 10.
 
-> ℹ️ Note:
-> - Only one item identifier flag, `-n` or `-i`, can be used with the `restock` command to identify the item that you
-    > want to update.
-> - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
+<div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
+ℹ️ <strong>Note:</strong><br> 
+<li>Only one item identifier flag, <code>-n</code> or <code>-i</code>, can be used with the <code>restock</code> command to identify the item that you want to sell.</li>
+<li>There must be a minimum of one flag used, excluding the <code>-n</code> or <code>-i</code> flag.</li>
+</div>
 
 * [Back to table of contents](#table-of-contents)
 ---
@@ -550,7 +591,9 @@ to 10.
 Format: `update -i ITEM_INDEX -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE
 -t THRESHOLD`
 
-> ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and note down the number displayed next to your item of interest.
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 To determine the <code>index</code> of an item in your inventory, call the <code>list</code> command first, and note down the number displayed next to your item of interest.
+</div>
 
 * The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to update.
 * To know the `item index`, we encourage you to first use the command `list` to find out the index of your item of 
@@ -565,10 +608,11 @@ remains unchanged.
 Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and its threshold to 2.
 
 
-> ℹ️ Note:
-> - Only one item identifier flag, `-n` or `-i`, can be used with the `update` command to identify the item that you
-> want to update.
-> - There must be a minimum of one flag used, excluding the `-n` or `-i` flag.
+<div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
+ℹ️ <strong>Note:</strong><br> 
+<li>Only one item identifier flag, <code>-n</code> or <code>-i</code>, can be used with the <code>update</code> command to identify the item that you want to sell.</li>
+<li>There must be a minimum of one flag used, excluding the <code>-n</code> or <code>-i</code> flag.</li>
+</div>
 
 * [Back to table of contents](#table-of-contents)
 ---
@@ -581,7 +625,9 @@ Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and 
 
 Format: `delete -i ITEM_INDEX`
 
-> ℹ️ To determine the `index` of an item in your inventory, call the `list` command first, and note down the number displayed next to your item of interest.
+<div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
+💡 To determine the <code>index</code> of an item in your inventory, call the <code>list</code> command first, and note down the number displayed next to your item of interest.
+</div>
 
 * `ITEM_INDEX` must be specified.
 * `ITEM_INDEX` specified must exist in the inventory, otherwise no item will be deleted.
@@ -604,11 +650,15 @@ Format: `delete -n ITEM_NAME`
 Examples:
 - `list` followed by `delete -n cookie` Deletes the first item named "cookie".
 
-> ❗Item name is case-sensitive. So items with names as "COOKIE", "Cookie", etc.  will not be deleted.
+<div id="warningCallout" style="padding: 1em; border: 0 solid #feb144;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #fff8e6;">
+❗Item name is case-sensitive. So items with names as "COOKIE", "Cookie", etc.  will not be deleted.
+</div>
 
 - `list` followed `delete -n tissue paper` Deletes the first item named "tissue paper".
 
-> ❗Item name is case-sensitive. So items with names as "TISSUE PAPER", "Tissue Paper", etc. will not be deleted.
+<div id="warningCallout" style="padding: 1em; border: 0 solid #feb144;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #fff8e6;">
+❗Item name is case-sensitive. So items with names as "TISSUE PAPER", "Tissue Paper", etc. will not be deleted.
+</div>
 
 * [Back to table of contents](#table-of-contents)
 ---
@@ -639,7 +689,9 @@ After a long day at work, it's time to take a rest! You can safely quit the appl
 
 Format: `bye`, `exit`, `quit`
 
-> ℹ️ BinBash will save the state of your current inventory, and you can always come back to it later.
+<div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
+ℹ️ BinBash will save the state of your current inventory, and you can always come back to it later.
+</div>
 
 * [Back to table of contents](#table-of-contents)
 ---
@@ -650,11 +702,14 @@ Unsure as to how you can save your BinBash data? Don't worry! Your data is autom
 
 Similarly, your saved data will be automatically loaded into BinBash when you start the application. If no previous save data was found, the application starts on a clean state.
 
-> ❗ For advanced users, BinBash data is stored locally as a `.txt` file in your BinBash install location:<br>`<Location of binbash.jar>/data/items.txt`.
-> 
-> Do exercise caution when directly editing this file, as BinBash **will not load** corrupted data (i.e., data that is not formatted correctly). 
-> 
-> We highly recommended that you take a backup of your save file before editing it.
+<div id="warningCallout" style="padding: 1em; border: 0 solid #feb144;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #fff8e6;">
+❗ For advanced users, BinBash data is stored locally as a <code>.txt</code> file in your BinBash install location:
+<br><code>< Location of binbash.jar >/data/items.txt</code>.
+<br><br>
+Do exercise caution when directly editing this file, as BinBash <strong>will not load</strong> corrupted data (i.e., data that is not formatted correctly). 
+<br>
+We highly recommended that you take a backup of your save file before editing it.
+</div>
 
 * [Back to table of contents](#table-of-contents)
 ---
