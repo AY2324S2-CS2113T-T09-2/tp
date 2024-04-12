@@ -1,6 +1,5 @@
 package seedu.binbash;
 
-
 import seedu.binbash.command.ByeCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.exceptions.BinBashException;
@@ -32,8 +31,8 @@ public class BinBash {
         userInterface.talk(itemList.getProfitMargin());
 
         while (userInterface.isUserActive()) {
-            String userInput = userInterface.readUserCommand();
             try {
+                String userInput = userInterface.readUserCommand();
                 Command userCommand = inputParser.parseCommand(userInput);
 
                 if (userCommand instanceof ByeCommand) {

@@ -6,6 +6,7 @@ import org.jline.reader.EndOfFileException;
 import org.jline.reader.UserInterruptException;
 import org.jline.terminal.TerminalBuilder;
 
+import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.logger.BinBashLogger;
 
 import java.io.IOException;
@@ -61,7 +62,7 @@ public class Ui {
      *
      * @return "bye" if end of file or program termination detected, a non-empty string otherwise.
      */
-    public String readUserCommand() {
+    public String readUserCommand() throws BinBashException {
         try {
             String userCommand = readUserInput();
             while (userCommand.trim().equals("")) {
@@ -69,11 +70,12 @@ public class Ui {
             }
             return userCommand;
         } catch (EndOfFileException e) {
-            UILOGGER.info(e.getMessage());
+            UILOGGER.info("received EOF, exiting gracefully");
             return "bye";
         } catch (UserInterruptException e) {
-            UILOGGER.info("received user interrupt");
-            return "bye";
+            UILOGGER.info("received user interrupt, halting application now");
+            setUserAsInactive();
+            throw new BinBashException("");
         }
     }
 
@@ -98,7 +100,7 @@ public class Ui {
      */
     public void talk(String line) {
         if (!isUserActive) {
-            assert line == "Bye!";
+            assert line == "Bye!" || line == "";
         }
         System.out.println(LINE_DIVIDER + NEWLINE + line + NEWLINE + LINE_DIVIDER);
     }
