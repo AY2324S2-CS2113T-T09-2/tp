@@ -7,6 +7,7 @@ import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.parser.Parser;
+import seedu.binbash.quotes.Quotes;
 import seedu.binbash.storage.Storage;
 import seedu.binbash.ui.Ui;
 
@@ -30,7 +31,7 @@ public class BinBash {
 
         userInterface.greet();
         userInterface.talk(itemList.getProfitMargin());
-        userInterface.talk(userInterface.getRandomMessage());
+        userInterface.talk(Quotes.getRandomQuote());
 
         while (userInterface.isUserActive()) {
             String userInput = userInterface.readUserCommand();

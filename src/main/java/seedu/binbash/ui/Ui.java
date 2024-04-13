@@ -1,6 +1,5 @@
 package seedu.binbash.ui;
 
-import java.util.Random;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.EndOfFileException;
@@ -8,10 +7,11 @@ import org.jline.reader.UserInterruptException;
 import org.jline.builtins.Completers.OptDesc;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+
 import seedu.binbash.logger.BinBashLogger;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import seedu.binbash.quotes.Quotes;
 
 /**
  * The user facing text interface of the program.
@@ -26,7 +26,6 @@ public class Ui {
     private static final String WELCOME_MESSAGE = "Welcome to BinBash!";
     private static final String LINE_DIVIDER = "-------------------------------------------------------------";
     private static final BinBashLogger UILOGGER = new BinBashLogger(Ui.class.getName());
-    private static final Random RANDOM = new Random();
 
     private static LineReader inputReader;
     private static boolean isUserActive;
@@ -43,13 +42,13 @@ public class Ui {
         System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
         try {
             Terminal userTerminal = TerminalBuilder.builder()
-                    .system(true)
-                    .dumb(true) // TODO: omit and catch using logger
-                    .build();
+                .system(true)
+                .dumb(true) // TODO: omit and catch using logger
+                .build();
             inputReader = LineReaderBuilder.builder()
-                    .terminal(userTerminal)
-                    .completer(new CommandCompleter(allCommandsOptionDescriptions))
-                    .build();
+                .terminal(userTerminal)
+                .completer(new CommandCompleter(allCommandsOptionDescriptions))
+                .build();
         } catch (IOException e) {
             UILOGGER.info("failed to get system terminal!");
             throw new RuntimeException(e);
@@ -93,10 +92,5 @@ public class Ui {
      */
     public void talk(String line) {
         System.out.println(LINE_DIVIDER + NEWLINE + line + NEWLINE + LINE_DIVIDER);
-    }
-
-    public String getRandomMessage() {
-        int randomIndex = RANDOM.nextInt(Quotes.CUSTOM_MESSAGES.length);
-        return Quotes.CUSTOM_MESSAGES[randomIndex];
     }
 }
