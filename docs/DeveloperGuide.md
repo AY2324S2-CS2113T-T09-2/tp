@@ -627,6 +627,15 @@ Overall, effective logging implementation enhances the maintainability, reliabil
         ```
 2. To exit the application, enter `bye` into the input.
 
+### Command Completion
+
+1. From an empty text interface, press `TAB`. This should present you with a list of commands and descriptions.
+2. Start typing, this list should filter based on every matching letter you type.
+3. Pressing `TAB` should cycle through all matching commands.
+4. Within each command, typing ` -` followed by `TAB` should present you with a list of options.
+   Expected: no option in this list should be an already specified option.
+   That is, when you've already typed `-c` in the same line, the list should not recommend the `-c` option again.
+
 ### Adding a new Item
 
 1. Enter this command to create a new `RetailItem`:<br>
