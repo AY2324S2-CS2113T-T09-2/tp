@@ -32,9 +32,10 @@
 
 ## Acknowledgements
 
-[AB3 Developer Guide](https://se-education.org/addressbook-level3/DeveloperGuide.html)
-
-[AB3 GitHub Project Repository](https://github.com/se-edu/addressbook-level3)
+- [AB3 Developer Guide](https://se-education.org/addressbook-level3/DeveloperGuide.html)
+- [AB3 GitHub Project Repository](https://github.com/se-edu/addressbook-level3)
+- [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/)
+- [JLine3](https://github.com/jline/jline3)
 
 ---
 ## Setting up, getting started
