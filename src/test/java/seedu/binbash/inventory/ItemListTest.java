@@ -1,6 +1,7 @@
 package seedu.binbash.inventory;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.binbash.exceptions.InvalidCommandException;
@@ -18,12 +19,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ItemListTest {
+    ItemList itemList;
+    ArrayList<Item> inventory;
+
+    @BeforeEach
+    void setUp() {
+        inventory = new ArrayList<Item>();
+    }
 
     @Test
     void deleteItem_indexOfItemInItemList_itemRemovedFromItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
-        itemList.addItem("retail", "testItem", "A test item", 2,
-                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
+        inventory.add(new PerishableRetailItem("testItem", "A test item", 2,
+                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6));
+        itemList = new ItemList(inventory);
 
         itemList.deleteItem(1);
 
@@ -32,9 +40,10 @@ class ItemListTest {
 
     @Test
     void deleteItem_nameOfItemInItemList_itemRemovedFromItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
-        itemList.addItem("retail", "testItem", "A test item", 2,
-                LocalDate.of(2024, 12 , 12), 4.00, 5.00,6);
+        inventory.add(new PerishableRetailItem("testItem", "A test item", 2,
+                LocalDate.of(2024, 12 , 12), 4.00,
+                5.00,6));
+        itemList = new ItemList(inventory);
 
         itemList.deleteItem("testItem");
 
@@ -43,9 +52,11 @@ class ItemListTest {
 
     @Test
     void deleteItem_nameOfItemNotInItemList_itemNotRemovedFromItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
-        itemList.addItem("retail", "testItem", "A test item", 2,
-                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
+        inventory.add(new PerishableRetailItem("testItem", "A test item", 2,
+                LocalDate.of(2024, 12 , 12), 4.00,
+                5.00, 6));
+
+        itemList = new ItemList(inventory);
 
         itemList.deleteItem("notTestItem");
 
@@ -54,11 +65,13 @@ class ItemListTest {
 
     @Test
     void deleteItem_deleteItemTwiceByIndex_returnItemAlreadyDeleted() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
-        itemList.addItem("retail", "testItem1", "Test item 1", 2,
-                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
-        itemList.addItem("retail", "testItem2", "Test item 2", 2,
-                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
+        inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
+                LocalDate.of(2024, 12 , 12), 4.00,
+                5.00, 6));
+        inventory.add (new PerishableRetailItem("testItem2", "Test item 2", 2,
+                LocalDate.of(2024, 12 , 12), 4.00,
+                5.00, 6));
+        itemList = new ItemList(inventory);
 
         itemList.deleteItem(1);
         String actualOutput = itemList.deleteItem(1);
@@ -70,11 +83,13 @@ class ItemListTest {
 
     @Test
     void deleteItem_deleteItemTwiceByName_returnNoItemFound() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
-        itemList.addItem("retail", "testItem1", "Test item 1", 2,
-                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
-        itemList.addItem("retail", "testItem2", "Test item 2", 2,
-                LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
+        inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
+                LocalDate.of(2024, 12 , 12), 4.00,
+                5.00, 6));
+        inventory.add(new PerishableRetailItem("testItem2", "Test item 2", 2,
+                LocalDate.of(2024, 12 , 12), 4.00,
+                5.00, 6));
+        itemList = new ItemList(inventory);
 
         itemList.deleteItem("testItem1");
         String actualOutput = itemList.deleteItem("testItem1");
@@ -86,7 +101,7 @@ class ItemListTest {
 
     @Test
     void addItem_noItemInItemList_oneItemInItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        itemList = new ItemList(inventory);
 
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.of(2024, 12 , 12), 4.00, 5.00, 6);
@@ -95,7 +110,7 @@ class ItemListTest {
 
     @Test
     void addItem_itemInputs_correctItemParameters() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        itemList = new ItemList(inventory);
 
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.of(1999, 1, 1), 4.00, 5.00, 6);
@@ -111,7 +126,7 @@ class ItemListTest {
 
     @Test
     void addItem_addOperationalItem_correctItemType() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        itemList = new ItemList(inventory);
 
         itemList.addItem("operational", "testItem", "A test item", 2,
                 LocalDate.MIN, 0.00, 5.00, 6);
@@ -120,7 +135,7 @@ class ItemListTest {
 
     @Test
     void addItem_addPerishableOperationalItem_correctItemType() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        itemList = new ItemList(inventory);
 
         itemList.addItem("operational", "testItem", "A test item", 2,
                 LocalDate.of(1999, 1, 1), 0.00, 5.00, 6);
@@ -129,12 +144,11 @@ class ItemListTest {
 
     @Test
     void printList_twoItemsInItemList_correctPrintFormatForBothItems() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
-
-        itemList.addItem("retail", "testItem1", "Test item 1", 2,
-                LocalDate.of(1999, 1, 1), 4.00, 5.00, 6);
-        itemList.addItem("retail", "testItem2", "Test item 2", 6,
-                LocalDate.of(1999, 1, 1), 8.00, 9.00, 10);
+        inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
+                LocalDate.of(1999, 1, 1), 4.00, 5.00, 6));
+        inventory.add(new PerishableRetailItem("testItem2", "Test item 2", 6,
+                LocalDate.of(1999, 1, 1), 8.00, 9.00, 10));
+        itemList = new ItemList(inventory);
 
         String actualOutput = itemList.printList(itemList.getItemList());
 
@@ -160,7 +174,6 @@ class ItemListTest {
 
     @Test
     void printListSortedByProfit_unsortedListByProfit_returnsSortedList() {
-        ArrayList<Item> inventory = new ArrayList<Item>();
         RetailItem testItem1 = new RetailItem("testItem1", "Test item 1", 10,
                 10.00, 5.00, 10);
         RetailItem testItem2 = new RetailItem("testItem2", "Test item 2", 10,
@@ -171,8 +184,7 @@ class ItemListTest {
         testItem2.setTotalUnitsPurchased(1);
         inventory.add(testItem1);
         inventory.add(testItem2);
-
-        ItemList itemList = new ItemList(inventory);
+        itemList = new ItemList(inventory);
 
         String actualOutput = itemList.printListSortedByProfit(itemList.getItemList());
 
@@ -198,12 +210,11 @@ class ItemListTest {
 
     @Test
     void printListSortedByCostPrice_unsortedListByCostPrice_returnsSortedList() {
-        ArrayList<Item> inventory = new ArrayList<Item>();
         inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
                 LocalDate.of(2024, 1, 1), 10.00, 5.00, 10));
         inventory.add(new PerishableRetailItem("testItem2", "Test item 2", 2,
                 LocalDate.of(2024, 1, 1), 3.00, 2.00, 10));
-        ItemList itemList = new ItemList(inventory);
+        itemList = new ItemList(inventory);
 
         String actualOutput = itemList.printListSortedByCostPrice(itemList.getItemList());
 
@@ -229,12 +240,11 @@ class ItemListTest {
 
     @Test
     void printListSortedByExpiryDate_unsortedListByExpiryDate_returnsSortedList() {
-        ArrayList<Item> inventory = new ArrayList<Item>();
         inventory.add(new PerishableRetailItem("testItem1", "Test item", 2,
                 LocalDate.of(2024, 1, 5), 3.00, 2.00, 10));
         inventory.add(new PerishableRetailItem("testItem2", "Test item", 2,
                 LocalDate.of(2024, 1, 1), 3.00, 2.00, 10));
-        ItemList itemList = new ItemList(inventory);
+        itemList = new ItemList(inventory);
 
         String actualOutput = itemList.printListSortedByExpiryDate(itemList.getItemList());
 
@@ -260,12 +270,11 @@ class ItemListTest {
 
     @Test
     void printListSortedBySalePrice_unsortedListBySalePrice_returnsSortedList() {
-        ArrayList<Item> inventory = new ArrayList<Item>();
         inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
                 LocalDate.of(2024, 1, 1), 10.00, 2.00, 10));
         inventory.add(new PerishableRetailItem("testItem2", "Test item 2", 2,
                 LocalDate.of(2024, 1, 1), 3.00, 2.00, 10));
-        ItemList itemList = new ItemList(inventory);
+        itemList = new ItemList(inventory);
 
         String actualOutput = itemList.printListSortedBySalePrice(itemList.getItemList());
 
@@ -291,14 +300,14 @@ class ItemListTest {
 
     @Test
     void printListSortedByExpiryDate_noPerishables_returnsEmptyList() {
-        ArrayList<Item> inventory = new ArrayList<Item>();
         inventory.add(new RetailItem("testItem1", "Test item 1",
                 2, 2.00, 10));
         inventory.add(new RetailItem("testItem2", "Test item 2",
                 2, 3.00, 2.00, 10));
-        ItemList itemList = new ItemList(inventory);
+        itemList = new ItemList(inventory);
 
         String actualOutput = itemList.printListSortedByExpiryDate(itemList.getItemList());
+
         String expectedOutput = "";
 
         assertEquals(expectedOutput,actualOutput);
@@ -306,15 +315,14 @@ class ItemListTest {
 
     @Test
     void printListSortedBySalePrice_noRetailItems_returnsEmptyList() {
-        ArrayList<Item> inventory = new ArrayList<Item>();
         inventory.add(new PerishableOperationalItem("testItem1", "Test item 1",
                 2, LocalDate.MIN, 2.00, 10));
         inventory.add(new PerishableOperationalItem("testItem2", "Test item 2",
                 2, LocalDate.MIN, 2.00, 10));
-
-        ItemList itemList = new ItemList(inventory);
+        itemList = new ItemList(inventory);
 
         String actualOutput = itemList.printListSortedBySalePrice(itemList.getItemList());
+
         String expectedOutput = "";
 
         assertEquals(expectedOutput,actualOutput);
@@ -560,10 +568,9 @@ class ItemListTest {
 
     @Test
     void toString_oneItemInList_returnList() {
-        ArrayList<Item> inventory = new ArrayList<Item>();
         inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
                 LocalDate.of(2024, 1, 1), 10.00, 2.00, 10));
-        ItemList itemList = new ItemList(inventory);
+        itemList = new ItemList(inventory);
 
         String actualOutput = itemList.toString();
 
@@ -580,8 +587,7 @@ class ItemListTest {
 
     @Test
     void toString_noItemInList_returnEmptyList() {
-        ArrayList<Item> inventory = new ArrayList<Item>();
-        ItemList itemList = new ItemList(inventory);
+        itemList = new ItemList(inventory);
 
         String actualOutput = itemList.toString();
 
@@ -589,5 +595,4 @@ class ItemListTest {
 
         assertEquals(expectedOutput, actualOutput);
     }
-
 }
