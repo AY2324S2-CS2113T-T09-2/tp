@@ -17,20 +17,29 @@ class DeleteCommandParserTest {
 
     @Test
     void parse_deleteByIndexOption_success() {
-        String[] invalidCommandArgs = new String[]{"-i", "1"};
+        String[] validCommandArgs = new String[]{"-i", "1"};
         try {
-            deleteCommand = deleteCommandParser.parse(invalidCommandArgs);
+            deleteCommand = deleteCommandParser.parse(validCommandArgs);
             Assertions.assertTrue(deleteCommand instanceof DeleteCommand);
         } catch (ParseException e) {
             Assertions.fail();
         }
+
+    }@Test
+    void parse_deleteByNegativeIndexOption_failure() {
+        String[] invalidCommandArgs = new String[]{"-i", "-1"};
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    deleteCommandParser.parse(invalidCommandArgs);
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "item index must be positive");
     }
 
     @Test
     void parse_deleteByNameOption_success() {
-        String[] invalidCommandArgs = new String[]{"-n", "1"};
+        String[] validCommandArgs = new String[]{"-n", "1"};
         try {
-            deleteCommand = deleteCommandParser.parse(invalidCommandArgs);
+            deleteCommand = deleteCommandParser.parse(validCommandArgs);
             Assertions.assertTrue(deleteCommand instanceof DeleteCommand);
         } catch (ParseException e) {
             Assertions.fail();
