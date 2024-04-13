@@ -137,8 +137,8 @@ The **Sequence Diagram** below shows how the components interact with each other
 API: [`Ui.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/ui/Ui.java)
 
 The `UI` component
-- receives user input to pass to `Main`
-- keeps track of a boolean variable that is false if and only if `ByeCommand` is received
+- loops over user inputs until a non-empty input to pass to `Main`
+- keeps track of a boolean variable that is false if and only if `ByeCommand` or `UserInterruptException` is received
 - depends on the `Parser` having set all command option descriptions in `CommandOptionAdder`
 - completes commands based on command and option descriptions in `CommandCompleter`
 
