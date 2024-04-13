@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ByeCommandTest {
+    Command command = new ByeCommand();
 
     @Test
     void execute_exitBinBash_returnBye() {
-        Command command = new ByeCommand();
         command.execute(new ItemList(new ArrayList<Item>()));
         String actualOutput = command.getExecutionUiOutput(); ;
         String expectedOutput = "Bye!";
