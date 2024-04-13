@@ -33,7 +33,8 @@ public class RestockCommandParser extends DefaultParser {
      * @throws ParseException If an error occurs during parsing.
      */
     public RestockCommand parse(String[] commandArgs) throws ParseException {
-        CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
+        CommandLine commandLine = super.parse(options, commandArgs);
+        Parser.checkDuplicateOption(commandLine.getOptions());
         RestockCommand restockCommand;
         String restockQuantity = commandLine.getOptionValue("quantity");
         int itemRestockQuantity = Parser.parseIntOptionValue(restockQuantity, "restock quantity");

@@ -33,7 +33,8 @@ public class SellCommandParser extends DefaultParser {
      * @throws ParseException If an error occurs during parsing.
      */
     public SellCommand parse(String[] commandArgs) throws ParseException {
-        CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
+        CommandLine commandLine = super.parse(options, commandArgs);
+        Parser.checkDuplicateOption(commandLine.getOptions());
         SellCommand sellCommand;
         String sellQuantity = commandLine.getOptionValue("quantity");
         int itemSellQuantity = Parser.parseIntOptionValue(sellQuantity, "sell quantity");

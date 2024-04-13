@@ -39,8 +39,8 @@ public class AddCommandParser extends DefaultParser {
      * @throws ParseException If there is an error parsing the command arguments.
      */
     public AddCommand parse(String[] commandArgs) throws ParseException {
-
         CommandLine commandLine = super.parse(options, commandArgs);
+        Parser.checkDuplicateOption(commandLine.getOptions());
 
         // Determine item type to be created
         String itemType;

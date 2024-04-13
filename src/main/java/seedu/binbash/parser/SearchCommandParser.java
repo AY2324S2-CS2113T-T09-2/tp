@@ -40,6 +40,7 @@ public class SearchCommandParser extends DefaultParser {
      */
     public SearchCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
+        Parser.checkDuplicateOption(commandLine.getOptions());
         checkNonListOption(commandLine.getOptions());
 
         SearchCommand searchCommand = new SearchCommand();

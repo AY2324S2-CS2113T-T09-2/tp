@@ -31,6 +31,7 @@ public class DeleteCommandParser extends DefaultParser {
      */
     public DeleteCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
+        Parser.checkDuplicateOption(commandLine.getOptions());
 
         if (commandLine.hasOption("name")) {
             String nameField = String.join(" ", commandLine.getOptionValues("name"));
