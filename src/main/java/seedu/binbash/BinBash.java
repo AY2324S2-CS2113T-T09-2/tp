@@ -2,7 +2,6 @@ package seedu.binbash;
 
 
 import seedu.binbash.command.ByeCommand;
-import seedu.binbash.command.QuoteCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.inventory.ItemList;
@@ -40,9 +39,6 @@ public class BinBash {
 
                 if (userCommand instanceof ByeCommand) {
                     userInterface.setUserAsInactive();
-                } else if (userCommand instanceof QuoteCommand) { // Handle QuoteCommand
-                    // Initialize Ui before executing QuoteCommand
-                    ((QuoteCommand) userCommand).setUi(userInterface);
                 }
 
                 userCommand.execute(itemList);
