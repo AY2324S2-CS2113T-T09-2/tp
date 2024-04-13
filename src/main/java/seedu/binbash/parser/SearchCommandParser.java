@@ -6,40 +6,28 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.jline.builtins.Completers.OptDesc;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 /**
  * Parses command line arguments for creating a SearchCommand.
  */
 public class SearchCommandParser extends DefaultParser {
-    private ArrayList<OptDesc> optionDescriptions;
 
     /**
      * Creates a new SearchCommandParser with the necessary options and option descriptions.
      */
     public SearchCommandParser() {
         options = new Options();
-        optionDescriptions = new ArrayList<>();
-        new CommandOptionAdder(options, optionDescriptions)
+        new CommandOptionAdder(options)
             .addNameOption(false, "Search by name")
             .addDescriptionOption(false, "Search by description")
             .addQuantityOption(false, "Search by quantity")
             .addCostPriceOption(false, "Search by cost-price")
             .addSalePriceOption(false, "Search by sale-price")
             .addExpirationDateOption(false, "Search by expiry date")
-            .addListOption(false, "Lists the first n results");
-    }
-
-    /**
-     * Gets the option descriptions for the SearchCommandParser.
-     *
-     * @return The list of option descriptions.
-     */
-    public ArrayList<OptDesc> getOptionDecriptions() {
-        return optionDescriptions;
+            .addListOption(false, "Lists the first n results")
+            .saveCommandOptionDescriptions("search");
     }
 
     /**
@@ -125,6 +113,9 @@ public class SearchCommandParser extends DefaultParser {
 
         if (commandLine.hasOption("list")) {
             int numberOfResults = Parser.parseIntOptionValue(commandLine.getOptionValue("list"), "number of results");
+            if (numberOfResults <= 0) {
+                throw new ParseException("number of results must be positive");
+            }
             searchCommand.setNumberOfResults(numberOfResults);
         }
         return searchCommand;

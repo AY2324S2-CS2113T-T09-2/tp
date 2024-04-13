@@ -119,7 +119,7 @@ public class UpdateCommand extends Command {
                 return true;
             }
             assert index > 0 && index <= itemList.getSortedItemCount();
-            commandLogger.info("Delete identifier is detected as an index");
+            commandLogger.info("Update identifier is detected as an index");
             try {
                 executionUiOutput = itemList.updateItemDataByIndex(index, itemDescription, itemQuantity,
                         itemExpirationDate, itemSalePrice, itemCostPrice, itemThreshold);

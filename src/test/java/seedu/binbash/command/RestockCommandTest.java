@@ -51,7 +51,9 @@ public class RestockCommandTest {
         ItemList itemList = new ItemList(new ArrayList<>());
         RestockCommand command = new RestockCommand("Non-Existing Item", 5);
         command.execute(itemList);
-        assertEquals("Item with name 'Non-Existing Item' not found.", command.getExecutionUiOutput());
+        assertEquals("Item with name 'Non-Existing Item' not found! " +
+                        "Consider using the search or the list command to find the exact name of your item!",
+                command.getExecutionUiOutput());
     }
 
     @Test

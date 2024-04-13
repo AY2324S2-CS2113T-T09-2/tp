@@ -1,5 +1,6 @@
 package seedu.binbash.comparators;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.binbash.item.PerishableRetailItem;
 import seedu.binbash.item.RetailItem;
@@ -11,10 +12,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ItemComparatorByProfitTest {
+    List<RetailItem> itemList;
+
+    @BeforeEach
+    void setUp() {
+        itemList = new ArrayList<>();
+    }
 
     @Test
     public void compare_itemsWithDifferentProfits_sortedByDescendingProfit() {
-        List<RetailItem> itemList = new ArrayList<>();
         RetailItem item1 = new RetailItem("Item1", "Description1", 10, 15.0, 5.0);
         item1.setTotalUnitsPurchased(10);
         item1.setTotalUnitsSold(10);
@@ -33,14 +39,13 @@ class ItemComparatorByProfitTest {
 
         itemList.sort(new ItemComparatorByProfit());
 
-        assertEquals("Item3", itemList.get(0).getItemName());
+        assertEquals("Item2", itemList.get(0).getItemName());
         assertEquals("Item1", itemList.get(1).getItemName());
-        assertEquals("Item2", itemList.get(2).getItemName());
+        assertEquals("Item3", itemList.get(2).getItemName());
     }
 
     @Test
     public void compare_itemsWithEqualProfits_sortedByInsertionOrder() {
-        List<RetailItem> itemList = new ArrayList<>();
         RetailItem item1 = new RetailItem("Item1", "Description1", 10, 15.0, 5.0);
         item1.setTotalUnitsPurchased(10);
         item1.setTotalUnitsSold(10);
@@ -59,8 +64,7 @@ class ItemComparatorByProfitTest {
     }
 
     @Test
-    public void compare_itemsWithNegativeProfit_sortedByDescendingProfit() {
-        List<RetailItem> itemList = new ArrayList<>();
+    public void compare_itemsWithNegativeProfit_sortedByAscendingProfit() {
         RetailItem item1 = new RetailItem("Item1", "Description1", 10, 5.0, 15.0);
         item1.setTotalUnitsPurchased(10);
         item1.setTotalUnitsSold(10);
@@ -74,7 +78,7 @@ class ItemComparatorByProfitTest {
 
         itemList.sort(new ItemComparatorByProfit());
 
-        assertEquals("Item2", itemList.get(0).getItemName());
-        assertEquals("Item1", itemList.get(1).getItemName());
+        assertEquals("Item1", itemList.get(0).getItemName());
+        assertEquals("Item2", itemList.get(1).getItemName());
     }
 }

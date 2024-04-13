@@ -7,22 +7,40 @@ skinparam CircledCharacterRadius 0
 class Ui {
         - isUserActive : boolean {static}
 
-        + setUserAsInactive()
         + readUserCommand() : String
-        + talk(line: String)
 }
 
-class TextIn {
-        - input : LineReader {static}
+package jline3 #DDDDDD {
+        class LineReader {
+                # terminal : Terminal
+        
+                + nextLine() : String
+        }
 
-        + nextLine() : String
+        class AggregateCompleter
 }
 
-class PrintStream {
-        + println(x: String)
+class CommandCompleter {
+        - addCompleter : ArgumentCompleter {static}
+        - updateCompleter : ArgumentCompleter {static}
+        - deleteCompleter : ArgumentCompleter {static}
+        - restockCompleter : ArgumentCompleter {static}
+        - sellCompleter : ArgumentCompleter {static}
+        - searchCompleter : ArgumentCompleter {static}
+        - listCompleter : ArgumentCompleter {static}
+        - profitCompleter : ArgumentCompleter {static}
+        - byeCompleter : ArgumentCompleter {static}
 }
 
-Ui -up-> "1" TextIn : reads from >
-Ui -right-> "1" PrintStream : writes to >
+class CommandOptionAdder {
+        - allCommandsOptionDescriptions : HashMap<String, ArrayList<OptDesc>> {static}
+
+        + getAllCommandsOptionDescriptions() : HashMap<String, ArrayList<OptDesc>>
+}
+
+Ui -> "1" LineReader : reads from >
+LineReader --> "completer" CommandCompleter
+CommandCompleter --|> AggregateCompleter
+CommandCompleter -d-> CommandOptionAdder : gets option descriptions from >
 
 @enduml
