@@ -330,7 +330,6 @@ class ItemListTest {
 
     @Test
     public void updateItemDataByName_validUpdates_success() throws Exception {
-        ArrayList<Item> items = new ArrayList<>();
         RetailItem testItem = new RetailItem(
                 "Test Item",
                 "A test item",
@@ -338,8 +337,8 @@ class ItemListTest {
                 20.0,
                 15.0,
                 5);
-        items.add(testItem);
-        ItemList itemList = new ItemList(items);
+        inventory.add(testItem);
+        itemList = new ItemList(inventory);
 
         String newDescription = "An updated test item";
         int newQuantity = 15;
@@ -348,7 +347,7 @@ class ItemListTest {
         double newCostPrice = 18.0;
         int newThreshold = 7;
 
-        String result = itemList.updateItemDataByName(
+        itemList.updateItemDataByName(
                 "Test Item",
                 newDescription,
                 newQuantity,
@@ -368,7 +367,6 @@ class ItemListTest {
 
     @Test
     public void updateItemDataByName_nonExistingItem_throwsException() {
-        ArrayList<Item> items = new ArrayList<>();
         RetailItem testItem = new RetailItem(
                 "Test Item",
                 "A test item",
@@ -376,8 +374,8 @@ class ItemListTest {
                 20.0,
                 15.0,
                 5);
-        items.add(testItem);
-        ItemList itemList = new ItemList(items);
+        inventory.add(testItem);
+        itemList = new ItemList(inventory);
 
         Exception exception = assertThrows(Exception.class, () -> {
             itemList.updateItemDataByName(
@@ -396,7 +394,6 @@ class ItemListTest {
 
     @Test
     public void updateItemDataByIndex_validUpdates_success() throws Exception {
-        ArrayList<Item> items = new ArrayList<>();
         RetailItem testItem = new RetailItem(
                 "Test Item",
                 "A test item",
@@ -404,8 +401,8 @@ class ItemListTest {
                 20.0,
                 15.0,
                 5);
-        items.add(testItem);
-        ItemList itemList = new ItemList(items);
+        inventory.add(testItem);
+        itemList = new ItemList(inventory);
 
         String newDescription = "An updated test item";
         int newQuantity = 15;
@@ -414,7 +411,7 @@ class ItemListTest {
         double newCostPrice = 18.0;
         int newThreshold = 7;
 
-        String result = itemList.updateItemDataByIndex(
+        itemList.updateItemDataByIndex(
                 1,
                 newDescription,
                 newQuantity,
@@ -434,7 +431,7 @@ class ItemListTest {
 
     @Test
     void updateItemDataByName_invalidItemName_throwsException() {
-        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList = new ItemList(inventory);
         assertThrows(InvalidCommandException.class, () -> itemList.updateItemDataByName(
                 "Nonexistent",
                 null,
@@ -447,7 +444,7 @@ class ItemListTest {
 
     @Test
     void updateItemDataByIndex_invalidItemIndex_throwsException() {
-        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList = new ItemList(inventory);
         assertThrows(IndexOutOfBoundsException.class, () -> itemList.updateItemDataByIndex(
                 3,
                 null,
@@ -460,7 +457,7 @@ class ItemListTest {
 
     @Test
     void updateItemDataByName_noChanges_noChangesMade() throws InvalidCommandException {
-        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList = new ItemList(inventory);
         itemList.addItem(
                 "retail",
                 "Item1",
@@ -485,7 +482,7 @@ class ItemListTest {
     @Test
     void sellOrRestockItem_validRestockOperation_success() {
         try {
-            ItemList itemList = new ItemList(new ArrayList<>());
+            itemList = new ItemList(inventory);
             itemList.addItem("operational", "Item1", "Description1", 10, LocalDate.MIN, 0.0, 10.0, 5);
             itemList.sellOrRestockItem("Item1", 5, "restock");
             OperationalItem item = (OperationalItem) itemList.getItemList().get(0);
@@ -497,7 +494,7 @@ class ItemListTest {
 
     @Test
     void sellOrRestockItem_sellingMoreThanAvailableQuantity_throwsException() {
-        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList = new ItemList(inventory);
         itemList.addItem("retail", "Item1", "Description1", 10, LocalDate.of(2024, 12 ,12), 20.0, 10.0, 5);
         assertThrows(InvalidCommandException.class, () -> itemList.sellOrRestockItem("Item1", 15, "sell"));
     }
@@ -505,7 +502,7 @@ class ItemListTest {
     @Test
     void sellOrRestockItem_validSellOperationWithQuantityBelowThreshold_returnsAlertMessage()
             throws InvalidCommandException {
-        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList = new ItemList(inventory);
         itemList.addItem("retail", "Item1", "Description1", 6, LocalDate.of(2024, 12, 12), 20.0, 10.0, 5);
         String result = itemList.sellOrRestockItem("Item1", 2, "sell");
         RetailItem item = (RetailItem) itemList.getItemList().get(0);
@@ -528,7 +525,7 @@ class ItemListTest {
 
     @Test
     void getTotalRevenue_multipleRetailItems_correctTotalRevenue() {
-        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList = new ItemList(inventory);
         RetailItem item1 = new RetailItem("Item1", "Description1", 10, 20.0, 10.0, 5);
         RetailItem item2 = new RetailItem("Item2", "Description2", 5, 15.0, 7.0, 3);
         item1.setTotalUnitsSold(10);
@@ -540,7 +537,7 @@ class ItemListTest {
 
     @Test
     void getTotalCost_multipleOperationalItems_correctTotalCost() {
-        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList = new ItemList(inventory);
         OperationalItem item1 = new OperationalItem("Item1", "Description1", 10, 10.0, 5);
         OperationalItem item2 = new OperationalItem("Item2", "Description2", 5, 7.0, 3);
         item1.setTotalUnitsPurchased(10);
@@ -552,7 +549,7 @@ class ItemListTest {
 
     @Test
     void getProfitMargin_multipleItems_correctProfitMargin() {
-        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList = new ItemList(inventory);
         RetailItem item1 = new RetailItem("Item1", "Description1", 10, 20.0, 10.0, 5);
         OperationalItem item2 = new OperationalItem("Item2", "Description2", 5, 7.0, 3);
         item1.setTotalUnitsSold(10);
