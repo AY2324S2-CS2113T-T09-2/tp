@@ -95,7 +95,8 @@ public class Storage {
             storageLogger.consoleLog("Data file is corrupted. Existing file renamed and new items.txt file " +
                             "created. Old corrupted file is within the ./data/ directory.");
         } else {
-            storageLogger.consoleLog("Failed to rename the corrupted file or create a new items.txt file.");
+            storageLogger.consoleLog("Data file is corrupted. Failed to rename the corrupted file or create a new " +
+                    "items.txt file.");
         }
 
         assert isRenamed : "Failed to rename the corrupted file";
