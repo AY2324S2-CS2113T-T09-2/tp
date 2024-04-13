@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Parses user input to generate commands for managing inventory.
@@ -134,6 +135,23 @@ public class Parser {
             return listCommandParser.parse(commandArgs);
         } catch (ParseException e) {
             throw new InvalidCommandException(e.getMessage());
+        }
+    }
+
+    /**
+     * Checks whether a duplicate option has been processed.
+     *
+     * @param processedOptions The list of options processed.
+     * @throws ParseException If duplicate option found.
+     */
+    static void checkDuplicateOption(Option[] processedOptions) throws ParseException {
+        HashSet<String> optionSet = new HashSet<>();
+        for (Option processedOption : processedOptions) {
+            String currentOption = processedOption.getOpt();
+            if (optionSet.contains(currentOption)) {
+                throw new ParseException("Duplicate option: -" + currentOption);
+            }
+            optionSet.add(currentOption);
         }
     }
 
