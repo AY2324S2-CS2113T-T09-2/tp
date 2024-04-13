@@ -134,27 +134,17 @@ The **Sequence Diagram** below shows how the components interact with each other
 
 ### Ui Component
 
-![Ui class diagram](images/UiClassDiagram.png)
-
 API: [`Ui.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/ui/Ui.java)
 
-The above class diagram shows the components delegating separate functionalities of the Ui.
+The `UI` component
+- receives user input to pass to `Main`
+- keeps track of a boolean variable that is false if and only if `ByeCommand` is received
+- depends on the `Parser` having set all command option descriptions in `CommandOptionAdder`
+- completes commands based on command and option descriptions in `CommandCompleter`
 
-The `TextIn` class is responsible for reading user input and returning it to `Ui`, upon which it is passed to the *main()* program.
+![Ui class diagram](images/UiClassDiagram.png)
 
-The `PrintStream` class writes text at the behest of `Ui` to standard output, upon which it is received by the user.
-
-Note the use of an externally provided `LineReader` object in the `TextIn` class that handles input. This allows us to greatly extend our text-based user interface with features such as:
-
-1. Command completion on tab
-
-2. Displaying option descriptions on hover
-
-3. Contextual help menus
-
-![linereader](images/ui-linereader-enhancement.png)
-
-This allows us to overload options on a small number of commands to provide full functionality of the application. Developers can then extend its features without also the worry of finding a way for users to access those features easily.
+This is enabled by the externally provided Java [JLine library](https://github.com/jline/jline3). Namely, it makes use of the `LineReader` object and extends an `AggregateCompleter` to read and complete user inputs respectively.
 
 ---
 

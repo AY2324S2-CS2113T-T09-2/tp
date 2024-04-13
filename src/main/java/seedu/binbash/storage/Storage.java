@@ -72,10 +72,10 @@ public class Storage {
         }
 
         if (!isCorrupted) {
-            storageLogger.consoleLog("Data loaded successfully");
+            storageLogger.consoleLog("Existing data file loaded successfully.");
         } else {
             handleCorruptedFile();
-            storageLogger.consoleLog("User will be given an incomplete inventory.");
+            storageLogger.info("User will be given an incomplete inventory.");
         }
         return outputList;
     }
@@ -85,17 +85,18 @@ public class Storage {
      * If both operations are successful, it logs the success message. Otherwise, it logs a warning message.
      */
     private void handleCorruptedFile() {
-        storageLogger.consoleLog("Data file is corrupted. BinBash is attempting to rename the corrupted file" +
+        storageLogger.info("Data file is corrupted. BinBash is attempting to rename the corrupted file" +
                 " and create a new data file.");
 
         boolean isRenamed = renameCorruptedFile();
         boolean isNewFileCreated = createNewTxtFile();
 
         if (isRenamed && isNewFileCreated) {
-            storageLogger.consoleLog("Corrupted file renamed and new items.txt file created. Old corrupted file is " +
-                            "within the ./data/ directory.");
+            storageLogger.consoleLog("Data file is corrupted. Existing file renamed and new items.txt file " +
+                            "created. Old corrupted file is within the ./data/ directory.");
         } else {
-            storageLogger.consoleLog("Failed to rename the corrupted file or create a new items.txt file.");
+            storageLogger.consoleLog("Data file is corrupted. Failed to rename the corrupted file or create a new " +
+                    "items.txt file.");
         }
 
         assert isRenamed : "Failed to rename the corrupted file";

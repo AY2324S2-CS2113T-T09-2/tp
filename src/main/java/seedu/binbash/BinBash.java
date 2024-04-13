@@ -20,7 +20,7 @@ public class BinBash {
     public BinBash() {
         logger = new BinBashLogger(BinBash.class.getName());
         inputParser = new Parser();
-        userInterface = new Ui(inputParser.getAllCommandsOptionDescriptions());
+        userInterface = new Ui();
         storage = new Storage();
         itemList = new ItemList(storage.loadData());
     }
