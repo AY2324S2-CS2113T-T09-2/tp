@@ -1,5 +1,6 @@
 @startuml
 
+    hide footbox
     participant "BinBash" as BinBash
     participant "userCommand:RestockItem" as RestockItem
     participant "itemList:ItemList" as ItemList

@@ -35,4 +35,32 @@ public class RestockCommandTest {
         assertTrue(restockCommand.execute(itemList));
         assertEquals(0, itemList.getItemCount());
     }
+
+    @Test
+    public void restockItem_increasesQuantity_validIndexAndQuantity() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
+        RestockCommand command = new RestockCommand(1, 5);
+        command.setIsIndex();
+        command.execute(itemList);
+        assertEquals(15, itemList.getItemList().get(0).getItemQuantity());
+    }
+
+    @Test
+    public void restockItem_returnsErrorMessage_nonExistingItem() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        RestockCommand command = new RestockCommand("Non-Existing Item", 5);
+        command.execute(itemList);
+        assertEquals("Item with name 'Non-Existing Item' not found.", command.getExecutionUiOutput());
+    }
+
+    @Test
+    public void restockItem_returnsErrorMessage_invalidIndex() {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
+        RestockCommand command = new RestockCommand(2, 5);
+        command.setIsIndex();
+        command.execute(itemList);
+        assertEquals("Index entered is out of bounds!", command.getExecutionUiOutput());
+    }
 }

@@ -4,7 +4,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.TypeHandler;
 import org.jline.builtins.Completers.OptDesc;
 
 import seedu.binbash.command.SellCommand;
@@ -54,13 +53,16 @@ public class SellCommandParser extends DefaultParser {
         CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
         SellCommand sellCommand;
         String sellQuantity = commandLine.getOptionValue("quantity");
-        int itemSellQuantity = TypeHandler.createNumber(sellQuantity).intValue();
+        int itemSellQuantity = Parser.parseIntOptionValue(sellQuantity, "sell quantity");
+        if (itemSellQuantity <= 0) {
+            throw new ParseException("Please provide a positive number.");
+        }
 
         if (commandLine.hasOption("name")) {
             String itemName = String.join(" ", commandLine.getOptionValues("name"));
             sellCommand = new SellCommand(itemName, itemSellQuantity);
         } else {
-            int index = TypeHandler.createNumber(commandLine.getOptionValue("index")).intValue();
+            int index = Parser.parseIntOptionValue(commandLine.getOptionValue("index"), "item index");
             sellCommand = new SellCommand(index, itemSellQuantity);
             sellCommand.setIsIndex();
         }

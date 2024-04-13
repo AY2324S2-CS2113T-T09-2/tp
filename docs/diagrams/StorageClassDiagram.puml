@@ -1,4 +1,9 @@
 @startuml
+
+skinparam classAttributeIconSize 0
+skinparam CircledCharacterFontSize 0
+skinparam CircledCharacterRadius 0
+
 class BinBash {
 
     - userInterface : Ui
