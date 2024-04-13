@@ -6,11 +6,13 @@ import seedu.binbash.command.Command;
 import seedu.binbash.command.DeleteCommand;
 import seedu.binbash.command.UpdateCommand;
 import seedu.binbash.command.SearchCommand;
+import seedu.binbash.command.SellCommand;
+import seedu.binbash.command.RestockCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
-import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
 
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
 
 import java.time.LocalDate;
@@ -48,7 +50,7 @@ public class Parser {
      * @return The parsed command.
      * @throws InvalidCommandException If the command is invalid or cannot be parsed.
      */
-    public Command parseCommand(String userInput) throws BinBashException {
+    public Command parseCommand(String userInput) throws InvalidCommandException {
         String[] tokens = userInput.trim().split("\\s+"); // Tokenize user input
         String commandString = tokens[0].toLowerCase();
         String[] commandArgs = Arrays.copyOfRange(tokens, 1, tokens.length); // Takes only options and arguments
@@ -103,7 +105,7 @@ public class Parser {
         }
     }
 
-    private Command parseRestockCommand(String[] commandArgs) throws InvalidCommandException {
+    private RestockCommand parseRestockCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return restockCommandParser.parse(commandArgs);
         } catch (ParseException e) {
@@ -111,7 +113,7 @@ public class Parser {
         }
     }
 
-    private Command parseSellCommand(String[] commandArgs) throws InvalidCommandException {
+    private SellCommand parseSellCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return sellCommandParser.parse(commandArgs);
         } catch (ParseException e) {
