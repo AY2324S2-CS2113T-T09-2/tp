@@ -14,7 +14,7 @@ public class SearchCommandParserTest {
 
     @Test
     public void parse_noOptionSpecified_throwsParseExceptionWithWarning() {
-        String[] invalidCommandArgs = new String[]{"-l", "2", "-l", "3"};
+        String[] invalidCommandArgs = new String[]{"-l", "2"};
         ParseException thrown = Assertions.assertThrows(
                 ParseException.class, () -> {
                     searchCommandParser.parse(invalidCommandArgs);
