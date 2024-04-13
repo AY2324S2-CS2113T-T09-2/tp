@@ -18,6 +18,7 @@ public class OperationalItem extends Item {
 
     @Override
     public String toString() {
-        return "[O] " + super.toString();
+        return "[O] " + super.toString() + System.lineSeparator()
+                + String.format("\tthreshold: %d", itemThreshold);
     }
 }

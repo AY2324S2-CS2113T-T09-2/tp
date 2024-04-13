@@ -53,4 +53,18 @@ public class AddCommandTest {
         assertEquals(5.00, addedItem.getItemCostPrice());
         assertEquals(6, addedItem.getItemThreshold());
     }
+
+    @Test
+    void execute_itemNameAlreadyExists_itemNotAdded() {
+        ItemList itemList = new ItemList(new ArrayList<Item>());
+        AddCommand addCommand1 = new AddCommand("retail", "testItem", "A test item", 2,
+                LocalDate.of(2024, 12, 12), 4.00, 5.00, 6);
+        AddCommand addCommand2 = new AddCommand("retail", "testItem", "Another test item", 3,
+                LocalDate.of(2024, 12 ,12), 7.00, 8.00, 9);
+
+        addCommand1.execute(itemList);
+        addCommand2.execute(itemList);
+
+        assertEquals(1, itemList.getItemCount());
+    }
 }
