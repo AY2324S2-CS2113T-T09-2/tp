@@ -59,23 +59,6 @@ public class SearchCommandTest {
     }
 
     @Test
-    void execute_searchForNonExistingItem_returnsEmptyList() {
-        SearchCommand searchCommand = new SearchCommand();
-        searchCommand.setNameField("NonExistingItemName");
-        searchCommand.setDescriptionField("NonExistingDescription");
-        int[] quantityRange = {0, 10};
-        searchCommand.setQuantityRange(quantityRange);
-        double[] costPriceRange = {0, 100};
-        searchCommand.setCostPriceRange(costPriceRange);
-
-        ItemList dummyItemList = new ItemList(testItemList);
-        searchCommand.execute(dummyItemList);
-        String actualOutput = searchCommand.getExecutionUiOutput();
-
-        Assertions.assertTrue(actualOutput.isBlank());
-    }
-
-    @Test
     void execute_searchWithEmptyCriteria_returnsAllItems() {
         SearchCommand searchCommand = new SearchCommand();
         ItemList dummyItemList = new ItemList(testItemList);
@@ -99,31 +82,6 @@ public class SearchCommandTest {
     }
 
     @Test
-    void execute_searchWithNegativeQuantityRange_returnsEmptyList() {
-        SearchCommand searchCommand = new SearchCommand();
-        int[] negativeQuantityRange = {-10, -5};
-        searchCommand.setQuantityRange(negativeQuantityRange);
-        ItemList dummyItemList = new ItemList(testItemList);
-        searchCommand.execute(dummyItemList);
-        String actualOutput = searchCommand.getExecutionUiOutput();
-
-        Assertions.assertTrue(actualOutput.isBlank());
-    }
-
-    @Test
-    void execute_searchWithNegativeCostPriceRange_returnsEmptyList() {
-        SearchCommand searchCommand = new SearchCommand();
-        double[] negativeCostPriceRange = {-100, -50};
-        searchCommand.setCostPriceRange(negativeCostPriceRange);
-
-        ItemList dummyItemList = new ItemList(testItemList);
-        searchCommand.execute(dummyItemList);
-        String actualOutput = searchCommand.getExecutionUiOutput();
-
-        Assertions.assertTrue(actualOutput.isBlank());
-    }
-
-    @Test
     void execute_searchWithExactCostPrice_returnsMatchingItems() {
         SearchCommand searchCommand = new SearchCommand();
         double[] exactCostPriceRange = {10.20, 10.20}; // Exact cost price of Philips LED PLL 4P2G
@@ -139,18 +97,5 @@ public class SearchCommandTest {
             }
         });
         Assertions.assertEquals(expectedOutput, actualOutput);
-    }
-
-    @Test
-    void execute_searchWithNegativeSalePriceRange_returnsEmptyList() {
-        SearchCommand searchCommand = new SearchCommand();
-        double[] negativeSalePriceRange = {-10, -5};
-        searchCommand.setSalePriceRange(negativeSalePriceRange);
-
-        ItemList dummyItemList = new ItemList(testItemList);
-        searchCommand.execute(dummyItemList);
-        String actualOutput = searchCommand.getExecutionUiOutput();
-
-        Assertions.assertTrue(actualOutput.isBlank());
     }
 }

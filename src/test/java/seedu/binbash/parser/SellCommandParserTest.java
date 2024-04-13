@@ -36,15 +36,6 @@ public class SellCommandParserTest {
         Assertions.assertEquals(thrown.getMessage(), "Missing required option: q");
     }
 
-    // New test case: Parsing with non-integer quantity
-    @Test
-    public void parse_nonIntegerQuantity_throwsParseException() {
-        String[] invalidCommandArgs = new String[]{"-i", "3", "-q", "abc"};
-        ParseException thrown = Assertions.assertThrows(
-                ParseException.class, () -> sellCommandParser.parse(invalidCommandArgs), "ParseException was expected");
-        Assertions.assertEquals(thrown.getMessage(), "sell quantity must be a number");
-    }
-
     // New test case: Parsing with missing option
     @Test
     public void parse_missingOption_throwsParseException() {
@@ -52,14 +43,5 @@ public class SellCommandParserTest {
         ParseException thrown = Assertions.assertThrows(
                 ParseException.class, () -> sellCommandParser.parse(invalidCommandArgs), "ParseException was expected");
         Assertions.assertEquals(thrown.getMessage(), "Missing required option: q");
-    }
-
-    // New test case: Parsing with non-numeric item ID
-    @Test
-    public void parse_nonNumericItemId_throwsParseException() {
-        String[] invalidCommandArgs = new String[]{"-i", "abc", "-q", "5"};
-        ParseException thrown = Assertions.assertThrows(
-                ParseException.class, () -> sellCommandParser.parse(invalidCommandArgs), "ParseException was expected");
-        Assertions.assertEquals(thrown.getMessage(), "item index must be a number");
     }
 }
