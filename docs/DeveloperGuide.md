@@ -668,6 +668,23 @@ Overall, effective logging implementation enhances the maintainability, reliabil
 5. List out the items using `list`. Ensure that the item can no longer be found.
 6. Open `data/items.txt` and ensure the deleted item does not exist in this file.
 
+### Searching for items
+
+1. Invalid range searches
+   - Prerequisite: inventory with pre-populated item list.
+   - Test case 1: `search -q -2..10`
+     Expected: No results found. Error message "quantity lower bound cannot be negative" shown.
+   - Test case 2: `search -s 5.50..4.15`
+     Expected: No results found. Error message "sale price lower bound is more than upper bound" shown.
+   - Test case 3: `search -e ..04-13-2024`
+     Expected: No results found. Error message "expiry date upper bound is invalid. Required format: dd-mm-yyyy" shown.
+2. Case insensitive name and description searches
+   - Prerequisite: inventory with pre-populated item list.
+   - Test case 1: `search -n item` followed by `search -n IteM`
+     Expected: Both searches give same results.
+   - Test case 2: `search -d used in warehouse` followed by `search -d uSed iN WAreHOuSe`
+     Expected: Both searches give same results.
+
 ### Update the quantity of an Item
 
 1. Enter this command to create a new `RetailItem`:<br>
