@@ -118,15 +118,50 @@ public class SearchCommandParserTest {
     }
 
     @Test
+    void parseRangeArgument_noRange_throwsParseExceptionWithWarningMessage() {
+        String invalidRangeArgument = " .. ";
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    searchCommandParser.parseRangeArgument(invalidRangeArgument, "test");
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "Format for test option: {min}..{max}. "
+                + "At least one of min or max is required.");
+    }
+
+    @Test
+    void parseRangeArgument_moreThanOneRange_throwsParseExceptionWithWarningMessage() {
+        String invalidRangeArgument = "a..b..c";
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    searchCommandParser.parseRangeArgument(invalidRangeArgument, "test");
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "Format for test option: {min}..{max}. "
+                + "At least one of min or max is required.");
+    }
+
+    @Test
+    void parseRangeArgument_invalidRange_throwsParseExceptionWithWarningMessage() {
+        String invalidRangeArgument = ".....";
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    searchCommandParser.parseRangeArgument(invalidRangeArgument, "test");
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "Format for test option: {min}..{max}. "
+                + "At least one of min or max is required.");
+    }
+
+    @Test
     void parseRangeArgument_multipleRanges_success() {
-        String[] rangeArguments = {"..4", "0..", "1..6", "..5..10"};
+        String[] rangeArguments = {"..4", "0.. ", " 3...8 ", "1..6 s", "a.b.c..5"};
         String[][] expectedRanges = {
-            {"", "4"}, {"0", ""}, {"1", "6"}, {"", "5"}
+            {"", "4"}, {"0", ""}, {"3", ".8"}, {"1", "6 s"}, {"a.b.c", "5"}
         };
         for (int i = 0; i < rangeArguments.length; i += 1) {
             try {
-                Assertions.assertTrue(Arrays.equals(expectedRanges[i],
-                        searchCommandParser.parseRangeArgument(rangeArguments[i], "option")));
+                String[] parsedRangeArgument = searchCommandParser.parseRangeArgument(
+                        rangeArguments[i], "test");
+                Assertions.assertEquals(expectedRanges[i][0], parsedRangeArgument[0]);
+                Assertions.assertEquals(expectedRanges[i][1], parsedRangeArgument[1]);
             } catch (ParseException e) {
                 Assertions.fail();
             }
