@@ -2,7 +2,6 @@ package seedu.binbash.command;
 
 import org.junit.jupiter.api.Test;
 import seedu.binbash.inventory.ItemList;
-import seedu.binbash.item.Item;
 
 import java.util.ArrayList;
 
@@ -13,10 +12,20 @@ class ByeCommandTest {
 
     @Test
     void execute_exitBinBash_returnBye() {
-        command.execute(new ItemList(new ArrayList<Item>()));
-        String actualOutput = command.getExecutionUiOutput(); ;
+        command.execute(new ItemList(new ArrayList<>()));
+        String actualOutput = command.getExecutionUiOutput();
         String expectedOutput = "Bye!";
 
         assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    void execute_multipleExecutions_returnByeConsistently() {
+        for (int i = 0; i < 5; i++) {
+            command.execute(new ItemList(new ArrayList<>()));
+            String actualOutput = command.getExecutionUiOutput();
+            String expectedOutput = "Bye!";
+            assertEquals(expectedOutput, actualOutput);
+        }
     }
 }

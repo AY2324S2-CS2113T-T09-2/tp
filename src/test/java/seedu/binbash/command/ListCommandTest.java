@@ -24,7 +24,7 @@ class ListCommandTest {
 
     @BeforeEach
     void setUp() {
-        inventory = new ArrayList<Item>();
+        inventory = new ArrayList<>();
     }
 
     @Test
@@ -240,6 +240,39 @@ class ListCommandTest {
         actualOutput = listCommand.getExecutionUiOutput();
 
         expectedOutput = "";
+
+        assertEquals(expectedOutput,actualOutput);
+    }
+
+    @Test
+    void execute_sortWithDuplicateItems_returnsSortedList() {
+        // New test case: Sorting with duplicate items
+        inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
+                LocalDate.of(2024, 1, 1), 3.00, 2.00, 10));
+        inventory.add(new PerishableRetailItem("testItem1", "Test item 1", 2,
+                LocalDate.of(2024, 1, 1), 5.00, 4.00, 10));
+        itemList = new ItemList(inventory);
+
+        listCommand = new ListCommand(SortOptionEnum.COST);
+        listCommand.execute(itemList);
+        actualOutput = listCommand.getExecutionUiOutput();
+
+        expectedOutput = "1. [P][R] testItem1" + System.lineSeparator()
+                + "\tdescription: Test item 1" + System.lineSeparator()
+                + "\tquantity: 2" + System.lineSeparator()
+                + "\tcost price: $2.00" + System.lineSeparator()
+                + "\tsale price: $3.00" + System.lineSeparator()
+                + "\tthreshold: 10" + System.lineSeparator()
+                + "\texpiry date: 01-01-2024" + System.lineSeparator()
+                + System.lineSeparator()
+                + "2. [P][R] testItem1" + System.lineSeparator()
+                + "\tdescription: Test item 1" + System.lineSeparator()
+                + "\tquantity: 2" + System.lineSeparator()
+                + "\tcost price: $4.00" + System.lineSeparator()
+                + "\tsale price: $5.00" + System.lineSeparator()
+                + "\tthreshold: 10" + System.lineSeparator()
+                + "\texpiry date: 01-01-2024" + System.lineSeparator()
+                + System.lineSeparator();
 
         assertEquals(expectedOutput,actualOutput);
     }

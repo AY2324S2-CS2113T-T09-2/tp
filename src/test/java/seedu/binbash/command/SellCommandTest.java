@@ -15,7 +15,7 @@ public class SellCommandTest {
 
     @Test
     void execute_sellExistingItem_quantityUpdated() throws InvalidCommandException {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList(new ArrayList<>());
         String itemName = "testItem";
         itemList.addItem("retail", itemName, "A test item", 9,
                 LocalDate.now(), 4.00, 5.00, 6);
@@ -29,7 +29,7 @@ public class SellCommandTest {
 
     @Test
     void execute_itemNotFound_noChangeInItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList(new ArrayList<>());
         RestockCommand restockCommand = new RestockCommand("nonexistentItem", 5);
 
         assertTrue(restockCommand.execute(itemList));

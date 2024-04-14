@@ -39,8 +39,8 @@ public class UpdateCommandTest {
     }
 
     @Test
-    void execute_updateByIndex_itemUpdated() throws InvalidCommandException {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+    void execute_updateByIndex_itemUpdated() {
+        ItemList itemList = new ItemList(new ArrayList<>());
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00, 6);
 
@@ -65,7 +65,7 @@ public class UpdateCommandTest {
 
     @Test
     void execute_itemNotFound_updateFailed() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList(new ArrayList<>());
         UpdateCommand updateCommand = new UpdateCommand("nonexistentItem");
         updateCommand.setItemDescription("Updated item");
         updateCommand.setItemQuantity(5);
@@ -82,7 +82,7 @@ public class UpdateCommandTest {
 
     @Test
     void execute_indexOutOfBounds_updateFailed() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList(new ArrayList<>());
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00, 6);
 
