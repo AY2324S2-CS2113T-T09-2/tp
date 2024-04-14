@@ -247,3 +247,5 @@ To ensure that the index of items in the printed list can be used as `ITEM_INDEX
 `sell` and `restock` commands, an `ArrayList<Integer>` called `sortedOrder` will be used to map the indexes of the
 items printed to their indexes in `itemList`. `sortedOrder` will be updated on startup, adding of items, deleting of
 items, and listing of items to ensure that the mapping is always accurate when it is referenced.
+* **Review contributions**:
+  * [List of GitHub pull requests reviewed (filtered)](https://github.com/AY2324S2-CS2113T-T09-2/tp/pulls?q=is%3Apr+is%3Aclosed+reviewed-by%3APureUsagi+-author%3APureUsagi+)
