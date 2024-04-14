@@ -179,16 +179,6 @@ The `Parser` component
 - provides common methods for sub-parsers to parse their option values
 - rethrows `ParseException` from sub-parsers as `InvalidCommandException` with appropriate error messages
 
-- **Command Interpretation**: The `Parser` analyzes user input to identify the corresponding commands and parameters, ensuring accurate command interpretation.
-
-- **Command Delegation**: Once user commands are identified, the `Parser` delegates command execution to the appropriate command handlers, ensuring seamless operation flow.
-
-- **Error Handling**: In cases of invalid or malformed input, the `Parser` provides informative error messages, guiding users towards correct command usage.
-
-- **Integration Support**: Designed with modularity in mind, the `Parser` facilitates integration with other system components, promoting extensibility and maintainability.
-
-By effectively parsing user commands and translating them into actionable tasks, the `Parser` enhances the overall usability and functionality of the application.
-
 Below shows the sequence diagram of a `Parser` parsing user input, to return the corresponding `Command`.
 
 ![ParseSequenceDiagram](images/ParseSequenceDiagram.png)
