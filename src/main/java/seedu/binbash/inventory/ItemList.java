@@ -5,7 +5,6 @@ import seedu.binbash.comparators.ItemComparatorByCostPrice;
 import seedu.binbash.comparators.ItemComparatorByExpiryDate;
 import seedu.binbash.comparators.ItemComparatorByProfit;
 import seedu.binbash.comparators.ItemComparatorBySalePrice;
-import seedu.binbash.exceptions.InvalidArgumentException;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
 import seedu.binbash.item.OperationalItem;
@@ -157,6 +156,15 @@ public class ItemList {
      */
     public String addItem(String itemType, String itemName, String itemDescription, int itemQuantity,
                           LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice, int itemThreshold) {
+        // Checking for existence of an item with the same name
+        ArrayList<Item> searchOutput = getSearchAssistant()
+                .searchByExactName(itemName)
+                .getFoundItems();
+        if (!searchOutput.isEmpty()) {
+            return String.format("An item with the name '%s' already exists in the inventory. " +
+                    "Please use a different name.", itemName);
+        }
+
         Item item;
         if (itemType.equals("retail") && !itemExpirationDate.equals(LocalDate.MIN)) {
             // Perishable Retail Item
@@ -201,14 +209,13 @@ public class ItemList {
     public String updateItemDataByName (String itemName, String itemDescription, int itemQuantity,
                                   LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
                                   int itemThreshold) throws InvalidCommandException {
-        Item item = findItemByName(itemName);
 
-        updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
+        Item itemToUpdate = findItemByName(itemName);
+        updateItemData(itemToUpdate, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
                 itemThreshold);
 
-        String output = "I have updated your item information. Do check the following if it is correct."
-                + System.lineSeparator() + System.lineSeparator() + item;
-        return output;
+        return "I have updated your item information. Do check the following if it is correct."
+                + System.lineSeparator() + System.lineSeparator() + itemToUpdate;
     }
 
     /**
@@ -278,12 +285,13 @@ public class ItemList {
             }
         }
     }
-    private void updateItemSalePrice(Item item, double itemSalePrice) {
-
+    private void updateItemSalePrice(Item item, double itemSalePrice) throws InvalidCommandException {
         if (itemSalePrice != Double.MIN_VALUE) {
             logger.info("Attempting to update item sale price");
             if (item instanceof RetailItem) {
                 ((RetailItem) item).setItemSalePrice(itemSalePrice);
+            } else {
+                throw new InvalidCommandException("This item is not a retail item and has no sale price");
             }
         }
     }
@@ -303,49 +311,52 @@ public class ItemList {
     }
 
     /**
-     * Finds an item in the sorted item list by its name.
+     * Finds an item in the item list by its name using the SearchAssistant class.
+     * This method conducts a case-sensitive search for the exact name of the item.
      *
      * @param itemName The name of the Item to be found.
      * @return The Item with the given name.
      * @throws InvalidCommandException If an Item with the provided name does not exist in the ItemList.
      */
     public Item findItemByName(String itemName) throws InvalidCommandException {
-        Item currentItem;
-        for (int i = 0; i < sortedOrder.size(); i++) {
-            currentItem = itemList.get(sortedOrder.get(i));
-            if (currentItem.getItemName().trim().equals(itemName)) {
-                return currentItem;
-            }
+        logger.info(String.format("Searching for item with name %s", itemName));
+        ArrayList<Item> searchOutput = getSearchAssistant()
+                .searchByExactName(itemName)
+                .getFoundItems(1);
+
+        if (searchOutput.isEmpty()) {
+            logger.info(String.format("No item with name '%s' found", itemName));
+            throw new InvalidCommandException(
+                    String.format("Item with name '%s' not found! ", itemName)
+            + "Consider using the search or the list command to find the exact name of your item!");
         }
-        throw new InvalidCommandException("Item with name '" + itemName + "' not found.");
+
+        logger.info(String.format("Item with name '%s' found!", itemName));
+        return searchOutput.get(0);
     }
 
-    private String sellOrRestock(Item item, int quantityToUpdateBy, String command) throws InvalidArgumentException {
+    private String sellOrRestock(Item item, int quantityToUpdateBy, String command) throws InvalidCommandException {
         String alertText = "";
         int currentQuantity = item.getItemQuantity();
-
         switch (command) {
         case RestockCommand.COMMAND:
-            if (quantityToUpdateBy > 0) {
-                currentQuantity += quantityToUpdateBy;
-                item.setItemQuantity(currentQuantity);
-            } else {
-                throw new InvalidArgumentException("Please provide a positive number.");
-            }
+            currentQuantity += quantityToUpdateBy;
+            item.setItemQuantity(currentQuantity);
 
             int totalUnitsPurchased = item.getTotalUnitsPurchased();
             item.setTotalUnitsPurchased(totalUnitsPurchased + quantityToUpdateBy);
 
             break;
         case SellCommand.COMMAND:
-            if (quantityToUpdateBy <= 0) {
-                throw new InvalidArgumentException("Please provide a positive number.");
-            }
             if (quantityToUpdateBy > currentQuantity) {
-                throw new InvalidArgumentException("You do not have enough to sell the stated quantity.");
+                throw new InvalidCommandException("You do not have enough to sell the stated quantity.");
             }
             currentQuantity -= quantityToUpdateBy;
             item.setItemQuantity(currentQuantity);
+
+            if (!(item instanceof RetailItem)) {
+                throw new InvalidCommandException("Operational items cannot be sold.");
+            }
 
             RetailItem retailItem = (RetailItem)item;
             int itemThreshold = retailItem.getItemThreshold();
@@ -358,7 +369,7 @@ public class ItemList {
             retailItem.setTotalUnitsSold(totalUnitsSold + quantityToUpdateBy);
             break;
         default:
-            throw new InvalidArgumentException("Invalid argument!");
+            throw new InvalidCommandException("Invalid argument!");
         }
 
         String output = "Great! I have updated the quantity of the item for you:" + System.lineSeparator()
@@ -375,20 +386,12 @@ public class ItemList {
      * @param itemQuantity The quantity to be sold/restocked.
      * @param command A string representing the type of operation to be done.
      * @return A String showing the result of the sell/restock operation.
-     * @throws InvalidArgumentException If provided item quantity is invalid (out of bounds).
+     * @throws InvalidCommandException If provided item quantity is invalid (out of bounds).
      */
-    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidArgumentException{
-        Item item = null;
+    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidCommandException{
+        Item item = findItemByName(itemName);
 
-        // Temporary for now. I noticed that both InvalidCommandException and InvalidArgumentException are used
-        // in this class. Would like to clarify which we are intending to use.
-        try {
-            item = findItemByName(itemName);
-        } catch (InvalidCommandException e) {
-            throw new InvalidArgumentException(e.getMessage());
-        }
         String output = sellOrRestock(item, itemQuantity, command);
-
         return output;
     }
 
@@ -399,9 +402,9 @@ public class ItemList {
      * @param itemQuantity The quantity to be sold/restocked.
      * @param command A string representing the type of operation to be done.
      * @return A String showing the result of the sell/restock operation.
-     * @throws InvalidArgumentException If provided item quantity is invalid (out of bounds).
+     * @throws InvalidCommandException If provided item quantity is invalid (out of bounds).
      */
-    public String sellOrRestockItem(int index, int itemQuantity, String command) throws InvalidArgumentException {
+    public String sellOrRestockItem(int index, int itemQuantity, String command) throws InvalidCommandException {
         Item item = itemList.get(sortedOrder.get(index - 1));
         return sellOrRestock(item, itemQuantity, command);
     }
@@ -471,7 +474,7 @@ public class ItemList {
 
             currentItem = itemList.get(sortedOrder.get(i));
             if (currentItem.getItemName().trim().equals(keyword)) {
-                logger.info("first matching item at index " + i + " found.");
+                logger.info("item found at index " + i);
                 targetIndex = i + 1;
                 break;
             }

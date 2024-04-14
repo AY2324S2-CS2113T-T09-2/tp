@@ -1,6 +1,12 @@
 @startuml
 
-abstract class Command {
+skinparam classAttributeIconSize 0
+skinparam CircledCharacterFontSize 0
+skinparam CircledCharacterRadius 0
+skinparam linetype polyline
+
+
+class "{abstract}\nCommand" {
     # itemList: ItemList
     # commandLogger: BinBashLogger
     # executionUiOutput: String
@@ -77,14 +83,26 @@ class UpdateCommand {
     + execute(itemList: ItemList): boolean
 }
 
-Command <|-- AddCommand
-Command <|-- ByeCommand
-Command <|-- DeleteCommand
-Command <|-- ListCommand
-Command <|-- ProfitCommand
-Command <|-- RestockCommand
-Command <|-- SearchCommand
-Command <|-- SellCommand
-Command <|-- UpdateCommand
+' Layout hints using hidden arrows
+AddCommand -[hidden]r- "{abstract}\nCommand"
+ByeCommand -[hidden]r- "{abstract}\nCommand"
+DeleteCommand -[hidden]r- "{abstract}\nCommand"
+ListCommand -[hidden]r- "{abstract}\nCommand"
+
+' Hidden arrows to suggest vertical positioning
+AddCommand -[hidden]- ProfitCommand
+ByeCommand -[hidden]- RestockCommand
+DeleteCommand -[hidden]- SearchCommand
+ListCommand -[hidden]- SellCommand
+
+"{abstract}\nCommand" <|-- AddCommand
+"{abstract}\nCommand" <|-- ByeCommand
+"{abstract}\nCommand" <|-- DeleteCommand
+"{abstract}\nCommand" <|-- ListCommand
+"{abstract}\nCommand" <|-- ProfitCommand
+"{abstract}\nCommand" <|-- RestockCommand
+"{abstract}\nCommand" <|-- SearchCommand
+"{abstract}\nCommand" <|-- SellCommand
+"{abstract}\nCommand" <|-- UpdateCommand
 
 @enduml

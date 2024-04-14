@@ -2,6 +2,9 @@
 
 skinparam componentStyle rectangle
 skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam CircledCharacterFontSize 0
+skinparam CircledCharacterRadius 0
 
 component Data {
 
@@ -11,24 +14,16 @@ component Data {
         - itemList: ArrayList<Item>
         - sortedOrder: ArrayList<Integer>
 
-        + getTotalRevenue(): Double
-        + getTotalCost(): Double
-        + getProfitMargin(): String
         + addItem(): String
         + updateItemDataByName(): String
         + updateItemDataByIndex(): String
         + findItemByName(itemName: String): Item
         + sellOrRestockItem(itemName: String, itemQuantity: Integer, command: String): String
-        + alertItemQuantity(item: Item): String
-        + deleteItem(index: Integer): String
-        + deleteItem(keyword: String): String
+        + deleteItem(): String
         + printList(itemList: List<Item>): String
-        + printListSortedByCostPrice(itemList: List<Item>): String
-        + printListSortedByExpiryDate(itemList: List<Item>): String
-        + printListSortedBySalePrice(itemList: List<Item>): String
     }
 
-    abstract class Item {
+    class "{abstract}\nItem" {
         # itemName: String
         # itemDescription: String
         # itemQuantity: Integer
@@ -39,7 +34,6 @@ component Data {
         + getItemQuantity(): Integer
         + setItemQuantity(itemQuantity: Integer)
         + getItemCostPrice(): Double
-        + toString(): String
     }
 
     class SearchAssistant {
@@ -47,12 +41,11 @@ component Data {
 
         + setFoundItems(foundItems: ArrayList<Item>): void
         + getFoundItems(): ArrayList<Item>
-        + getFoundItems(numberOfResults: Integer): ArrayList<Item>
     }
 
     SearchAssistant -left-* "1" ItemList
 
-    ItemList --> "*" Item : > contains
+    ItemList --> "*" "{abstract}\nItem" : > contains
 }
 
 @enduml

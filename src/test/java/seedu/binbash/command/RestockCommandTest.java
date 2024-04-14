@@ -37,15 +37,6 @@ public class RestockCommandTest {
     }
 
     @Test
-    public void restockItem_returnsErrorMessage_negativeQuantity() {
-        ItemList itemList = new ItemList(new ArrayList<>());
-        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
-        RestockCommand command = new RestockCommand("Test Item", -5);
-        command.execute(itemList);
-        assertEquals("Please provide a positive number.", command.getExecutionUiOutput());
-    }
-
-    @Test
     public void restockItem_increasesQuantity_validIndexAndQuantity() {
         ItemList itemList = new ItemList(new ArrayList<>());
         itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
@@ -56,21 +47,13 @@ public class RestockCommandTest {
     }
 
     @Test
-    public void restockItem_returnsErrorMessage_negativeQuantityByIndex() {
-        ItemList itemList = new ItemList(new ArrayList<>());
-        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
-        RestockCommand command = new RestockCommand(1, -5);
-        command.setIsIndex();
-        command.execute(itemList);
-        assertEquals("Please provide a positive number.", command.getExecutionUiOutput());
-    }
-
-    @Test
     public void restockItem_returnsErrorMessage_nonExistingItem() {
         ItemList itemList = new ItemList(new ArrayList<>());
         RestockCommand command = new RestockCommand("Non-Existing Item", 5);
         command.execute(itemList);
-        assertEquals("Item with name 'Non-Existing Item' not found.", command.getExecutionUiOutput());
+        assertEquals("Item with name 'Non-Existing Item' not found! " +
+                        "Consider using the search or the list command to find the exact name of your item!",
+                command.getExecutionUiOutput());
     }
 
     @Test

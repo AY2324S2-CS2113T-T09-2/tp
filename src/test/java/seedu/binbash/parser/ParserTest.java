@@ -15,6 +15,10 @@ import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
 import seedu.binbash.item.Item;
 
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.ParseException;
+
+import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -67,9 +71,9 @@ public class ParserTest {
     @Test
     public void parseAddCommand_createItemWithNoQuantity_returnsAddCommand() {
         try {
-            itemList.addItem("retail", "Test Item", "Test Description", 0, LocalDate.of(1999, 1, 1), 0.00, 0.00, 0);
+            itemList.addItem("retail", "Test Item", "Test Description", 0, LocalDate.of(2999, 1, 1), 0.00, 0.00, 0);
             Command command = parser.parseCommand(
-                    "add -re -n Test Item -d Test Description -e 01-01-1999 -s 0.00 -c 0.00 -t 0"
+                    "add -re -n Test Item -d Test Description -e 01-01-2999 -s 0.00 -c 0.00 -t 0"
             );
             assertTrue(command instanceof AddCommand);
         } catch (BinBashException e) {
@@ -92,9 +96,9 @@ public class ParserTest {
     @Test
     public void parseAddCommand_createItemWithAllArguments_returnsAddCommand() {
         try {
-            itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.of(1999, 1, 1), 0.00, 0.00, 0);
+            itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.of(2999, 1, 1), 0.00, 0.00, 0);
             Command command = parser.parseCommand(
-                    "add -re -n Test Item -d Test Description -q 10 -e 01-01-1999 -s 0.00 -c 0.00 -t 0"
+                    "add -re -n Test Item -d Test Description -q 10 -e 01-01-2999 -s 0.00 -c 0.00 -t 0"
             );
             assertInstanceOf(AddCommand.class, command);
         } catch (BinBashException e) {
@@ -116,5 +120,46 @@ public class ParserTest {
     @Test
     public void testParseCommand_invalidSearchCommand_throwsInvalidCommandException() {
         assertThrows(InvalidCommandException.class, () -> parser.parseCommand("search"));
+    }
+
+    @Test
+    void checkDuplicateOption_processedDuplicateOptions_throwsParseExceptionWithWarning() {
+        Option[] processedOptions = new Option[]{new Option("t", "test option"), new Option("t", "test option 2")};
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    parser.checkDuplicateOption(processedOptions);
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "Duplicate option: -t");
+    }
+
+    @Test
+    void parseIntOptionValue_intMin_parsesIntMin() {
+        String intOptionValue = String.valueOf(Integer.MIN_VALUE);
+        try {
+            int parsedInt = parser.parseIntOptionValue(intOptionValue, "int");
+            Assertions.assertEquals(parsedInt, Integer.MIN_VALUE);
+        } catch (ParseException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    void parseIntOptionValue_moreThanIntMax_throwsParseExceptionWithWarning() {
+        String intOptionValue = String.valueOf(Long.MAX_VALUE);
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    parser.parseIntOptionValue(intOptionValue, "int");
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "int too large!");
+    }
+
+    @Test
+    void parseDoubleOptionValue_nonNumber_throwsParseExceptionWithWarning() {
+        String doubleOptionValue = "not a double";
+        ParseException thrown = Assertions.assertThrows(
+                ParseException.class, () -> {
+                    parser.parseDoubleOptionValue(doubleOptionValue, "double");
+                }, "ParseException was expected");
+        Assertions.assertEquals(thrown.getMessage(), "double must be a number.");
     }
 }

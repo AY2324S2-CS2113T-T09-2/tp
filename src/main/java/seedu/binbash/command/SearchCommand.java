@@ -21,9 +21,7 @@ public class SearchCommand extends Command {
 
     public SearchCommand() {
         commandLogger = new BinBashLogger(SearchCommand.class.getName());
-        commandLogger.info(String.format(
-                "Creating Search Command..."
-        ));
+        commandLogger.info("Creating Search Command...");
     }
 
     /**
@@ -110,7 +108,13 @@ public class SearchCommand extends Command {
             .searchBySalePriceBetween(salePriceRange[0], salePriceRange[1])
             .searchByExpiryDateBetween(expiryDateRange[0], expiryDateRange[1])
             .getFoundItems(numberOfResults);
-        executionUiOutput = itemList.printList(foundItems);
+
+        if (foundItems.isEmpty()) {
+            executionUiOutput = "There are no items found that match your search description!";
+        } else {
+            executionUiOutput = itemList.printList(foundItems);
+        }
+
         return foundItems.size() <= numberOfResults;
     }
 }
