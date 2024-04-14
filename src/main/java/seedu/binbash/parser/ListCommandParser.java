@@ -32,6 +32,8 @@ public class ListCommandParser extends DefaultParser {
      */
     public ListCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
+        Parser.checkDuplicateOption(commandLine.getOptions());
+
         if (commandLine.hasOption("cost")) {
             return new ListCommand(SortOptionEnum.COST);
         }

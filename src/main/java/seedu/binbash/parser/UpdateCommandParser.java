@@ -40,6 +40,7 @@ public class UpdateCommandParser extends DefaultParser {
      */
     public UpdateCommand parse(String[] commandArgs) throws ParseException {
         CommandLine commandLine = super.parse(options, commandArgs);
+        Parser.checkDuplicateOption(commandLine.getOptions());
         UpdateCommand updateCommand = getUpdateCommand(commandLine);
 
         if (commandLine.hasOption("description")) {
