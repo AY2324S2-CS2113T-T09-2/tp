@@ -6,6 +6,10 @@ skinparam CircledCharacterRadius 0
 
 class Parser {
     + parseCommand(userInput: String): Command
+    ~ checkDuplicateOption(processedOptions: Option[]) {static}
+    ~ parseIntOptionValue(argument: String, option: String): int {static}
+    ~ parseDoubleOptionValue(argument: String, option: String): double {static}
+    ~ parseDateOptionValue(argument: String, option: String): LocalDate {static}
 }
 
 class AddCommandParser {
@@ -22,7 +26,6 @@ class RestockCommandParser {
 
 class SearchCommandParser {
     + parse(commandArgs: String[]): SearchCommand
-    + parseRangeArgument(argument: String, option: String): String[]
 }
 
 class SellCommandParser {
@@ -33,6 +36,10 @@ class UpdateCommandParser {
     + parse(commandArgs: String[]): UpdateCommand
 }
 
+class DeleteCommandParser {
+    + parse(commandArgs: String[]): DeleteCommand
+}
+
 AddCommandParser --* "1" Parser : < calls
 SearchCommandParser --* "1" Parser : < calls
 ListCommandParser --* "1" Parser : < calls
@@ -40,5 +47,7 @@ ListCommandParser --* "1" Parser : < calls
 Parser "1" *-- RestockCommandParser : > calls
 Parser "1" *-- SellCommandParser : > calls
 Parser "1" *-- UpdateCommandParser : > calls
+
+DeleteCommandParser -r-* "1" Parser : < calls
 
 @enduml

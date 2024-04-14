@@ -4,9 +4,9 @@ import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.UserInterruptException;
-import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
+import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.logger.BinBashLogger;
 
 import java.io.IOException;
@@ -16,6 +16,8 @@ import java.io.IOException;
  */
 public class Ui {
     private static final String NEWLINE = System.lineSeparator();
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_RED = "\u001B[31m";
     private static final String LOGO = "  ____  _       ____            _" + NEWLINE +
             " | __ )(_)_ __ | __ )  __ _ ___| |__" + NEWLINE +
             " |  _ \\| | '_ \\|  _ \\ / _` / __| '_ \\" + NEWLINE +
@@ -38,17 +40,13 @@ public class Ui {
     public Ui() {
         System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
         try {
-            Terminal userTerminal = TerminalBuilder.builder()
-                .system(true)
-                .dumb(true)
-                .build();
             inputReader = LineReaderBuilder.builder()
-                .terminal(userTerminal)
+                .terminal(TerminalBuilder.builder().system(true).dumb(true).build())
                 .completer(new CommandCompleter())
                 .build();
         } catch (IOException e) {
             UILOGGER.info("failed to get system terminal!");
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         isUserActive = true;
     }
@@ -57,24 +55,30 @@ public class Ui {
         return isUserActive;
     }
 
-    public void setUserAsInactive() {
+    public static void setUserAsInactive() {
         isUserActive = false;
     }
 
     /**
-     * Returns a string received by the user.
+     * Returns a non-empty string received by the user.
      *
-     * @return "bye" if end of file or program termination detected, a string read from standard input otherwise.
+     * @return "bye" if EOF (^D) signal detected, a non-empty string otherwise.
+     * @throws BinBashException if user interrupt (^C) signal detected.
      */
-    public String readUserCommand() {
-        assert isUserActive();
+    public String readUserCommand() throws BinBashException {
         try {
-            String userInput = inputReader.readLine("binbash> ");
-            UILOGGER.info("received raw user input: " + userInput);
-            return userInput;
-        } catch (EndOfFileException | UserInterruptException e) {
-            UILOGGER.info("received EOF / interrupt exception");
+            String userCommand = readUserInput();
+            while (userCommand.trim().equals("")) {
+                userCommand = readUserInput();
+            }
+            return userCommand;
+        } catch (EndOfFileException e) {
+            UILOGGER.info("received EOF, exiting gracefully");
             return "bye";
+        } catch (UserInterruptException e) {
+            UILOGGER.info("received user interrupt, halting application immediately");
+            setUserAsInactive();
+            throw new BinBashException("");
         }
     }
 
@@ -86,11 +90,33 @@ public class Ui {
     }
 
     /**
-     * Prints text to standard output as an explicit response or acknowledgement of some user command.
+     * Prints a response to or acknowledgement of some user command to standard output.
+     *
+     * @param line The response to print.
+     */
+    public void talk(String line) {
+        if (line == "Bye!") {
+            assert !isUserActive;
+        }
+        System.out.println(LINE_DIVIDER + NEWLINE + line + NEWLINE + LINE_DIVIDER);
+    }
+
+    /**
+     * Prints a warning of some unexpected application behaviour to standard output.
      *
      * @param line The text to print.
      */
-    public void talk(String line) {
-        System.out.println(LINE_DIVIDER + NEWLINE + line + NEWLINE + LINE_DIVIDER);
+    public void warn(String line) {
+        if (!isUserActive) {
+            assert line == "";
+        }
+        System.out.println(ANSI_RED + line + ANSI_RESET);
+    }
+
+    private String readUserInput() throws EndOfFileException, UserInterruptException {
+        assert isUserActive;
+        String userInput = inputReader.readLine("binbash> ");
+        UILOGGER.info("received raw user input: " + userInput);
+        return userInput;
     }
 }

@@ -117,7 +117,9 @@ However, if you ever need more clarification on the features provided by a speci
       ![Mac Terminal 2](images/mac_launchpad_other.png)<br>
       Alternatively, click on the Spotlight icon in your menu bar, and type in `Terminal`.
    3. Linux
-      * If you're on Linux, open the terminal in your Linux distribution.
+      * If you're on Linux, the name of the terminal application differs between distributions. Try searching with these keywords to find the right application on your system: `terminal`, `bash`, `console`
+      * You'll know you've found it when you're presented with an interface like this: <br>
+      ![Fedora Terminal](images/fedora_sway_terminal.png)
 5. Navigate to the folder containing `binbash.jar` using the terminal/command prompt.
    * To do this, you can key in `cd` into the command prompt followed by the file location of `binbash.jar`.
    * Here is an example on Windows:<br>
