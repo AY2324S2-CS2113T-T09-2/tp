@@ -12,7 +12,6 @@ import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
 import seedu.binbash.command.QuoteCommand;
 
-import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.exceptions.InvalidCommandException;
 
 import org.apache.commons.cli.Option;
