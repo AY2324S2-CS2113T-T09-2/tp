@@ -55,7 +55,7 @@ public class Ui {
         return isUserActive;
     }
 
-    public void setUserAsInactive() {
+    public static void setUserAsInactive() {
         isUserActive = false;
     }
 

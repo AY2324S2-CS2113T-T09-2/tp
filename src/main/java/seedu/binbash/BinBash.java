@@ -1,6 +1,5 @@
 package seedu.binbash;
 
-import seedu.binbash.command.ByeCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.inventory.ItemList;
@@ -34,11 +33,6 @@ public class BinBash {
             try {
                 String userInput = userInterface.readUserCommand();
                 Command userCommand = inputParser.parseCommand(userInput);
-
-                if (userCommand instanceof ByeCommand) {
-                    userInterface.setUserAsInactive();
-                }
-
                 userCommand.execute(itemList);
                 userInterface.talk(userCommand.getExecutionUiOutput());
 
