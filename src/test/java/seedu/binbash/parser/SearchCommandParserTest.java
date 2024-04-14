@@ -60,7 +60,7 @@ public class SearchCommandParserTest {
                 ParseException.class, () -> {
                     searchCommandParser.parse(invalidCommandArgs);
                 }, "ParseException was expected");
-        Assertions.assertEquals(thrown.getMessage(), "expiry date lower bound is more than upper bound");
+        Assertions.assertEquals(thrown.getMessage(), "expiry date lower bound is after upper bound");
     }
 
     @Test
