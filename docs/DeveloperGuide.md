@@ -174,7 +174,10 @@ application's persistent data.
 
 API: [`Parser.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/parser/Parser.java)
 
-The `Parser` component plays a vital role in interpreting user input and facilitating interaction with the application. It serves as the bridge between user commands and actionable operations within the system. Here's an overview of its functionalities:
+The `Parser` component
+- delegates parsing to an appropriate command parser based on the first word found
+- provides common methods for sub-parsers to parse their option values
+- rethrows `ParseException` from sub-parsers as `InvalidCommandException` with appropriate error messages
 
 - **Command Interpretation**: The `Parser` analyzes user input to identify the corresponding commands and parameters, ensuring accurate command interpretation.
 
