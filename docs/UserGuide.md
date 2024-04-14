@@ -21,7 +21,7 @@ Our long awaited first release adds everything you would expect of an inventory 
 -->
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -51,7 +51,7 @@ Our long awaited first release adds everything you would expect of an inventory 
 10. [Glossary](#glossary)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ## BinBash Overview
 
@@ -90,7 +90,7 @@ The format and expected outputs of these commands will be enumerated in turn. Do
 </div>
 
 If you are new to BinBash (or new to command line-based applications in general), we highly recommend that you read through the rest of this guide sequentially, following the order of sections in this guide.
-In particular, we suggest that you take note of the [command format](#notes-on-the-command-format) used by BinBash, as it would provide you with a better understanding of how BinBash processes your commands.
+In particular, we suggest that you take note of the [command format](#command-format) used by BinBash, as it would provide you with a better understanding of how BinBash processes your commands.
 
 If you consider yourself a power user, feel free to jump to the [Command Summary](#command-summary) section. 
 However, if you ever need more clarification on the features provided by a specific command, do head over to the [Features](#features) section, as detailed explanations of each command will be provided there.
@@ -98,7 +98,7 @@ However, if you ever need more clarification on the features provided by a speci
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ## Getting Started
 
@@ -171,7 +171,7 @@ Have problems loading up BinBash? Fret not, here's how to troubleshoot some of t
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ## Key Definitions
 
@@ -247,14 +247,9 @@ Please refer to the subsequent <a href="#command-format">Command Format</a> sect
 <li>The <code>-e</code> flag should be provided if the item that you are adding is a Perishable item. That is to say, it will expire by the provided expiry date.</li>
 <li>The <code>-s</code> flag should be provided if the item that you are adding is a Retail item. This means that this item is meant to be sold.</li>
 <li>The flags can be placed in any order. There is no specific order that you have to abide by.</li>
-<li>Words in <code>UPPER_CASE</code> are the arguments that are meant to be supplied by you.<br>For example, in <code>-n ITEM_NAME</code>, <code>ITEM_NAME</code> would represent the name of the item you are adding (e.g., <code>add -n apple</code>).</li>
-<li>For some commands, if flags and arguments are wrapped in square brackets, they are optional.<br>For example, <code>add [-q ITEM_QUANTITY]</code> signify that the <code>-q</code> flag, as well as its argument, are optional for the command.</li>
-</div>
-
-<div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
-ℹ️ <strong>Note:</strong>
-The flags <code>-re</code>, <code>-op</code> and <code>-p</code> do not have any corresponding placeholders. They are marked as "Not Applicable" in 
-the table above.
+<li>For some commands, if flags and arguments are wrapped in square brackets, they are optional. More details on this will be explained in the commands within the Features section.</li>
+<li>The flags <code>-re</code>, <code>-op</code> and <code>-p</code> do not have any corresponding placeholders. They are marked as "Not Applicable" in 
+the table above.</li>
 </div>
 
 ### Placeholders
@@ -362,7 +357,7 @@ and how they can be of use to your business!
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -401,7 +396,7 @@ Likewise within each command, type <code>-</code> followed by <code>TAB</code> t
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Adding an item: `add`
 
@@ -432,7 +427,8 @@ This allows you to create a placeholder for an item in your inventory you've yet
 
 Examples:
 
-- `add -re -n lego -d toys -q 350 -s 102.00 -c 34.32 -t 50`<br>
+- `add -re -n lego -d toys -q 350 -s 102.00 -c 34.32 -t 50` This command adds a new retail item named "lego". The
+details of this item can be seen in the sample output below.
    ```text
    -------------------------------------------------------------
    Noted! I have added the following item into your inventory:
@@ -445,17 +441,19 @@ Examples:
        threshold: 50
    -------------------------------------------------------------
    ```
-- `add -re -n hammer -d tools -q 20 -s 9.00 -c 4.39 -t 10`<br>
+- `add -re -n hammer -d tools -s 9.00 -c 4.39` Similarly, this command adds a new item named "hammer" to the inventory. 
+However, notice how in this example, the `ITEM_QUANTITY` and `THRESHOLD` values are not specified in the command, and 
+are given default values of 0 and 1 respectively. This can be seen in the sample output below.
    ```text
    -------------------------------------------------------------
    Noted! I have added the following item into your inventory:
     
    [R] hammer
        description: tools
-       quantity: 20
+       quantity: 0
        cost price: $4.39
        sale price: $9.00
-       threshold: 10
+       threshold: 1
    -------------------------------------------------------------
    ```
 
@@ -472,7 +470,8 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -e EXPIRY_DATE -s SALE_PRICE -
 
 Examples:
 
-- `add -re -n apple -d fruit -q 50 -e 12-12-2024 -s 1.00 -c 0.39 -t 10`<br>
+- `add -re -n apple -d fruit -q 50 -e 12-12-2024 -s 1.00 -c 0.39 -t 10` This command adds a new perishable item named 
+"apple" to the inventory. The sample output can be seen below.
    ```text
    -------------------------------------------------------------
    Noted! I have added the following item into your inventory:
@@ -486,14 +485,16 @@ Examples:
        expiry date: 12-12-2024
    -------------------------------------------------------------
    ```
-- `add -re -n tuna fish -d seafood -q 5 -e 02-11-2024 -s 10 -c 4.50`<br>
+- `add -re -n tuna fish -d seafood -q 5 -e 02-11-2024 -s 10 -c 4.50` This command adds a perishable retail item named 
+"tuna fish" to the inventory. Once again, `ITEM_QUANTITY` and `THRESHOLD` values are not specified in the command, and 
+are given default values of 0 and 1 respectively. Do note that this behaviour is common for all item types.
    ```text
    -------------------------------------------------------------
    Noted! I have added the following item into your inventory:
     
    [P][R] tuna fish
        description: seafood
-       quantity: 5
+       quantity: 0
        cost price: $4.50
        sale price: $10.00 
        threshold: 1
@@ -526,7 +527,8 @@ This allows you to create a placeholder for an item in your inventory you've yet
 
 Examples:
 
-- `add -op -n light bulbs -d lighting -q 5 -c 2.30 -t 3`<br>
+- `add -op -n light bulbs -d lighting -q 5 -c 2.30 -t 3` This command adds an operational item named "light bulbs" to 
+the inventory. The sample output can be seen below.
    ```text
    -------------------------------------------------------------
    Noted! I have added the following item into your inventory:
@@ -554,7 +556,8 @@ Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -e EXPIRY_DATE -c COST_PRICE [
 
 Examples:
 
-- `add -op -n milk -d to make coffee -q 2 -e 03-10-2024 -c 1.30`<br>
+- `add -op -n milk -d to make coffee -q 2 -e 03-10-2024 -c 1.30` This command adds a perishable operational item named 
+"milk" to your inventory.
    ```text
    -------------------------------------------------------------
    Noted! I have added the following item into your inventory:
@@ -571,7 +574,7 @@ Examples:
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Searching for an item: `search`
 
@@ -681,7 +684,7 @@ sorted lists as they do not have a sale price.
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Selling an item: `sell`
 
@@ -729,7 +732,7 @@ Examples:
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Restocking an item: `restock`
 
@@ -775,7 +778,7 @@ Examples:
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Updating an item: `update`
 
@@ -838,7 +841,7 @@ Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and 
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Deleting an item: `delete`
 
@@ -890,7 +893,7 @@ Examples:
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Calculating the total profit: `profit`
 
@@ -910,7 +913,7 @@ Total profit: $6907.40
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Exiting the application: `bye`, `exit`, `quit`
 
@@ -927,7 +930,7 @@ Format: `bye`, `exit`, `quit`
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ### Saving and Loading data
 
@@ -948,7 +951,7 @@ We highly recommended that you take a backup of your save file before editing it
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ## Command Summary
 
@@ -977,7 +980,7 @@ We highly recommended that you take a backup of your save file before editing it
 [Back to table of contents](#table-of-contents)
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 
@@ -1015,6 +1018,7 @@ If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), r
 [Back to table of contents](#table-of-contents)
 
 ---
+<div style="page-break-after: always;"></div>
 
 ## Glossary
 
