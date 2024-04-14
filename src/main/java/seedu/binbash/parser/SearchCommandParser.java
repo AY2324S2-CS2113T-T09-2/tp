@@ -14,6 +14,8 @@ import java.time.LocalDate;
  * Parses command line arguments for creating a SearchCommand.
  */
 public class SearchCommandParser extends DefaultParser {
+    private static final int RANGE_ARGUMENT_LOWER_BOUND = 0;
+    private static final int RANGE_ARGUMENT_UPPER_BOUND = 1;
 
     /**
      * Creates a new SearchCommandParser with the necessary options and option descriptions.
@@ -94,12 +96,12 @@ public class SearchCommandParser extends DefaultParser {
         String[] argumentRange = {"", ""};
         String[] values = argument.split("\\Q..\\E");
         if (values[0].equals("")) {
-            argumentRange[1] = values[1];
+            argumentRange[RANGE_ARGUMENT_UPPER_BOUND] = values[1];
             return argumentRange;
         }
-        argumentRange[0] = values[0];
+        argumentRange[RANGE_ARGUMENT_LOWER_BOUND] = values[0];
         try {
-            argumentRange[1] = values[1];
+            argumentRange[RANGE_ARGUMENT_UPPER_BOUND] = values[1];
             return argumentRange;
         } catch (ArrayIndexOutOfBoundsException e) {
             return argumentRange;
@@ -108,19 +110,21 @@ public class SearchCommandParser extends DefaultParser {
 
     private double[] parseNonNegativeDoubleRange(String[] rangeArgument, String type) throws ParseException {
         double[] doubleRange = {0.0, Double.MAX_VALUE};
-        if (rangeArgument[0] != "") {
-            doubleRange[0] = Parser.parseDoubleOptionValue(rangeArgument[0], type + " lower bound");
-            if (doubleRange[0] < 0) {
+        if (rangeArgument[RANGE_ARGUMENT_LOWER_BOUND] != "") {
+            doubleRange[RANGE_ARGUMENT_LOWER_BOUND] = Parser.parseDoubleOptionValue(rangeArgument[RANGE_ARGUMENT_LOWER_BOUND],
+                    type + " lower bound");
+            if (doubleRange[RANGE_ARGUMENT_LOWER_BOUND] < 0) {
                 throw new ParseException(type + " lower bound cannot be negative");
             }
         }
-        if (rangeArgument[1] != "") {
-            doubleRange[1] = Parser.parseDoubleOptionValue(rangeArgument[1], type + " upper bound");
-            if (doubleRange[1] < 0) {
+        if (rangeArgument[RANGE_ARGUMENT_UPPER_BOUND] != "") {
+            doubleRange[RANGE_ARGUMENT_UPPER_BOUND] = Parser.parseDoubleOptionValue(rangeArgument[RANGE_ARGUMENT_UPPER_BOUND],
+                    type + " upper bound");
+            if (doubleRange[RANGE_ARGUMENT_UPPER_BOUND] < 0) {
                 throw new ParseException(type + " upper bound cannot be negative");
             }
         }
-        if (doubleRange[0] > doubleRange[1]) {
+        if (doubleRange[RANGE_ARGUMENT_LOWER_BOUND] > doubleRange[RANGE_ARGUMENT_UPPER_BOUND]) {
             throw new ParseException(type + " lower bound is more than upper bound");
         }
         return doubleRange;
@@ -128,19 +132,21 @@ public class SearchCommandParser extends DefaultParser {
 
     private int[] parseNonNegativeIntRange(String[] rangeArgument, String type) throws ParseException {
         int[] intRange = {0, Integer.MAX_VALUE};
-        if (rangeArgument[0] != "") {
-            intRange[0] = Parser.parseIntOptionValue(rangeArgument[0], "quantity lower bound");
-            if (intRange[0] < 0) {
+        if (rangeArgument[RANGE_ARGUMENT_LOWER_BOUND] != "") {
+            intRange[RANGE_ARGUMENT_LOWER_BOUND] = Parser.parseIntOptionValue(rangeArgument[RANGE_ARGUMENT_LOWER_BOUND],
+                    type + " lower bound");
+            if (intRange[RANGE_ARGUMENT_LOWER_BOUND] < 0) {
                 throw new ParseException(type + " lower bound cannot be negative");
             }
         }
-        if (rangeArgument[1] != "") {
-            intRange[1] = Parser.parseIntOptionValue(rangeArgument[1], "quantity upper bound");
-            if (intRange[1] < 0) {
+        if (rangeArgument[RANGE_ARGUMENT_UPPER_BOUND] != "") {
+            intRange[RANGE_ARGUMENT_UPPER_BOUND] = Parser.parseIntOptionValue(rangeArgument[RANGE_ARGUMENT_UPPER_BOUND],
+                    "quantity upper bound");
+            if (intRange[RANGE_ARGUMENT_UPPER_BOUND] < 0) {
                 throw new ParseException(type + " upper bound cannot be negative");
             }
         }
-        if (intRange[0] > intRange[1]) {
+        if (intRange[RANGE_ARGUMENT_LOWER_BOUND] > intRange[RANGE_ARGUMENT_UPPER_BOUND]) {
             throw new ParseException(type + " lower bound is more than upper bound");
         }
         return intRange;
@@ -148,14 +154,16 @@ public class SearchCommandParser extends DefaultParser {
 
     private LocalDate[] parseDateRange(String[] rangeArgument, String type) throws ParseException {
         LocalDate[] dateRange = {LocalDate.MIN, LocalDate.MAX};
-        if (rangeArgument[0] != "") {
-            dateRange[0] = Parser.parseDateOptionValue(rangeArgument[0], "expiry date lower bound");
+        if (rangeArgument[RANGE_ARGUMENT_LOWER_BOUND] != "") {
+            dateRange[RANGE_ARGUMENT_LOWER_BOUND] = Parser.parseDateOptionValue(rangeArgument[RANGE_ARGUMENT_LOWER_BOUND],
+                    "expiry date lower bound");
         }
-        if (rangeArgument[1] != "") {
-            dateRange[1] = Parser.parseDateOptionValue(rangeArgument[1], "expiry date upper bound");
+        if (rangeArgument[RANGE_ARGUMENT_UPPER_BOUND] != "") {
+            dateRange[RANGE_ARGUMENT_UPPER_BOUND] = Parser.parseDateOptionValue(rangeArgument[RANGE_ARGUMENT_UPPER_BOUND],
+                    "expiry date upper bound");
         }
-        if (dateRange[0].isAfter(dateRange[1])) {
-            throw new ParseException(type + " lower bound is more than upper bound");
+        if (dateRange[RANGE_ARGUMENT_LOWER_BOUND].isAfter(dateRange[RANGE_ARGUMENT_UPPER_BOUND])) {
+            throw new ParseException(type + " lower bound is after upper bound");
         }
         return dateRange;
     }
