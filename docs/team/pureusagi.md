@@ -21,6 +21,7 @@ disposed of.
   * **What it does**: Allows the user to specify the order of how items should be shown by the list command. The user can 
 specify whether the list is sorted by cost price, sale price or expiry date. Additionally, the index of items shown in
 the sorted list can also be used as references for other commands like `delete` or `update`.
+the sorted list can also be used as references for other commands like `delete`, `update` `sell` or `restock`.
   * **Justification**: This feature improves the readability by allowing it to be sorted in a way that is desired by the
 user. In situations where the inventory is very large, the user cannot be expected to scroll through the unsorted list
 just to find a few items. Sorting the list is a quality-of-life feature that greatly enhances the experience of the 
