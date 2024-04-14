@@ -108,9 +108,9 @@ However, if you ever need more clarification on the features provided by a speci
 4. Open the terminal/command prompt for your system.
    1. Windows
       * If you're on Windows, press `Windows Key + R` and type in `cmd`. Click `Ok` to launch the command prompt.<br>
-      ![Windows run](images/WindowsRun.png)
+      ![Windows run](images/windows_run.png)
       * You should see a window appear that is similar to the one shown below.<br>
-      ![Windows Cmd](images/WindowsCmd.png)
+      ![Windows Cmd](images/windows_cmd.png)
    2. Mac
       * If you're on Mac, click on `Launchpad` > `Other` > `Terminal`.<br>
       ![Mac Terminal](images/mac_launchpad.png)<br>
@@ -123,7 +123,7 @@ However, if you ever need more clarification on the features provided by a speci
 5. Navigate to the folder containing `binbash.jar` using the terminal/command prompt.
    * To do this, you can key in `cd` into the command prompt followed by the file location of `binbash.jar`.
    * Here is an example on Windows:<br>
-   ![Windows cd](images/WindowsCd.png)
+   ![Windows cd](images/windows_cdToDirectory.png)
 6. Type `java -jar binbash.jar` into the command prompt, and press enter. If the application has started successfully, you should see the following output:<br>
     ```text
     -------------------------------------------------------------
