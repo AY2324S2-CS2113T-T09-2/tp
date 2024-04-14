@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Assertions;
 
 import org.apache.commons.cli.ParseException;
 
-import java.util.Arrays;
-
 public class SearchCommandParserTest {
     private final SearchCommandParser searchCommandParser = new SearchCommandParser();
 
