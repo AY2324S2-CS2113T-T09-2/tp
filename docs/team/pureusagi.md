@@ -14,8 +14,8 @@ Given below are my contributions to the project.
 * **New Feature**: Added the `delete` command to remove items.
   * **What it does**: Allows the user to remove one item from the inventory at a time. The item can be identified using its
 id shown by the list command or the name of the item.
-  * **Justification**: This feature is vital to the product as it allows user to remove items that are no longer being kept
-in their inventory, reasons can include: no longer being sold due to poor sales or items have expired and have to be
+  * **Justification**: This feature is vital to the product as it allows users to remove items that are no longer being kept
+in their inventory, reasons can include: no longer being sold due to poor sales or items have expired and need to be
 disposed of. 
 * **New Feature**: Added the sorting functionality for the `list` command.
   * **What it does**: Allows the user to specify the order of how items should be shown by the list command. The user can 
