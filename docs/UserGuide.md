@@ -624,6 +624,9 @@ To search for items that cost at least $15, we should format our query as:<br>
 <div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
 💡 <strong>Tip:</strong> Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for <code>delete</code>, <code>update</code>, <code>sell</code> and <code>restock</code> commands.
 </div>
+
+<div id="warningCallout" style="padding: 1em; border: 0 solid #feb144;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #fff8e6;">
+❗ <strong>Warning:</strong> The indexes of items used as references to other commands are updated every time the list command is executed. Make sure to reference the latest list generated. Using the indexes of previous lists may result in incorrect outcomes or behavior.
 </div>
 
 #### List Inventory (Unsorted)
