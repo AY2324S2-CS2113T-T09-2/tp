@@ -10,6 +10,7 @@ features which facilitate efficient sales and trends analysis.
 
 Given below are my contributions to the project.
 
+### Summary of Contributions:
 * **New Feature**: Added the `delete` command to remove items.
   * **What it does**: Allows the user to remove one item from the inventory at a time. The item can be identified using its
 id shown by the list command or the name of the item.
