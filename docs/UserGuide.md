@@ -146,7 +146,11 @@ However, if you ever need more clarification on the features provided by a speci
 
 Awesome! You've now successfully started the BinBash application!
 
-Now, you can head over to the [Features](#features) section to learn how to use the application.
+Now, you can head over to the [Key Definitions](#key-definitions) section. There, you will learn more about the 
+different types of items and their attributes, as well as the usage of flags and placeholders. Understanding these 
+concepts is essential before exploring the various features that BinBash offers, ensuring you can effectively manage 
+and navigate the system.
+
 
 #### Possible Issues During Startup
 
