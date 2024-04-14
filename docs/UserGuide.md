@@ -622,7 +622,8 @@ To search for items that cost at least $15, we should format our query as:<br>
 > You can also use this command to display your inventory list, sorted based on cost price, sale price, profit, or expiry date.
 
 <div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
-💡 <strong>Tip:</strong> Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for <code>delete</code> and <code>update</code> commands.
+💡 <strong>Tip:</strong> Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for <code>delete</code>, <code>update</code>, <code>sell</code> and <code>restock</code> commands.
+</div>
 </div>
 
 #### List Inventory (Unsorted)
