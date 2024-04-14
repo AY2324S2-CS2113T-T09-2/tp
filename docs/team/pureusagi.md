@@ -50,7 +50,8 @@ functionality and exceptions in the default Java logger.
   * Set up the team/org repo.
   * Release of v1.0 of the product.
   * Assist in issue management.
-  * Updating user\develop docs that are not specific to a feature.
+  * Assist in reviewing and approving GitHub pull requests.
+  * Updating user/developer docs that are not specific to a feature.
     * Edit the target user section of the developer guide.
     * Edit the value proposition section of the developer guide.
     * Edit the command summary section of the user guide.
