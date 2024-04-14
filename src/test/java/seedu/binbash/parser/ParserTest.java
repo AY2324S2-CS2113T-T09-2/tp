@@ -46,10 +46,35 @@ public class ParserTest {
     }
 
     @Test
+    public void testParseCommand_repeatedByeCommand_returnsByeCommandAfterRestart() {
+        try {
+            Command command1 = parser.parseCommand("bye");
+            assertTrue(command1 instanceof ByeCommand);
+            setUp();
+            Command command2 = parser.parseCommand("bye");
+            assertTrue(command2 instanceof ByeCommand);
+        } catch (BinBashException e) {
+            fail("Unexpected InvalidCommandException: " + e.getMessage());
+        }
+    }
+
+    @Test
     public void testParseCommand_validCommandQuote_returnsQuoteCommand() {
         try {
             Command command = parser.parseCommand("quote");
             assertTrue(command instanceof QuoteCommand);
+        } catch (BinBashException e) {
+            fail("Unexpected InvalidCommandException: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testParseCommand_repeatedQuoteCommand_returnsQuoteCommand() {
+        try {
+            Command command1 = parser.parseCommand("quote");
+            Command command2 = parser.parseCommand("quote");
+            assertTrue(command1 instanceof QuoteCommand);
+            assertTrue(command2 instanceof QuoteCommand);
         } catch (BinBashException e) {
             fail("Unexpected InvalidCommandException: " + e.getMessage());
         }

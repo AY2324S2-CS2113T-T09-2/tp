@@ -165,4 +165,19 @@ public class SearchCommandParserTest {
             }
         }
     }
+
+    @Test
+    public void parse_repeatedParsing_noExceptionsThrown() {
+        String[] commandArgs1 = {"-q", "0..-0"};
+        String[] commandArgs2 = {"-c", "1..2"};
+        String[] commandArgs3 = {"-e", "..23-11-2023"};
+        String[] commandArgs4 = {"-c", "15.49..15.50", "-s", "..-0", "-e", "07-07-2007..07-07-2007"};
+
+        Assertions.assertDoesNotThrow(() -> {
+            searchCommandParser.parse(commandArgs1);
+            searchCommandParser.parse(commandArgs2);
+            searchCommandParser.parse(commandArgs3);
+            searchCommandParser.parse(commandArgs4);
+        });
+    }
 }

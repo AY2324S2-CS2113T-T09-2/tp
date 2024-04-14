@@ -28,4 +28,12 @@ class ByeCommandTest {
             assertEquals(expectedOutput, actualOutput);
         }
     }
+
+    @Test
+    void execute_withNonNullItemList_returnBye() {
+        // Test behavior with a non-null ItemList
+        ItemList itemList = new ItemList(new ArrayList<>());
+        command.execute(itemList);
+        assertEquals("Bye!", command.getExecutionUiOutput());
+    }
 }

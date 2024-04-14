@@ -69,4 +69,22 @@ class ListCommandParserTest {
             Assertions.fail();
         }
     }
+
+    @Test
+    public void parse_repeatedParsing_noExceptionsThrown() {
+        String[] commandArgs1 = {};
+        String[] commandArgs2 = {"-e"};
+        String[] commandArgs3 = {"-c"};
+        String[] commandArgs4 = {"-s"};
+        String[] commandArgs5 = {"-p"};
+
+        Assertions.assertDoesNotThrow(() -> {
+            listCommandParser.parse(commandArgs1);
+            listCommandParser.parse(commandArgs2);
+            listCommandParser.parse(commandArgs3);
+            listCommandParser.parse(commandArgs4);
+            listCommandParser.parse(commandArgs5);
+        });
+    }
+
 }
