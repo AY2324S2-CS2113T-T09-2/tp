@@ -18,25 +18,20 @@ code. My role in this project was primarily focused on the storage aspects of Bi
 - **Challenges faced**:
   - Ensuring the system's scalability posed a significant challenge, requiring careful design to allow for the addition 
   of new item types without necessitating a redesign of the entire storage system. 
-  - This meant that the storage mechanism had to be straightforward. Additionally, the codebase also had to be kept 
-  clean and readable at all times, as this was essential in facilitating the future development and addition of new 
-  items by other developers.
+  - This meant that the storage mechanism had to be straightforward and codebase also had to be kept 
+  clean and readable at all times for future modifications.
 
 ### Feature 2: Data Recovery Mechanism
-- **What it does**:
-  - On detecting data corruption (when loading), app renames corrupted file and creates a new one to maintain operability.
-- **Justification**:
-  - Protecting user data and minimizing downtime are critical in inventory management. This recovery process ensures 
+- **What it does**: On detecting data corruption (when loading), app renames corrupted file and creates a new one to maintain operability.
+- **Justification**: Protecting user data and minimizing downtime are critical in inventory management. This recovery process ensures 
   that users do not experience data loss and can continue to use the application with minimal interruption.
-- **Highlights**:
-  - Securely isolates corrupt files and logs incidents for analysis.
+- **Highlights**: Securely isolates corrupt files and logs incidents for analysis.
 
 ### Enhancements to Existing Features:
 - **Profit Calculation & List Sorting by Profit**:
   - **What it does**: Adds profit calculation, and allow sorting by profit margins.
   - **Justification**: Offer insights to users for their inventory profitability.
-  - **Highlights**:
-    - Implements revenue and cost calculations, with a sorting function for profitability.
+  - **Highlights**: Implements revenue and cost calculations, with a sorting function for profitability.
 
 ### Code Contributed:
 - [RepoSense link](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=nur-haziq&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2024-02-23&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
@@ -48,22 +43,15 @@ code. My role in this project was primarily focused on the storage aspects of Bi
 - User Guide:
   - Created the **'Key Definitions'** section of the UG, which aimed to introduce to the user the different item types,
   the concepts of **flags** and **placeholders**.
-  - Reformatted the `list` command section to condense the information.
-  - Reformatted the summary table of commands encompassing `add`, `search`, `list`, `delete`, `sell`, `restock`, 
-  `update`, and `profit`, summarizing their usage and descriptions for quick reference.
+  - Reformatted the `list` command section, and the summary table of commands. 
   - Improved the existing documentation with a focus on user-friendliness.
 - Developer Guide:
   - Designed the overall sequence diagram.
-  - Developed a class diagram for the `Storage` component, specifying its responsibilities like loading data, 
-  saving data, handling corrupted files, and parsing data.
-  - Added a class diagram of the command classes, highlighting their structure and relationships within the 
-  `seedu.binbash.command` package.
-  - Described the `DeleteCommand` class' implementation, including constructor design decisions that align with the
-  Single Responsibility Principle and the command pattern encapsulation.
+  - Developed a class diagram for the `Storage` component, and the `Command` classes.
+  - Described the `DeleteCommand` class implementation, including constructor design decisions that align with the SRP and the command pattern encapsulation.
 
 ### Community Engagement & Contribution to Team Tasks:
 - Release of v2.0 of the product
 - Participated regularly in the peer review process. [Link to PR's reviewed](https://github.com/AY2324S2-CS2113T-T09-2/tp/pulls?q=is%3Apr+is%3Aclosed+reviewed-by%3Anur-haziq+-author%3Anur-haziq)
-- Actively participated in code reviews for both the iP and PE-D, with contributions recognized as above average in 
-terms of quantity of feedback provided.
+- Actively participated in code reviews for both the iP and PE-D.
 
