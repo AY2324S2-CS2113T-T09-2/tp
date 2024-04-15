@@ -86,7 +86,7 @@ public class Ui {
      * Prints a greeting message to standard output.
      */
     public void greet() {
-        talk(LOGO + WELCOME_MESSAGE);
+        talk(NEWLINE + LOGO + WELCOME_MESSAGE);
     }
 
     /**

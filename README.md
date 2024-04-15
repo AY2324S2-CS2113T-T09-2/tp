@@ -7,7 +7,6 @@ for your daily operations.
 
 <img src="docs/images/Ui_1.png" alt="BinBash Intro" width="800"/>
 
-
 ## Features
 - **Stock Management**: Keep track of what's in stock, with the ability to add, update, sell, restock and delete easily.
 - **Inventory viewing**: View your inventory with list and search features to find essential information about your stock.

@@ -932,6 +932,26 @@ Format: `bye`, `exit`, `quit`
 ---
 <div style="page-break-after: always;"></div>
 
+### Getting Inspirational Quotes: `quote`
+
+> This command fetches a random quote to uplift your spirits.
+
+Need a little motivation? The quote command retrieves random inspirational messages to brighten your day. Whether you're feeling stuck or just need a boost, BinBash has got you covered!
+
+Format: `quote`
+
+The output will display a random quote in the format as seen below:
+```text
+-------------------------------------------------------------
+Have a nice day!
+
+-------------------------------------------------------------
+```
+
+> ℹ️ BinBash brings you a variety of inspiring messages to keep you motivated throughout your inventory management journey. So go ahead, type quote and let the positivity flow!
+* [Back to table of contents](#table-of-contents)
+---
+
 ### Saving and Loading data
 
 Unsure as to how you can save your BinBash data? Don't worry! Your data is automatically saved to your local storage. No manual saving of data is required.
@@ -955,17 +975,18 @@ We highly recommended that you take a backup of your save file before editing it
 
 ## Command Summary
 
-| **Command** | **Usage**                                                                                                                                                                                                                                                           | **Description**                                                                                                       |
-|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
-| **add**     | `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -s SALE_PRICE -c COST_PRICE [-e EXPIRY_DATE] [-q ITEM_QUANTITY] [-t THRESHOLD]` <br> `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -c COST_PRICE [-e EXPIRY_DATE] [-q ITEM_QUANTITY] [-t THRESHOLD]`                          | Adds a new item to the inventory.                                                                                     |
-| **search**  | `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`                                                                                                                     | Searches for items in the inventory based on various criteria.                                                        |
-| **list**    | `list` <br> `list -c` <br> `list -s` <br> `list -e` <br> `list -p`                                                                                                                                                                                                  | Lists all items in the inventory, with optional sorting based on cost price, sale price, expiry date or profits.      |
-| **delete**  | `delete -i ITEM_INDEX` <br> `delete -n ITEM_NAME`                                                                                                                                                                                                                   | Deletes an item from the inventory.                                                                                   |
-| **sell**    | `sell -n ITEM_NAME -q ITEM_QUANTITY` <br> `sell -i ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                                                                     | Decreases the quantity of an item after a sale.                                                                       |
-| **restock** | `restock -n ITEM_NAME -q ITEM_QUANTITY` <br> `restock -i ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                                                               | Increases the quantity of an item after restocking.                                                                   |
-| **update**  | `update -n ITEM_NAME [-d ITEM_DESCRIPTION] [-q ITEM_QUANTITY] [-e EXPIRY_DATE] [-s SALE_PRICE] [-c COST_PRICE] [-t THRESHOLD]` <br> `update -i ITEM_INDEX [-d ITEM_DESCRIPTION] [-q ITEM_QUANTITY] [-e EXPIRY_DATE] [-s SALE_PRICE] [-c COST_PRICE] [-t THRESHOLD]` | Updates the details of an existing item in the inventory.                                                             |
-| **profit**  | `profit`                                                                                                                                                                                                                                                            | Displays the total profit earned from the inventory.                                                                  |
-| **bye**     | `bye` <br> `exit` <br> `quit`                                                                                                                                                                                                                                       | Exits the application.                                                                                                |
+| **Command** | **Usage**                                                                                                                                                                                                                                   | **Description**                                                                                                  |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **add**     | `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` <br> `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -c COST_PRICE -t THRESHOLD`              | Adds a new item to the inventory.                                                                                |
+| **search**  | `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`                                                                                             | Searches for items in the inventory based on various criteria.                                                   |
+| **list**    | `list` <br> `list -c` <br> `list -s` <br> `list -e` <br> `list -p`                                                                                                                                                                          | Lists all items in the inventory, with optional sorting based on cost price, sale price, expiry date or profits. |
+| **delete**  | `delete -i ITEM_INDEX` <br> `delete -n ITEM_NAME`                                                                                                                                                                                           | Deletes an item from the inventory.                                                                              |
+| **sell**    | `sell -n ITEM_NAME -q ITEM_QUANTITY` <br> `sell -i ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                                             | Decreases the quantity of an item after a sale.                                                                  |
+| **restock** | `restock -n ITEM_NAME -q ITEM_QUANTITY` <br> `restock -i ITEM_INDEX -q ITEM_QUANTITY`                                                                                                                                                       | Increases the quantity of an item after restocking.                                                              |
+| **update**  | `update -n ITEM_NAME -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` <br> `update -i ITEM_INDEX -d ITEM_DESCRIPTION -q ITEM_QUANTITY -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE -t THRESHOLD` | Updates the details of an existing item in the inventory.                                                        |
+| **profit**  | `profit`                                                                                                                                                                                                                                    | Displays the total profit earned from the inventory.                                                             |
+| **quote**   | `quote`                                                                                                                                                                                                                                     | Displays a random quote on the screen.                                                                           |
+| **bye**     | `bye` <br> `exit` <br> `quit`                                                                                                                                                                                                               | Exits the application.                                                                                           |
 
 <div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
 ℹ️ <strong>Note:</strong>

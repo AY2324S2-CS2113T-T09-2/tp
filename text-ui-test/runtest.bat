@@ -20,4 +20,8 @@ java -jar %jarloc% < ..\..\text-ui-test\input.txt > ..\..\text-ui-test\ACTUAL.TX
 
 cd ..\..\text-ui-test
 
-FC ACTUAL.TXT EXPECTED.TXT >NUL && ECHO Test passed! || Echo Test failed!
+REM Skip the first 20 lines and copy the rest of the file, so lines are compared after the quote.
+more +20 ACTUAL.TXT > ACTUAL_TEMP.TXT
+more +20 EXPECTED.TXT > EXPECTED_TEMP.TXT
+
+FC ACTUAL_TEMP.TXT EXPECTED_TEMP.TXT >NUL && ECHO Test passed! || Echo Test failed!
