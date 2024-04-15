@@ -12,11 +12,6 @@ import java.util.regex.Pattern;
  */
 public class SellCommand extends Command{
     public static final String COMMAND = "sell";
-    public static final Pattern COMMAND_FORMAT = Pattern.compile(
-            "sell\\s+"
-                    + "n/(?<itemName>.+?)(?=q/)"
-                    + "q/(?<sellQuantity>.+)"
-    );
     private String itemName;
     private final int sellQuantity;
     private int index;
