@@ -142,7 +142,8 @@ public class ItemList {
     }
 
     /**
-     * Adds an Item to the ItemList.
+     * Adds an Item to the itemList based on specified details. Creates the appropriate
+     * item type (retail or operational) and handles perishable status.
      *
      * @param itemType A String denoting the type of Item to be added. Can be "retail" or "operational".
      * @param itemName The name of the Item to be added.
@@ -154,8 +155,9 @@ public class ItemList {
      * @param itemThreshold The quantity threshold of the Item to be added.
      * @return The result String to indicate that a new Item was added.
      */
-    public String addItem(String itemType, String itemName, String itemDescription, int itemQuantity,
-                          LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice, int itemThreshold) {
+    public String addItem(String itemType, String itemName, String itemDescription,
+                          int itemQuantity, LocalDate itemExpirationDate, double itemSalePrice,
+                          double itemCostPrice, int itemThreshold) {
         // Checking for existence of an item with the same name
         ArrayList<Item> searchOutput = getSearchAssistant()
                 .searchByExactName(itemName)
@@ -172,14 +174,16 @@ public class ItemList {
                     itemExpirationDate, itemSalePrice, itemCostPrice, itemThreshold);
         } else if (itemType.equals("retail") && itemExpirationDate.equals(LocalDate.MIN)) {
             // Non-perishable Retail Item
-            item = new RetailItem(itemName, itemDescription, itemQuantity, itemSalePrice, itemCostPrice, itemThreshold);
+            item = new RetailItem(itemName, itemDescription, itemQuantity,
+                    itemSalePrice, itemCostPrice, itemThreshold);
         } else if (itemType.equals("operational") && !itemExpirationDate.equals(LocalDate.MIN)) {
             // Perishable Operational Item
             item = new PerishableOperationalItem(itemName, itemDescription, itemQuantity,
                     itemExpirationDate, itemCostPrice, itemThreshold);
         } else {
             // Non-perishable Operational Item
-            item = new OperationalItem(itemName, itemDescription, itemQuantity, itemCostPrice, itemThreshold);
+            item = new OperationalItem(itemName, itemDescription, itemQuantity,
+                    itemCostPrice, itemThreshold);
         }
 
         int beforeSize = itemList.size();
@@ -194,7 +198,7 @@ public class ItemList {
     }
 
     /**
-     * Updates an Item in the ItemList by its name.
+     * Updates the data for an existing item in the itemList by its name.
      *
      * @param itemName The name of the item to be updated.
      * @param itemDescription The new description of the item to be updated.
@@ -211,7 +215,8 @@ public class ItemList {
                                   int itemThreshold) throws InvalidCommandException {
 
         Item itemToUpdate = findItemByName(itemName);
-        updateItemData(itemToUpdate, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
+        updateItemData(itemToUpdate, itemDescription, itemQuantity,
+                itemExpirationDate, itemSalePrice, itemCostPrice,
                 itemThreshold);
 
         return "I have updated your item information. Do check the following if it is correct."
@@ -219,7 +224,7 @@ public class ItemList {
     }
 
     /**
-     * Updates an Item in the ItemList by its index in the inner List.
+     * Updates the data for an existing item in the itemList by its index.
      *
      * @param index The index of the Item in the inner List.
      * @param itemDescription The new description of the item to be updated.
@@ -234,10 +239,11 @@ public class ItemList {
     public String updateItemDataByIndex (int index, String itemDescription, int itemQuantity,
                                   LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
                                   int itemThreshold) throws InvalidCommandException {
-        //Item item = itemList.get(index - 1);
+
         Item item = itemList.get(sortedOrder.get(index - 1));
 
-        updateItemData(item, itemDescription, itemQuantity, itemExpirationDate, itemSalePrice, itemCostPrice,
+        updateItemData(item, itemDescription, itemQuantity,
+                itemExpirationDate, itemSalePrice, itemCostPrice,
                 itemThreshold);
 
         String output = "I have updated the your item information. Do check the following if it is correct."
@@ -249,9 +255,9 @@ public class ItemList {
      * Private helper method to update an Item with the provided parameters.
      * Calls other private helpers to update individual attributes.
      */
-    private void updateItemData(Item item, String itemDescription, int itemQuantity, LocalDate itemExpirationDate,
-                                double itemSalePrice, double itemCostPrice, int itemThreshold)
-            throws InvalidCommandException {
+    private void updateItemData(Item item, String itemDescription, int itemQuantity,
+                                LocalDate itemExpirationDate, double itemSalePrice, double itemCostPrice,
+                                int itemThreshold) throws InvalidCommandException {
         updateItemDescription(item, itemDescription);
         updateItemQuantity(item, itemQuantity);
         updateItemExpirationDate(item, itemExpirationDate);
@@ -266,6 +272,7 @@ public class ItemList {
             item.setItemDescription(itemDescription);
         }
     }
+
     private void updateItemQuantity(Item item, int itemQuantity) {
         if (itemQuantity != Integer.MIN_VALUE) {
             logger.info("Attempting to update item quantity");
@@ -285,6 +292,7 @@ public class ItemList {
             }
         }
     }
+
     private void updateItemSalePrice(Item item, double itemSalePrice) throws InvalidCommandException {
         if (itemSalePrice != Double.MIN_VALUE) {
             logger.info("Attempting to update item sale price");
@@ -335,7 +343,8 @@ public class ItemList {
         return searchOutput.get(0);
     }
 
-    private String sellOrRestock(Item item, int quantityToUpdateBy, String command) throws InvalidCommandException {
+    private String sellOrRestock(Item item, int quantityToUpdateBy, String command)
+            throws InvalidCommandException {
         String alertText = "";
         int currentQuantity = item.getItemQuantity();
         switch (command) {
@@ -388,7 +397,7 @@ public class ItemList {
      * @return A String showing the result of the sell/restock operation.
      * @throws InvalidCommandException If provided item quantity is invalid (out of bounds).
      */
-    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidCommandException{
+    public String sellOrRestockItem(String itemName, int itemQuantity, String command) throws InvalidCommandException {
         Item item = findItemByName(itemName);
 
         String output = sellOrRestock(item, itemQuantity, command);
@@ -408,7 +417,6 @@ public class ItemList {
         Item item = itemList.get(sortedOrder.get(index - 1));
         return sellOrRestock(item, itemQuantity, command);
     }
-
 
     /**
      * Generates an alert that the quantity for an Item has fallen below its given threshold.
