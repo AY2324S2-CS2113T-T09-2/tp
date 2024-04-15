@@ -53,5 +53,5 @@ code. My role in this project was primarily focused on the storage aspects of Bi
 ### Community Engagement & Contribution to Team Tasks:
 - Release of v2.0 of the product
 - Participated regularly in the peer review process. [Link to PR's reviewed](https://github.com/AY2324S2-CS2113T-T09-2/tp/pulls?q=is%3Apr+is%3Aclosed+reviewed-by%3Anur-haziq+-author%3Anur-haziq)
-- Actively participated in code reviews for both the iP and PE-D, with contributions recognized as above average in terms of quantity of feedback provided.
+- Actively participated in code reviews for both the iP and PE-D.
 
