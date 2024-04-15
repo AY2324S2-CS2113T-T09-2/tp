@@ -60,7 +60,9 @@ public class Parser {
 
         switch (commandString) {
         case "bye":
+            //Fallthrough
         case "exit":
+            //Fallthrough
         case "quit":
             return new ByeCommand();
         case "add":

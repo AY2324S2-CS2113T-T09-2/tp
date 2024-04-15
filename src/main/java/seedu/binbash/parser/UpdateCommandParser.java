@@ -44,22 +44,22 @@ public class UpdateCommandParser extends DefaultParser {
         UpdateCommand updateCommand = getUpdateCommand(commandLine);
 
         if (commandLine.hasOption("description")) {
-            hasDescriptionOption(commandLine, updateCommand);
+            applyDescriptionOption(commandLine, updateCommand);
         }
         if (commandLine.hasOption("quantity")) {
-            hasQuantityOption(commandLine, updateCommand);
+            applyQuantityOption(commandLine, updateCommand);
         }
         if (commandLine.hasOption("cost-price")) {
-            hasCostPriceOption(commandLine, updateCommand);
+            applyCostPriceOption(commandLine, updateCommand);
         }
         if (commandLine.hasOption("sale-price")) {
-            hasSalePriceOption(commandLine, updateCommand);
+            applySalePriceOption(commandLine, updateCommand);
         }
         if (commandLine.hasOption("expiry-date")) {
-            hasExpirationDateOption(commandLine, updateCommand);
+            applyExpirationDateOption(commandLine, updateCommand);
         }
         if (commandLine.hasOption("threshold")) {
-            hasThresholdOption(commandLine, updateCommand);
+            applyThresholdOption(commandLine, updateCommand);
         }
         if (!hasOption) {
             throw new ParseException("At least one of -d, -q, -c, -s, -e, -t option required");
@@ -67,7 +67,7 @@ public class UpdateCommandParser extends DefaultParser {
         return updateCommand;
     }
 
-    private void hasThresholdOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
+    private void applyThresholdOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
         String threshold = commandLine.getOptionValue("threshold");
         int itemThreshold = Parser.parseIntOptionValue(threshold, "threshold");
         if (itemThreshold < 0) {
@@ -77,14 +77,14 @@ public class UpdateCommandParser extends DefaultParser {
         hasOption = true;
     }
 
-    private void hasExpirationDateOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
+    private void applyExpirationDateOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
         LocalDate itemExpiryDate = Parser.parseDateOptionValue(commandLine.getOptionValue("expiry-date"),
                 "expiry date");
         updateCommand.setItemExpirationDate(itemExpiryDate);
         hasOption = true;
     }
 
-    private void hasSalePriceOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
+    private void applySalePriceOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
         String salePrice = commandLine.getOptionValue("sale-price");
         double itemSalePrice = Parser.parseDoubleOptionValue(salePrice, "sale price");
         if (itemSalePrice < 0) {
@@ -94,7 +94,7 @@ public class UpdateCommandParser extends DefaultParser {
         hasOption = true;
     }
 
-    private void hasCostPriceOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
+    private void applyCostPriceOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
         String costPrice = commandLine.getOptionValue("cost-price");
         double itemCostPrice = Parser.parseDoubleOptionValue(costPrice, "cost price");
         if (itemCostPrice < 0) {
@@ -104,7 +104,7 @@ public class UpdateCommandParser extends DefaultParser {
         hasOption = true;
     }
 
-    private void hasQuantityOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
+    private void applyQuantityOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
         String quantity = commandLine.getOptionValue("quantity");
         int itemQuantity = Parser.parseIntOptionValue(quantity, "quantity");
         if (itemQuantity < 0) {
@@ -114,7 +114,7 @@ public class UpdateCommandParser extends DefaultParser {
         hasOption = true;
     }
 
-    private void hasDescriptionOption(CommandLine commandLine, UpdateCommand updateCommand) {
+    private void applyDescriptionOption(CommandLine commandLine, UpdateCommand updateCommand) {
         String itemDescription = String.join(" ", commandLine.getOptionValues("description"));
         updateCommand.setItemDescription(itemDescription);
         hasOption = true;
