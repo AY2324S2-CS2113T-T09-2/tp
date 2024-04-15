@@ -12,11 +12,6 @@ import java.util.regex.Pattern;
  */
 public class RestockCommand extends Command{
     public static final String COMMAND = "restock";
-    public static final Pattern COMMAND_FORMAT = Pattern.compile(
-            "restock\\s+"
-                    + "n/(?<itemName>.+?)(?=q/)"
-                    + "q/(?<restockQuantity>.+)"
-    );
     private String itemName;
     private int restockQuantity;
     private int index;
