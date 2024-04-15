@@ -122,7 +122,7 @@ public class Storage {
     }
 
     /**
-     * Creates a new data file named "items.txt".
+     * Creates a new data file, named "items.txt".
      *
      * @return true if the file is successfully created, false otherwise.
      */
