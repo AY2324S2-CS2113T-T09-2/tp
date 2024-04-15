@@ -194,7 +194,7 @@ public class Storage {
                 } else {
                     isCorrupted = true;
                 }
-            } catch (NumberFormatException | DateTimeParseException e) {
+            } catch (NumberFormatException | DateTimeParseException | ArrayIndexOutOfBoundsException e) {
                 isCorrupted = true;
             }
         }
