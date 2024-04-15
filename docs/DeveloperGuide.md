@@ -179,6 +179,14 @@ The `Parser` component
 - provides common methods for sub-parsers to parse their option values
 - rethrows `ParseException` from sub-parsers as `InvalidCommandException` with appropriate error messages
 
+The `Parser` utilizes parsing functionalities provided by the [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/) library.
+
+![ParserLibraryClassDiagram](images/ParserLibraryClassDiagram.png)
+
+In particular, the `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`) extend the `DefaultParser` class provided by the library, 
+where input-parsing tasks are delegated to the methods provided by the library.
+For instance, the `Options` class handles command-specific flags, and in turn, parsed user arguments are retrieved from the `CommandLine` class.
+
 Below shows the sequence diagram of a `Parser` parsing user input, to return the corresponding `Command`.
 
 ![ParseSequenceDiagram](images/ParseSequenceDiagram.png)

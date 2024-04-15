@@ -20,6 +20,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
 
 import org.junit.jupiter.api.Assertions;
+import seedu.binbash.quotes.Quotes;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -78,6 +80,21 @@ public class ParserTest {
         } catch (BinBashException e) {
             fail("Unexpected InvalidCommandException: " + e.getMessage());
         }
+    }
+
+
+    @Test
+    void getRandomQuote_returnsValidQuote() {
+        String quote = Quotes.getRandomQuote();
+
+        boolean quoteFound = false;
+        for (String predefinedQuote : Quotes.CUSTOM_MESSAGES) {
+            if (predefinedQuote.equals(quote)) {
+                quoteFound = true;
+                break;
+            }
+        }
+        assertTrue(quoteFound, "Returned quote is not one of the predefined quotes.");
     }
 
     @Test
