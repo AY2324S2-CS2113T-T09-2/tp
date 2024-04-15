@@ -109,24 +109,24 @@ However, if you ever need more clarification on the features provided by a speci
 4. Open the terminal/command prompt for your system.
    1. Windows
       * If you're on Windows, press `Windows Key + R` and type in `cmd`. Click `Ok` to launch the command prompt.<br>
-      ![Windows run](images/windows_run.png)
+      <img src="images/windows_run.png" alt="Windows Run" style="height:auto; width:40%">
       * You should see a window appear that is similar to the one shown below.<br>
-      ![Windows Cmd](images/windows_cmd.png)
+      <img src="images/windows_cmd.png" alt="Windows Cmd" style="height:auto; width:90%">
    2. Mac
       * If you're on Mac, click on `Launchpad` > `Other` > `Terminal`.<br>
-      ![Mac Terminal](images/mac_launchpad.png)<br>
-      ![Mac Terminal 2](images/mac_launchpad_other.png)<br>
+      ![Mac Launchpad](images/mac_launchpad.png)<br>
+      <img src="images/mac_launchpad_other.png" alt="Mac Launchpad 2" style="height:auto; width:80%"><br>
       Alternatively, click on the Spotlight icon in your menu bar, and type in `Terminal`.
       * A terminal window should appear.<br>
-      ![Mac Terminal 3](images/mac_terminal.png)
+      <img src="images/mac_terminal.png" alt="Mac Terminal" style="height:auto; width:60%">
    3. Linux
       * If you're on Linux, the name of the terminal application differs between distributions. Try searching with these keywords to find the right application on your system: `terminal`, `bash`, `console`
       * You'll know you've found it when you're presented with an interface like this: <br>
-      ![Fedora Terminal](images/fedora_sway_terminal.png)
+      <img src="images/fedora_sway_terminal.png" alt="Fedora Terminal Run" style="height:auto; width:65%">
 5. Navigate to the folder containing `binbash.jar` using the terminal/command prompt.
    * To do this, you can key in `cd` into the command prompt followed by the file location of `binbash.jar`.
    * Here is an example on Windows:<br>
-   ![Windows cd](images/windows_cdToDirectory.png)
+   <img src="images/windows_cdToDirectory.png" alt="Windows cd" style="height:auto; width:85%">
 6. Type `java -jar binbash.jar` into the command prompt, and press enter. If the application has started successfully, you should see the following output:<br>
     ```text
     -------------------------------------------------------------
@@ -225,7 +225,7 @@ You would enter the corresponding [Placeholder](#placeholders) immediately after
 <div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
 💡 <strong>Tip:</strong><br>
 You may find the following image taken from the subsequent <a href="#command-format">Command Format</a> section helpful:<br>
-<img src="images/UG_CommandFormat.png" alt="Command Format Diagram"><br>
+<img src="images/UG_CommandFormat.png" alt="Command Format Diagram" style="height:auto; width:55%"><br>
 <em>Illustration of how flags and placeholders are used in BinBash's command structure.</em><br><br>
 Please refer to the subsequent <a href="#command-format">Command Format</a> section to see how Flags and Placeholders are used together.
 </div>
@@ -345,7 +345,7 @@ You will encounter BinBash commands throughout this User Guide. Before you delve
 Features section, let's first learn what a command consists of.
 
 Here is an example: <br>
-![Command Format Diagram](images/UG_CommandFormat.png)
+<img src="images/UG_CommandFormat.png" alt="Command Format Diagram" style="height:auto; width:55%">
 
 A command consists of:
 
