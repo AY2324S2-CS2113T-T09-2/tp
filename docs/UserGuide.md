@@ -828,7 +828,7 @@ Updates the description of the item named "banana" to "ripe fruit", its quantity
 2024 and its cost price to $0.50. Other information remain unchanged.
 
     ```text
-    I have updated the your item information. Do check the following if it is correct.
+    I have updated your item information. Do check the following if it is correct.
     
     [P][R] banana
         description: ripe fruit
