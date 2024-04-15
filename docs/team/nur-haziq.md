@@ -78,11 +78,11 @@ methods in the `ItemList` class.
 
 ### Documentation:
 - User Guide:
-  - Created the 'Key Definitions' section of the UG, which aimed to introduce to the user the different item types 
+  - Created the **'Key Definitions'** section of the UG, which aimed to introduce to the user the different item types 
   within BinBash. 
-  - Detailed the usage of flags and placeholders, explaining their roles in command inputs and documenting conditions 
+  - Detailed the usage of **flags** and **placeholders**, explaining their roles in command inputs and documenting conditions 
   for valid and invalid data entries, thereby facilitating error-free user interactions. 
-  - Presented a structured explanation of the command format, illustrating how commands, flags, and placeholders 
+  - Presented a structured explanation of the **command format**, illustrating how commands, flags, and placeholders 
   interact, which aids users in mastering command execution for inventory management.
   - Reformatted the `list` command section to condense the information and utilized a tabular format to explain the 
   various ways to sort inventory based on criteria like cost, sale price, profit, and expiry date.
@@ -106,5 +106,5 @@ methods in the `ItemList` class.
 - Release of v2.0 of the product
 - Participated regularly in the peer review process. [Link to PR's reviewed](https://github.com/AY2324S2-CS2113T-T09-2/tp/pulls?q=is%3Apr+is%3Aclosed+reviewed-by%3Anur-haziq+-author%3Anur-haziq)
 - Actively participated in code reviews for both the iP and PE-D, with contributions recognized as above average in 
-- terms of quantity of feedback provided.
+terms of quantity of feedback provided.
 
