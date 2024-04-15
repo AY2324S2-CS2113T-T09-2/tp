@@ -1192,10 +1192,8 @@ If not, refer to Oracle's [guide](https://docs.oracle.com/en/java/javase/11/inst
 **Q**: I want to modify my `items.txt` file. How should I format my items?<br>
 **A**: Firstly, we recommend that you take a backup of your current `items.txt` file before editing it.
 
-Then, open the file in any text editor of your choice (you can use `Notepad` on Windows). Feel free to add, modify or remove rows, but do ensure that they adhere to this format:
-```text
-TYPE|NAME|DESCRIPTION|QUANTITY|COST_PRICE|UNITS_PURCHASED|THRESHOLD|EXPIRATION_DATE|SALE_PRICE|UNITS_SOLD|
-```
+Then, open the file in any text editor of your choice (you can use `Notepad` on Windows). Feel free to add, modify or remove rows, but do ensure that they adhere to this format:<br>
+![Storage Format](images/storage_format.png)
 
 If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), replace its value with a whitespace (one
 press of the spacebar would suffice!)

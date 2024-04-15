@@ -44,14 +44,12 @@ public class CommandCompleter extends AggregateCompleter {
     private static ArgumentCompleter deleteCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("delete", "delete", COMMAND_GROUP_INVENTORY, "delete an item from the inventory",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, THIRD_SORTED_ORDER_ON_DISPLAY)));
-
     private static ArgumentCompleter restockCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("restock", "restock", COMMAND_GROUP_IN_OUT, "restock an item",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FOURTH_SORTED_ORDER_ON_DISPLAY)));
     private static ArgumentCompleter sellCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("sell", "sell", COMMAND_GROUP_IN_OUT, "sell an item",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FIFTH_SORTED_ORDER_ON_DISPLAY)));
-
     private static ArgumentCompleter searchCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("search", "search", COMMAND_GROUP_QUERY, "search for an item",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, SIXTH_SORTED_ORDER_ON_DISPLAY)));
@@ -61,7 +59,6 @@ public class CommandCompleter extends AggregateCompleter {
     private static ArgumentCompleter profitCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("profit", "profit", COMMAND_GROUP_QUERY, "display total profit",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, EIGHTH_SORTED_ORDER_ON_DISPLAY)));
-
     private static ArgumentCompleter byeCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("exit", "exit", COMMAND_GROUP_OTHERS, "exits application",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, NINTH_SORTED_ORDER_ON_DISPLAY)));

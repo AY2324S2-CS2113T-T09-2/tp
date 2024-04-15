@@ -45,7 +45,6 @@ Given below are my contributions to the project.
     * **What it does**: Allows the user to safely exit the application.
     * **Justification**: This is a basic feature of the application, as users need to exit the application normally
     without inducing any exceptions.
-    * **Highlights**: -
 
 * **Code contributed**: [RepoSense link](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=yhwong20&breakdown=true)
 
@@ -56,24 +55,18 @@ Given below are my contributions to the project.
 * **Documentation**:
     * User Guide:
       * Added the documentation for the `bye` command.
-      * Added the Getting Started section.
-      * Added the FAQ section.
-      * Added examples for the `add` feature.
+      * Added the **Getting Started** and **FAQ** section.
       * Added and maintained the table of contents to ensure navigability of the document.
-      * Added admonition boxes throughout the document to improve emphasis and clarity.
+      * Added call-out boxes throughout the document to improve emphasis and clarity.
       * Implemented changes to improve user-centric tone, readability and clarity.
-      * Maintained the documentation's format.
     * Developer Guide:
       * Added the Design - Architecture section, as well as adding the overall architecture diagram of the application.
       * Added the Design - Data Component section, as well as adding the Data Component diagram and Item Class diagram.
       * Added the Features - Add Item to Inventory section, as well as adding the sequence diagram for the add functionality.
       * Added the Parser Class diagram, as well as the sequence diagram for the parsing functionality.
-      * Added the Acknowledgements section.
-      * Added the Setting up, getting started section.
-      * Added the Instructions for manual testing section.
-      * Updated the User stories.
+      * Added the **Acknowledgements**, **Setting up, getting started** and **Instructions for manual testing** sections.
+      * Updated User stories.
       * Added and maintained the table of contents to ensure navigability of the document.
-      * Maintained the documentation's format.
 
 * **Review contributions**:
     * [List of GitHub pull requests reviewed (filtered)](https://github.com/AY2324S2-CS2113T-T09-2/tp/pulls?q=is%3Apr+reviewed-by%3AYHWong20+-author%3AYHWong20+)

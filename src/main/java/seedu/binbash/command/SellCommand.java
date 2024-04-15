@@ -5,18 +5,12 @@ import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.inventory.ItemList;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 /**
  * Represents the execution of a sell command that will decrease the quantity of an Item.
  */
 public class SellCommand extends Command{
     public static final String COMMAND = "sell";
-    public static final Pattern COMMAND_FORMAT = Pattern.compile(
-            "sell\\s+"
-                    + "n/(?<itemName>.+?)(?=q/)"
-                    + "q/(?<sellQuantity>.+)"
-    );
     private String itemName;
     private final int sellQuantity;
     private int index;

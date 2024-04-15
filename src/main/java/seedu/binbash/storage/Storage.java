@@ -122,7 +122,7 @@ public class Storage {
     }
 
     /**
-     * Creates a new data file named "items.txt".
+     * Creates a new data file, named "items.txt".
      *
      * @return true if the file is successfully created, false otherwise.
      */
@@ -135,7 +135,6 @@ public class Storage {
                 return true;
             }
         } catch (IOException e) {
-            // This feels like a "proceed at your own risk" kind of statement.
             storageLogger.severe("Error creating new items.txt file: " + e.getMessage());
         }
         return false;
@@ -194,7 +193,7 @@ public class Storage {
                 } else {
                     isCorrupted = true;
                 }
-            } catch (NumberFormatException | DateTimeParseException e) {
+            } catch (NumberFormatException | DateTimeParseException | ArrayIndexOutOfBoundsException e) {
                 isCorrupted = true;
             }
         }
