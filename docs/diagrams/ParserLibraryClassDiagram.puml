@@ -1,0 +1,28 @@
+@startuml
+
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam CircledCharacterFontSize 0
+skinparam CircledCharacterRadius 0
+
+class XYZCommandParser {
+    + parse(commandArgs: String[]): XYZCommand
+}
+
+package "Apache Commons CLI" #DDDDDD {
+        class DefaultParser {
+            # options: Options
+            + parse(options: Options, arguments: String[]): CommandLine
+        }
+
+        class CommandLine {
+            + getOptionValue(): String
+            + getOptionValues(): String[]
+        }
+}
+
+DefaultParser -d- "cmd" CommandLine : > stores option values in
+XYZCommandParser -u-|> DefaultParser
+XYZCommandParser -u-> CommandLine : gets option values from >
+
+@enduml

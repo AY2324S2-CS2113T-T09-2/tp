@@ -1172,11 +1172,35 @@ If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), r
 
 ## Glossary
 
+Below, you'll find definitions for terms frequently used throughout this user guide. To help you easily navigate and understand these concepts, the terms are organized in alphabetical order.
+
 ### Bash
 A computer program that provides a text-based interface and environment for user input. Also, the name of a programming language commonly used for scripting and operating system job control.
 
 ### Command Prompt / Command Line / Terminal
 A means of interacting with a computer through keyboard typed lines of text, also known as commands. This is in contrast to the currently more popular graphical user interface (GUI), which uses visual elements that users can directly manipulate to perform their desired actions.
 
+### Expiry Date
+The date by which a perishable item should be sold or used before it becomes unsuitable for sale or consumption. 
+
+### Flags
+Special markers used in command line interfaces to modify commands or indicate specific variables. [See Flags in BinBash](#flags)
+
 ### Java
 Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.
+
+### Operational Items
+Supplies or equipment used in the daily operations of a business that are essential for running the business but not sold to customers. [See Item Types in BinBash](#item)
+
+### Placeholders
+Symbols or variables in programming and scripting that hold a place for a value that can be specified later. [See Placeholders in BinBash](#placeholders)
+
+### Perishable Items
+Goods that have a limited time frame in which they are suitable for sale or use, such as food or certain medical supplies. [See Item Types in BinBash](#item)
+
+### Retail Items
+Products intended for sale to consumers. These can range from everyday household items to specialty products. [See Item Types in BinBash](#item)
+
+### Threshold
+A predefined limit that, when reached, triggers a specific action, such as an alert message to remind the user of the low stock.
+
