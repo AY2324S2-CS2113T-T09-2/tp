@@ -635,24 +635,74 @@ Example:
 
 Suppose you have the following items in your inventory:
 - Item A (Perishable Retail), Cost Price: $5, Sale Price: $15, Expiry Date: 01-05-2023
-- Item B (Perishable Retail), Cost Price: $10, Sale Price: $12, Expiry Date: 15-04-2023
-- Item C (Perishable Operational), Cost Price: $3, Expiry Date: 10-07-2023
-- Item D (Non-perishable Retail), Cost Price: $7, Sale Price: $14
+- Item B (Perishable Operational), Cost Price: $3, Expiry Date: 10-07-2023
+- Item C (Non-perishable Retail), Cost Price: $7, Sale Price: $14
 
-Using `list -c`, BinBash sorts all items by cost price in ascending order:
-- Item C, Cost Price: $3
-- Item A, Cost Price: $5
-- Item D, Cost Price: $7
-- Item B, Cost Price: $10
+```text
+-------------------------------------------------------------
+1. [P][R] Item A
+	...
+	cost price: $5.00
+	sale price: $15.00
+	threshold: ...
+	expiry date: 01-05-2023
 
-Using `list -e`, BinBash sorts the items in order of which items will expire first. Notice how BinBash will filter out 
-non-perishable items (Item D) and sort the remaining items by their expiry date:
-- Item B, Expiry Date: 15-04-2023
-- Item A, Expiry Date: 01-05-2023
-- Item C, Expiry Date: 10-07-2023
+2. [P][O] Item B
+	...
+	cost price: $3.00
+	threshold: ...
+	expiry date: 10-07-2023
 
-Similarly, you can use `list -s` to sort the items by sale price and `list -p` to sort by profit. Once again, 
-note that for sorting the items by sale price and by profit, operational items like Item C will not appear in these 
+3. [R] Item C
+	...
+	cost price: $7.00
+	sale price: $14.00
+	threshold: ...
+
+-------------------------------------------------------------
+```
+Note that the sample output has been slightly shortened for the sake of brevity.
+
+Using `list -c`, BinBash sorts all items by **cost price** in **ascending order**:
+
+```text
+-------------------------------------------------------------
+1. [P][O] Item B
+	...
+	cost price: $3.00
+	...
+
+2. [P][R] Item A
+	...
+	cost price: $5.00
+	...
+
+3. [R] Item C
+	...
+	cost price: $7.00
+	...
+
+-------------------------------------------------------------
+```
+
+Using `list -e`, BinBash sorts the items in order of **which items will expire first**. Notice how BinBash will filter out 
+non-perishable items (Item C) and sort the remaining items by their expiry date:
+
+```text
+-------------------------------------------------------------
+1. [P][R] Item A
+	...
+	expiry date: 01-05-2023
+
+2. [P][O] Item B
+	...
+	expiry date: 10-07-2023
+
+-------------------------------------------------------------
+```
+
+Similarly, you can use `list -s` to sort the items by **sale price**, and `list -p` to sort by **profit**. Once again, 
+note that for sorting the items by sale price and by profit, operational items like Item B **will not appear** in these 
 sorted lists as they do not have a sale price.
 
 [Back to table of contents](#table-of-contents)
