@@ -6,19 +6,22 @@ import seedu.binbash.command.Command;
 import seedu.binbash.command.DeleteCommand;
 import seedu.binbash.command.UpdateCommand;
 import seedu.binbash.command.SearchCommand;
+import seedu.binbash.command.SellCommand;
+import seedu.binbash.command.RestockCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
-import seedu.binbash.exceptions.BinBashException;
+import seedu.binbash.command.QuoteCommand;
+
 import seedu.binbash.exceptions.InvalidCommandException;
 
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
-import org.jline.builtins.Completers.OptDesc;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Parses user input to generate commands for managing inventory.
@@ -44,33 +47,13 @@ public class Parser {
     }
 
     /**
-     * Gets the option descriptions for all commands.
-     *
-     * @return The option descriptions for all commands.
-     */
-    public ArrayList<ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
-        ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions = new ArrayList<>() {
-            {
-                add(addCommandParser.getOptionDecriptions());
-                add(restockCommandParser.getOptionDecriptions());
-                add(sellCommandParser.getOptionDecriptions());
-                add(updateCommandParser.getOptionDecriptions());
-                add(searchCommandParser.getOptionDecriptions());
-                add(listCommandParser.getOptionDecriptions());
-                add(deleteCommandParser.getOptionDecriptions());
-            }
-        };
-        return allCommandsOptionDescriptions;
-    }
-
-    /**
      * Parses a command from user input.
      *
      * @param userInput The user input to parse.
      * @return The parsed command.
      * @throws InvalidCommandException If the command is invalid or cannot be parsed.
      */
-    public Command parseCommand(String userInput) throws BinBashException {
+    public Command parseCommand(String userInput) throws InvalidCommandException {
         String[] tokens = userInput.trim().split("\\s+"); // Tokenize user input
         String commandString = tokens[0].toLowerCase();
         String[] commandArgs = Arrays.copyOfRange(tokens, 1, tokens.length); // Takes only options and arguments
@@ -96,6 +79,8 @@ public class Parser {
             return parseUpdateCommand(commandArgs);
         case "profit":
             return new ProfitCommand();
+        case "quote":
+            return new QuoteCommand();
         default:
             throw new InvalidCommandException("Invalid command: "  + commandString);
         }
@@ -125,7 +110,7 @@ public class Parser {
         }
     }
 
-    private Command parseRestockCommand(String[] commandArgs) throws InvalidCommandException {
+    private RestockCommand parseRestockCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return restockCommandParser.parse(commandArgs);
         } catch (ParseException e) {
@@ -133,7 +118,7 @@ public class Parser {
         }
     }
 
-    private Command parseSellCommand(String[] commandArgs) throws InvalidCommandException {
+    private SellCommand parseSellCommand(String[] commandArgs) throws InvalidCommandException {
         try {
             return sellCommandParser.parse(commandArgs);
         } catch (ParseException e) {
@@ -157,6 +142,31 @@ public class Parser {
         }
     }
 
+    /**
+     * Checks whether a duplicate option has been processed.
+     *
+     * @param processedOptions The list of options processed.
+     * @throws ParseException If duplicate option found.
+     */
+    static void checkDuplicateOption(Option[] processedOptions) throws ParseException {
+        HashSet<String> optionSet = new HashSet<>();
+        for (Option processedOption : processedOptions) {
+            String currentOption = processedOption.getOpt();
+            if (optionSet.contains(currentOption)) {
+                throw new ParseException("Duplicate option: -" + currentOption);
+            }
+            optionSet.add(currentOption);
+        }
+    }
+
+    /**
+     * Returns an integer value parsed from a provided string.
+     *
+     * @param argument The provided string.
+     * @param option The option taking this parsed value as an argument.
+     * @return Parsed integer value.
+     * @throws ParseException If argument is not the string representation of a Java int.
+     */
     static int parseIntOptionValue(String argument, String option) throws ParseException {
         long longValue;
         try {
@@ -173,6 +183,14 @@ public class Parser {
         return (int) longValue;
     }
 
+    /**
+     * Returns a double value parsed from a provided string.
+     *
+     * @param argument The provided string.
+     * @param option The option taking this parsed value as an argument.
+     * @return Parsed double value.
+     * @throws ParseException If argument is not the string representation of a Java double.
+     */
     static double parseDoubleOptionValue(String argument, String option) throws ParseException {
         if (argument.length() > 300) {
             throw new ParseException(option + " number given too long!");
@@ -185,6 +203,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns a LocalDate parsed from a provided string.
+     *
+     * @param argument The provided string.
+     * @param option The option taking this parsed value as an argument.
+     * @return Parsed date.
+     * @throws ParseException If argument is not the string representation of a LocalDate formatted in
+     *     EXPECTED_INPUT_DATE_FORMAT.
+     */
     static LocalDate parseDateOptionValue(String argument, String option) throws ParseException {
         try {
             LocalDate dateValue = LocalDate.parse(argument, EXPECTED_INPUT_DATE_FORMAT);

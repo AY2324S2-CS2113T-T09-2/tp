@@ -32,9 +32,10 @@
 
 ## Acknowledgements
 
-[AB3 Developer Guide](https://se-education.org/addressbook-level3/DeveloperGuide.html)
-
-[AB3 GitHub Project Repository](https://github.com/se-edu/addressbook-level3)
+- [AB3 Developer Guide](https://se-education.org/addressbook-level3/DeveloperGuide.html)
+- [AB3 GitHub Project Repository](https://github.com/se-edu/addressbook-level3)
+- [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/)
+- [JLine3](https://github.com/jline/jline3)
 
 ---
 ## Setting up, getting started
@@ -134,27 +135,17 @@ The **Sequence Diagram** below shows how the components interact with each other
 
 ### Ui Component
 
-![Ui class diagram](images/UiClassDiagram.png)
-
 API: [`Ui.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/ui/Ui.java)
 
-The above class diagram shows the components delegating separate functionalities of the Ui.
+The `UI` component
+- loops over user inputs until a non-empty input to pass to `Main`
+- keeps track of a boolean variable that is false if and only if `ByeCommand` or `UserInterruptException` is received
+- depends on the `Parser` having set all command option descriptions in `CommandOptionAdder`
+- completes commands based on command and option descriptions in `CommandCompleter`
 
-The `TextIn` class is responsible for reading user input and returning it to `Ui`, upon which it is passed to the *main()* program.
+![Ui class diagram](images/UiClassDiagram.png)
 
-The `PrintStream` class writes text at the behest of `Ui` to standard output, upon which it is received by the user.
-
-Note the use of an externally provided `LineReader` object in the `TextIn` class that handles input. This allows us to greatly extend our text-based user interface with features such as:
-
-1. Command completion on tab
-
-2. Displaying option descriptions on hover
-
-3. Contextual help menus
-
-![linereader](images/ui-linereader-enhancement.png)
-
-This allows us to overload options on a small number of commands to provide full functionality of the application. Developers can then extend its features without also the worry of finding a way for users to access those features easily.
+This is enabled by the externally provided Java [JLine library](https://github.com/jline/jline3). Namely, it makes use of the `LineReader` object and extends an `AggregateCompleter` to read and complete user inputs respectively.
 
 ---
 
@@ -183,17 +174,10 @@ application's persistent data.
 
 API: [`Parser.java`](https://github.com/AY2324S2-CS2113T-T09-2/tp/blob/master/src/main/java/seedu/binbash/parser/Parser.java)
 
-The `Parser` component plays a vital role in interpreting user input and facilitating interaction with the application. It serves as the bridge between user commands and actionable operations within the system. Here's an overview of its functionalities:
-
-- **Command Interpretation**: The `Parser` analyzes user input to identify the corresponding commands and parameters, ensuring accurate command interpretation.
-
-- **Command Delegation**: Once user commands are identified, the `Parser` delegates command execution to the appropriate command handlers, ensuring seamless operation flow.
-
-- **Error Handling**: In cases of invalid or malformed input, the `Parser` provides informative error messages, guiding users towards correct command usage.
-
-- **Integration Support**: Designed with modularity in mind, the `Parser` facilitates integration with other system components, promoting extensibility and maintainability.
-
-By effectively parsing user commands and translating them into actionable tasks, the `Parser` enhances the overall usability and functionality of the application.
+The `Parser` component
+- delegates parsing to an appropriate command parser based on the first word found
+- provides common methods for sub-parsers to parse their option values
+- rethrows `ParseException` from sub-parsers as `InvalidCommandException` with appropriate error messages
 
 Below shows the sequence diagram of a `Parser` parsing user input, to return the corresponding `Command`.
 
@@ -636,6 +620,15 @@ Overall, effective logging implementation enhances the maintainability, reliabil
         ```
 2. To exit the application, enter `bye` into the input.
 
+### Command Completion
+
+1. From an empty text interface, press `TAB`. This should present you with a list of commands and descriptions.
+2. Start typing, this list should filter based on every matching letter you type.
+3. Pressing `TAB` should cycle through all matching commands.
+4. Within each command, typing ` -` followed by `TAB` should present you with a list of options.
+   Expected: no option in this list should be an already specified option.
+   That is, when you've already typed `-c` in the same line, the list should not recommend the `-c` option again.
+
 ### Adding a new Item
 
 1. Enter this command to create a new `RetailItem`:<br>
@@ -676,6 +669,23 @@ Overall, effective logging implementation enhances the maintainability, reliabil
    `delete New Operational Item`
 5. List out the items using `list`. Ensure that the item can no longer be found.
 6. Open `data/items.txt` and ensure the deleted item does not exist in this file.
+
+### Searching for items
+
+1. Invalid range searches
+   - Prerequisite: inventory with pre-populated item list.
+   - Test case 1: `search -q -2..10`
+     Expected: No results found. Error message "quantity lower bound cannot be negative" shown.
+   - Test case 2: `search -s 5.50..4.15`
+     Expected: No results found. Error message "sale price lower bound is more than upper bound" shown.
+   - Test case 3: `search -e ..04-13-2024`
+     Expected: No results found. Error message "expiry date upper bound is invalid. Required format: dd-mm-yyyy" shown.
+2. Case insensitive name and description searches
+   - Prerequisite: inventory with pre-populated item list.
+   - Test case 1: `search -n item` followed by `search -n IteM`
+     Expected: Both searches give same results.
+   - Test case 2: `search -d used in warehouse` followed by `search -d uSed iN WAreHOuSe`
+     Expected: Both searches give same results.
 
 ### Update the quantity of an Item
 

@@ -6,18 +6,38 @@ import org.apache.commons.cli.Options;
 import org.jline.builtins.Completers.OptDesc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
- * A utiliy class to add and save command options, shared between command parsers and Ui
- * command completer classes.
+ * A utility class to add and save command options and descriptions, used by command parsers
+ * and command completer classes respectively.
  */
 public class CommandOptionAdder {
-    Options options;
-    ArrayList<OptDesc> optionDescriptions;
+    private static HashMap<String, ArrayList<OptDesc>> allCommandsOptionDescriptions = new HashMap<>();
+    private Options options;
+    private ArrayList<OptDesc> optionDescriptions;
 
-    public CommandOptionAdder(Options options, ArrayList<OptDesc> optionDescriptions) {
+    public CommandOptionAdder() {
+        this(new Options());
+    }
+
+    public CommandOptionAdder(Options options) {
         this.options = options;
-        this.optionDescriptions = optionDescriptions;
+        optionDescriptions = new ArrayList<>();
+    }
+
+    public HashMap<String, ArrayList<OptDesc>> getAllCommandsOptionDescriptions() {
+        return allCommandsOptionDescriptions;
+    }
+
+    /**
+     * Saves option descriptions for the current command after all options are added.
+     *
+     * @param command The name of the command.
+     */
+    void saveCommandOptionDescriptions(String command) {
+        assert options.getOptions().size() == optionDescriptions.size();
+        allCommandsOptionDescriptions.put(command, optionDescriptions);
     }
 
     private Option getRetailItemOption() {
@@ -88,7 +108,7 @@ public class CommandOptionAdder {
                 .desc("Sort by profits earned for each item.")
                 .argName("profit")
                 .build();
-
+        optionDescriptions.add(new OptDesc("-p", "--profit", "sort by profit"));
         return sortProfitOption;
     }
 
@@ -98,6 +118,8 @@ public class CommandOptionAdder {
      * @return The current instance of CommandOptionAdder.
      */
     CommandOptionAdder addListTypeOptionGroup() {
+        assert !options.hasOption("c") && !options.hasOption("e")
+            && !options.hasOption("s") && !options.hasOption("p");
         OptionGroup listTypeOptionGroup = new OptionGroup()
                 .addOption(sortByCostPriceOption())
                 .addOption(sortByExpirationDateOption())
@@ -140,6 +162,7 @@ public class CommandOptionAdder {
      * @return The current instance of CommandOptionAdder.
      */
     CommandOptionAdder addItemTypeOptionGroup() {
+        assert !options.hasOption("re") && !options.hasOption("op");
         OptionGroup itemTypeOptionGroup = new OptionGroup()
                 .addOption(getRetailItemOption())
                 .addOption(getOperationalItemOption());
@@ -155,6 +178,7 @@ public class CommandOptionAdder {
      * @return The current instance of CommandOptionAdder.
      */
     CommandOptionAdder addItemNameAndIndexOptionGroup() {
+        assert !options.hasOption("n") && !options.hasOption("i");
         OptionGroup itemNameAndInxdexOptionGroup = new OptionGroup()
                 .addOption(getItemIndexOption())
                 .addOption(getItemNameOption());
@@ -177,6 +201,7 @@ public class CommandOptionAdder {
                 .longOpt("name")
                 .desc(description)
                 .build();
+        assert !options.hasOption("n");
         options.addOption(nameOption);
         optionDescriptions.add(new OptDesc("-n", "--name", description));
         return this;
@@ -197,6 +222,7 @@ public class CommandOptionAdder {
                 .desc(description)
                 .argName("index")
                 .build();
+        assert !options.hasOption("i");
         options.addOption(nameOption);
         optionDescriptions.add(new OptDesc("-i", "--index", description));
         return this;
@@ -216,6 +242,7 @@ public class CommandOptionAdder {
                 .longOpt("description")
                 .desc(description)
                 .build();
+        assert !options.hasOption("d");
         options.addOption(descOption);
         optionDescriptions.add(new OptDesc("-d", "--description", description));
         return this;
@@ -236,6 +263,7 @@ public class CommandOptionAdder {
                 .longOpt("cost-price")
                 .desc(description)
                 .build();
+        assert !options.hasOption("c");
         options.addOption(costOption);
         optionDescriptions.add(new OptDesc("-c", "--cost-price", description));
         return this;
@@ -256,6 +284,7 @@ public class CommandOptionAdder {
                 .longOpt("quantity")
                 .desc(description)
                 .build();
+        assert !options.hasOption("q");
         options.addOption(quantOption);
         optionDescriptions.add(new OptDesc("-q", "--quantity", description));
         return this;
@@ -276,6 +305,7 @@ public class CommandOptionAdder {
                 .longOpt("sale-price")
                 .desc(description)
                 .build();
+        assert !options.hasOption("s");
         options.addOption(saleOption);
         optionDescriptions.add(new OptDesc("-s", "--sale-price", description));
         return this;
@@ -296,6 +326,7 @@ public class CommandOptionAdder {
                 .longOpt("expiry-date")
                 .desc(description)
                 .build();
+        assert !options.hasOption("e");
         options = options.addOption(expiryOption);
         optionDescriptions.add(new OptDesc("-e", "--expiry-date", description));
         return this;
@@ -316,6 +347,7 @@ public class CommandOptionAdder {
                 .desc(description)
                 .argName("threshold")
                 .build();
+        assert !options.hasOption("t");
         options = options.addOption(thresholdOption);
         optionDescriptions.add(new OptDesc("-t", "--threshold", description));
         return this;
@@ -336,6 +368,7 @@ public class CommandOptionAdder {
                 .longOpt("list")
                 .desc(description)
                 .build();
+        assert !options.hasOption("l");
         options.addOption(nameOption);
         optionDescriptions.add(new OptDesc("-l", "--list", description));
         return this;

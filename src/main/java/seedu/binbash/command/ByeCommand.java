@@ -3,6 +3,8 @@ package seedu.binbash.command;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 
+import seedu.binbash.ui.Ui;
+
 /**
  * Represents the execution of a bye command that quits the program.
  */
@@ -14,8 +16,8 @@ public class ByeCommand extends Command {
 
     @Override
     public boolean execute(ItemList itemList) {
+        Ui.setUserAsInactive();
         executionUiOutput = "Bye!";
-        hasToSave = true;
         return true;
     }
 }

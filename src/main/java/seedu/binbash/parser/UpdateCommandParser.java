@@ -4,18 +4,15 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.CommandLine;
-import org.jline.builtins.Completers.OptDesc;
 
 import seedu.binbash.command.UpdateCommand;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 /**
  * Parses command line arguments for creating an UpdateCommand.
  */
 public class UpdateCommandParser extends DefaultParser {
-    private ArrayList<OptDesc> optionDescriptions;
     private boolean hasOption;
 
     /**
@@ -23,30 +20,15 @@ public class UpdateCommandParser extends DefaultParser {
      */
     public UpdateCommandParser() {
         options = new Options();
-        optionDescriptions = new ArrayList<>();
-        new CommandOptionAdder(options, optionDescriptions)
+        new CommandOptionAdder(options)
                 .addItemNameAndIndexOptionGroup()
                 .addDescriptionOption(false, "Update description of item")
                 .addQuantityOption(false, "Update quantity of item")
                 .addCostPriceOption(false, "Update cost price of item")
                 .addSalePriceOption(false, "Update sale price of item")
-                .addExpirationDateOption(false,
-                        "Update expiry date of item")
-                .addThresholdOption(false,
-                        "Update threshold of item");
-    }
-
-    /**
-     * Gets the option descriptions for the UpdateCommandParser.
-     *
-     * @return The list of option descriptions.
-     */
-    public ArrayList<OptDesc> getOptionDecriptions() {
-        return optionDescriptions;
-    }
-
-    public void setHasOption(boolean hasOption) {
-        this.hasOption = hasOption;
+                .addExpirationDateOption(false, "Update expiry date of item")
+                .addThresholdOption(false, "Update threshold of item")
+                .saveCommandOptionDescriptions("update");
     }
 
     /**
@@ -57,7 +39,8 @@ public class UpdateCommandParser extends DefaultParser {
      * @throws ParseException If an error occurs during parsing.
      */
     public UpdateCommand parse(String[] commandArgs) throws ParseException {
-        CommandLine commandLine = new DefaultParser().parse(options, commandArgs);
+        CommandLine commandLine = super.parse(options, commandArgs);
+        Parser.checkDuplicateOption(commandLine.getOptions());
         UpdateCommand updateCommand = getUpdateCommand(commandLine);
 
         if (commandLine.hasOption("description")) {
@@ -79,7 +62,7 @@ public class UpdateCommandParser extends DefaultParser {
             hasThresholdOption(commandLine, updateCommand);
         }
         if (!hasOption) {
-            throw new ParseException("At least one of -n, -d, -c, -s, -e option required");
+            throw new ParseException("At least one of -d, -q, -c, -s, -e, -t option required");
         }
         return updateCommand;
     }
@@ -91,14 +74,14 @@ public class UpdateCommandParser extends DefaultParser {
             throw new ParseException("Threshold must be must be at least 0.");
         }
         updateCommand.setItemThreshold(itemThreshold);
-        setHasOption(true);
+        hasOption = true;
     }
 
     private void hasExpirationDateOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
         LocalDate itemExpiryDate = Parser.parseDateOptionValue(commandLine.getOptionValue("expiry-date"),
                 "expiry date");
         updateCommand.setItemExpirationDate(itemExpiryDate);
-        setHasOption(true);
+        hasOption = true;
     }
 
     private void hasSalePriceOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
@@ -108,7 +91,7 @@ public class UpdateCommandParser extends DefaultParser {
             throw new ParseException("Sale price must be at least 0.");
         }
         updateCommand.setItemSalePrice(itemSalePrice);
-        setHasOption(true);
+        hasOption = true;
     }
 
     private void hasCostPriceOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
@@ -118,7 +101,7 @@ public class UpdateCommandParser extends DefaultParser {
             throw new ParseException("Cost price must be at least 0.");
         }
         updateCommand.setItemCostPrice(itemCostPrice);
-        setHasOption(true);
+        hasOption = true;
     }
 
     private void hasQuantityOption(CommandLine commandLine, UpdateCommand updateCommand) throws ParseException {
@@ -128,13 +111,13 @@ public class UpdateCommandParser extends DefaultParser {
             throw new ParseException("Quantity must be at least 0.");
         }
         updateCommand.setItemQuantity(itemQuantity);
-        setHasOption(true);
+        hasOption = true;
     }
 
     private void hasDescriptionOption(CommandLine commandLine, UpdateCommand updateCommand) {
         String itemDescription = String.join(" ", commandLine.getOptionValues("description"));
         updateCommand.setItemDescription(itemDescription);
-        setHasOption(true);
+        hasOption = true;
     }
 
     private UpdateCommand getUpdateCommand(CommandLine commandLine) {
