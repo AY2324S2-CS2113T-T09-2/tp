@@ -702,7 +702,7 @@ non-perishable items (Item C) and sort the remaining items by their expiry date:
 ```
 
 Similarly, you can use `list -s` to sort the items by **sale price**, and `list -p` to sort by **profit**. Once again, 
-note that for sorting the items by sale price and by profit, operational items like Item C **will not appear** in these 
+note that for sorting the items by sale price and by profit, operational items like Item B **will not appear** in these 
 sorted lists as they do not have a sale price.
 
 [Back to table of contents](#table-of-contents)
