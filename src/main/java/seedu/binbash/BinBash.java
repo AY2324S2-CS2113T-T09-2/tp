@@ -5,6 +5,7 @@ import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.parser.Parser;
+import seedu.binbash.quotes.Quotes;
 import seedu.binbash.storage.Storage;
 import seedu.binbash.ui.Ui;
 
@@ -28,6 +29,7 @@ public class BinBash {
 
         userInterface.greet();
         userInterface.talk(itemList.getProfitMargin());
+        userInterface.talk(Quotes.getRandomQuote());
 
         while (userInterface.isUserActive()) {
             try {
@@ -46,7 +48,7 @@ public class BinBash {
         }
         logger.info("BinBash exiting...");
     }
-    
+
     /**
      * Main entry-point for the BinBash application.
      */

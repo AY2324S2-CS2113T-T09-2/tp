@@ -10,6 +10,8 @@ import seedu.binbash.command.SellCommand;
 import seedu.binbash.command.RestockCommand;
 import seedu.binbash.command.ListCommand;
 import seedu.binbash.command.ProfitCommand;
+import seedu.binbash.command.QuoteCommand;
+
 import seedu.binbash.exceptions.InvalidCommandException;
 
 import org.apache.commons.cli.Option;
@@ -77,6 +79,8 @@ public class Parser {
             return parseUpdateCommand(commandArgs);
         case "profit":
             return new ProfitCommand();
+        case "quote":
+            return new QuoteCommand();
         default:
             throw new InvalidCommandException("Invalid command: "  + commandString);
         }
