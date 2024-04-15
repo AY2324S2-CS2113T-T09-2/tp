@@ -23,7 +23,7 @@ package "Apache Commons CLI" #DDDDDD {
         }
 }
 
-DefaultParser -up- CommandLine : > returns
+DefaultParser -d- "cmd" CommandLine : > stores option values in
 XYZCommandParser -up-|> DefaultParser
 DefaultParser "1" *-left- Options
 
