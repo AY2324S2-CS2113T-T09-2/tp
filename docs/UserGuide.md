@@ -678,7 +678,7 @@ This is achieved by using the respective item identifier flags, <code>-n</code> 
 Format: `sell -n ITEM_NAME -q ITEM_QUANTITY`
 
 * Both flags `-n` and `-q` are mandatory.
-* The flag `-n` is used, meaning that the `item name` is used as an identifier to identify the item you wish to sell.
+* The flag `-n` is used, meaning that the `ITEM_NAME` is used as an identifier to identify the item you wish to sell.
 * The quantity given to this command represents the amount of item that you want to sell. This amount will be reduced
   from the existing quantity of the item in the inventory list.
 
@@ -712,7 +712,7 @@ quantity of oranges is 73, you should see something like the following.
 Format: `sell -i ITEM_INDEX -q ITEM_QUANTITY`
 
 * Both flags `-i` and `-q` are mandatory.
-* The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to sell.
+* The flag `-i` is used, meaning that the `ITEM_INDEX` is used as an identifier to identify the item you wish to sell.
 
 <div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
 💡 <strong>Tip:</strong> To determine the <code>index</code> of an item in your inventory, call the <code>list</code> command first, and note down the number displayed next to your item of interest.
@@ -771,7 +771,7 @@ This is achieved by using the respective item identifier flags, <code>-n</code> 
 Format: `restock -n ITEM_NAME -q ITEM_QUANTITY`
 
 * Both flags `-n` and `-q` are mandatory.
-* The flag `-n` is used, meaning that the `item name` is used as an identifier to identify the item you wish to restock.
+* The flag `-n` is used, meaning that the `ITEM_NAME` is used as an identifier to identify the item you wish to restock.
 * The quantity given to this command represents the amount of item that you want to restock. This amount will be added
   to the existing quantity of the item in the inventory list.
 
@@ -805,7 +805,7 @@ quantity of apples in your inventory is 3, you should see something like the fol
 Format: `restock -i ITEM_INDEX -q ITEM_QUANTITY`
 
 * Both flags `-i` and `-q` are mandatory.
-* The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to update.
+* The flag `-i` is used, meaning that the `ITEM_INDEX` is used as an identifier to identify the item you wish to update.
 
 <div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
 💡 <strong>Tip:</strong> To determine the <code>index</code> of an item in your inventory, call the <code>list</code> command first, and note down the number displayed next to your item of interest.
@@ -843,7 +843,7 @@ This is achieved by using the respective item identifier flags, <code>-n</code> 
 Format: `update -n ITEM_NAME [-d ITEM_DESCRIPTION] [-q ITEM_QUANTITY] [-e EXPIRY_DATE] [-s SALE_PRICE] [-c COST_PRICE]
 [-t THRESHOLD]`
 
-* The flag `-n` is used, meaning that the `item name` is used as an identifier to identify the item you wish to update.
+* The flag `-n` is used, meaning that the `ITEM_NAME` is used as an identifier to identify the item you wish to update.
 This flag is required.
 * All other flags are optional, depending on what details you wish to update.
 
@@ -876,7 +876,7 @@ Updates the description of the item named "banana" to "ripe fruit", its quantity
 Format: `update -i ITEM_INDEX [-d ITEM_DESCRIPTION] [-q ITEM_QUANTITY] [-e EXPIRY_DATE] [-s SALE_PRICE] [-c COST_PRICE]
 [-t THRESHOLD]`
 
-* The flag `-i` is used, meaning that the `item index` is used as an identifier to identify the item you wish to update.
+* The flag `-i` is used, meaning that the `ITEM_INDEX` is used as an identifier to identify the item you wish to update.
 * To know the `item index`, we encourage you to first use the command `list` to find out the index of your item of
   interest.
 * All other flags are optional,depending on what details you wish to update.
