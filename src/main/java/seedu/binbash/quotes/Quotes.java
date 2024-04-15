@@ -49,7 +49,7 @@ public class Quotes {
     private static final Random RANDOM = new Random();
 
     // Private constructor to prevent instantiation
-    public Quotes() {}
+    private Quotes() {}
 
     public static String getRandomQuote() {
         int randomIndex = RANDOM.nextInt(CUSTOM_MESSAGES.length);
