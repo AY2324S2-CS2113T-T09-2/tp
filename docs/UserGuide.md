@@ -1035,8 +1035,11 @@ We highly recommended that you take a backup of your save file before editing it
 <tr>
 <td><strong>add</strong></td>
 <td>
+<ul>
 <li><code>add -re -n ITEM_NAME -d ITEM_DESCRIPTION [-q ITEM_QUANTITY] -e EXPIRY_DATE -s SALE_PRICE -c COST_PRICE [-t THRESHOLD]</code> </li>
-<li><code>add -op -n ITEM_NAME -d ITEM_DESCRIPTION [-q ITEM_QUANTITY] -e EXPIRY_DATE -c COST_PRICE [-t THRESHOLD]</code></li></td>
+<li><code>add -op -n ITEM_NAME -d ITEM_DESCRIPTION [-q ITEM_QUANTITY] -e EXPIRY_DATE -c COST_PRICE [-t THRESHOLD]</code></li>
+</ul>
+</td>
 <td>Adds a new item to the inventory.</td>
 </tr>
 <tr>
@@ -1046,43 +1049,45 @@ We highly recommended that you take a backup of your save file before editing it
 </tr>
 <tr>
 <td><strong>list</strong></td>
-<td>
+<td><ul>
 <li><code>list</code></li>
 <li><code>list -c</code></li>
 <li><code>list -s</code></li>
 <li><code>list -e</code></li>
 <li><code>list -p</code></li>
+</ul></td>
 <td>Lists all items in the inventory, with optional sorting based on cost price, sale price, expiry date or profits.</td>
 </tr>
 <tr>
 <td><strong>delete</strong></td>
-<td>
+<td><ul>
 <li><code>delete -i ITEM_INDEX</code></li>
 <li><code>delete -n ITEM_NAME</code></li>
-</td>
+</ul></td>
 <td>Deletes an item from the inventory.</td>
 </tr>
 <tr>
 <td><strong>sell</strong></td>
-<td>
+<td><ul>
 <li><code>sell -n ITEM_NAME -q ITEM_QUANTITY</code></li>
 <li><code>sell -i ITEM_INDEX -q ITEM_QUANTITY</code></li>
-</td>
+</ul></td>
 <td>Decreases the quantity of an item after a sale.</td>
 </tr>
 <tr>
 <td><strong>restock</strong></td>
-<td>
+<td><ul>
 <li><code>restock -n ITEM_NAME -q ITEM_QUANTITY</code></li>
 <li><code>restock -i ITEM_INDEX -q ITEM_QUANTITY</code></li>
-</td><td>Increases the quantity of an item after restocking.</td>
+</ul></td>
+<td>Increases the quantity of an item after restocking.</td>
 </tr>
 <tr>
 <td><strong>update</strong></td>
-<td>
+<td><ul>
 <li><code>update -n ITEM_NAME [-d ITEM_DESCRIPTION] [-q ITEM_QUANTITY] [-e EXPIRY_DATE] [-s SALE_PRICE] [-c COST_PRICE] [-t THRESHOLD]</code></li>
 <li><code>update -i ITEM_INDEX [-d ITEM_DESCRIPTION] [-q ITEM_QUANTITY] [-e EXPIRY_DATE] [-s SALE_PRICE] [-c COST_PRICE] [-t THRESHOLD]</code></li>
-</td>
+</ul></td>
 <td>Updates the details of an existing item in the inventory depending on which fields are specified.  At least one of the optional flags must be specified.</td>
 </tr>
 <tr>
@@ -1097,16 +1102,15 @@ We highly recommended that you take a backup of your save file before editing it
 </tr>
 <tr>
 <td><strong>bye</strong></td>
-<td>
+<td><ul>
 <li><code>bye</code></li>
 <li><code>exit</code></li>
 <li><code>quit</code></li>
-</td>
+</ul></td>
 <td>Exits the application.</td>
 </tr>
 </tbody>
 </table>
-
 
 <div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
 ℹ️ <strong>Note:</strong>
