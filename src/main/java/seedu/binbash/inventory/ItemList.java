@@ -246,7 +246,7 @@ public class ItemList {
                 itemExpirationDate, itemSalePrice, itemCostPrice,
                 itemThreshold);
 
-        String output = "I have updated the your item information. Do check the following if it is correct."
+        String output = "I have updated your item information. Do check the following if it is correct."
                 + System.lineSeparator() + System.lineSeparator() + item;
         return output;
     }
