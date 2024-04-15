@@ -44,7 +44,8 @@ Our long awaited first release adds everything you would expect of an inventory 
     - [Updating an item: `update`](#updating-an-item-update)
     - [Deleting an item: `delete`](#deleting-an-item-delete)
     - [Calculating the total profit: `profit`](#calculating-the-total-profit-profit)
-    - [Exiting the application: `bye`](#exiting-the-application-bye-exit-quit)
+    - [Exiting the application: `bye`, `exit`, `quit`](#exiting-the-application-bye-exit-quit)
+    - [Getting Inspirational Quotes: `quote`](#getting-inspirational-quotes-quote)
     - [Saving and Loading data](#saving-and-loading-data)
 8. [Command Summary](#command-summary)
 9. [FAQ](#faq)
@@ -1035,7 +1036,7 @@ If not, refer to Oracle's [guide](https://docs.oracle.com/en/java/javase/11/inst
 
 Then, open the file in any text editor of your choice (you can use `Notepad` on Windows). Feel free to add, modify or remove rows, but do ensure that they adhere to this format:
 ```text
-ITEM_TYPE|ITEM_NAME|ITEM_DESCRIPTION|QUANTITY|ITEM_COST_PRICE|TOTAL_UNITS_PURCHASED|ITEM_THRESHOLD|ITEM_EXPIRATION_DATE|ITEM_SALE_PRICE|TOTAL_UNITS_SOLD|
+TYPE|NAME|DESCRIPTION|QUANTITY|COST_PRICE|UNITS_PURCHASED|THRESHOLD|EXPIRATION_DATE|SALE_PRICE|UNITS_SOLD|
 ```
 
 If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), replace its value with a whitespace.
