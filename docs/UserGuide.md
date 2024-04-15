@@ -818,6 +818,10 @@ Format: `update -n ITEM_NAME [-d ITEM_DESCRIPTION] [-q ITEM_QUANTITY] [-e EXPIRY
 This flag is required.
 * All other flags are optional, depending on what details you wish to update.
 
+<div id="warningCallout" style="padding: 1em; border: 0 solid #feb144;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #fff8e6;">
+❗ <strong>Warning:</strong> Item name is case-sensitive. 
+</div>
+
 Examples:
 - `update -n banana -d ripe fruit -q 30 -e 10-10-2024 -c 0.50`
 Updates the description of the item named "banana" to "ripe fruit", its quantity to 30, its expiry date to 10 October 
