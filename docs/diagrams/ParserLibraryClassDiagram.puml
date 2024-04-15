@@ -17,6 +17,7 @@ package "Apache Commons CLI" #DDDDDD {
         class Options
 
         class CommandLine {
+            # options : Options
             + getOptionValue(): String
             + getOptionValues(): String[]
         }
