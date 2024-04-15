@@ -948,8 +948,12 @@ Have a nice day!
 -------------------------------------------------------------
 ```
 
-> ℹ️ BinBash brings you a variety of inspiring messages to keep you motivated throughout your inventory management journey. So go ahead, type quote and let the positivity flow!
-* [Back to table of contents](#table-of-contents)
+<div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
+ℹ️ <strong>Note:</strong> BinBash brings you a variety of inspiring messages to keep you motivated throughout your inventory management journey. So go ahead, type <code>quote</code> and let the positivity flow!
+</div>
+
+[Back to table of contents](#table-of-contents)
+
 ---
 
 ### Saving and Loading data
