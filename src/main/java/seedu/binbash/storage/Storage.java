@@ -135,7 +135,6 @@ public class Storage {
                 return true;
             }
         } catch (IOException e) {
-            // This feels like a "proceed at your own risk" kind of statement.
             storageLogger.severe("Error creating new items.txt file: " + e.getMessage());
         }
         return false;
