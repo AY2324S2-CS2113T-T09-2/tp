@@ -5,7 +5,6 @@ import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.inventory.ItemList;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 /**
  * Represents the execution of a restock command that will increase the quantity of an Item.

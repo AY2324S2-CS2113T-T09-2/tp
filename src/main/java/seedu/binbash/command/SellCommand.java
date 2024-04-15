@@ -5,7 +5,6 @@ import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.inventory.ItemList;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 /**
  * Represents the execution of a sell command that will decrease the quantity of an Item.
