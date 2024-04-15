@@ -1107,7 +1107,6 @@ We highly recommended that you take a backup of your save file before editing it
 </tbody>
 </table>
 
-
 <div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
 ℹ️ <strong>Note:</strong>
 <li>Only one item type flag can be specified for each item. This means that you can only use either <code>-re</code> or <code>-op</code> but not both at the same time. </li> 
