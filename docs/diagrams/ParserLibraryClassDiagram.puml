@@ -11,10 +11,9 @@ class XYZCommandParser {
 
 package "Apache Commons CLI" #DDDDDD {
         class DefaultParser {
+            # options: Options
             + parse(options: Options, arguments: String[]): CommandLine
         }
-
-        class Options
 
         class CommandLine {
             + getOptionValue(): String
@@ -22,8 +21,8 @@ package "Apache Commons CLI" #DDDDDD {
         }
 }
 
-DefaultParser -up- CommandLine : > returns
-XYZCommandParser -up-|> DefaultParser
-DefaultParser "1" *-left- Options
+DefaultParser -d- "cmd" CommandLine : > stores option values in
+XYZCommandParser -u-|> DefaultParser
+XYZCommandParser -u-> CommandLine : gets option values from >
 
 @enduml
