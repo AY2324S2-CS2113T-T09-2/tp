@@ -44,7 +44,8 @@ Our long awaited first release adds everything you would expect of an inventory 
     - [Updating an item: `update`](#updating-an-item-update)
     - [Deleting an item: `delete`](#deleting-an-item-delete)
     - [Calculating the total profit: `profit`](#calculating-the-total-profit-profit)
-    - [Exiting the application: `bye`](#exiting-the-application-bye-exit-quit)
+    - [Exiting the application: `bye`, `exit`, `quit`](#exiting-the-application-bye-exit-quit)
+    - [Getting Inspirational Quotes: `quote`](#getting-inspirational-quotes-quote)
     - [Saving and Loading data](#saving-and-loading-data)
 8. [Command Summary](#command-summary)
 9. [FAQ](#faq)
@@ -116,6 +117,8 @@ However, if you ever need more clarification on the features provided by a speci
       ![Mac Terminal](images/mac_launchpad.png)<br>
       ![Mac Terminal 2](images/mac_launchpad_other.png)<br>
       Alternatively, click on the Spotlight icon in your menu bar, and type in `Terminal`.
+      * A terminal window should appear.<br>
+      ![Mac Terminal 3](images/mac_terminal.png)
    3. Linux
       * If you're on Linux, the name of the terminal application differs between distributions. Try searching with these keywords to find the right application on your system: `terminal`, `bash`, `console`
       * You'll know you've found it when you're presented with an interface like this: <br>
@@ -410,9 +413,8 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -s SALE_PRICE -c COST_PRICE [-
 * `ITEM_NAME`, `ITEM_DESCRIPTION`, `SALE_PRICE` and `COST_PRICE` must be specified.
 * All other fields are optional.
 * If `ITEM_QUANTITY` is not specified, a default value of `0` will be assigned to it.
-This allows you to create a placeholder for an item in your inventory you've yet to receive any stock of.
+This may come in useful when you need to create a placeholder for an item in your inventory that you've yet to receive any stock of.
 * If `THRESHOLD` is not specified, a default value of `1` will be assigned to it.
-* There is no need to include the currency. A `$` sign will be appended to the prices.
 * Retail items do not have an `EXPIRY_DATE` field, hence the flag `-e` is not used.
 
 <div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
@@ -453,9 +455,9 @@ Format: `add -re -n ITEM_NAME -d ITEM_DESCRIPTION -e EXPIRY_DATE -s SALE_PRICE -
 
 Examples:
 
-- `add -re -n tuna fish -d seafood -q 5 -e 02-11-2024 -s 10 -c 4.50` This command adds a perishable retail item named 
+- `add -re -n tuna fish -d seafood -e 02-11-2024 -s 10 -c 4.50` This command adds a perishable retail item named 
 "tuna fish" to the inventory. As mentioned before, when `ITEM_QUANTITY` and `THRESHOLD` values are not specified in the command,
-they will be given default values of 0 and 1 respectively. Do note that this behaviour is common for all item types.
+they will be given default values of `0` and `1` respectively. Do note that this behaviour is common across **all** item types.
    ```text
    -------------------------------------------------------------
    Noted! I have added the following item into your inventory:
@@ -478,9 +480,8 @@ Format: `add -op -n ITEM_NAME -d ITEM_DESCRIPTION -c COST_PRICE [-q ITEM_QUANTIT
 * `ITEM_NAME`, `ITEM_DESCRIPTION` and `COST_PRICE` must be specified.
 * All other fields are optional.
 * If `ITEM_QUANTITY` is not specified, a default value of `0` will be assigned to it.
-This allows you to create a placeholder for an item in your inventory you've yet to receive any stock of.
+This may come in useful when you need to create a placeholder for an item in your inventory that you've yet to receive any stock of.
 * If `THRESHOLD` is not specified, a default value of `1` will be assigned to it.
-* There is no need to include the currency. A `$` sign will be appended to the prices.
 * `-s` and `-e` are not used as there are no `SALE_PRICE` and `EXPIRY_DATE` fields for an Operational Item.
 
 <div id="tipCallout" style="padding: 1em; border: 0 solid #9ee09e;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #e6f5e6;">
@@ -541,7 +542,7 @@ Examples:
 
 > This allows you to search for items in your inventory, filtering results through a number of item-specific fields.
 
-Format: `search -n NAME_QUERY -d DESCRIPTION_QUERY -q QUANTITY_RANGE -c COST_PRICE_RANGE -s SALE_PRICE_RANGE -e EXPIRY_DATE_RANGE -l NUMBER_OF_RESULTS`
+Format: `search [-n NAME_QUERY] [-d DESCRIPTION_QUERY] [-q QUANTITY_RANGE] [-c COST_PRICE_RANGE] [-s SALE_PRICE_RANGE] [-e EXPIRY_DATE_RANGE] [-l NUMBER_OF_RESULTS]`
 
 - At least one of `-n`, `-d`, `-q`, `-c`, `-s`, or `-e` must be set.
 - `NAME_QUERY` and `DESCRIPTION_QUERY` perform a case-insensitive search on the name and description fields of inventory items respectively.
@@ -649,9 +650,8 @@ sorted lists as they do not have a sale price.
 
 <div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
 ℹ️ <strong>Note:</strong><br> 
-<li><code>sell</code> works by either specifying the item <strong>name</strong> or its <strong>index</strong> in the inventory. Only one item identifier 
-flag, <code>-n</code> or <code>-i</code>, can be used with the <code>sell</code> command to identify the item that you want to sell. 
-There must be a minimum of one flag used, excluding the <code>-n</code> or <code>-i</code> flag.</li>
+<li>To <code>sell</code> an item, you should specify either the item <strong>name</strong>, or its <strong>index</strong> in the inventory. 
+This is achieved by using the respective item identifier flags, <code>-n</code> or <code>-i</code>, together with the <code>sell</code> command to identify the item that you want to sell.</li>
 <li>Only <strong>Retail</strong> items can be sold. BinBash will not allow you to sell an <strong>Operational</strong> item.</li>
 </div>
 
@@ -673,19 +673,19 @@ Examples:
 - `sell -n oranges -q 20` This will deduct the quantity of "oranges" in your inventory list by 20. Assuming your initial
 quantity of oranges is 73, you should see something like the following.
 
- ```text
--------------------------------------------------------------
-Great! I have updated the quantity of the item for you:
-
-[P][R] oranges
-	description: Mandarin
-	quantity: 53
-	cost price: $0.45
-	sale price: $1.45
-	threshold: 50
-	expiry date: 10-06-2024
--------------------------------------------------------------
-   ```
+    ```text
+    -------------------------------------------------------------
+    Great! I have updated the quantity of the item for you:
+    
+    [P][R] oranges
+        description: Mandarin
+        quantity: 53
+        cost price: $0.45
+        sale price: $1.45
+        threshold: 50
+        expiry date: 10-06-2024
+    -------------------------------------------------------------
+    ```
 
 #### Selling an item using item index
 
@@ -738,11 +738,9 @@ Oh no! Your item is running low!
 
 <div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
 ℹ️ <strong>Note:</strong><br>
-<li><code>restock</code> works by either specifying the item <strong>name</strong> or its <strong>index</strong> in the inventory. Only one item identifier 
-flag, <code>-n</code> or <code>-i</code>, can be used with the <code>restock</code> command to identify the item that you want to restock. 
-There must be a minimum of one flag used, excluding the <code>-n</code> or <code>-i</code> flag.</li>
+To <code>restock</code> an item, you should specify either the item <strong>name</strong>, or its <strong>index</strong> in the inventory. 
+This is achieved by using the respective item identifier flags, <code>-n</code> or <code>-i</code>, together with the <code>restock</code> command to identify the item that you want to restock.
 </div>
-
 
 #### Restocking an item using item name
 
@@ -762,19 +760,19 @@ Examples:
 - `restock -n apples -q 50` This will add the quantity of "apples" in your inventory list by 50. Assuming your initial
 quantity of apples in your inventory is 3, you should see something like the following.
 
- ```text
--------------------------------------------------------------
-Great! I have updated the quantity of the item for you:
-
-[P][R] apples
-	description: Fuji
-	quantity: 53
-	cost price: $0.50
-	sale price: $1.25
-	threshold: 50
-	expiry date: 10-06-2024
--------------------------------------------------------------
-````
+    ```text
+    -------------------------------------------------------------
+    Great! I have updated the quantity of the item for you:
+    
+    [P][R] apples
+        description: Fuji
+        quantity: 53
+        cost price: $0.50
+        sale price: $1.25
+        threshold: 50
+        expiry date: 10-06-2024
+    -------------------------------------------------------------
+    ````
 #### Restocking an item using item index
 
 Format: `restock -i ITEM_INDEX -q ITEM_QUANTITY`
@@ -806,9 +804,8 @@ Examples:
 
 <div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
 ℹ️ <strong>Note:</strong><br>
-<li><code>update</code> works by either specifying the item <strong>name</strong> or its <strong>index</strong> in the inventory. Only one item identifier 
-flag, <code>-n</code> or <code>-i</code>, can be used with the <code>update</code> command to identify the item that you want to update. 
-There must be a minimum of one flag used, excluding the <code>-n</code> or <code>-i</code> flag.</li>
+<li>To <code>update</code> an item, you should specify either the item <strong>name</strong>, or its <strong>index</strong> in the inventory. 
+This is achieved by using the respective item identifier flags, <code>-n</code> or <code>-i</code>, together with the <code>update</code> command to identify the item that you want to update.</li>
 <li>Any item field can be updated except for its <strong>name</strong>.</li>
 </div>
 
@@ -826,18 +823,18 @@ Examples:
 Updates the description of the item named "banana" to "ripe fruit", its quantity to 30, its expiry date to 10 October 
 2024 and its cost price to $0.50. Other information remain unchanged.
 
-```text
-I have updated the your item information. Do check the following if it is correct.
-
-[P][R] banana
-	description: ripe fruit
-	quantity: 30
-	cost price: $0.50
-	sale price: $1.20
-	threshold: 50
-	expiry date: 10-10-2024
--------------------------------------------------------------
-```
+    ```text
+    I have updated the your item information. Do check the following if it is correct.
+    
+    [P][R] banana
+        description: ripe fruit
+        quantity: 30
+        cost price: $0.50
+        sale price: $1.20
+        threshold: 50
+        expiry date: 10-10-2024
+    -------------------------------------------------------------
+    ```
 
  
 #### Updating an item using item index
@@ -864,8 +861,6 @@ Examples:
 - `update -i 2 -d office supplies -s 20.00`
 Updates the description of the item at index 2 to "office supplies" and its sale price to $20.00. Other information 
 remains unchanged.
-- `update -i 4 -q 10 -c 2.00 -t 2`
-Updates the quantity of the item at index 4 to 10, its cost price to $2.00, and its threshold to 2.
 
 [Back to table of contents](#table-of-contents)
 
@@ -900,19 +895,19 @@ Format: `delete -n ITEM_NAME`
 Examples:
 - `delete -n cookie` Deletes the item with the name "cookie".
 
-```text
--------------------------------------------------------------
-Got it! I've removed the following item:
-
-[P][R] cookie
-	description: Famous Amos
-	quantity: 3
-	cost price: $0.80
-	sale price: $1.60
-	threshold: 55
-	expiry date: 10-01-2024
--------------------------------------------------------------
-```
+    ```text
+    -------------------------------------------------------------
+    Got it! I've removed the following item:
+    
+    [P][R] cookie
+        description: Famous Amos
+        quantity: 3
+        cost price: $0.80
+        sale price: $1.60
+        threshold: 55
+        expiry date: 10-01-2024
+    -------------------------------------------------------------
+    ```
 
 #### Deleting an item using item index
 
@@ -998,7 +993,7 @@ Have a nice day!
 ```
 <div id="infoCallout" style="padding: 1em; border: 0 solid #9ec1cf;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #eef9fc;">
 ℹ️ <strong>Note:</strong> BinBash brings you a variety of inspiring messages to keep you motivated throughout your 
-inventory management journey. So go ahead, type quote and let the positivity flow!
+inventory management journey. So go ahead, type <code>quote</code> and let the positivity flow!
 </div>
 
 [Back to table of contents](#table-of-contents)
@@ -1157,7 +1152,7 @@ If not, refer to Oracle's [guide](https://docs.oracle.com/en/java/javase/11/inst
 
 Then, open the file in any text editor of your choice (you can use `Notepad` on Windows). Feel free to add, modify or remove rows, but do ensure that they adhere to this format:
 ```text
-ITEM_TYPE|ITEM_NAME|ITEM_DESCRIPTION|QUANTITY|ITEM_COST_PRICE|TOTAL_UNITS_PURCHASED|ITEM_THRESHOLD|ITEM_EXPIRATION_DATE|ITEM_SALE_PRICE|TOTAL_UNITS_SOLD|
+TYPE|NAME|DESCRIPTION|QUANTITY|COST_PRICE|UNITS_PURCHASED|THRESHOLD|EXPIRATION_DATE|SALE_PRICE|UNITS_SOLD|
 ```
 
 If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), replace its value with a whitespace.
