@@ -71,7 +71,7 @@ This guide will walk you through each feature, providing clear instructions and 
 can make the most out of BinBash. Let's get your inventory organized efficiently and effectively!
 
 ---
-<br>
+<div style="page-break-after: always;"></div>
 
 ## How to Use this Guide
 
@@ -154,6 +154,7 @@ different types of items and their attributes, as well as the usage of flags and
 concepts is essential before exploring the various features that BinBash offers, ensuring you can effectively manage 
 and navigate the system.
 
+<br>
 
 #### Possible Issues During Startup
 
@@ -217,6 +218,8 @@ different items.
 Restrictions for the different attributes can be found in the [Placeholders](#placeholders) section, or within the 
 specific feature in the [Features](#features) section.
 
+<br>
+
 ### Flags
 
 Flags are delimiters in BinBash that enable the system to distinguish different parameters without ambiguity. 
@@ -254,6 +257,8 @@ Please refer to the subsequent <a href="#command-format">Command Format</a> sect
 <li>The flags <code>-re</code>, <code>-op</code> and <code>-p</code> do not have any corresponding placeholders. They are marked as "Not Applicable" in 
 the table above.</li>
 </div>
+
+<br>
 
 ### Placeholders
 
@@ -334,10 +339,12 @@ The <code>COMMAND_WORD</code> placeholder does not have a corresponding flag and
 <tr>
 <td><code>COMMAND_WORD</code></td>
 <td>Not Applicable</td>
-<td>The COMMAND_WORD is a specific keyword that triggers a command in BinBash.<br><strong>Info:</strong><ul><li>COMMAND_WORD is strictly one of the specified keywords below.</li></ul><strong>Valid Examples:</strong><ul><li><code>add</code></li><li><code>bye</code></li><li><code>exit</code></li><li><code>quit</code></li><li><code>delete</code></li><li><code>list</code></li><li><code>profit</code></li><li><code>restock</code></li><li><code>search</code></li><li><code>sell</code></li><li><code>update</code></li></ul><strong>Invalid Examples:</strong><ul><li>Any text not listed in the valid examples.</li></ul></td>
+<td>The COMMAND_WORD is a specific keyword that triggers a command in BinBash.<br><strong>Info:</strong><ul><li>COMMAND_WORD is strictly one of the specified keywords below.</li></ul><strong>Valid Examples:</strong><ul><li><code>add</code></li><li><code>bye</code></li><li><code>exit</code></li><li><code>quit</code></li><li><code>delete</code></li><li><code>list</code></li><li><code>profit</code></li><li><code>restock</code></li><li><code>search</code></li><li><code>sell</code></li><li><code>update</code></li><li><code>quote</code></li></ul><strong>Invalid Examples:</strong><ul><li>Any text not listed in the valid examples.</li></ul></td>
 </tr>
 </tbody>
 </table>
+
+<br>
 
 ### Command Format
 
@@ -441,6 +448,7 @@ details of this item can be seen in the sample output below.
        threshold: 50
    -------------------------------------------------------------
    ```
+<br>
 
 #### Adding a Perishable Retail item
 
@@ -471,6 +479,8 @@ they will be given default values of `0` and `1` respectively. Do note that this
        expiry date: 02-11-2024
    -------------------------------------------------------------
    ```
+
+<br>
 
 #### Adding an Operational item
 
@@ -503,6 +513,8 @@ the inventory. The sample output can be seen below.
        threshold: 3
    -------------------------------------------------------------
    ```
+
+<br>
 
 #### Adding a Perishable Operational item
 
@@ -594,11 +606,15 @@ This will be further demonstrated in the examples below.
 💡 <strong>Tip:</strong> Indexes of the items listed, whether in a sorted list or unsorted list, can be used as references for <code>delete</code>, <code>update</code>, <code>sell</code> and <code>restock</code> commands.
 </div>
 
+<br>
+
 #### List Unsorted Inventory
 
 View the inventory in the order items were added:
 
 Format: `list`
+
+<br>
 
 #### List Sorted Inventory
 
@@ -655,6 +671,8 @@ This is achieved by using the respective item identifier flags, <code>-n</code> 
 <li>Only <strong>Retail</strong> items can be sold. BinBash will not allow you to sell an <strong>Operational</strong> item.</li>
 </div>
 
+<br>
+
 #### Selling an item using item name
 
 Format: `sell -n ITEM_NAME -q ITEM_QUANTITY`
@@ -686,6 +704,8 @@ quantity of oranges is 73, you should see something like the following.
         expiry date: 10-06-2024
     -------------------------------------------------------------
     ```
+ 
+<br>
 
 #### Selling an item using item index
 
@@ -704,6 +724,8 @@ Format: `sell -i ITEM_INDEX -q ITEM_QUANTITY`
 
 Examples:
 - `sell -i 1 -q 50` This will decrease the quantity of the item at index 1 in your inventory list by 50.
+
+<br>
 
 #### Notification feature for depleting stock
 
@@ -742,6 +764,8 @@ To <code>restock</code> an item, you should specify either the item <strong>name
 This is achieved by using the respective item identifier flags, <code>-n</code> or <code>-i</code>, together with the <code>restock</code> command to identify the item that you want to restock.
 </div>
 
+<br>
+
 #### Restocking an item using item name
 
 Format: `restock -n ITEM_NAME -q ITEM_QUANTITY`
@@ -773,6 +797,9 @@ quantity of apples in your inventory is 3, you should see something like the fol
         expiry date: 10-06-2024
     -------------------------------------------------------------
     ````
+  
+<br>
+
 #### Restocking an item using item index
 
 Format: `restock -i ITEM_INDEX -q ITEM_QUANTITY`
@@ -809,6 +836,8 @@ This is achieved by using the respective item identifier flags, <code>-n</code> 
 <li>Any item field can be updated except for its <strong>name</strong>.</li>
 </div>
 
+<br>
+
 #### Updating an item using item name
 
 Format: `update -n ITEM_NAME [-d ITEM_DESCRIPTION] [-q ITEM_QUANTITY] [-e EXPIRY_DATE] [-s SALE_PRICE] [-c COST_PRICE]
@@ -840,6 +869,7 @@ Updates the description of the item named "banana" to "ripe fruit", its quantity
     -------------------------------------------------------------
     ```
 
+<br>
  
 #### Updating an item using item index
 
@@ -858,7 +888,6 @@ Format: `update -i ITEM_INDEX [-d ITEM_DESCRIPTION] [-q ITEM_QUANTITY] [-e EXPIR
 <div id="warningCallout" style="padding: 1em; border: 0 solid #feb144;border-left-width: 4px;border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; padding: 1em; border-radius: 4px; color: #293132; background-color: #fff8e6;">
 ❗ <strong>Warning:</strong> Make sure to reference the latest list generated by the <code>list</code> command. Using the indexes of previous/outdated lists may result in incorrect outcomes or behavior.
 </div>
-
 
 
 Examples:
@@ -881,6 +910,8 @@ remains unchanged.
 flag, <code>-n</code> or <code>-i</code>, can be used with the <code>delete</code> command to identify the item that you want to delete. 
 There must be a minimum of one flag used, excluding the <code>-n</code> or <code>-i</code> flag.</li>
 </div>
+
+<br>
 
 #### Deleting an item using item name
 
@@ -912,6 +943,8 @@ Examples:
         expiry date: 10-01-2024
     -------------------------------------------------------------
     ```
+
+<br>
 
 #### Deleting an item using item index
 
@@ -1003,6 +1036,7 @@ inventory management journey. So go ahead, type <code>quote</code> and let the p
 [Back to table of contents](#table-of-contents)
 
 ---
+<div style="page-break-after: always;"></div>
 
 ### Saving and Loading data
 
@@ -1163,7 +1197,8 @@ Then, open the file in any text editor of your choice (you can use `Notepad` on 
 TYPE|NAME|DESCRIPTION|QUANTITY|COST_PRICE|UNITS_PURCHASED|THRESHOLD|EXPIRATION_DATE|SALE_PRICE|UNITS_SOLD|
 ```
 
-If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), replace its value with a whitespace.
+If your item does not contain a certain attribute (e.g, no `ITEM_SALE_PRICE`), replace its value with a whitespace (one
+press of the spacebar would suffice!)
 
 [Back to table of contents](#table-of-contents)
 
