@@ -3,7 +3,8 @@
 ## Project: BinBash 
 
 BinBash is an inventory management system is designed to empower small businesses with robust inventory and item 
-management capabilities. It is a CLI based application, written in Java, and it has slightly under 9k lines of code.
+management capabilities. It is a CLI based application, written in Java, and it has slightly more than 10k lines of 
+code.
 
 My role in this project was primarily focused on the storage aspects of BinBash and ensuring reliable data persistence.
 
@@ -66,7 +67,7 @@ My role in this project was primarily focused on the storage aspects of BinBash 
     least profitable items in their inventory.
 
 ### Code Contributed:
-- [RepoSense link](#https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=nur-haziq&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2024-02-23&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
+- [RepoSense link](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=nur-haziq&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2024-02-23&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
 
 ### Contributions to JUnit testing:
 - Crafted a suite of JUnit tests for the `Storage.java` class, substantially increasing code coverage and ensuring the 
@@ -76,15 +77,20 @@ methods in the `ItemList` class.
 - Contributed in coming up with JUnit tests across various `Command` classes.
 
 ### Documentation:
-
 - User Guide:
-  - Introduced and explained the concept of flags within BinBash, detailing their usage and significance in command 
-  structure to facilitate user understanding and command input. 
+  - Created the **'Key Definitions'** section of the UG, which aimed to introduce to the user the different item types 
+  within BinBash. 
+  - Detailed the usage of **flags** and **placeholders**, explaining their roles in command inputs and documenting conditions 
+  for valid and invalid data entries, thereby facilitating error-free user interactions. 
+  - Presented a structured explanation of the **command format**, illustrating how commands, flags, and placeholders 
+  interact, which aids users in mastering command execution for inventory management.
   - Reformatted the `list` command section to condense the information and utilized a tabular format to explain the 
   various ways to sort inventory based on criteria like cost, sale price, profit, and expiry date.
   - Reformatted the summary table of commands encompassing `add`, `search`, `list`, `delete`, `sell`, `restock`, 
   `update`, and `profit`, summarizing their usage and descriptions for quick reference.
   - Improved the existing documentation with a focus on user-friendliness.
+
+<br>
 
 - Developer Guide:
   - Designed the overall sequence diagram to provide developers with a high-level understanding of BinBash's design and
@@ -93,14 +99,12 @@ methods in the `ItemList` class.
   saving data, handling corrupted files, and parsing data.
   - Added a class diagram of the command classes, highlighting their structure and relationships within the 
   `seedu.binbash.command` package.
-  - Described the `DeleteCommand` class's implementation, including constructor design decisions that align with the
+  - Described the `DeleteCommand` class' implementation, including constructor design decisions that align with the
   Single Responsibility Principle and the command pattern encapsulation.
 
-### Community Engagement:
-- Participated regularly in the peer review process, contributing 67 comments, achieving the third-highest interaction 
-rate among peers (as of 05-04-2024)
-- Actively participated in code reviews for both the iP and PE-D, 
-with contributions recognized as above average in terms of quantity of feedback provided.
+### Community Engagement & Contribution to Team Tasks:
+- Release of v2.0 of the product
+- Participated regularly in the peer review process. [Link to PR's reviewed](https://github.com/AY2324S2-CS2113T-T09-2/tp/pulls?q=is%3Apr+is%3Aclosed+reviewed-by%3Anur-haziq+-author%3Anur-haziq)
+- Actively participated in code reviews for both the iP and PE-D, with contributions recognized as above average in 
+terms of quantity of feedback provided.
 
-### Screenshots/Links to Contributions:
-<!-- TODO -->

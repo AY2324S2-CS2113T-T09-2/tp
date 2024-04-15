@@ -1,12 +1,11 @@
 package seedu.binbash;
 
-
-import seedu.binbash.command.ByeCommand;
 import seedu.binbash.command.Command;
 import seedu.binbash.exceptions.BinBashException;
 import seedu.binbash.inventory.ItemList;
 import seedu.binbash.logger.BinBashLogger;
 import seedu.binbash.parser.Parser;
+import seedu.binbash.quotes.Quotes;
 import seedu.binbash.storage.Storage;
 import seedu.binbash.ui.Ui;
 
@@ -20,7 +19,7 @@ public class BinBash {
     public BinBash() {
         logger = new BinBashLogger(BinBash.class.getName());
         inputParser = new Parser();
-        userInterface = new Ui(inputParser.getAllCommandsOptionDescriptions());
+        userInterface = new Ui();
         storage = new Storage();
         itemList = new ItemList(storage.loadData());
     }
@@ -30,16 +29,12 @@ public class BinBash {
 
         userInterface.greet();
         userInterface.talk(itemList.getProfitMargin());
+        userInterface.talk(Quotes.getRandomQuote());
 
         while (userInterface.isUserActive()) {
-            String userInput = userInterface.readUserCommand();
             try {
+                String userInput = userInterface.readUserCommand();
                 Command userCommand = inputParser.parseCommand(userInput);
-
-                if (userCommand instanceof ByeCommand) {
-                    userInterface.setUserAsInactive();
-                }
-
                 userCommand.execute(itemList);
                 userInterface.talk(userCommand.getExecutionUiOutput());
 
@@ -48,12 +43,12 @@ public class BinBash {
                 }
 
             } catch (BinBashException e) {
-                userInterface.talk(e.getMessage());
+                userInterface.warn(e.getMessage());
             }
         }
         logger.info("BinBash exiting...");
     }
-    
+
     /**
      * Main entry-point for the BinBash application.
      */

@@ -4,26 +4,22 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.jline.builtins.Completers.OptDesc;
 
 import seedu.binbash.command.AddCommand;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 /**
  * Parses command line arguments for creating a AddCommand.
  */
 public class AddCommandParser extends DefaultParser {
-    private ArrayList<OptDesc> optionDescriptions;
 
     /**
      * Creates a new AddCommandParser with the necessary options and option descriptions.
      */
     public AddCommandParser() {
         options = new Options();
-        optionDescriptions = new ArrayList<>();
-        new CommandOptionAdder(options, optionDescriptions)
+        new CommandOptionAdder(options)
             .addItemTypeOptionGroup()
             .addNameOption(true, "Easily recognizable item name.")
             .addDescriptionOption(true, "A brief description of the item.")
@@ -31,16 +27,8 @@ public class AddCommandParser extends DefaultParser {
             .addCostPriceOption(true, "The cost of the item.")
             .addSalePriceOption(false, "How much you'll sell the item for.")
             .addExpirationDateOption(false, "If the item has an expiration date, specify it here.")
-            .addThresholdOption(false, "Minimum quantity, below which an alert will be displayed");
-    }
-
-    /**
-     * Gets the option descriptions for the list command.
-     *
-     * @return The list of option descriptions.
-     */
-    public ArrayList<OptDesc> getOptionDecriptions() {
-        return optionDescriptions;
+            .addThresholdOption(false, "Minimum quantity, below which an alert will be displayed")
+            .saveCommandOptionDescriptions("add");
     }
 
     /**
@@ -51,8 +39,8 @@ public class AddCommandParser extends DefaultParser {
      * @throws ParseException If there is an error parsing the command arguments.
      */
     public AddCommand parse(String[] commandArgs) throws ParseException {
-
         CommandLine commandLine = super.parse(options, commandArgs);
+        Parser.checkDuplicateOption(commandLine.getOptions());
 
         // Determine item type to be created
         String itemType;
@@ -101,7 +89,7 @@ public class AddCommandParser extends DefaultParser {
         LocalDate itemExpiryDate = Parser.parseDateOptionValue(commandLine.getOptionValue("expiry-date"),
                 "expiry date");
         if (itemExpiryDate.isBefore(LocalDate.now())) {
-            throw new ParseException("Expiry date has already past.");
+            throw new ParseException("Expiry date has already past. Item not added.");
         }
         return itemExpiryDate;
     }

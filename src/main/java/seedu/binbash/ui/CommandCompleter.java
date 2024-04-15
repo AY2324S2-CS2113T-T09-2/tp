@@ -8,7 +8,10 @@ import org.jline.reader.impl.completer.AggregateCompleter;
 import org.jline.reader.impl.completer.StringsCompleter;
 import org.jline.reader.impl.completer.NullCompleter;
 
+import seedu.binbash.parser.CommandOptionAdder;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Suggests and provides descriptions on commands and command options.
@@ -41,14 +44,12 @@ public class CommandCompleter extends AggregateCompleter {
     private static ArgumentCompleter deleteCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("delete", "delete", COMMAND_GROUP_INVENTORY, "delete an item from the inventory",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, THIRD_SORTED_ORDER_ON_DISPLAY)));
-
     private static ArgumentCompleter restockCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("restock", "restock", COMMAND_GROUP_IN_OUT, "restock an item",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FOURTH_SORTED_ORDER_ON_DISPLAY)));
     private static ArgumentCompleter sellCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("sell", "sell", COMMAND_GROUP_IN_OUT, "sell an item",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, FIFTH_SORTED_ORDER_ON_DISPLAY)));
-
     private static ArgumentCompleter searchCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("search", "search", COMMAND_GROUP_QUERY, "search for an item",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, SIXTH_SORTED_ORDER_ON_DISPLAY)));
@@ -58,35 +59,34 @@ public class CommandCompleter extends AggregateCompleter {
     private static ArgumentCompleter profitCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("profit", "profit", COMMAND_GROUP_QUERY, "display total profit",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, EIGHTH_SORTED_ORDER_ON_DISPLAY)));
-
     private static ArgumentCompleter byeCompleter = new ArgumentCompleter(new StringsCompleter(
                 new Candidate("exit", "exit", COMMAND_GROUP_OTHERS, "exits application",
                     SUFFIX, KEY, IS_COMPLETE_CANDIDATE, NINTH_SORTED_ORDER_ON_DISPLAY)));
 
     /**
      * Calls on parent constructor with every completer, then updates each individual completer.
-     * Note the order of command options to get depends on the order in which those descriptions were added in Parser.
      *
-     * @param allCommandsOptionDescriptions A list of option descriptions for all commands in this program.
      * @return The current instance of CommandCompleter.
      */
-    public CommandCompleter(ArrayList<ArrayList<OptDesc>> allCommandsOptionDescriptions) {
+    public CommandCompleter() {
         super(addCompleter, searchCompleter, restockCompleter, sellCompleter, profitCompleter,
                 deleteCompleter, listCompleter, updateCompleter, byeCompleter);
+        HashMap<String, ArrayList<OptDesc>> allCommandsOptionDescriptions = new CommandOptionAdder()
+            .getAllCommandsOptionDescriptions();
         addCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(0), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("add"), OPTION_COMPLETER_START_POS));
         restockCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(1), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("restock"), OPTION_COMPLETER_START_POS));
         sellCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(2), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("sell"), OPTION_COMPLETER_START_POS));
         updateCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(3), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("update"), OPTION_COMPLETER_START_POS));
         searchCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(4), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("search"), OPTION_COMPLETER_START_POS));
         listCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(5), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("list"), OPTION_COMPLETER_START_POS));
         deleteCompleter.getCompleters().add(new OptionCompleter(
-                    allCommandsOptionDescriptions.get(6), OPTION_COMPLETER_START_POS));
+                    allCommandsOptionDescriptions.get("delete"), OPTION_COMPLETER_START_POS));
         profitCompleter.getCompleters().add(NullCompleter.INSTANCE);
         byeCompleter.getCompleters().add(NullCompleter.INSTANCE);
     }

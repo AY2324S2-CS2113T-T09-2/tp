@@ -1,12 +1,13 @@
 list
-add -re -n item with -d no exp or quantity -s 0.00 -c 100.00
-add -re -n item with -d no exp -q 10 -s 0.00 -c 100.00
-add -re -n item with -d no quantity -e 01-01-2025 -s 0.00 -c 100.00
-add -re -n item with -d everything -q 100 -e 01-01-2025 -s 0.00 -c 100.00
-add -op -n item with -d no exp(op) -q 10 -c 100.00
-add -op -n item with -d everything(op) -q 100 -e 01-01-2025 -c 100.00
+add -re -n item1 with -d no exp or quantity -s 0.00 -c 100.00
+add -re -n item2 with -d no exp -q 10 -s 0.00 -c 100.00
+add -re -n item3 with -d no quantity -e 01-01-2025 -s 0.00 -c 100.00
+add -re -n item4 with -d everything -q 100 -e 01-01-2025 -s 0.00 -c 100.00
+add -op -n item5 with -d no exp(op) -q 10 -c 100.00
+add -op -n item6 with -d everything(op) -q 100 -e 01-01-2025 -c 100.00
+add -op -n item1 with -d duplicate name -q 100 -e 01-01-2025 -c 100.00
 search -d no exp -l 2
-search -n item with
+search -n item1 with
 search -d everything -e ..01-02-2025
 list
 bye

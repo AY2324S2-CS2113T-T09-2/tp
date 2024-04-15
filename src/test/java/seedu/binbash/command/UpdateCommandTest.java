@@ -39,8 +39,8 @@ public class UpdateCommandTest {
     }
 
     @Test
-    void execute_updateByIndex_itemUpdated() throws InvalidCommandException {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+    void execute_updateByIndex_itemUpdated() {
+        ItemList itemList = new ItemList(new ArrayList<>());
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00, 6);
 
@@ -65,7 +65,7 @@ public class UpdateCommandTest {
 
     @Test
     void execute_itemNotFound_updateFailed() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList(new ArrayList<>());
         UpdateCommand updateCommand = new UpdateCommand("nonexistentItem");
         updateCommand.setItemDescription("Updated item");
         updateCommand.setItemQuantity(5);
@@ -75,12 +75,14 @@ public class UpdateCommandTest {
         updateCommand.setItemThreshold(8);
 
         assertTrue(updateCommand.execute(itemList));
-        assertEquals("Item with name 'nonexistentItem' not found.", updateCommand.getExecutionUiOutput());
+        assertEquals("Item with name 'nonexistentItem' not found! " +
+                "Consider using the search or the list command to find the exact name of your item!",
+                updateCommand.getExecutionUiOutput());
     }
 
     @Test
     void execute_indexOutOfBounds_updateFailed() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList(new ArrayList<>());
         itemList.addItem("retail", "testItem", "A test item", 2,
                 LocalDate.now(), 4.00, 5.00, 6);
 
@@ -95,5 +97,32 @@ public class UpdateCommandTest {
 
         assertTrue(updateCommand.execute(itemList));
         assertEquals("Index entered is out of bounds!", updateCommand.getExecutionUiOutput());
+    }
+
+    @Test
+    void execute_updateItemFieldsIndependently_itemUpdated() throws InvalidCommandException {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "testItem", "A test item", 2,
+                LocalDate.now(), 4.00, 5.00, 6);
+
+        UpdateCommand updateCommand1 = new UpdateCommand("testItem");
+        updateCommand1.setItemDescription("Updated Description");
+        assertTrue(updateCommand1.execute(itemList));
+        assertEquals("Updated Description", itemList.findItemByName("testItem").getItemDescription());
+
+        UpdateCommand updateCommand2 = new UpdateCommand("testItem");
+        updateCommand2.setItemQuantity(10);
+        assertTrue(updateCommand2.execute(itemList));
+        assertEquals(10, itemList.findItemByName("testItem").getItemQuantity());
+
+        UpdateCommand updateCommand5 = new UpdateCommand("testItem");
+        updateCommand5.setItemCostPrice(7.50);
+        assertTrue(updateCommand5.execute(itemList));
+        assertEquals(7.50, itemList.findItemByName("testItem").getItemCostPrice());
+
+        UpdateCommand updateCommand6 = new UpdateCommand("testItem");
+        updateCommand6.setItemThreshold(12);
+        assertTrue(updateCommand6.execute(itemList));
+        assertEquals(12, itemList.findItemByName("testItem").getItemThreshold());
     }
 }

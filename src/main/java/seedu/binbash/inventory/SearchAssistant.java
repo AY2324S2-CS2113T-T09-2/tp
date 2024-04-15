@@ -18,7 +18,7 @@ public class SearchAssistant {
     private ArrayList<Item> foundItems;
 
     /**
-     * Note that the list of items to search through has to be explicity set by the caller.
+     * Note that the list of items to search through has to be explicitly set by the caller.
      */
     public void setFoundItems(ArrayList<Item> foundItems) {
         this.foundItems = foundItems;
@@ -43,7 +43,8 @@ public class SearchAssistant {
     }
 
     /**
-     * Finds all items whose names contain a given string.
+     * Searches for items whose names contain the specified substring, ignoring case.
+     * If the given string is empty, no filtering is applied.
      *
      * @param nameField The given string.
      * @return The current instance of SearchAssistant.
@@ -55,6 +56,23 @@ public class SearchAssistant {
         foundItems = foundItems.stream()
             .filter(item -> item.getItemName().toLowerCase().contains(nameField.toLowerCase()))
             .collect(Collectors.toCollection(ArrayList::new));
+        return this;
+    }
+
+    /**
+     * Searches for items whose names exactly match the specified string, with case sensitivity.
+     * If the given string is empty, no filtering is applied.
+     *
+     * @param nameField The exact name to search for in the item names.
+     * @return The current instance of SearchAssistant with the filtered list of items.
+     */
+    public SearchAssistant searchByExactName(String nameField) {
+        if (nameField.equals("")) {
+            return this;
+        }
+        foundItems = foundItems.stream()
+                .filter(item -> item.getItemName().equals(nameField))
+                .collect(Collectors.toCollection(ArrayList::new));
         return this;
     }
 

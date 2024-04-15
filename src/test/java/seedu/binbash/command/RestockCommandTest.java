@@ -15,7 +15,7 @@ public class RestockCommandTest {
 
     @Test
     void execute_restockExistingItem_quantityUpdated() throws InvalidCommandException {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList(new ArrayList<>());
         String itemName = "testItem";
         itemList.addItem("retail", itemName, "A test item", 2,
                 LocalDate.now(), 4.00, 5.00, 6);
@@ -29,7 +29,7 @@ public class RestockCommandTest {
 
     @Test
     void execute_itemNotFound_noChangeInItemList() {
-        ItemList itemList = new ItemList(new ArrayList<Item>());
+        ItemList itemList = new ItemList(new ArrayList<>());
         RestockCommand restockCommand = new RestockCommand("nonexistentItem", 5);
 
         assertTrue(restockCommand.execute(itemList));
@@ -51,7 +51,9 @@ public class RestockCommandTest {
         ItemList itemList = new ItemList(new ArrayList<>());
         RestockCommand command = new RestockCommand("Non-Existing Item", 5);
         command.execute(itemList);
-        assertEquals("Item with name 'Non-Existing Item' not found.", command.getExecutionUiOutput());
+        assertEquals("Item with name 'Non-Existing Item' not found! " +
+                        "Consider using the search or the list command to find the exact name of your item!",
+                command.getExecutionUiOutput());
     }
 
     @Test
@@ -62,5 +64,15 @@ public class RestockCommandTest {
         command.setIsIndex();
         command.execute(itemList);
         assertEquals("Index entered is out of bounds!", command.getExecutionUiOutput());
+    }
+
+    @Test
+    void execute_restockZeroQuantity_noChangeInItemList() throws InvalidCommandException {
+        ItemList itemList = new ItemList(new ArrayList<>());
+        itemList.addItem("retail", "Test Item", "Test Description", 10, LocalDate.MIN, 5.0, 2.0, 5);
+        RestockCommand restockCommand = new RestockCommand("Test Item", 0);
+
+        assertTrue(restockCommand.execute(itemList));
+        assertEquals(10, itemList.findItemByName("Test Item").getItemQuantity());
     }
 }
